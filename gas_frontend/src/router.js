@@ -22,22 +22,21 @@ const router = new VueRouter({
       name: "Login",
       meta: { layout: "simple" , title:"Login" },
       component: require("@/views/Pages/Login").default
-    },
-   
+    }
   ]
 });
-router.beforeEach(async(to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!localStorage.getItem("token")) {
-      next({
-        name: "Login"
-      });
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach(async(to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (!localStorage.getItem("token")) {
+//       next({
+//         name: "Login"
+//       });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

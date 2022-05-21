@@ -1,10 +1,13 @@
 <template>
   <v-app >
     <router-view > </router-view>
+    <!-- Snackbar -->
+
   </v-app>
 </template>
 
 <script>
+//import { eventBus } from "@/main";
 export default {
   name: "App",
   data() {
