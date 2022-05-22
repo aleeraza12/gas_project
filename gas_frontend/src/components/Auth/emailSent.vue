@@ -6,26 +6,12 @@
         <div class="grey-side">
         </div>
         <div class="login-screen">
-          <div class="sign-in-content">Password Recovery</div>
-          <div class="sign-in-subcontent">Please enter the email adress linked to your account</div>
-          <v-form v-model="valid">
-          <div>
-            <v-text-field
-            label="Email Address"
-            outlined
-            dense
-            placeholder="Email Address"
-            hide-details
-            class="username-feild mt-6 ml-16"
-            v-model="email"
-          ></v-text-field>
+          <div class="inner-box">
+             
           </div>
-          <div class="mt-10 ml-16"> 
-            <v-btn block large class="elevation-0 btn-login" @click="sendMail()" dense >
-             Confirm
-            </v-btn>
-          </div>
-          </v-form>
+          <div class="sign-in-content">Recovery Email Sent</div>
+          <div class="sign-in-subcontent">Kindly check your email for the password reset link that has been sent to you</div>
+           <div class="resend" @click="resend()">Didn’t receive any email? <b>Resend</b></div>
         </div>
       </div>
     </v-card-text>
@@ -45,11 +31,11 @@
      
     },
     methods:{
-        sendMail(){
-            this.$router.push({
-                name:"MailSent"
-            })
-        }
+      resend(){
+         this.$router.push({
+           name:"PasswordRecover"
+         })
+      }
     }
   }
 </script>

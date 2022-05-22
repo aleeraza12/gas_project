@@ -28,6 +28,12 @@ const router = new VueRouter({
       name: "PasswordRecover",
       meta: { layout: "simple" , title:"Password Recover" },
       component: require("@/views/Pages/PasswordRecover").default
+    },
+    {
+      path: "/mail-sent",
+      name: "MailSent",
+      meta: { layout: "simple" , title:"Mail Sent" },
+      component: require("@/views/Pages/emailSent").default
     }
   ]
 });

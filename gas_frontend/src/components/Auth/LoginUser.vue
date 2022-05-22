@@ -67,6 +67,11 @@
      
     },
     methods:{
+      forgetPassword(){
+        this.$router.push({
+          name:"PasswordRecover"
+        })
+      }
     }
   }
 </script>
@@ -138,6 +143,7 @@
   color:black;
   font-weight: 500;
   margin-left:23rem;
+  cursor:pointer
 }
 .btn-login {
   background-color: black !important;
