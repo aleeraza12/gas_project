@@ -4,27 +4,12 @@
     <v-card-text>
       <div class="d-flex">
         <div class="grey-side">
-          <div class="inner-box">
-             
-          </div>
-          <div class="content-welcome">Welcome Back! </div>
-          <div class="sub-content-welcome">Sign in to access your dashboard</div>
         </div>
         <div class="login-screen">
-          <div class="sign-in-content">Sign In</div>
-          <div class="sign-in-subcontent">Enter your username and password</div>
+          <div class="sign-in-content">Update Password</div>
+          <div class="sign-in-subcontent">Create a new password for your account</div>
           <v-form v-model="valid">
-          <div>
-            <v-text-field
-            label="Username"
-            outlined
-            dense
-            placeholder="Username"
-            hide-details
-            class="username-feild mt-6 ml-16"
-            v-model="username"
-          ></v-text-field>
-          </div>
+
            <div>
             <v-text-field
             outlined
@@ -39,10 +24,23 @@
             v-model="password"
           ></v-text-field>
           </div>
-          <div class="forget-passowrd  mt-3" @click="forgetPassword()">Forgot Password?</div>
+           <div>
+            <v-text-field
+            outlined
+            :append-icon="show1 ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+            :type="show1 ? 'text' : 'confirm_password'"
+            @click:append="show1 = !show1"
+            label="Confirm Password"
+            dense
+            placeholder="Confirm Password"
+            hide-details
+            class="password-feild mt-3 ml-16"
+            v-model="confirm_password"
+          ></v-text-field>
+          </div>
           <div class="mt-10 ml-16"> 
-            <v-btn block large class="elevation-0 btn-login" @click="login()" dense >
-              Sign In
+            <v-btn block large class="elevation-0 btn-login" @click="updatePassword()" dense >
+             Reset Password 
             </v-btn>
           </div>
           </v-form>
@@ -59,15 +57,16 @@
     data: () => ({
       valid: false,
       show:false,
-     username:"",
+      show1:false,
      password:"",
+     confirm_password:"",
     }),
     components:{},
     created(){
      
     },
     methods:{
-      forgetPassword(){
+      updatePassword(){
         this.$router.push({
           name:"PasswordRecover"
         })

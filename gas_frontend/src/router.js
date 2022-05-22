@@ -34,6 +34,12 @@ const router = new VueRouter({
       name: "MailSent",
       meta: { layout: "simple" , title:"Mail Sent" },
       component: require("@/views/Pages/emailSent").default
+    },
+    {
+      path: "/update-password",
+      name: "Update Password",
+      meta: { layout: "simple" , title:"Update Password" },
+      component: require("@/views/Pages/updatePassword").default
     }
   ]
 });
