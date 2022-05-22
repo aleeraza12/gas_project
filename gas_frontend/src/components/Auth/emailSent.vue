@@ -11,7 +11,7 @@
           </div>
           <div class="sign-in-content">Recovery Email Sent</div>
           <div class="sign-in-subcontent">Kindly check your email for the password reset link that has been sent to you</div>
-           <div class="resend" @click="resend()">Didn’t receive any email? <b>Resend</b></div>
+           <div class="mt-5 resend-text" @click="resend()">Didn’t receive any email? <b>Resend</b></div>
         </div>
       </div>
     </v-card-text>
@@ -113,6 +113,10 @@
   color:#fff;
   min-width:400px !important;
   border-radius: 8px !important;
+  cursor: pointer;
+}
+.resend-text{
+  margin-left:4.5rem;
   cursor: pointer;
 }
 </style>
