@@ -22,6 +22,12 @@ const router = new VueRouter({
       name: "Login",
       meta: { layout: "simple" , title:"Login" },
       component: require("@/views/Pages/Login").default
+    },
+    {
+      path: "/password-recover",
+      name: "PasswordRecover",
+      meta: { layout: "simple" , title:"Password Recover" },
+      component: require("@/views/Pages/PasswordRecover").default
     }
   ]
 });
