@@ -10,7 +10,7 @@
           <div class="content-welcome">Hello! </div>
           <div class="sub-content-welcome">Welcome to GAS360 where you are guaranteed <br/> access to clean cooking LPG fuel</div>
         </div>
-        <div class="login-screen">
+        <div class="create-screen">
           <div class="sign-in-content">Welcome</div>
           <div class="sign-in-subcontent">Create your account to  get started</div>
           <v-form v-model="valid">
@@ -69,6 +69,35 @@
             v-model="address"
           ></v-text-field>
           </div>
+          <div class="d-flex">
+            <div>
+              <v-text-field
+                label="City"
+                outlined
+                dense
+                placeholder="City"
+                hide-details
+                class="city-feild mt-6 ml-16"
+                v-model="city"
+              ></v-text-field>
+            </div>
+            <div class="mt-6 ml-2">
+             <v-select
+                :items="states"
+                label="State"
+                outlined
+                dense
+              ></v-select>
+            </div>
+          </div>
+          <div class="ml-16" style="width:410px">
+             <v-select
+                :items="plants"
+                label="Select Plants"
+                outlined
+                dense
+              ></v-select>
+          </div>
            <div>
             <v-text-field
             outlined
@@ -83,10 +112,23 @@
             v-model="password"
           ></v-text-field>
           </div>
-          <div class="forget-passowrd  mt-3" @click="forgetPassword()">Forgot Password?</div>
+           <div>
+            <v-text-field
+            outlined
+            :append-icon="show1 ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+            :type="show1 ? 'text' : 'confirm_password'"
+            @click:append="show1 = !show1"
+            label="Confirm Password"
+            dense
+            placeholder="Confirm Password"
+            hide-details
+            class="password-feild mt-3 ml-16"
+            v-model="confirm_password"
+          ></v-text-field>
+          </div>
           <div class="mt-10 ml-16"> 
-            <v-btn block large class="elevation-0 btn-login" @click="login()" dense >
-              Sign In
+            <v-btn block large class="elevation-0 btn-create" @click="createAccount()" dense >
+             Create Account
             </v-btn>
           </div>
           </v-form>
@@ -103,8 +145,17 @@
     data: () => ({
       valid: false,
       show:false,
-     username:"",
+      show1:false,
+     owners_name:"",
+     company_name:"",
+     email_address:"",
+     phone_number:"",
+     address:"",
      password:"",
+     confirm_password:"",
+     city:"",
+     states: ['Punjab', 'KPK', 'Balochistan', 'Sindh'],
+     plants:["plant 1","plant 2","plant 3" ,"plant 4","plant 5"]
     }),
     components:{},
     created(){
@@ -116,7 +167,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 630px;
+  height: 800px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -124,8 +175,8 @@
   background-color: #EBEBEA;
 
 }
-.login-screen{
-  height: 630px;
+.create-screen{
+  height: 800px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -157,7 +208,7 @@
  font-weight: 600;
  font-size:18px;
  color:black;
- margin-top:6rem;
+ margin-top:2rem;
  margin-left: 4.5rem;
 }
 .sign-in-subcontent {
@@ -172,18 +223,17 @@
   border-color: #D6D6D6;
   border-radius: 8px;
 }
+.city-feild {
+    width: 150px;
+  border-color: #D6D6D6;
+  border-radius: 8px;
+}
 .password-feild{
   width: 400px;
   border-color: #D6D6D6;
   border-radius: 8px;
 }
-.forget-passowrd{
-  font-size: 12px;
-  color:black;
-  font-weight: 500;
-  margin-left:23rem;
-}
-.btn-login {
+.btn-create {
   background-color: black !important;
   color:#fff;
   min-width:400px !important;
