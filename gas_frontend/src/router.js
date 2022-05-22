@@ -46,6 +46,12 @@ const router = new VueRouter({
       name: "Reset Message",
       meta: { layout: "simple" , title:"Reset Message" },
       component: require("@/views/Pages/resetMessage").default
+    },
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      meta: { layout: "simple" , title:"Dashboard" },
+      component: require("@/views/Pages/dashboard").default
     }
   ]
 });

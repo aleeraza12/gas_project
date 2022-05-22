@@ -67,6 +67,11 @@
      
     },
     methods:{
+      login(){
+          this.$router.push({
+            name:"Dashboard"
+          })
+      },
       forgetPassword(){
         this.$router.push({
           name:"PasswordRecover"
