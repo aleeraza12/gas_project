@@ -40,6 +40,12 @@ const router = new VueRouter({
       name: "Update Password",
       meta: { layout: "simple" , title:"Update Password" },
       component: require("@/views/Pages/updatePassword").default
+    },
+    {
+      path: "/reset-message",
+      name: "Reset Message",
+      meta: { layout: "simple" , title:"Reset Message" },
+      component: require("@/views/Pages/resetMessage").default
     }
   ]
 });

@@ -6,44 +6,16 @@
         <div class="grey-side">
         </div>
         <div class="login-screen">
-          <div class="sign-in-content">Update Password</div>
-          <div class="sign-in-subcontent">Create a new password for your account</div>
-          <v-form v-model="valid">
-
-           <div>
-            <v-text-field
-            outlined
-            :append-icon="show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
-            :type="show ? 'text' : 'password'"
-            @click:append="show = !show"
-            label="Password"
-            dense
-            placeholder="Password"
-            hide-details
-            class="password-feild mt-3 ml-16"
-            v-model="password"
-          ></v-text-field>
+          <div class="inner-box">
+             
           </div>
-           <div>
-            <v-text-field
-            outlined
-            :append-icon="show1 ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
-            :type="show1 ? 'text' : 'confirm_password'"
-            @click:append="show1 = !show1"
-            label="Confirm Password"
-            dense
-            placeholder="Confirm Password"
-            hide-details
-            class="password-feild mt-3 ml-16"
-            v-model="confirm_password"
-          ></v-text-field>
-          </div>
-          <div class="mt-10 ml-16"> 
-            <v-btn block large class="elevation-0 btn-login" @click="updatePassword()" dense >
-             Reset Password 
+          <div class="sign-in-content">Password Reset Successful</div>
+          <div class="sign-in-subcontent">You have successfully reset your password</div>
+            <div class="mt-7 ml-16"> 
+            <v-btn block large class="elevation-0 btn-login" @click="login()" dense >
+             Login
             </v-btn>
           </div>
-          </v-form>
         </div>
       </div>
     </v-card-text>
@@ -56,20 +28,17 @@
   export default {
     data: () => ({
       valid: false,
-      show:false,
-      show1:false,
-     password:"",
-     confirm_password:"",
+      email:""
     }),
     components:{},
     created(){
      
     },
     methods:{
-      updatePassword(){
-        this.$router.push({
-          name:"Reset Message"
-        })
+      resend(){
+         this.$router.push({
+           name:"PasswordRecover"
+         })
       }
     }
   }
@@ -97,7 +66,7 @@
   width: 300px;
   background-color:  #D2D2D2;
   margin-top:6rem;
-  margin-left:10rem
+  margin-left:4rem
 }
 .content-welcome{
   font-weight: 600;
@@ -142,13 +111,16 @@
   color:black;
   font-weight: 500;
   margin-left:23rem;
-  cursor:pointer
 }
 .btn-login {
   background-color: #464646 !important;
   color:#fff;
   min-width:400px !important;
   border-radius: 8px !important;
+  cursor: pointer;
+}
+.resend-text{
+  margin-left:4.5rem;
   cursor: pointer;
 }
 </style>
