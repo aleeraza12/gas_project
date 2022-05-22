@@ -14,7 +14,7 @@ export default {
   }),
   components:{
     Dashboard :()=>import("../../components/Dashboard/dashboard.vue"),
-    Sidebar:()=>import("../../components/sidebar/sidebar.vue")
+   
   },
   mounted() {
     
