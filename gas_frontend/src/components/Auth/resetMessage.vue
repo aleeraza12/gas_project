@@ -35,9 +35,9 @@
      
     },
     methods:{
-      resend(){
+      login(){
          this.$router.push({
-           name:"PasswordRecover"
+           name:"Login"
          })
       }
     }
