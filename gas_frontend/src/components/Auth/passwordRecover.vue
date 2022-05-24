@@ -1,13 +1,13 @@
 <template>
 <div class="main-container">
   <v-card>
-    <v-card-text>
+    <v-card-text class="pa-0">
       <div class="d-flex">
         <div class="grey-side">
         </div>
         <div class="login-screen">
-          <div class="sign-in-content">Password Recovery</div>
-          <div class="sign-in-subcontent">Please enter the email adress linked to your account</div>
+          <div class="sign-in-content d-flex align-start justify-start">Password Recovery</div>
+          <div class="sign-in-subcontent d-flex align-start justify-start">Please enter the email adress linked to your account</div>
           <v-form v-model="valid">
           <div>
             <v-text-field
@@ -55,7 +55,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -64,7 +64,7 @@
 
 }
 .login-screen{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;

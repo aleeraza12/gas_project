@@ -1,31 +1,60 @@
 <template>
-  <v-app >
-    <router-view > </router-view>
-    <!-- Snackbar -->
-
+  <v-app id="app">
+    <v-main>
+        <component :is="layout" />
+        
+    </v-main>
+   
   </v-app>
 </template>
-
 <script>
-//import { eventBus } from "@/main";
+const default_layout = "app";
 export default {
-  name: "App",
+  components: {
+    "simple-layout": () => import("@/components/Layouts/simpleLayout"),
+    "app-layout": () => import("@/components/Layouts/AppLayout"),
+   
+  },
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || default_layout) + "-layout";
+    }
+  },
+  watch:{
+     $route : {
+       handler:(to)=>{
+         document.title = to.meta.title + '-' +  `Sample` 
+       },
+       immediate:true,
+     }
+  },
   data() {
     return {
+
     };
-  },
-  computed: {},
-  watch: {
-  },
-  
-  methods: {},
+  }
 };
 </script>
 
-<style scoped>
-body {
-  background: white !important;
-}
-</style>
 <style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
 </style>

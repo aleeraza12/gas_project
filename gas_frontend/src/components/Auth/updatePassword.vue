@@ -1,13 +1,13 @@
 <template>
 <div class="main-container">
   <v-card>
-    <v-card-text>
+    <v-card-text class="pa-0">
       <div class="d-flex">
         <div class="grey-side">
         </div>
         <div class="login-screen">
-          <div class="sign-in-content">Update Password</div>
-          <div class="sign-in-subcontent">Create a new password for your account</div>
+          <div class="sign-in-content d-flex align-start justify-start">Update Password</div>
+          <div class="sign-in-subcontent  d-flex align-start justify-start">Create a new password for your account</div>
           <v-form v-model="valid">
 
            <div>
@@ -76,7 +76,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -85,7 +85,7 @@
 
 }
 .login-screen{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;

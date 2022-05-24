@@ -1,18 +1,18 @@
 <template>
 <div class="main-container">
-  <v-card>
-    <v-card-text>
+  <v-card class="elevation-0">
+    <v-card-text class="pa-0">
       <div class="d-flex">
         <div class="grey-side">
           <div class="inner-box">
              
           </div>
-          <div class="content-welcome">Hello! </div>
-          <div class="sub-content-welcome">Welcome to GAS360 where you are guaranteed <br/> access to clean cooking LPG fuel</div>
+          <div class="content-welcome d-flex align-start justify-start">Hello! </div>
+          <div class="sub-content-welcome  d-flex align-start justify-start">Welcome to GAS360 where you are guaranteed <br/> access to clean cooking LPG fuel</div>
         </div>
         <div class="create-screen">
-          <div class="sign-in-content">Welcome</div>
-          <div class="sign-in-subcontent">Create your account to  get started</div>
+          <div class="sign-in-content  d-flex align-start justify-start">Welcome</div>
+          <div class="sign-in-subcontent  d-flex align-start justify-start">Create your account to  get started</div>
           <v-form v-model="valid">
           <div>
             <v-text-field
@@ -21,7 +21,7 @@
             dense
             placeholder="Owners Full Name"
             hide-details
-            class="username-feild mt-6 ml-16"
+            class="username-feild mt-2 ml-16"
             v-model="owners_name"
           ></v-text-field>
           </div>
@@ -32,7 +32,7 @@
             dense
             placeholder="Company Name"
             hide-details
-            class="username-feild mt-6 ml-16"
+            class="username-feild mt-2 ml-16"
             v-model="company_name"
           ></v-text-field>
           </div>
@@ -43,7 +43,7 @@
             dense
             placeholder="Email Address"
             hide-details
-            class="username-feild mt-6 ml-16"
+            class="username-feild mt-2 ml-16"
             v-model="email_address"
           ></v-text-field>
           </div>
@@ -54,7 +54,7 @@
             dense
             placeholder="Phone Number"
             hide-details
-            class="username-feild mt-6 ml-16"
+            class="username-feild mt-2 ml-16"
             v-model="phone_number"
           ></v-text-field>
           </div>
@@ -65,7 +65,7 @@
             dense
             placeholder="Address"
             hide-details
-            class="username-feild mt-6 ml-16"
+            class="username-feild mt-2 ml-16"
             v-model="address"
           ></v-text-field>
           </div>
@@ -77,11 +77,11 @@
                 dense
                 placeholder="City"
                 hide-details
-                class="city-feild mt-6 ml-16"
+                class="city-feild mt-2 ml-16"
                 v-model="city"
               ></v-text-field>
             </div>
-            <div class="mt-6 ml-2">
+            <div class="mt-2 ml-2">
              <v-select
                 :items="states"
                 label="State"
@@ -90,12 +90,13 @@
               ></v-select>
             </div>
           </div>
-          <div class="ml-16" style="width:410px">
+          <div class="ml-16 mt-0" style="width:410px ;position:absolute">
              <v-select
                 :items="plants"
                 label="Select Plants"
                 outlined
                 dense
+                small 
               ></v-select>
           </div>
            <div>
@@ -108,7 +109,7 @@
             dense
             placeholder="Password"
             hide-details
-            class="password-feild mt-3 ml-16"
+            class="password-feild mt-13 ml-16"
             v-model="password"
           ></v-text-field>
           </div>
@@ -122,11 +123,11 @@
             dense
             placeholder="Confirm Password"
             hide-details
-            class="password-feild mt-3 ml-16"
+            class="password-feild mt-2 ml-16"
             v-model="confirm_password"
           ></v-text-field>
           </div>
-          <div class="mt-10 ml-16"> 
+          <div class="mt-5 ml-16"> 
             <v-btn block large class="elevation-0 btn-create" @click="createAccount()" dense >
              Create Account
             </v-btn>
@@ -167,7 +168,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 800px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -176,7 +177,7 @@
 
 }
 .create-screen{
-  height: 800px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -206,16 +207,16 @@
 }
 .sign-in-content{
  font-weight: 600;
- font-size:18px;
+ font-size:16px;
  color:black;
- margin-top:2rem;
+ margin-top:1rem;
  margin-left: 4.5rem;
 }
 .sign-in-subcontent {
  font-weight: 400;
- font-size:14px;
+ font-size:12px;
  color:black;
- margin-top:1rem;
+ margin-top:0.5rem;
  margin-left: 4.5rem;
 }
 .username-feild{

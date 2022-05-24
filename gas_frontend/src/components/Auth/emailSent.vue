@@ -1,7 +1,7 @@
 <template>
 <div class="main-container">
   <v-card>
-    <v-card-text>
+    <v-card-text class="pa-0">
       <div class="d-flex">
         <div class="grey-side">
         </div>
@@ -41,7 +41,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -50,7 +50,7 @@
 
 }
 .login-screen{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -58,10 +58,10 @@
   background-color: #fff;
 }
 .inner-box{
-  height: 300px;
+  height: 250px;
   width: 300px;
   background-color:  #D2D2D2;
-  margin-top:6rem;
+  margin-top:4rem;
   margin-left:10rem
 }
 .content-welcome{
@@ -82,8 +82,8 @@
  font-weight: 600;
  font-size:18px;
  color:black;
- margin-top:6rem;
- margin-left: 4.5rem;
+ margin-top:3rem;
+ margin-left: 2.5rem;
 }
 .sign-in-subcontent {
  font-weight: 400;

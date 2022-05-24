@@ -1,7 +1,7 @@
 <template>
 <div class="main-container">
   <v-card>
-    <v-card-text>
+    <v-card-text class="pa-0">
       <div class="d-flex">
         <div class="grey-side">
         </div>
@@ -9,8 +9,8 @@
           <div class="inner-box">
              
           </div>
-          <div class="sign-in-content">Password Reset Successful</div>
-          <div class="sign-in-subcontent">You have successfully reset your password</div>
+          <div class="sign-in-content  d-flex align-start justify-start">Password Reset Successful</div>
+          <div class="sign-in-subcontent  d-flex align-start justify-start">You have successfully reset your password</div>
             <div class="mt-7 ml-16"> 
             <v-btn block large class="elevation-0 btn-login" @click="login()" dense >
              Login
@@ -45,7 +45,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -54,7 +54,7 @@
 
 }
 .login-screen{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -62,10 +62,10 @@
   background-color: #fff;
 }
 .inner-box{
-  height: 300px;
+  height: 250px;
   width: 300px;
   background-color:  #D2D2D2;
-  margin-top:6rem;
+  margin-top:4rem;
   margin-left:4rem
 }
 .content-welcome{
@@ -115,7 +115,7 @@
 .btn-login {
   background-color: #464646 !important;
   color:#fff;
-  min-width:400px !important;
+  min-width:300px !important;
   border-radius: 8px !important;
   cursor: pointer;
 }
