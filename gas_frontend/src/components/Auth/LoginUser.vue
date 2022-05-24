@@ -1,18 +1,18 @@
 <template>
 <div class="main-container">
-  <v-card>
-    <v-card-text>
+  <v-card class="elevation-0">
+    <v-card-text class="pa-0">
       <div class="d-flex">
         <div class="grey-side">
           <div class="inner-box">
              
           </div>
-          <div class="content-welcome">Welcome Back! </div>
-          <div class="sub-content-welcome">Sign in to access your dashboard</div>
+          <div class="content-welcome d-flex align-start justify-start">Welcome Back! </div>
+          <div class="sub-content-welcome d-flex align-start justify-start">Sign in to access your dashboard</div>
         </div>
         <div class="login-screen">
-          <div class="sign-in-content">Sign In</div>
-          <div class="sign-in-subcontent">Enter your username and password</div>
+          <div class="sign-in-content d-flex align-start justify-start">Sign In</div>
+          <div class="sign-in-subcontent d-flex align-start justify-start">Enter your username and password</div>
           <v-form v-model="valid">
           <div>
             <v-text-field
@@ -82,7 +82,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -91,7 +91,7 @@
 
 }
 .login-screen{
-  height: 630px;
+  height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -147,7 +147,7 @@
   font-size: 12px;
   color:black;
   font-weight: 500;
-  margin-left:23rem;
+  margin-left:13rem;
   cursor:pointer
 }
 .btn-login {
