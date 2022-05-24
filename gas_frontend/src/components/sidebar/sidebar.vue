@@ -56,7 +56,7 @@
 </script>
 <style scoped>
 .sidebar-card{
-    height:660px;
+    height:600px;
     border-radius:0px !important
 }
 .navaigation-side{
