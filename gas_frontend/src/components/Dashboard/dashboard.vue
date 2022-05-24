@@ -88,6 +88,21 @@
           </v-card>
         </div>
       </div>
+      <div class=" d-flex mt-3">
+       <div><b>Orders</b></div>
+       <v-spacer></v-spacer>
+       <div class="mr-3"><b>Date Picker</b></div>
+      </div>
+      <div class="mt-3">
+        <v-data-table
+          :headers="headers"
+          :items="desserts"
+          :items-per-page="5"
+          class="elevation-1"
+            hide-default-footer
+          height="230px"
+        ></v-data-table>
+      </div>
     </v-card-text>
   </v-card>
 </div>
@@ -97,7 +112,94 @@
 
   export default {
     data: () => ({
-
+       headers: [
+          {
+            text: 'Date',
+            align: 'start',
+            sortable: false,
+            value: 'name',
+          },
+          { text: 'Order Id', value: 'id' },
+          { text: 'Customer Name', value: 'name' },
+          { text: 'Gas Quantity', value: 'quantity' },
+          { text: 'Amount', value: 'amount' },
+          { text: 'Status', value: 'status' },
+          { text: 'Update by', value: 'update_by' },
+          { text: 'Payment Mode', value: 'payment' },
+           { text: 'Views', value: 'actions' },
+        ],
+        desserts: [
+          {
+            date: '04 april 2022 01:32 am',
+            id: '100',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+          {
+            date: '04 april 2022 01:32 am',
+            id: '101',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+          {
+            date: '04 april 2022 01:32 am',
+            id: '102',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+          {
+            date: '04 april 2022 01:32 am',
+            id: '103',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+          {
+            date: '04 april 2022 01:32 am',
+            id: '104',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+          {
+            date: '04 april 2022 01:32 am',
+            id: '105',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+          {
+            date: '04 april 2022 01:32 am',
+            id: '106',
+            name: 'John',
+            quantity: 6,
+            amount: 2400,
+            status: 'Paid',
+            update_by:'abc',
+            payment: 'cash',
+          },
+        ],
     }),
     components:{},
     created(){
