@@ -29,6 +29,65 @@
            <div>Monday 4th, April 2022</div>
         </div>
       </div>
+      <div class="d-flex mt-5">
+        <div>
+          <v-card height="120" width="250"  style="background-color:#EBEBEA">
+            <v-card-text>
+              <div class="d-flex">
+                <div>
+                  <div class="d-flex align-start justify-start"><b>600 Kg</b></div>
+                  <div  class="d-flex align-start justify-start">NA 000000000000000</div>
+                </div>
+                <v-spacer></v-spacer>
+                <div  class="d-flex align-end justify-end">
+                  <v-icon>mdi-image</v-icon>
+                </div>
+              </div>
+              <div  class="d-flex align-start justify-start mt-5">
+                <b>Total Available Gas</b>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+        <div>
+          <v-card height="120" width="250" class="ml-5"  style="background-color:#EBEBEA">
+            <v-card-text>
+              <div class="d-flex">
+                <div>
+                  <div class="d-flex align-start justify-start"><b>124</b></div>
+                  <div  class="d-flex align-start justify-start">3 New Customers</div>
+                </div>
+                <v-spacer></v-spacer>
+                <div  class="d-flex align-end justify-end">
+                  <v-icon>mdi-image</v-icon>
+                </div>
+              </div>
+              <div  class="d-flex align-start justify-start mt-5">
+                <b>Total Customers</b>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+          <div>
+          <v-card height="120" width="250" class="ml-5" style="background-color:#EBEBEA">
+            <v-card-text>
+              <div class="d-flex">
+                <div>
+                  <div class="d-flex align-start justify-start"><b>124,00000000</b></div>
+                  <div  class="d-flex align-start justify-start">45 New Connections</div>
+                </div>
+                <v-spacer></v-spacer>
+                <div  class="d-flex align-end justify-end">
+                  <v-icon>mdi-image</v-icon>
+                </div>
+              </div>
+              <div  class="d-flex align-start justify-start mt-5">
+                <b>Total Sales</b>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
     </v-card-text>
   </v-card>
 </div>
