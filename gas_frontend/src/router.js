@@ -50,7 +50,7 @@ const router = new VueRouter({
     {
       path: "/dashboard",
       name: "Dashboard",
-      meta: { layout: "simple" , title:"Dashboard" },
+      meta: { layout: "app" , title:"Dashboard" },
       component: require("@/views/Pages/dashboard").default
     }
   ]
