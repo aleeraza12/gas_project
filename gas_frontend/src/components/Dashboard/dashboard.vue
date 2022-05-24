@@ -18,6 +18,17 @@
           <v-icon> mdi-bell-outline</v-icon>
         </div>
       </div>
+      <div class="d-flex mt-5">
+        <div>
+         <b> Welcome Ola,</b>
+        </div>
+        <v-spacer></v-spacer>
+        <div>
+          <div>Current gas price</div>
+          <div> <b>N1 300</b></div>
+           <div>Monday 4th, April 2022</div>
+        </div>
+      </div>
     </v-card-text>
   </v-card>
 </div>
