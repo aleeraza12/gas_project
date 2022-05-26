@@ -52,6 +52,24 @@ const router = new VueRouter({
       name: "Dashboard",
       meta: { layout: "app" , title:"Dashboard" },
       component: require("@/views/Pages/dashboard").default
+    },
+    {
+      path: "/orders",
+      name: "Orders",
+      meta: { layout: "app" , title:"Orders" },
+      component: require("@/views/Pages/orders").default
+    },
+    {
+      path: "/sales",
+      name: "Sales",
+      meta: { layout: "app" , title:"Sales" },
+      component: require("@/views/Pages/sales").default
+    },
+    {
+      path: "/settings",
+      name: "Settings",
+      meta: { layout: "app" , title:"Settings" },
+      component: require("@/views/Pages/setting").default
     }
   ]
 });

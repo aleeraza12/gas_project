@@ -14,20 +14,27 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list dense>
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-            @click.stop="mini = !mini"
-            class="sidebar-item"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <v-list-item class="d-flex align-center pl-4 sidebar-item"
+          v-for="(link , i ) in links" :key="i" router 
+          @click.stop="mini = !mini"
+         :to="link.route"
+        >
+         <!-- sidebar icons -->
+         <div :id="link.icon">
+           <v-icon class="mr-7 py-4" :color="link.color" v-text="link.icon" size="25"></v-icon>
+         </div>
+         <v-tooltip content-class="arrow-left"
+         nudge-right="1" right color="#ffe7b8"
+         >
+         <span class="black--text"> {{link.text}} </span>
+         </v-tooltip>
+         <!--sidebar text -->
+         <div>
+           <span class="text-capitalize body-2 font-weight-bold">
+              {{link.text}}         
+           </span>
+         </div>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </v-card>
@@ -38,11 +45,13 @@
   export default {
     data: () => ({
       drawer: true,
-      items: [
-        { title: 'Home', icon: 'mdi-home-city' },
-        { title: 'My Account', icon: 'mdi-account' },
-        { title: 'Users', icon: 'mdi-account-group-outline' },
-      ],
+      titleName:"",
+     links: [
+          { text: 'Dashboard', icon: 'mdi-view-dashboard', route:'/dashboard' ,tabName : "Dashboard" , color:"black" },
+          { text: 'Orders', icon: 'mdi-folder', route:'/orders' ,tabName : "Orders" , color:"black" },
+           { text: 'Sales', icon: 'mdi-folder', route:'/sales' ,tabName : "Sales" , color:"black" },
+            { text: 'Settings', icon: 'mdi-folder', route:'/settings' ,tabName : "Settings" , color:"black" },
+        ],
       mini: false,
     }),
     components:{},
@@ -50,7 +59,9 @@
      
     },
     methods:{
-     
+        getColor(link,titleName,index){
+        titleName == link.tabName ? (this.links[index].color = '#215549') : (this.links[index].color = 'black' );
+      },
     }
   }
 </script>
