@@ -66,6 +66,25 @@ const router = new VueRouter({
       component: require("@/views/Pages/sales").default
     },
     {
+      path: "/purchases",
+      name: "Purchases",
+      meta: { layout: "app" , title:"Purchases" },
+      component: require("@/views/Pages/purchases").default
+    },
+    {
+      path: "/customers",
+      name: "Customers",
+      meta: { layout: "app" , title:"Customers" },
+      component: require("@/views/Pages/customers").default
+    },
+    {
+      path: "/reconcilation",
+      name: "Reconcilation",
+      meta: { layout: "app" , title:"Reconcilation" },
+      component: require("@/views/Pages/reconcilation").default
+    },
+    
+    {
       path: "/settings",
       name: "Settings",
       meta: { layout: "app" , title:"Settings" },
