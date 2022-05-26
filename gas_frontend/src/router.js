@@ -91,6 +91,12 @@ const router = new VueRouter({
       component: require("./components/forms/sale-receipt-form.vue").default
     },
 
+    {
+      path: "/purchase-receipt-form",
+      name: "purchase-receipt-form",
+      meta: { layout: "app" , title:"purchase-receipt-form" },
+      component: require("./components/forms/purchase-receipt-form.vue").default
+    },
     
     {
       path: "/settings",
