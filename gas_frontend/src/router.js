@@ -85,6 +85,14 @@ const router = new VueRouter({
     },
     
     {
+      path: "/sale-receipt-form",
+      name: "sale-receipt-form",
+      meta: { layout: "app" , title:"sale-receipt-form" },
+      component: require("./components/forms/sale-receipt-form.vue").default
+    },
+
+    
+    {
       path: "/settings",
       name: "Settings",
       meta: { layout: "app" , title:"Settings" },
