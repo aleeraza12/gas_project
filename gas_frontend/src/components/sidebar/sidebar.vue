@@ -68,21 +68,21 @@ export default {
       },
       {
         text: "Orders",
-        icon: "mdi-folder",
+        icon: "mdi-chart-line",
         route: "/orders",
         tabName: "Orders",
         color: "black",
       },
       {
         text: "Sales",
-        icon: "mdi-folder",
+        icon: "mdi-cart-outline",
         route: "/sales",
         tabName: "Sales",
         color: "black",
       },
       {
         text: "Purchases",
-        icon: "mdi-folder",
+        icon: "mdi-shopping",
         route: "/purchases",
         tabName: "Purchases",
         color: "black",
@@ -94,16 +94,30 @@ export default {
         tabName: "Customers",
         color: "black",
       },
+       {
+        text: "Users",
+        icon: "mdi-account-outline",
+        route: "/users",
+        tabName: "Users",
+        color: "black",
+      },
+       {
+        text: "Wallet",
+        icon: "mdi-wallet",
+        route: "/wallet",
+        tabName: "Wallet",
+        color: "black",
+      },
       {
         text: "Reconcilation",
-        icon: "mdi-folder",
+        icon: "mdi-receipt",
         route: "/reconcilation",
         tabName: "Reconcilation",
         color: "black",
       },
       {
         text: "Settings",
-        icon: "mdi-folder",
+        icon: "mdi-cog",
         route: "/settings",
         tabName: "Settings",
         color: "black",
@@ -145,7 +159,7 @@ export default {
 </script>
 <style scoped>
 .sidebar-card {
-  height: 600px;
+  height: 660px;
   border-radius: 0px !important;
 }
 .navaigation-side {
