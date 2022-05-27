@@ -108,7 +108,6 @@ export default {
       required: (value) => !!value || "Required.",
     },
     email: null,
-    password: null,
   }),
   components: {},
   created() {},
@@ -151,7 +150,7 @@ export default {
           if (response.data.status == 200) {
             this.snackbarColor = "primary";
             this.snackbarMsg = "Login successfully";
-           this.loading = false;
+            this.loading = false;
             localStorage.setItem("token", response.data.data.token);
             localStorage.setItem(
               "user",
