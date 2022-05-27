@@ -56,7 +56,7 @@ class UserController extends Controller
                 'designation'=>  $request->designation,
                 'permissions'=>  $request->permissions,
                 'user_type_id'=>  $request->user_type_id,
-               
+                'company_id'=>  $request->company_id,
             ]
         );
         return response()->json(['response' => $user, 'status' => 201]);

@@ -19,9 +19,13 @@ class Customer extends Model
         'state',
         'customer_type_id',
         'address',
+        'company_id'
     ];
     public function customer_type(){
         return $this->hasOne(CustomerType::class);
+    }
+    public function company(){
+        return $this->hasOne(Company::class);
     }
 
 

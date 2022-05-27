@@ -24,8 +24,10 @@ class CreateCustomersTable extends Migration
             $table->longText('city');
             $table->longText('state');
             $table->integer('customer_type_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->timestamps();
             $table->foreign('customer_type_id')->references('id')->on('customer_types');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 
@@ -39,3 +41,4 @@ class CreateCustomersTable extends Migration
         Schema::dropIfExists('customers');
     }
 }
+

@@ -1,96 +1,204 @@
 <template>
-<div class="main-container">
-  <v-card class="elevation-0">
-    <v-card-text class="pa-0">
-      <div class="d-flex">
-        <div class="grey-side">
-          <div class="inner-box">
-             
+  <div class="main-container">
+    <v-card class="elevation-0">
+      <v-card-text class="pa-0">
+        <div class="d-flex">
+          <div class="grey-side">
+            <div class="inner-box"></div>
+            <div class="content-welcome d-flex align-start justify-start">
+              Welcome Back!
+            </div>
+            <div class="sub-content-welcome d-flex align-start justify-start">
+              Sign in to access your dashboard
+            </div>
           </div>
-          <div class="content-welcome d-flex align-start justify-start">Welcome Back! </div>
-          <div class="sub-content-welcome d-flex align-start justify-start">Sign in to access your dashboard</div>
-        </div>
-        <div class="login-screen">
-          <div class="sign-in-content d-flex align-start justify-start">Sign In</div>
-          <div class="sign-in-subcontent d-flex align-start justify-start">Enter your username and password</div>
-          <v-form v-model="valid">
-          <div>
-            <v-text-field
-            label="Username"
-            outlined
-            dense
-            placeholder="Username"
-            hide-details
-            class="username-feild mt-6 ml-16"
-            v-model="username"
-          ></v-text-field>
-          </div>
-           <div>
-            <v-text-field
-            outlined
-            :append-icon="show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
-            :type="show ? 'text' : 'password'"
-            @click:append="show = !show"
-            label="Password"
-            dense
-            placeholder="Password"
-            hide-details
-            class="password-feild mt-3 ml-16"
-            v-model="password"
-          ></v-text-field>
-          </div>
-          <div class="forget-passowrd  mt-3" @click="forgetPassword()">Forgot Password?</div>
-          <div class="mt-10 ml-16"> 
-            <v-btn block large class="elevation-0 btn-login" @click="login()" dense >
+          <div class="login-screen">
+            <div class="sign-in-content d-flex align-start justify-start">
               Sign In
-            </v-btn>
+            </div>
+            <div class="sign-in-subcontent d-flex align-start justify-start">
+              Enter your username and password
+            </div>
+            <v-form v-model="valid">
+              <div>
+                <v-text-field
+                  label="Username"
+                  outlined
+                  dense
+                  placeholder="email"
+                  hide-details
+                  :rules="emailRules"
+                  class="username-feild mt-6 ml-16"
+                  v-model="email"
+                ></v-text-field>
+              </div>
+              <div>
+                <v-text-field
+                  outlined
+                  :append-icon="
+                    show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
+                  "
+                  :type="show ? 'text' : 'password'"
+                  @click:append="show = !show"
+                  :rules="[rules.required]"
+                  label="Password"
+                  dense
+                  placeholder="Password"
+                  hide-details
+                  class="password-feild mt-3 ml-16"
+                  v-model="password"
+                ></v-text-field>
+              </div>
+              <div class="forget-passowrd mt-3" @click="forgetPassword()">
+                Forgot Password?
+              </div>
+              <div class="mt-10 ml-16">
+                <v-btn
+                  block
+                  large
+                  class="elevation-0 btn-login"
+                  @click="login()"
+                  :loading="loading"
+                  :disabled="!valid"
+                  dense
+                >
+                  Sign In
+                </v-btn>
+              </div>
+            </v-form>
           </div>
-          </v-form>
         </div>
-      </div>
-    </v-card-text>
-  </v-card>
-</div>
+      </v-card-text>
+    </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snackbarMsg }}
+    </v-snackbar>
+  </div>
 </template>
 
 <script>
-
-  export default {
-    data: () => ({
-      valid: false,
-      show:false,
-     username:"",
-     password:"",
-    }),
-    components:{},
-    created(){
-     
+import axios from "axios";
+export default {
+  data: () => ({
+    valid: false,
+    show: false,
+    username: "",
+    password: "",
+    snackbarMsg: "",
+    snackbar: false,
+    snackbarColor: "",
+    loading: false,
+    emailRules: [
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+/.test(v) || "E-mail must be valid",
+    ],
+    rules: {
+      required: (value) => !!value || "Required.",
     },
-    methods:{
-      login(){
-          this.$router.push({
-            name:"Dashboard"
-          })
-      },
-      forgetPassword(){
-        this.$router.push({
-          name:"PasswordRecover"
+    email: null,
+    password: null,
+  }),
+  components: {},
+  created() {},
+  computed: {
+    getIcon() {
+      return this.snackbarColor == "primary"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
+    //...mapGetters(["getAdminInfo"]),
+  },
+  watch: {
+    email() {
+      this.email && this.password
+        ? (this.btnDisable = false)
+        : (this.btnDisable = true);
+    },
+    password() {
+      this.email && this.password
+        ? (this.btnDisable = false)
+        : (this.btnDisable = true);
+    },
+  },
+  mounted() {
+    console.log(this.$store.state.url, "urls");
+  },
+  methods: {
+    login() {
+      this.loading = true;
+      let url = this.$store.state.url;
+      let body = {
+        email: this.email,
+        password: this.password,
+      };
+      axios
+        .post(url + "login", body)
+        .then((response) => {
+          this.snackbar = true;
+          console.log("response user", response.data.status);
+          if (response.data.status == 200) {
+            this.snackbarColor = "primary";
+            this.snackbarMsg = "Login successfully";
+           this.loading = false;
+            localStorage.setItem("token", response.data.data.token);
+            localStorage.setItem(
+              "user",
+              JSON.stringify(response.data.data.user)
+            );
+            //this.$store.dispatch("getOrders", response.data.data.user.id);
+            let vm = this;
+            setTimeout(function () {
+              vm.$router.push("/dashboard");
+            }, 1200);
+          } else if (response.data.status == 400) {
+            this.loading = false;
+            this.snackbarColor = "red";
+            this.snackbarMsg = response.data.data;
+          }
         })
-      }
-    }
-  }
+        .catch(() => {
+          this.snackbar = true;
+          this.snackbarColor = "red";
+          this.snackbarMsg = "Something went wrong";
+          this.loading = false;
+        });
+    },
+
+    //login() {
+    //  this.$router.push({
+    //    name: "Dashboard",
+    //  });
+    //},
+    forgetPassword() {
+      this.$router.push({
+        name: "PasswordRecover",
+      });
+    },
+  },
+};
 </script>
 <style scoped>
-.grey-side{
+.grey-side {
   height: 600px;
   width: 746px;
   left: 0px;
   top: 0px;
   border-radius: 0px;
-  background-color: #EBEBEA;
-
+  background-color: #ebebea;
 }
-.login-screen{
+.login-screen {
   height: 600px;
   width: 746px;
   left: 0px;
@@ -98,62 +206,62 @@
   border-radius: 0px;
   background-color: #fff;
 }
-.inner-box{
+.inner-box {
   height: 300px;
   width: 300px;
-  background-color:  #D2D2D2;
-  margin-top:6rem;
-  margin-left:10rem
+  background-color: #d2d2d2;
+  margin-top: 6rem;
+  margin-left: 10rem;
 }
-.content-welcome{
+.content-welcome {
   font-weight: 600;
-  font-size:18px;
-  color:black;
-   margin-top:2rem;
-  margin-left:15rem
+  font-size: 18px;
+  color: black;
+  margin-top: 2rem;
+  margin-left: 15rem;
 }
-.sub-content-welcome{
+.sub-content-welcome {
   font-weight: 300;
-  font-size:14px;
-  color:black;
-  margin-top:0.5rem;
-  margin-left:13rem
+  font-size: 14px;
+  color: black;
+  margin-top: 0.5rem;
+  margin-left: 13rem;
 }
-.sign-in-content{
- font-weight: 600;
- font-size:18px;
- color:black;
- margin-top:6rem;
- margin-left: 4.5rem;
+.sign-in-content {
+  font-weight: 600;
+  font-size: 18px;
+  color: black;
+  margin-top: 6rem;
+  margin-left: 4.5rem;
 }
 .sign-in-subcontent {
- font-weight: 400;
- font-size:14px;
- color:black;
- margin-top:1rem;
- margin-left: 4.5rem;
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  margin-top: 1rem;
+  margin-left: 4.5rem;
 }
-.username-feild{
+.username-feild {
   width: 400px;
-  border-color: #D6D6D6;
+  border-color: #d6d6d6;
   border-radius: 8px;
 }
-.password-feild{
+.password-feild {
   width: 400px;
-  border-color: #D6D6D6;
+  border-color: #d6d6d6;
   border-radius: 8px;
 }
-.forget-passowrd{
+.forget-passowrd {
   font-size: 12px;
-  color:black;
+  color: black;
   font-weight: 500;
-  margin-left:13rem;
-  cursor:pointer
+  margin-left: 13rem;
+  cursor: pointer;
 }
 .btn-login {
   background-color: #464646 !important;
-  color:#fff;
-  min-width:400px !important;
+  color: #fff;
+  min-width: 400px !important;
   border-radius: 8px !important;
   cursor: pointer;
 }
