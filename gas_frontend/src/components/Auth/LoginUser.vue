@@ -49,9 +49,15 @@
                   v-model="password"
                 ></v-text-field>
               </div>
-              <div class="forget-passowrd mt-3" @click="forgetPassword()">
-                Forgot Password?
+              <div class="d-flex mt-3">
+                <div class="regster" @click="$router.push('signup')">
+                  Register
+                </div>
+                <div @click="forgetPassword()" class="forget-passowrd">
+                  Forgot Password?
+                </div>
               </div>
+              <div class="forget-passowrd mt-3"></div>
               <div class="mt-10 ml-16">
                 <v-btn
                   block
@@ -254,7 +260,14 @@ export default {
   font-size: 12px;
   color: black;
   font-weight: 500;
-  margin-left: 13rem;
+  margin-left: 16rem;
+  cursor: pointer;
+}
+.regster {
+  font-size: 12px;
+  color: black;
+  font-weight: 500;
+  margin-left: 4rem;
   cursor: pointer;
 }
 .btn-login {

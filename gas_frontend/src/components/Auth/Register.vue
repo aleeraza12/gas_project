@@ -150,6 +150,11 @@
                   v-model="confirm_password"
                 ></v-text-field>
               </div>
+              <div class="mt-3">
+                <span class="forget-password" @click="$router.push('login')"
+                  >Already have an account? Login</span
+                >
+              </div>
               <div class="mt-5 ml-16">
                 <v-btn
                   block
@@ -302,6 +307,13 @@ export default {
   background-color: #d2d2d2;
   margin-top: 6rem;
   margin-left: 10rem;
+}
+.forget-password {
+  font-size: 12px;
+  color: black;
+  font-weight: 500;
+  margin-left: 6rem;
+  cursor: pointer;
 }
 .content-welcome {
   font-weight: 600;
