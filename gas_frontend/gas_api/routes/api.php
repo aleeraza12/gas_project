@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DepoController;
 use App\Http\Controllers\General;
@@ -64,7 +65,7 @@ Route::middleware('token')->group(function () {
     //User CRUD routes
     Route::prefix('user')->group(function () {
         Route::controller(UserController::class)->group(function () {
-            Route::post('create', 'create_user')->withoutMiddleware('token');;
+            Route::post('create', 'create_user')->withoutMiddleware('token');
             Route::post('delete', 'delete_user');
             Route::post('read', 'read_user');
             Route::post('read_all', 'read_all_user');
@@ -119,6 +120,16 @@ Route::middleware('token')->group(function () {
             Route::post('delete', 'delete_purchase');
             Route::post('read', 'read_purchase');
             Route::post('read_all', 'read_all_purchases');
+        });
+    });
+
+     //Company route
+     Route::prefix('company')->group(function () {
+        Route::controller(CompanyController::class)->group(function () {
+            Route::post('create', 'create_company')->withoutMiddleware('token');
+            Route::post('delete', 'delete_company');
+            Route::post('read', 'read_company');
+            Route::post('read_all', 'read_all_companies');
         });
     });
 });

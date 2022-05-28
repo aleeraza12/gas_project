@@ -18,10 +18,15 @@ class User extends Model
         'status',
         'last_login_at',
         'permissions',
-        'user_type_id'
+        'user_type_id',
+        'company_id'
     ];
     public function user_type(){
         return $this->hasOne(UserType::class);
+    }
+
+    public function company(){
+        return $this->hasOne(Company::class);
     }
 
     
@@ -34,5 +39,3 @@ class User extends Model
         return unserialize($value);
     }
 }
-
-

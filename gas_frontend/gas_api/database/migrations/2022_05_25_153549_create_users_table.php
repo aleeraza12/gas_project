@@ -24,9 +24,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_login_at')->nullable();
             $table->longText('permissions')->nullable();
             $table->integer('user_type_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->timestamps();
-            $table->foreign('user_type_id')->references('id')->on('user_types')->onDelete('cascade');;
-
+            $table->foreign('user_type_id')->references('id')->on('user_types')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

@@ -36,7 +36,7 @@ class Token extends Model
         $token = new Token();
         $token->token = $random_token;
         $token->expires_at = $token->expires_at = Carbon::create(Carbon::now()->addHours(5)->format('Y-m-d\TH:i:sO'));
-        $token->user_id = $id;
+        $token->company_id = $id;
         $token->save();
         return [$token->token, 201];
     }

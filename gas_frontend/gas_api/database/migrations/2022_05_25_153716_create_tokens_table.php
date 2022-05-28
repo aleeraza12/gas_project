@@ -16,11 +16,11 @@ class CreateTokensTable extends Migration
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
             $table->string('token');
-            $table->integer('user_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')
-            ->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')
+                ->onDelete('cascade');
         });
     }
 

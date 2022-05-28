@@ -54,6 +54,7 @@ class CustomerController extends Controller
                 'city'=>  $request->city,
                 'state'=>  $request->state,
                 'customer_type_id'=>  $request->customer_type_id,
+                'company_id'=>  $request->company_id,
                 'address'=>  $request->address,
             ]
         );
