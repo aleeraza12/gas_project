@@ -1,6 +1,6 @@
 <template>
 <div class="main-container">
-  <v-card class="dashboard-card pa-0 elevation-0">
+  <v-card class="pa-0 elevation-0">
     <v-card-text>
       <div class="d-flex top-bar pt-2">
         <div class="ml-2">
@@ -55,7 +55,7 @@
           class="elevation-1"
             hide-default-footer
             hide-default-header
-          height="230px"
+           height="calc(100vh-500px)"
         >
           <template v-slot:[`body.prepend`]= "{headers}">
            <th v-for="(header , i) in headers" :key="i" class="table-head">

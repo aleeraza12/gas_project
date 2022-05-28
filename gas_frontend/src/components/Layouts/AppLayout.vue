@@ -3,7 +3,7 @@
       <div>
         <Sidebar />
       </div>
-      <div class="" style="width:100vw">
+      <div class="mx-16 mt-5" style="width:100%">
         <router-view></router-view>
     </div>
     </div>
