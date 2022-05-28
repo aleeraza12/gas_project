@@ -78,6 +78,12 @@ const router = new VueRouter({
       component: require("@/views/Pages/customers").default
     },
     {
+      path: "/users",
+      name: "Users",
+      meta: { layout: "app" , title:"Users" },
+      component: require("@/views/Pages/users").default
+    },
+    {
       path: "/reconcilation",
       name: "Reconcilation",
       meta: { layout: "app" , title:"Reconcilation" },
