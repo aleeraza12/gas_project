@@ -15,7 +15,7 @@
                         dense
                         hide-details
                         class="mt-1"
-                        style="width:200px"
+                        style="width:300px"
                     ></v-text-field>
                 </div>
                 <div>
@@ -26,13 +26,120 @@
                         dense
                         hide-details
                         class="mt-1"
-                        style="width:200px"
+                        style="width:300px"
                     ></v-text-field>
                 </div>
+                 <div>
+                    <v-text-field
+                        v-model="password"
+                        label="password"
+                        outlined
+                        dense
+                        hide-details
+                        class="mt-1"
+                        style="width:300px"
+                    ></v-text-field>
+                </div>
+                 <div>
+                    <v-text-field
+                        v-model="desgination"
+                        label="Desgination"
+                        outlined
+                        dense
+                        hide-details
+                        class="mt-1"
+                        style="width:300px"
+                    ></v-text-field>
+                </div>
+                <div class="mt-3" style="width:300px">
+                 <v-select
+                        :items="status"
+                        label="Select Status"
+                        outlined
+                        hide-details
+                    >
+                    </v-select>
+                </div>
+                 <div class="mt-3" style="width:300px">
+                 <v-select
+                        :items="status"
+                        label="User Type"
+                        outlined
+                        hide-details
+                    >
+                    </v-select>
+                </div>
+                <div class="d-flex justify-start align-start mt-3"><b>Access Granted</b></div>
+                <div class="d-flex fonts">
+                   <v-radio-group
+      v-model="row"
+      row
+    >
+      <v-radio
+        label="Dashboard"
+        value="radio-1"
+      ></v-radio>
+      <v-radio
+        label="Sales"
+        value="radio-2"
+      ></v-radio>
+       <v-radio
+        label="Orders"
+        value="radio-3"
+      ></v-radio>
+       <v-radio
+        label="Purchases"
+        value="radio-4"
+      ></v-radio>
+    </v-radio-group>
+                </div>
+                <div class="d-flex fonts">
+                   <v-radio-group
+      v-model="row"
+      row
+    >
+      <v-radio
+        label="Customers"
+        value="radio-1"
+      ></v-radio>
+      <v-radio
+        label="Users"
+        value="radio-2"
+      ></v-radio>
+       <v-radio
+        label="Wallet"
+        value="radio-3"
+      ></v-radio>
+       <v-radio
+        label="Reconilcation"
+        value="radio-4"
+      ></v-radio>
+    </v-radio-group>
+                </div>
+                <div class="mt-5  mb-5 ml-16">
+                <v-btn
+                  block
+                  large
+                  class="elevation-0 btn-create"
+                  :loading="loading"
+                  :disabled="!valid"
+                  @click="createAccount()"
+                  dense
+                >
+                 Save
+                </v-btn>
+              </div>
             </v-form>
         </div>
     </div>
 </template>
+<script>
+  export default {
+    data: () => ({
+      status: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+    }),
+  }
+</script>
 <style scoped>
 .fonts{
     font-size: 12px;
