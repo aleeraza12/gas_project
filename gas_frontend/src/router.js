@@ -146,6 +146,13 @@ const router = new VueRouter({
       component: require("./components/users/no-user.vue").default
     },
     {
+      path: "/new-user",
+      name: "new-user",
+      meta: { layout: "app" , title:"new-user" },
+      component: require("./components/users/addNewUser.vue").default
+    },
+    
+    {
       path: "/settings",
       name: "Settings",
       meta: { layout: "app", title: "Settings", requireAuth: true },
