@@ -3,9 +3,10 @@
         <div class="d-flex align-start justify-start">
            <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
         </div>
-        <div class="d-flex align-center justify-center mt-3">
+        <div class="d-flex align-center justify-center mt-16">
              <div>
-                 <img height="300px" width="300px" src="../../assets/images/no-data.png"/>
+                 <img height="150px" width="150px" src="../../assets/images/bg.png" style="position:absolute"/>
+                 <img height="150px" width="150px" src="../../assets/images/no-data.png" style="position: relative;"/>
                  <div class="fonts"> Sorry, you have not yet created any orders <br>
 Kindly create orders to begin</div>
 <div class="mt-5 ml-16">
