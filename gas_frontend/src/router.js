@@ -122,6 +122,12 @@ const router = new VueRouter({
       component: require("./components/sales/sales-details.vue").default
     },
     {
+      path: "/purchase-details",
+      name: "purchase-details",
+      meta: { layout: "app" , title:"purchase-details" },
+      component: require("./components/purchases/purchase-details").default
+    },
+    {
       path: "/settings",
       name: "Settings",
       meta: { layout: "app", title: "Settings", requireAuth: true },
