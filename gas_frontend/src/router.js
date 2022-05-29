@@ -128,6 +128,18 @@ const router = new VueRouter({
       component: require("./components/purchases/purchase-details").default
     },
     {
+      path: "/no-sale",
+      name: "no-sales",
+      meta: { layout: "app" , title:"no-sales" },
+      component: require("./components/sales/no-sales.vue").default
+    },
+    {
+      path: "/no-order",
+      name: "no-orders",
+      meta: { layout: "app" , title:"no-orders" },
+      component: require("./components/orders/no-order").default
+    },
+    {
       path: "/settings",
       name: "Settings",
       meta: { layout: "app", title: "Settings", requireAuth: true },
