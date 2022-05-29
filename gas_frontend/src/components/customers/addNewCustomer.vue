@@ -4,13 +4,13 @@
            <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
         </div>
         <div class="mt-3">
-            <div class="d-flex align-start justify-start"> <b>Add New User</b></div>
-            <div  class="d-flex align-start justify-start fonts mt-1">Enter the following details to create a user profile</div>
+            <div class="d-flex align-start justify-start"> <b>New Customer</b></div>
+            <div  class="d-flex align-start justify-start fonts mt-1">Enter the following details to create a customer profile</div>
             <v-form v-model="valid" class="mt-5">
                 <div>
                     <v-text-field
-                        v-model="created_by"
-                        label="Created By"
+                        v-model="name"
+                        label="Enter Name"
                         outlined
                         dense
                         hide-details
@@ -20,8 +20,8 @@
                 </div>
                 <div>
                     <v-text-field
-                        v-model="username"
-                        label="User Name"
+                        v-model="phone_number"
+                        label="Phone Number"
                         outlined
                         dense
                         hide-details
@@ -31,8 +31,8 @@
                 </div>
                  <div>
                     <v-text-field
-                        v-model="password"
-                        label="password"
+                        v-model="email"
+                        label="Email Address"
                         outlined
                         dense
                         hide-details
@@ -42,8 +42,8 @@
                 </div>
                  <div>
                     <v-text-field
-                        v-model="desgination"
-                        label="Desgination"
+                        v-model="street"
+                        label="Enter Address"
                         outlined
                         dense
                         hide-details
@@ -51,17 +51,31 @@
                         style="width:300px"
                     ></v-text-field>
                 </div>
-                <div class="mt-3" style="width:300px">
-                 <v-select
+                 <div class="d-flex" style="width:300px">
+                 <div>
+                        <v-text-field
+                            label="City"
+                            outlined
+                            dense
+                            placeholder="City"
+                            hide-details
+                            class="city-feild mt-2 mr-3"
+                            v-model="state"
+                        ></v-text-field>
+                   </div>
+                   <div class="mt-2">
+                        <v-select
                         :items="status"
                         label="Select Status"
                         outlined
-                        dense
-                        small
+                      small
+                      dense
                         hide-details
                     >
                     </v-select>
-                </div>
+                   </div>
+               </div>
+               
                  <div class="mt-3" style="width:300px">
                  <v-select
                         :items="status"
@@ -73,54 +87,7 @@
                     >
                     </v-select>
                 </div>
-                <div class="d-flex justify-start align-start mt-3"><b>Access Granted</b></div>
-                <div class="d-flex fonts">
-                   <v-radio-group
-      v-model="row"
-      row
-    >
-      <v-radio
-        label="Dashboard"
-        value="radio-1"
-      ></v-radio>
-      <v-radio
-        label="Sales"
-        value="radio-2"
-      ></v-radio>
-       <v-radio
-        label="Orders"
-        value="radio-3"
-      ></v-radio>
-       <v-radio
-        label="Purchases"
-        value="radio-4"
-      ></v-radio>
-    </v-radio-group>
-                </div>
-                <div class="d-flex fonts">
-                   <v-radio-group
-      v-model="row"
-      row
-    >
-      <v-radio
-        label="Customers"
-        value="radio-1"
-      ></v-radio>
-      <v-radio
-        label="Users"
-        value="radio-2"
-      ></v-radio>
-       <v-radio
-        label="Wallet"
-        value="radio-3"
-      ></v-radio>
-       <v-radio
-        label="Reconilcation"
-        value="radio-4"
-      ></v-radio>
-    </v-radio-group>
-                </div>
-                <div class="mt-5  mb-5 ml-16">
+                <div class="mt-5  mb-5">
                 <v-btn
                   block
                   large
