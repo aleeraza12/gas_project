@@ -128,6 +128,12 @@ const router = new VueRouter({
       component: require("./components/purchases/purchase-details").default
     },
     {
+      path: "/order-details",
+      name: "order-details",
+      meta: { layout: "app" , title:"order-details" },
+      component: require("./components/orders/order-details.vue").default
+    },
+    {
       path: "/no-sale",
       name: "no-sales",
       meta: { layout: "app" , title:"no-sales" },
