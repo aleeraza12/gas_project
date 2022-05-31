@@ -9,5 +9,6 @@ class Purchase extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date','receipt_number','receipt_attachment_path','company_name','company_phone_name','driver_name','gas_quantity','amount','unit_price','user_id','payment_status_id','status'];
+    protected $fillable = ['date', 'receipt_number', 'receipt_attachment_path', 'company_name', 'company_phone_number', 'driver_name', 'gas_quantity', 'amount', 'unit_price', 'company_id'];
+
 }

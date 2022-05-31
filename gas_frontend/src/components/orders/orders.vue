@@ -1,7 +1,5 @@
 <template>
 <div class="main-container">
-  <v-card class="pa-0 elevation-0">
-    <v-card-text>
       <div class="d-flex top-bar pt-2">
         <div class="ml-2">
           <v-text-field
@@ -48,7 +46,9 @@
        <div class="mr-3"><b>Date Picker</b></div>
       </div>
       <div class="mt-3">
-        <v-data-table
+        <v-card  class="elevation-0">
+          <v-card-text>
+ <v-data-table
           :headers="headers"
           :items="desserts"
           :items-per-page="5"
@@ -66,9 +66,10 @@
           
        </template>
         </v-data-table>
+          </v-card-text>
+        </v-card>
+       
       </div>
-    </v-card-text>
-  </v-card>
 </div>
 </template>
 

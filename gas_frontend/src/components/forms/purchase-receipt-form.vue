@@ -210,84 +210,112 @@ export default {
   methods: {
     savePurchase() {
       this.loading = true;
-      let file_size = document.querySelector("input[type=file]").files[0].size;
-      this.validFileSize = true;
-      let fileBase64;
-      if (file_size > 2097152) {
-        this.validFileSize = false;
-      }
-      if (!this.validFileSize) {
-        this.snackbar = true;
-        this.snackbarColor = "red";
-        this.snacbarMessage = " File size should not be greater then 2 MB";
-        this.loading = false;
-        this.files = [];
-      } else {
-        let that = this;
-        const file = document.querySelector("input[type=file]").files[0];
-        const reader = new FileReader();
-        reader.addEventListener(
-          "load",
-          function () {
-            fileBase64 = reader.result; //extract file type
-            let i = file.name.lastIndexOf(".");
-            let fileType;
-            if (i > 0) {
-              fileType = file.name.substring(i + 1);
-            }
-            if (fileType == "jpg") {
-              fileType = "jpeg";
-            }
-            that.decodedBase64 = fileBase64.replace(
-              "data:image/" + fileType + ";base64,",
-              ""
-            );
-            console.log("base64", that.decodedBase64);
-            //that.array_to_push.push({
-            //  base64: that.decodedBase64,
-            //  extension: fileType,
-            //});
-            event.target.value = null;
-            //let user_id = JSON.parse(localStorage.getItem("user"));
-            let requestBody = {
-              date: that.date,
-              receipt_number: that.receipt_number,
-              company_name: that.company_name,
-              company_phone_number: that.company_phone_number,
-              driver_name: that.driver_name,
-              gas_quantity: that.gas_quantity,
-              amount: that.amount,
-              unit_price: that.unit_price,
-              status: that.status,
-              recepient_name: that.recepient_name,
-              //payment_status_id: this.payment_status_id,
-              attachment: that.decodedBase64,
-            };
-            console.log("requsetbody", requestBody, that.decodedBase64);
-            RequestService.post("purchase/create", requestBody)
-              .then((res) => {
-                console.log("status in purchase", res.data.status);
-                if (res.data.status == 200) {
-                  console.log("this is inside");
-                  that.snackbar = true;
-                  that.snackbarColor = "success";
-                  that.snacbarMessage = "Images uploaded successfully";
-                  that.loading = false;
-                }
-              })
-              .catch(() => {
-                //if (err.response) {
-                that.snackbar = true;
-                that.snackbarColor = "red";
-                that.snacbarMessage = " Something went wrong";
-                //}
-              });
-          },
-          false
-        );
-        if (file) {
-          reader.readAsDataURL(file);
+      if (this.files.length > 0) {
+        console.log("nsde f");
+        let file_size =
+          document.querySelector("input[type=file]").files[0].size;
+        this.validFileSize = true;
+        let fileBase64;
+        if (file_size > 2097152) {
+          this.validFileSize = false;
         }
+        if (!this.validFileSize) {
+          this.snackbar = true;
+          this.snackbarColor = "red";
+          this.snacbarMessage = " File size should not be greater then 2 MB";
+          this.loading = false;
+          this.files = [];
+        } else {
+          let that = this;
+          const file = document.querySelector("input[type=file]").files[0];
+          const reader = new FileReader();
+          reader.addEventListener(
+            "load",
+            function () {
+              fileBase64 = reader.result; //extract file type
+              let i = file.name.lastIndexOf(".");
+              let fileType;
+              if (i > 0) {
+                fileType = file.name.substring(i + 1);
+              }
+              if (fileType == "jpg") {
+                fileType = "jpeg";
+              }
+              that.decodedBase64 = fileBase64.replace(
+                "data:image/" + fileType + ";base64,",
+                ""
+              );
+              event.target.value = null;
+              let requestBody = {
+                date: that.date,
+                receipt_number: that.receipt_number,
+                company_name: that.company_name,
+                company_phone_number: that.company_phone_number,
+                driver_name: that.driver_name,
+                gas_quantity: that.gas_quantity,
+                amount: that.amount,
+                unit_price: that.unit_price,
+                recepient_name: that.recepient_name,
+                attachment: that.decodedBase64,
+              };
+              console.log("requsetbody", requestBody, that.decodedBase64);
+              RequestService.post("purchase/create", requestBody)
+                .then((res) => {
+                  console.log("status in purchase", res.data.status);
+                  if (res.data.status == 201) {
+                    console.log("this is inside");
+                    that.snackbar = true;
+                    that.snackbarColor = "success";
+                    that.snacbarMessage =
+                      "Your purchase(s) uploaded successfully";
+                    that.loading = false;
+                  }
+                })
+                .catch(() => {
+                  //if (err.response) {
+                  that.snackbar = true;
+                  that.snackbarColor = "red";
+                  that.snacbarMessage = " Something went wrong";
+                  //}
+                });
+            },
+            false
+          );
+          if (file) {
+            reader.readAsDataURL(file);
+          }
+        }
+      } else {
+        console.log("nsde else");
+        let requestBody = {
+          date: this.date,
+          receipt_number: this.receipt_number,
+          company_name: this.company_name,
+          company_phone_number: this.company_phone_number,
+          driver_name: this.driver_name,
+          gas_quantity: this.gas_quantity,
+          amount: this.amount,
+          unit_price: this.unit_price,
+          recepient_name: this.recepient_name,
+        };
+        RequestService.post("purchase/create", requestBody)
+          .then((res) => {
+            console.log("status in purchase", res.data.status);
+            if (res.data.status == 201) {
+              console.log("this is inside");
+              this.snackbar = true;
+              this.snackbarColor = "success";
+              this.snacbarMessage = "Your purchase(s) uploaded successfully";
+              this.loading = false;
+            }
+          })
+          .catch(() => {
+            //if (err.response) {
+            this.snackbar = true;
+            this.snackbarColor = "red";
+            this.snacbarMessage = " Something went wrong";
+            //}
+          });
       }
     },
   },
@@ -295,7 +323,7 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  background-color: black !important;
+  background-color: #464646 !important;
   color: #fff;
   min-width: 230px !important;
   border-radius: 8px !important;

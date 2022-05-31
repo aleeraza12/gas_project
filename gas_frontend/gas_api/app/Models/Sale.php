@@ -9,11 +9,6 @@ class Sale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'gas_quantity', 'transaction_id', 'amount', 'customer_id', 'user_id', 'payment_mode_id', 'payment_status_id','discount_code'
+        'gas_quantity', 'total_amount',  'discount_code', 'customer_name', 'customer_type', 'payment_mode', 'status', 'company_id', 'price', 'customer_phone_number'
     ];
-
-    public function transaction(){
-        return $this->hasOne(Transaction::class);
-    }
-    
 }

@@ -3,9 +3,12 @@
       <div>
         <Sidebar />
       </div>
-      <div class="mx-16 mt-5" style="width:100%">
-        <router-view></router-view>
-    </div>
+       <v-main>
+         <v-container fluid>
+       <router-view></router-view>
+      </v-container>
+</v-main>
+
     </div>
   
 </template>

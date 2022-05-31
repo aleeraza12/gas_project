@@ -49,13 +49,13 @@ class CustomerController extends Controller
             [
                 'name' => $request->name,
                 'email' =>  $request->email,
-                'phone_number'=>  $request->phone_numer,
-                'password'=> Hash::make($request->password),
-                'city'=>  $request->city,
-                'state'=>  $request->state,
-                'customer_type_id'=>  $request->customer_type_id,
-                'company_id'=>  $request->company_id,
-                'address'=>  $request->address,
+                'phone_number' =>  $request->phone_numer,
+                'city' =>  $request->city,
+                'state' =>  $request->state,
+                //'customer_type_id'=>  $request->customer_type_id,
+                'customer_type' =>  $request->customer_type,
+                'company_id' =>  $request->user_id,
+                'address' =>  $request->address,
             ]
         );
         return response()->json(['response' => $customer, 'status' => 201]);
@@ -67,17 +67,16 @@ class CustomerController extends Controller
         return response()->json(['response' => "Customer deleted successfully", 'status' => 200]);
     }
 
-    
+
     public function read_customer(Request $request)
     {
         $customer =  CustomerModel::find($request->customer_id);
         return response()->json(['response' => $customer, 'status' => 200]);
     }
 
-       public function read_all_customer(Request $request)
+    public function read_all_customer(Request $request)
     {
         $customers =  CustomerModel::all();
         return response()->json(['response' => $customers, 'status' => 200]);
     }
-
 }

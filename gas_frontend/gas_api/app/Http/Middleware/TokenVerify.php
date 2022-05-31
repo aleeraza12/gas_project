@@ -23,7 +23,7 @@ class TokenVerify
             $message = 'Invalid Credentials';
         $token = Token::where('token', $request->header('token'))->first();
         if ($token) {
-            if ($request->user_id == $token->user_id) {
+            if ($request->user_id == $token->company_id) {
                 $date2 = Carbon::create(Carbon::now());
                 $date1 = Carbon::parse($token->expires_at);
                 if ($date1->gte($date2))

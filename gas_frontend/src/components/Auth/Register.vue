@@ -359,7 +359,7 @@ export default {
   border-radius: 8px;
 }
 .btn-create {
-  background-color: black !important;
+  background-color:  #464646;
   color: #fff;
   min-width: 400px !important;
   border-radius: 8px !important;

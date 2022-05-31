@@ -32,7 +32,7 @@
                     <div class="d-flex align-start justify-start">
                       <b>Total Users</b>
                     </div>
-                    <div class="d-flex align-start justify-start">78</div>
+                    <div class="d-flex align-start justify-start">{{getCustomers.length}}</div>
                   </div>
                   <v-spacer></v-spacer>
                   <div class="d-flex align-end justify-end">
@@ -57,7 +57,7 @@
         <div class="mt-3">
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="getCustomers"
             :items-per-page="5"
             class="elevation-1"
             hide-default-footer
@@ -79,98 +79,35 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     headers: [
       {
-        text: "Date",
+        text: "Customer Name",
         align: "start",
         sortable: false,
         value: "name",
       },
-      { text: "Order Id", value: "id" },
-      { text: "Customer Name", value: "name" },
-      { text: "Gas Quantity", value: "quantity" },
-      { text: "Amount", value: "amount" },
-      { text: "Status", value: "status" },
-      { text: "Update by", value: "update_by" },
-      { text: "Payment Mode", value: "payment" },
-      { text: "Views", value: "actions" },
-    ],
-    desserts: [
-      {
-        date: "04 april 2022 01:32 am",
-        id: "100",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "101",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "102",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "103",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "104",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "105",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "106",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
+      { text: "Phone Number", value: "phone_number" },
+      { text: "Email Address", value: "email" },
+      { text: "Location", value: "address" },
+      { text: "Customer Type", value: "customer_type" },
+      { text: "Total Sales", value: "9910910191" },
+      { text: "Edit", value: "" },
+      { text: "Delete", value: "" },
     ],
   }),
   components: {},
+  created() {},
+  watch: {
+    getCustomers() {
+      console.log("response", this.getCustomers);
+    },
+  },
+  computed: {
+    ...mapGetters(["getCustomers"]),
+  },
   created() {},
   mounted() {
     this.$store.dispatch("getCustomersListing");

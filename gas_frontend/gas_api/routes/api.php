@@ -7,6 +7,7 @@ use App\Http\Controllers\General;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Payment;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -82,8 +83,8 @@ Route::middleware('token')->group(function () {
         });
     });
 
-     //Payment Status route
-     Route::prefix('payment/status')->group(function () {
+    //Payment Status route
+    Route::prefix('payment/status')->group(function () {
         Route::controller(Payment::class)->group(function () {
             Route::post('create', 'create_payment_status');
             Route::post('delete', 'delete_payment_status');
@@ -102,8 +103,8 @@ Route::middleware('token')->group(function () {
         });
     });
 
-     //Depo route
-     Route::prefix('depo')->group(function () {
+    //Depo route
+    Route::prefix('depo')->group(function () {
         Route::controller(DepoController::class)->group(function () {
             Route::post('create', 'create_depo_price');
             Route::post('delete', 'delete_depo_price');
@@ -113,8 +114,8 @@ Route::middleware('token')->group(function () {
     });
 
 
-       //Purchase route
-       Route::prefix('purchase')->group(function () {
+    //Purchase route
+    Route::prefix('purchase')->group(function () {
         Route::controller(PurchaseController::class)->group(function () {
             Route::post('create', 'create_purchase');
             Route::post('delete', 'delete_purchase');
@@ -123,8 +124,8 @@ Route::middleware('token')->group(function () {
         });
     });
 
-     //Company route
-     Route::prefix('company')->group(function () {
+    //Company route
+    Route::prefix('company')->group(function () {
         Route::controller(CompanyController::class)->group(function () {
             Route::post('create', 'create_company')->withoutMiddleware('token');
             Route::post('delete', 'delete_company');
@@ -132,10 +133,14 @@ Route::middleware('token')->group(function () {
             Route::post('read_all', 'read_all_companies');
         });
     });
+
+    //Sales route
+    Route::prefix('sale')->group(function () {
+        Route::controller(SaleController::class)->group(function () {
+            Route::post('create', 'create_sale');
+            Route::post('delete', 'delete_sale');
+            Route::post('read', 'read_sale');
+            Route::post('read_all', 'read_all_sale');
+        });
+    });
 });
-
-
-
-
-
-

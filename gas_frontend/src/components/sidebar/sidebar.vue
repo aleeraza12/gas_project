@@ -103,14 +103,14 @@ export default {
       },
        {
         text: "Wallet",
-        icon: "mdi-wallet",
+        icon: "mdi-credit-card",
         route: "/wallet",
         tabName: "Wallet",
         color: "black",
       },
       {
         text: "Reconcilation",
-        icon: "mdi-receipt",
+        icon: "mdi-trackpad",
         route: "/reconcilation",
         tabName: "Reconcilation",
         color: "black",

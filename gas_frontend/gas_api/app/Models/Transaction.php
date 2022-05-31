@@ -10,6 +10,6 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'amount','gas_quantity','type'
+        'amount', 'gas_quantity', 'type', 'outer_id'
     ];
 }

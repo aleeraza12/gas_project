@@ -15,4 +15,13 @@ class Company extends Model
     {
         return $this->hasOne(Token::class);
     }
+
+    public function purchase()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+    public function sale()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

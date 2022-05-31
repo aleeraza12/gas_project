@@ -17,19 +17,19 @@ class CreatePurchasesTable extends Migration
             $table->increments('id');
             $table->timestamp('date');
             $table->string('receipt_number');
-            $table->string('receipt_attachment_path');
+            $table->string('receipt_attachment_path')->nullable();
             $table->string('company_name');
-            $table->string('company_phone_name');
+            $table->string('company_phone_number');
             $table->string('driver_name');
             $table->string('gas_quantity');
             $table->integer('amount');
             $table->integer('unit_price');
-            $table->enum('status', ['pending', 'delivered','cancelled'])->default('pending');
-            $table->integer('user_id')->unsigned();
-            $table->integer('payment_status_id')->unsigned();
+            $table->integer('company_id')->unsigned();
+            $table->enum('status', ['pending', 'delivered', 'cancelled'])->default('pending');
+            $table->string('recepient_name')->nullable();
+            $table->enum('payment_status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('payment_status_id')->references('id')->on('payment_statuses');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

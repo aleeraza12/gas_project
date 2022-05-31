@@ -14,12 +14,11 @@ class TransactionController extends Controller
                 'id' => $request->transaction_id
             ],
             [
-                'gas_quantity' => $request->gas_quantity,
                 'amount' =>  $request->amount,
                 'type' =>  $request->type,
+                'outer_id' =>  $request->user_id, //company id
             ]
         );
         return response()->json(['response' => $transaction->id, 'status' => 201]);
-    }
     }
 }

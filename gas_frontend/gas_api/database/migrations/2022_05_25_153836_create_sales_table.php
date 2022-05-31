@@ -16,19 +16,21 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('gas_quantity');
-            $table->float('amount');
+            $table->float('total_amount');
+            $table->float('price');
             $table->string('discount_code')->nullable();
-            $table->integer('transaction_id')->unsigned();
-            $table->integer('customer_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('payment_mode_id')->unsigned();
-            $table->integer('payment_status_id')->unsigned();
+            //$table->integer('customer_id')->unsigned();
+            $table->string('customer_name');
+            $table->string('customer_type');
+            $table->string('customer_phone_number');
+            //$table->integer('user_id')->unsigned();
+            $table->integer('company_id')->unsigned();
+            $table->enum('payment_mode', ['cash', 'prepaid'])->default('cash');
+            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();
-            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('payment_mode_id')->references('id')->on('payment_modes');
-            $table->foreign('payment_status_id')->references('id')->on('payment_statuses');
+            //$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

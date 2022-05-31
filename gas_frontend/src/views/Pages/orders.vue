@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="d-flex">
-      <div> <Orders /></div>
-    </div>
+     <Orders />
      
   </div>
 </template>

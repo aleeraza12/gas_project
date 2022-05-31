@@ -1,41 +1,203 @@
 <template>
-    <div class="main-container">
-        <div class="d-flex align-start justify-start">
-           <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
-        </div>
-        <div class="mt-3">
-            <div class="d-flex align-start justify-start"> <b>Add New User</b></div>
-            <div  class="d-flex align-start justify-start fonts mt-1">Enter the following details to create a user profile</div>
-            <v-form v-model="valid" class="mt-5">
-                <div>
-                    <v-text-field
-                        v-model="created_by"
-                        label="Created By"
-                        outlined
-                        dense
-                        hide-details
-                        class="mt-1"
-                        style="width:200px"
-                    ></v-text-field>
-                </div>
-                <div>
-                    <v-text-field
-                        v-model="username"
-                        label="User Name"
-                        outlined
-                        dense
-                        hide-details
-                        class="mt-1"
-                        style="width:200px"
-                    ></v-text-field>
-                </div>
-            </v-form>
-        </div>
+  <div class="main-container">
+    <div class="d-flex align-start justify-start">
+      <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
+    <div class="mt-3">
+      <div class="d-flex align-start justify-start"><b>Add New User</b></div>
+      <div class="d-flex align-start justify-start fonts mt-1">
+        Enter the following details to create a user profile
+      </div>
+      <v-form v-model="valid" class="mt-5">
+        <div>
+          <v-text-field
+            v-model="created_by"
+            label="Created By"
+            outlined
+            dense
+            hide-details
+            class="mt-1"
+            style="width: 300px"
+          ></v-text-field>
+        </div>
+        <div>
+          <v-text-field
+            v-model="name"
+            label="Enter User Name"
+            outlined
+            dense
+            hide-details
+            class="mt-1"
+            style="width: 300px"
+          ></v-text-field>
+        </div>
+        <div>
+          <v-text-field
+            v-model="password"
+            label="Enter Password"
+            outlined
+            dense
+            hide-details
+            class="mt-1"
+            style="width: 300px"
+          ></v-text-field>
+        </div>
+        <div>
+          <v-text-field
+            v-model="designation"
+            label="Enter Desgination/Role"
+            outlined
+            dense
+            hide-details
+            class="mt-1"
+            style="width: 300px"
+          ></v-text-field>
+        </div>
+        <div class="mt-3" style="width: 300px">
+          <v-select
+            :items="statuses"
+            v-model="status"
+            label="Status"
+            outlined
+            dense
+            small
+            hide-details
+          >
+          </v-select>
+        </div>
+        <div class="mt-3" style="width: 300px">
+          <v-select
+            :items="user_types"
+            v-model="user_type"
+            label="User Type"
+            outlined
+            hide-details
+            small
+            dense
+          >
+          </v-select>
+        </div>
+        <div class="d-flex justify-start align-start mt-3">
+          <b>Access Granted</b>
+        </div>
+        <div class="d-flex fonts">
+          <v-radio-group v-model="permission1" row dense>
+            <v-radio label="Dashboard" value="dashboard"></v-radio>
+            <v-radio label="Sales" value="sales"></v-radio>
+            <v-radio label="Orders" value="orders"></v-radio>
+            <v-radio label="Purchases" value="purchases"></v-radio>
+          </v-radio-group>
+        </div>
+        <div class="d-flex fonts">
+          <v-radio-group v-model="permission2" row dense>
+            <v-radio label="Customers" value="customers"></v-radio>
+            <v-radio label="Users" value="users"></v-radio>
+            <v-radio label="Wallet" value="wallet"></v-radio>
+            <v-radio label="Reconilcation" value="reconilcation"></v-radio>
+          </v-radio-group>
+        </div>
+        <div class="mt-5 mb-5 ml-16">
+          <v-btn
+            block
+            large
+            class="elevation-0 btn-create"
+            :loading="loading"
+            :disabled="!valid"
+            @click="createUser()"
+            dense
+          >
+            Save
+          </v-btn>
+        </div>
+      </v-form>
+    </div>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
+  </div>
 </template>
+<script>
+import RequestService from "../../RequestService";
+export default {
+  data: () => ({
+    statuses: ["Active", "inactive"],
+    designations: ["Manager", "Cashier", "Sales Person", "Finance Manager"],
+    user_types: ["Admin", "User", "Sub Admin"],
+    user_type: "",
+    designation: "",
+    name: "",
+    created_by: "",
+    phone_number: "",
+    status: "",
+    customer_type: "",
+    password: "",
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
+    loading: false,
+    valid: false,
+    permissions: [],
+    permission1: null,
+    permission2: null,
+  }),
+  computed: {
+    getIcon() {
+      return this.snackbarColor == "primary"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
+    //...mapGetters(["getAdminInfo"]),
+  },
+  methods: {
+    createUser() {
+      this.permissions.push(this.permission1);
+      this.permissions.push(this.permission2);
+      let requestBody = {
+        name: this.name,
+        created_by: this.created_by,
+        user_type: this.user_type,
+        password: this.password,
+        designation: this.designation,
+        status: this.status,
+        permissions: this.permissions,
+      };
+      console.log(requestBody);
+      //  RequestService.post("user/create", requestBody)
+      //    .then((res) => {
+      //      console.log("status in user", res.data.status);
+      //      if (res.data.status == 201) {
+      //        console.log("this is inside");
+      //        this.snackbar = true;
+      //        this.snackbarColor = "success";
+      //        this.snacbarMessage = "Your user(s) added successfully";
+      //        this.loading = false;
+      //      }
+      //    })
+      //    .catch(() => {
+      //      this.snackbar = true;
+      //      this.snackbarColor = "red";
+      //      this.snacbarMessage = " Something went wrong";
+      //      this.loading = false;
+      //    });
+    },
+  },
+};
+</script>
 <style scoped>
-.fonts{
-    font-size: 12px;
+.fonts {
+  font-size: 12px;
 }
 .btn-create {
   background-color: #464646 !important;

@@ -50,12 +50,13 @@ class UserController extends Controller
             ],
             [
                 'name' => $request->name,
-                'email' =>  $request->email,
-                'phone_number'=>  $request->phone_number,
+                'created_by' => $request->created_by,
                 'password'=> Hash::make($request->password),
                 'designation'=>  $request->designation,
                 'permissions'=>  $request->permissions,
-                'user_type_id'=>  $request->user_type_id,
+                'user_type'=>  $request->user_type,
+                'status'=>  $request->status,
+                //'user_type_id'=>  $request->user_type_id,
                 'company_id'=>  $request->company_id,
             ]
         );

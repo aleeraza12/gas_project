@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
@@ -16,15 +17,18 @@ class SaleController extends Controller
             ],
             [
                 'gas_quantity' => $request->gas_quantity,
-                'amount' =>  $request->amount,
-                'customer_id' =>  $request->customer_id,
+                'total_amount' =>  $request->total_amount,
+                'price' =>  $request->price,
+                'customer_name' =>  $request->customer_name,
+                'customer_phone_number' =>  $request->customer_phone_number,
+                'customer_type' =>  $request->customer_type,
                 'discount_code' => $request->discount_code,
-                'user_id' =>  $request->user_id,
-                'payment_mode_id' =>  $request->payment_mode_id,
-                'payment_status_id' =>  $request->payment_status_id,
-                'transaction_id' =>  TransactionController::createTransaction($request->request->add(['type'=>'sale'])),
+                'company_id' =>  $request->user_id,
+                //'user_id' =>  $request->user_id,
+                'payment_mode' =>  $request->payment_mode,
             ]
         );
+        TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount]));
         return response()->json(['response' => $sale, 'status' => 201]);
     }
 
@@ -43,7 +47,11 @@ class SaleController extends Controller
 
     public function read_all_sale(Request $request)
     {
-        $sales =  Sale::all();
+        $sales =   Company::find($request->user_id)->sale;
+        $name = Company::find($request->user_id);
+        foreach ($sales as $sale) {
+            $sale['updated_by'] = $name->company_name;
+        }
         return response()->json(['response' => $sales, 'status' => 200]);
-    } 
+    }
 }

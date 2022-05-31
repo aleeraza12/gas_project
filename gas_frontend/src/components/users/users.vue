@@ -49,7 +49,9 @@
        <div class="mr-3"><b>Date Picker</b></div>
       </div>
       <div class="mt-3">
-        <v-data-table
+        <v-card>
+          <v-card-text>
+       <v-data-table
           :headers="headers"
           :items="desserts"
           :items-per-page="5"
@@ -67,6 +69,9 @@
           
        </template>
         </v-data-table>
+          </v-card-text>
+        </v-card>
+ 
       </div>
     </v-card-text>
   </v-card>

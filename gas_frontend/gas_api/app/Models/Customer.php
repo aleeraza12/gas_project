@@ -13,20 +13,19 @@ class Customer extends Model
         'name',
         'email',
         'phone_number',
-        'password',
         'status',
         'city',
         'state',
-        'customer_type_id',
+        'customer_type',
         'address',
         'company_id'
     ];
-    public function customer_type(){
+    public function customer_type()
+    {
         return $this->hasOne(CustomerType::class);
     }
-    public function company(){
+    public function company()
+    {
         return $this->hasOne(Company::class);
     }
-
-
 }

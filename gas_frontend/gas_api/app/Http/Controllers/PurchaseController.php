@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,17 +20,17 @@ class PurchaseController extends Controller
                 'date' => $request->date,
                 'receipt_number' =>  $request->receipt_number,
                 'company_name' =>  $request->company_name,
-                'company_phone_name' => $request->company_phone_name,
+                'company_phone_number' => $request->company_phone_number,
                 'driver_name' =>  $request->driver_name,
                 'gas_quantity' =>  $request->gas_quantity,
                 'amount' =>  $request->amount,
                 'unit_price' =>  $request->unit_price,
-                'status' =>  $request->status,
-                'user_id' =>  $request->user_id,
-                'payment_status_id' =>  $request->payment_status_id,
-                'receipt_attachment_path' =>  $this->upload_attachment($request),
+                'recepient_name' =>  $request->recepient_name,
+                'company_id' => $request->user_id,
+                'receipt_attachment_path' =>  $request->has('attachment') ? $this->upload_attachment($request) : null,
             ]
         );
+        TransactionController::createTransaction($request->merge(['type' => 'purchase']));
         return response()->json(['response' => $purchase, 'status' => 201]);
     }
 
@@ -48,15 +49,15 @@ class PurchaseController extends Controller
 
     public function read_all_purchases(Request $request)
     {
-        $purchases =  Purchase::all();
+        $purchases =  Company::find($request->user_id)->purchase;
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
 
     public function upload_attachment($request)
     {
-        $filename = Str::random(5) . 'id' . $request->date . '.' . $request->extension;
+        $filename = Str::random(5) . 'id' . $request->date . '.' . 'png';
         $original_file_path = 'receipt' . $filename;
-        $image = $request->image;  // your base64 encoded
+        $image = $request->attachment;  // your base64 encoded
         $image = str_replace('data:image/png;base64,', '', $request->attachment);
         $image = str_replace(' ', '+', $image);
         Storage::disk('local')->put($original_file_path, base64_decode($image));
