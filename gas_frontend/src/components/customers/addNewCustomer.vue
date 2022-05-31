@@ -15,6 +15,7 @@
             label="Enter Name"
             placeholder="Enter Name"
             outlined
+            :rules="nameRules"
             dense
             hide-details
             class="mt-1"
@@ -24,6 +25,7 @@
         <div>
           <v-text-field
             v-model="phone_number"
+            :rules="nameRules"
             label="Enter Phone Number"
             placeholder="Enter Phone Number"
             outlined
@@ -37,6 +39,7 @@
           <v-text-field
             v-model="email"
             label="Enter Email Address"
+            :rules="nameRules"
             placeholder="Enter Email Address"
             outlined
             dense
@@ -49,6 +52,7 @@
           <v-text-field
             v-model="address"
             label="Enter Street"
+            :rules="nameRules"
             placeholder="Enter Street"
             outlined
             dense
@@ -62,6 +66,7 @@
             <v-text-field
               label="City"
               outlined
+              :rules="nameRules"
               dense
               placeholder="Enter City"
               hide-details
@@ -72,6 +77,7 @@
           <div class="mt-2">
             <v-select
               :items="states"
+              :rules="nameRules"
               label="State"
               placeholder="Enter State"
               outlined
@@ -89,6 +95,7 @@
             :items="customer_types"
             v-model="customer_type"
             label="Customer Type"
+            :rules="nameRules"
             placeholder="Select One"
             outlined
             hide-details
@@ -133,6 +140,7 @@
 import RequestService from "../../RequestService";
 export default {
   data: () => ({
+    nameRules: [(v) => !!v || "This field is required"],
     states: ["Foo", "Bar", "Fizz", "Buzz"],
     customer_types: ["Distributor", "Retailer"],
     name: "",

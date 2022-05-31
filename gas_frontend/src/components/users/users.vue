@@ -60,6 +60,8 @@
           <v-card>
             <v-card-text>
               <v-data-table
+                :loading="loading"
+                loading-text="Loading... Please wait"
                 :headers="headers"
                 :items="getUsers"
                 :items-per-page="5"
@@ -79,6 +81,15 @@
                     </div>
                   </th>
                 </template>
+                <template v-slot:item.actions="{ item }">
+                  <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-eye
+                  </v-icon>
+                  <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+                </template>
+                <template v-slot:no-data>
+                  <v-btn color="primary" @click="initialize"> Reset </v-btn>
+                </template>
               </v-data-table>
             </v-card-text>
           </v-card>
@@ -90,13 +101,16 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
 export default {
   data: () => ({
+    loading: true,
     headers: [
       {
         text: "User Name",
         align: "start",
         sortable: false,
+
         value: "name",
       },
       { text: "Desgnation", value: "desgnation" },
@@ -104,12 +118,10 @@ export default {
       { text: "Status", value: "status" },
       { text: "Access Granted", value: "permissions" },
       { text: "Created By", value: "created_by" },
-      { text: "Edit ", value: "" },
-      { text: "Delete", value: "" },
+       { text: 'Actions', value: 'actions', sortable: false },
     ],
   }),
   components: {},
-  created() {},
   watch: {
     getUsers() {
       console.log("response", this.getUsers);
@@ -118,7 +130,12 @@ export default {
   computed: {
     ...mapGetters(["getUsers"]),
   },
-  created() {},
+  created() {
+    eventBus.$on("responseArrived", () => {
+      console.log("emt arrved");
+      this.loading = false;
+    });
+  },
   mounted() {
     this.$store.dispatch("getUsersListing");
   },

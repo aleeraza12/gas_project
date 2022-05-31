@@ -57,9 +57,11 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-          <v-card >
+          <v-card>
             <v-card-text>
               <v-data-table
+                :loading="loading"
+                loading-text="Loading... Please wait"
                 :headers="headers"
                 :items="getPurchases"
                 :items-per-page="5"
@@ -79,6 +81,11 @@
                     </div>
                   </th>
                 </template>
+                  <template v-slot:item.actions="{ item }">
+                  <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-eye
+                  </v-icon>
+                </template>
               </v-data-table>
             </v-card-text>
           </v-card>
@@ -90,8 +97,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
+
 export default {
   data: () => ({
+    loading: true,
+    
     headers: [
       {
         text: "Date",
@@ -107,14 +118,19 @@ export default {
       { text: "Status", value: "status" },
       { text: "Drver's Name", value: "driver_name" },
       { text: "Received By", value: "recepient_name" },
-      { text: "Actions", value: "" },
+            { text: 'Actions', value: 'actions', sortable: false },
+
     ],
   }),
   components: {},
   computed: {
     ...mapGetters(["getPurchases"]),
   },
-  created() {},
+  created() {
+    eventBus.$on("responseArrived", () => {
+      this.loading = false;
+    });
+  },
   methods: {},
   watch: {
     getPurchases() {

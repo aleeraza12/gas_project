@@ -13,6 +13,7 @@
           <v-text-field
             v-model="created_by"
             label="Created By"
+            :rules="nameRules"
             outlined
             dense
             hide-details
@@ -24,6 +25,7 @@
           <v-text-field
             v-model="name"
             label="Enter User Name"
+            :rules="nameRules"
             outlined
             dense
             hide-details
@@ -35,6 +37,7 @@
           <v-text-field
             v-model="password"
             label="Enter Password"
+            :rules="nameRules"
             outlined
             dense
             hide-details
@@ -45,6 +48,7 @@
         <div>
           <v-text-field
             v-model="designation"
+            :rules="nameRules"
             label="Enter Desgination/Role"
             outlined
             dense
@@ -56,6 +60,7 @@
         <div class="mt-3" style="width: 300px">
           <v-select
             :items="statuses"
+            :rules="nameRules"
             v-model="status"
             label="Status"
             outlined
@@ -68,6 +73,7 @@
         <div class="mt-3" style="width: 300px">
           <v-select
             :items="user_types"
+            :rules="nameRules"
             v-model="user_type"
             label="User Type"
             outlined
@@ -135,6 +141,7 @@ export default {
     statuses: ["Active", "Iactive"],
     designations: ["Manager", "Cashier", "Sales Person", "Finance Manager"],
     user_types: ["Admin", "User", "Sub Admin"],
+    nameRules: [(v) => !!v || "This field is required"],
     user_type: "",
     designation: "",
     name: "",

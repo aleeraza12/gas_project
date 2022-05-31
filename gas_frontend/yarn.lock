@@ -8283,6 +8283,11 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-plugin-event-bus@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/vue-plugin-event-bus/-/vue-plugin-event-bus-0.0.5.tgz#8d7777ea3e6e684482fc6cdbbad2023a2a3f173c"
+  integrity sha512-K22uxFJW7z3vEGxNfoHPDRH+dHypHQuj5g79ixExzP6EClLGTC4UDvn8K0oKM+uU0HGNVZRkjC2TouRWrpvZ5Q==
+
 vue-router@^3.5.3:
   version "3.5.4"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.5.4.tgz#c453c0b36bc75554de066fefc3f2a9c3212aca70"
