@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <div class="d-flex">
-      <div> <Dashboard /></div>
-    </div>
-     
-  </div>
+  <div> <Dashboard /></div>
 </template>
 <script>
 export default {

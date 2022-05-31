@@ -219,7 +219,6 @@
 .top-bar{
   background-color: #EBEBEA;
   height: 55px;
-  width: 930px;
   border-radius: 20px;
 }
 .searchbar{

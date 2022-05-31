@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <div class="d-flex">
-      <div> <Reconcilation /></div>
-    </div>
-     
-  </div>
+  <div> <Reconcilation /></div>
 </template>
 <script>
 export default {

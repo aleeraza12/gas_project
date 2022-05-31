@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <div class="d-flex">
-      <div> <Users /></div>
-    </div>
-     
-  </div>
+  <div> <Users /></div>
 </template>
 <script>
 export default {
