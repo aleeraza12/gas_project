@@ -1,7 +1,6 @@
 <template>
   <div>
-     <Orders />
-     
+     <Orders /> 
   </div>
 </template>
 <script>

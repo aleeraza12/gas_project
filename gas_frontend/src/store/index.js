@@ -26,7 +26,7 @@ const store = {
   },
   actions: {
     // gettng all customers for a company
-    getCustomersListing(context, data) {
+    getCustomersListing(context) {
       let requestBody = {};
       RequestService.post("customer/read_all", requestBody).then((response) => {
         if (response.data.status == 200) {
@@ -38,7 +38,7 @@ const store = {
     },
 
     // gettng all users for a company
-    getUsersListing(context, data) {
+    getUsersListing(context) {
       let requestBody = {};
       RequestService.post("user/read_all", requestBody).then((response) => {
         if (response.data.status == 200) {

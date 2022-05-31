@@ -57,7 +57,7 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-          <v-card>
+          <v-card  class="elevation-0">
             <v-card-text>
               <v-data-table
                 :loading="loading"
@@ -149,7 +149,6 @@ export default {
 .top-bar {
   background-color: #ebebea;
   height: 55px;
-  width: 930px;
   border-radius: 20px;
 }
 .searchbar {
