@@ -18,6 +18,7 @@
                 :items="customer_types"
                 v-model="customer_type"
                 label="Customer Type"
+                :rules="nameRules"
                 outlined
                 dense
                 small
@@ -30,6 +31,7 @@
                 v-model="customer_name"
                 outlined
                 dense
+                :rules="nameRules"
                 placeholder="Enter Customer Name"
                 hide-details
                 class="username-feild mt-3"
@@ -43,12 +45,14 @@
                 placeholder="Enter Phone Number"
                 hide-details
                 class="username-feild mt-3"
+                :rules="nameRules"
                 v-model="customer_phone_number"
               ></v-text-field>
             </div>
             <div>
               <v-text-field
                 label="Enter Price"
+                :rules="nameRules"
                 outlined
                 dense
                 placeholder="Enter Price"
@@ -61,6 +65,7 @@
               <div>
                 <v-text-field
                   label="Gas Quantity"
+                  :rules="nameRules"
                   outlined
                   dense
                   placeholder="Enter Gas Quantity"
@@ -73,6 +78,7 @@
                 <v-text-field
                   label="Total Amount"
                   outlined
+                  :rules="nameRules"
                   dense
                   placeholder="Enter Amount"
                   hide-details
@@ -86,6 +92,7 @@
                 :items="payment_modes"
                 v-model="payment_mode"
                 label="Payment Methods"
+                :rules="nameRules"
                 outlined
                 dense
                 small
@@ -168,6 +175,7 @@ export default {
     show1: false,
     gas_quantity: "",
     price: "",
+    nameRules: [(v) => !!v || "This field is required"],
     total_amount: "",
     customer_name: "",
     customer_phone_number: "",

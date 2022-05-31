@@ -32,7 +32,9 @@
                     <div class="d-flex align-start justify-start">
                       <b>Total Users</b>
                     </div>
-                    <div class="d-flex align-start justify-start">{{getCustomers.length}}</div>
+                    <div class="d-flex align-start justify-start">
+                      {{ getCustomers.length }}
+                    </div>
                   </div>
                   <v-spacer></v-spacer>
                   <div class="d-flex align-end justify-end">
@@ -56,6 +58,8 @@
         </div>
         <div class="mt-3">
           <v-data-table
+            :loading="loading"
+            loading-text="Loading... Please wait"
             :headers="headers"
             :items="getCustomers"
             :items-per-page="5"
@@ -71,6 +75,12 @@
                 </div>
               </th>
             </template>
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="editItem(item)">
+                mdi-eye
+              </v-icon>
+              <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+            </template>
           </v-data-table>
         </div>
       </v-card-text>
@@ -80,8 +90,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
+
 export default {
   data: () => ({
+    loading: true,
+    
     headers: [
       {
         text: "Customer Name",
@@ -94,11 +108,16 @@ export default {
       { text: "Location", value: "address" },
       { text: "Customer Type", value: "customer_type" },
       { text: "Total Sales", value: "9910910191" },
-      { text: "Edit", value: "" },
-      { text: "Delete", value: "" },
+      { text: "Actions", value: "actions", sortable: false },
     ],
   }),
   components: {},
+  created() {
+    eventBus.$on("responseArrived", () => {
+      console.log("emt ar");
+      this.loading = false;
+    });
+  },
   watch: {
     getCustomers() {
       console.log("response", this.getCustomers);
@@ -107,7 +126,6 @@ export default {
   computed: {
     ...mapGetters(["getCustomers"]),
   },
-  created() {},
   mounted() {
     this.$store.dispatch("getCustomersListing");
   },

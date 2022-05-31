@@ -23,6 +23,11 @@ const RequestService = {
         .post(`${baseUrl}/${endpoint}`, body)
         .then((res) => {
           resolve(res);
+
+          if (res.data.status == 401) {
+            localStorage.clear();
+            router.push("/login");
+          }
         })
         .catch((err) => {
           if (err.response.status == 401) {

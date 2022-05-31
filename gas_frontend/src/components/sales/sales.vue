@@ -60,6 +60,8 @@
           <v-card  class="elevation-0">
             <v-card-text>
               <v-data-table
+                :loading="loading"
+                loading-text="Loading... Please wait"
                 :headers="headers"
                 :items="getSales"
                 :items-per-page="5"
@@ -79,6 +81,11 @@
                     </div>
                   </th>
                 </template>
+                  <template v-slot:item.actions="{ item }">
+                  <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-eye
+                  </v-icon>
+                </template>
               </v-data-table>
             </v-card-text>
           </v-card>
@@ -89,8 +96,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
+
 export default {
   data: () => ({
+    loading: true,
+    
     headers: [
       {
         text: "Date",
@@ -105,14 +116,19 @@ export default {
       { text: "Status", value: "status" },
       { text: "Update by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
-      { text: "Views", value: "actions" },
+            { text: 'Actions', value: 'actions', sortable: false },
+
     ],
   }),
   components: {},
   computed: {
     ...mapGetters(["getSales"]),
   },
-  created() {},
+  created() {
+    eventBus.$on("responseArrived", () => {
+      this.loading = false;
+    });
+  },
   methods: {},
   watch: {
     getSales() {

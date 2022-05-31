@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import RequestService from "../RequestService";
+import { eventBus } from "@/main";
 Vue.use(Vuex);
 
 const store = {
@@ -30,6 +31,7 @@ const store = {
       RequestService.post("customer/read_all", requestBody).then((response) => {
         if (response.data.status == 200) {
           console.log("customers fetched");
+          eventBus.$emit("responseArrived");
           context.commit("SET_CUSTOMERS", response.data.response);
         }
       });
@@ -42,6 +44,7 @@ const store = {
         if (response.data.status == 200) {
           console.log("users fetched");
           context.commit("SET_USERS", response.data.response);
+          eventBus.$emit("responseArrived");
         }
       });
     },
@@ -54,6 +57,7 @@ const store = {
         if (response.data.status == 200) {
           console.log("Order fetched");
           context.commit("SET_SALES", response.data.response);
+          eventBus.$emit("responseArrived");
         }
       });
     },
@@ -66,6 +70,7 @@ const store = {
         if (response.data.status == 200) {
           console.log("purchase fetched");
           context.commit("SET_PURCHASES", response.data.response);
+          eventBus.$emit("responseArrived");
         }
       });
     },

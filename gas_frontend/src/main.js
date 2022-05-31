@@ -9,7 +9,7 @@ import store from "./store/index";
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
-
+export const eventBus = new Vue();
 new Vue({
   router,
   store,
