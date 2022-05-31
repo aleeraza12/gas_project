@@ -99,7 +99,6 @@ export default {
     ],
   }),
   components: {},
-  created() {},
   watch: {
     getCustomers() {
       console.log("response", this.getCustomers);

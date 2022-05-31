@@ -109,7 +109,6 @@ export default {
     ],
   }),
   components: {},
-  created() {},
   watch: {
     getUsers() {
       console.log("response", this.getUsers);
