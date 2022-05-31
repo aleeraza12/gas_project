@@ -20,7 +20,7 @@
         </div>
         <div class="d-flex mt-5">
           <div>
-            <b> Customers</b>
+            <b> Users</b>
           </div>
         </div>
         <div class="d-flex mt-5">
@@ -38,7 +38,7 @@
                   </div>
                   <v-spacer></v-spacer>
                   <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined
+                    <v-btn small dense outlined @click="addNewUser()"
                       >Add New
                       <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
                     >
@@ -57,7 +57,7 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-          <v-card  class="elevation-0">
+          <v-card class="elevation-0">
             <v-card-text>
               <v-data-table
                 :loading="loading"
@@ -81,14 +81,15 @@
                     </div>
                   </th>
                 </template>
-                <template v-slot:item.actions="{ item }">
+                <template v-slot:item.actions1="{ item }">
                   <v-icon small class="mr-2" @click="editItem(item)">
                     mdi-eye
                   </v-icon>
-                  <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
                 </template>
-                <template v-slot:no-data>
-                  <v-btn color="primary" @click="initialize"> Reset </v-btn>
+                <template v-slot:item.actions2="{ item }">
+                  <v-icon small class="mr-2" @click="deleteItem(item)">
+                    mdi-eye
+                  </v-icon>
                 </template>
               </v-data-table>
             </v-card-text>
@@ -96,15 +97,34 @@
         </div>
       </v-card-text>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
+import RequestService from "../../RequestService";
 export default {
   data: () => ({
     loading: true,
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
     headers: [
       {
         text: "User Name",
@@ -113,12 +133,13 @@ export default {
 
         value: "name",
       },
-      { text: "Desgnation", value: "desgnation" },
+      { text: "Designation", value: "designation" },
       { text: "User Type", value: "user_type" },
       { text: "Status", value: "status" },
       { text: "Access Granted", value: "permissions" },
       { text: "Created By", value: "created_by" },
-       { text: 'Actions', value: 'actions', sortable: false },
+      { text: "Edit", value: "actions1", sortable: false },
+      { text: "Delete", value: "actions2", sortable: false },
     ],
   }),
   components: {},
@@ -129,6 +150,11 @@ export default {
   },
   computed: {
     ...mapGetters(["getUsers"]),
+    getIcon() {
+      return this.snackbarColor == "success"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
   },
   created() {
     eventBus.$on("responseArrived", () => {
@@ -138,6 +164,30 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getUsersListing");
+  },
+  methods: {
+    addNewUser() {
+      this.$router.push("/new-user");
+    },
+    editItem(item) {
+      console.log(item);
+    },
+    deleteItem(item) {
+      console.log(item);
+      let requestBody = {
+        users_id: item.id,
+      };
+      RequestService.post("user/delete", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          console.log("users deleted");
+          this.loading = true;
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.snacbarMessage = "Your user(s) deleted successfully";
+          this.$store.dispatch("getUsersListing");
+        }
+      });
+    },
   },
 };
 </script>

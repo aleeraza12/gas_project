@@ -54,6 +54,8 @@
 </template>
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
     drawer: true,
@@ -94,14 +96,14 @@ export default {
         tabName: "Customers",
         color: "black",
       },
-       {
+      {
         text: "Users",
         icon: "mdi-account-outline",
         route: "/users",
         tabName: "Users",
         color: "black",
       },
-       {
+      {
         text: "Wallet",
         icon: "mdi-credit-card",
         route: "/wallet",
@@ -134,6 +136,9 @@ export default {
   }),
   components: {},
   created() {},
+  computed: {
+    ...mapGetters(["getSales", "getUsers"]),
+  },
   methods: {
     getColor(link, titleName, index) {
       titleName == link.tabName
@@ -141,7 +146,8 @@ export default {
         : (this.links[index].color = "black");
     },
     Logout(rout) {
-      console.log("logout called", rout);
+      console.log("logout called", rout, this.getSales.length);
+
       if (rout.text == "Logout") {
         let url = this.$store.state.url;
         let requestBody = {
@@ -152,6 +158,10 @@ export default {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         });
+      } else if (rout.text == "Sales" && this.getSales.length == 0) {
+        this.$router.push("no-sale");
+      } else if (rout.text == "Users" && this.getUsers.length == 0) {
+        this.$router.push("no-user");
       }
     },
   },

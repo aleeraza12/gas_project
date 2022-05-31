@@ -11,18 +11,26 @@ const store = {
     customers: [],
     purchases: [],
     users: [],
+    view_single_receipt: [],
+    view_single_purchase: [],
   },
   getters: {
     getSales: (state) => state.sales,
     getCustomers: (state) => state.customers,
     getUsers: (state) => state.users,
     getPurchases: (state) => state.purchases,
+    getPurchases: (state) => state.purchases,
+    getSingleReceipt: (state) => state.view_single_receipt,
+    getSinglePurchase: (state) => state.view_single_purchase,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
     SET_CUSTOMERS: (state, payload) => (state.customers = payload),
     SET_PURCHASES: (state, payload) => (state.purchases = payload),
     SET_USERS: (state, payload) => (state.users = payload),
+    SET_VIEW_RECEIPT: (state, payload) => (state.view_single_receipt = payload),
+    SET_VIEW_PURCHASE: (state, payload) =>
+      (state.view_single_purchase = payload),
   },
   actions: {
     // gettng all customers for a company

@@ -50,6 +50,9 @@ class PurchaseController extends Controller
     public function read_all_purchases(Request $request)
     {
         $purchases =  Company::find($request->user_id)->purchase;
+        foreach ($purchases as $purchase) {
+            $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
+        }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
 

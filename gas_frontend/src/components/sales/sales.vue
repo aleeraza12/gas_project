@@ -57,7 +57,7 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-          <v-card  class="elevation-0">
+          <v-card class="elevation-0">
             <v-card-text>
               <v-data-table
                 :loading="loading"
@@ -81,8 +81,8 @@
                     </div>
                   </th>
                 </template>
-                  <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="editItem(item)">
+                <template v-slot:item.actions="{ item }">
+                  <v-icon small class="mr-2" @click="ViewReceipt(item)">
                     mdi-eye
                   </v-icon>
                 </template>
@@ -101,23 +101,22 @@ import { eventBus } from "@/main";
 export default {
   data: () => ({
     loading: true,
-    
+
     headers: [
       {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "name",
+        value: "created_at",
       },
       //{ text: "Order Id", value: "id" },
       { text: "Customer Name", value: "customer_name" },
       { text: "Gas Quantity", value: "gas_quantity" },
       { text: "Amount", value: "total_amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "updated_by" },
+      { text: "Update by", value: "updatedsales-details_by" },
       { text: "Payment Mode", value: "payment_mode" },
-            { text: 'Actions', value: 'actions', sortable: false },
-
+      { text: "View Receipt", value: "actions", sortable: false },
     ],
   }),
   components: {},
@@ -129,7 +128,13 @@ export default {
       this.loading = false;
     });
   },
-  methods: {},
+  methods: {
+    ViewReceipt(item) {
+      console.log(item);
+      this.$store.commit("SET_VIEW_RECEIPT", item);
+      this.$router.push("sales-details");
+    },
+  },
   watch: {
     getSales() {
       console.log("response", this.getSales);

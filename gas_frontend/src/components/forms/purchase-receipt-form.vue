@@ -2,9 +2,9 @@
   <div class="main-container">
     <div class="d-flex">
       <div>
-           <div class="d-flex align-start justify-start">
-      <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
-    </div>
+        <div class="d-flex align-start justify-start" @click="goToPurchase()">
+          <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+        </div>
         <div class="mt-5 ml-3 d-flex align-start justify-start">
           <b>Purchase Recepit Form</b>
         </div>
@@ -139,16 +139,22 @@
       </div>
       <div>
         <div
-          style="height: 300px; width: 300px; margin-top: 10rem;cursor: pointer;"
+          style="
+            height: 300px;
+            width: 300px;
+            margin-top: 10rem;
+            cursor: pointer;
+          "
           class="pa-10 ml-16"
-      
         >
           <div v-if="decodedBase64 != ''">
             <img :src="decodedBase64" height="70" width="80" />
-            <v-icon @click="decodedBase64 = ''" class="ml-3" size="30">mdi-delete-sweep</v-icon>
+            <v-icon @click="decodedBase64 = ''" class="ml-3" size="30"
+              >mdi-delete-sweep</v-icon
+            >
           </div>
           <label for="file-input" v-else>
-            <v-icon size="80"  class="pointer">mdi-image</v-icon
+            <v-icon size="80" class="pointer">mdi-image</v-icon
             ><v-icon>mdi-plus</v-icon>
             <input
               id="file-input"
@@ -156,8 +162,10 @@
               class="d-none"
               @change="onFileChange"
             />
+            <div style="text-decoration: underline">
+              <b>Add Image</b>
+            </div>
           </label>
-          <div style="text-decoration:underline"><b>Add Image</b></div>
         </div>
       </div>
     </div>
@@ -238,6 +246,9 @@ export default {
   created() {},
   watch: {},
   methods: {
+    goToPurchase() {
+      this.$router.push("/purchases");
+    },
     onFileChange() {
       console.log("nsde f");
       let file_size = document.querySelector("input[type=file]").files[0].size;
@@ -306,6 +317,9 @@ export default {
             this.snackbarColor = "success";
             this.snacbarMessage = "Your purchase(s) uploaded successfully";
             this.loading = false;
+            setTimeout(() => {
+              this.$router.push("/purchases");
+            }, 1000);
           }
         })
         .catch(() => {
@@ -313,7 +327,9 @@ export default {
           this.snackbar = true;
           this.snackbarColor = "red";
           this.snacbarMessage = " Something went wrong";
-          //}
+          setTimeout(() => {
+            this.$router.push("/purchases");
+          }, 1000);
         });
     },
   },

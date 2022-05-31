@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $user = User::updateOrCreate(
             [
-                'id' => $request->user_id
+                'id' => $request->users_id
             ],
             [
                 'name' => $request->name,
@@ -65,14 +65,14 @@ class UserController extends Controller
 
     public function delete_user(Request $request)
     {
-        $user =  User::find($request->user_id)->delete();
+        $user =  User::find($request->users_id)->delete();
         return response()->json(['response' => "User deleted successfully", 'status' => 200]);
     }
 
 
     public function read_user(Request $request)
     {
-        $user =  User::find($request->user_id);
+        $user =  User::find($request->users_id);
         return response()->json(['response' => $user, 'status' => 200]);
     }
 
