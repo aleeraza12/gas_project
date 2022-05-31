@@ -69,7 +69,11 @@
             height="230px"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
-              <th v-for="(header, i) in headers" :key="i" class="table-head">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
+              >
                 <div class="d-flex ml-3">
                   {{ header.text }}
                 </div>

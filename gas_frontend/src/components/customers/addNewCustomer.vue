@@ -170,7 +170,7 @@ export default {
   },
   methods: {
     goToCustomerListings() {
-      this.$router.push("/customers");
+      this.$router.go(-1);
     },
 
     createCustomer() {
@@ -205,7 +205,7 @@ export default {
           this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
-            this.$router.push("/customers");
+            this.$router.go(-1);
           }, 1000);
         });
     },

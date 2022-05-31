@@ -172,7 +172,7 @@ export default {
   },
   methods: {
     goToUserListings() {
-      this.$router.push("/users");
+      this.$router.go(-1);
     },
     createUser() {
       this.loading = true;
@@ -208,7 +208,7 @@ export default {
           this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
-            this.$router.push("/users");
+            this.$router.go(-1);
           }, 1000);
         });
     },

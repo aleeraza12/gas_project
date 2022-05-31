@@ -2,7 +2,10 @@
   <div class="main-container">
     <div class="d-flex">
       <div>
-        <div class="d-flex align-start justify-start">
+        <div
+          class="d-flex align-start justify-start"
+          @click="goToSalesListingPage()"
+        >
           <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
         </div>
         <div class="mt-5 ml-3 d-flex align-start justify-start">
@@ -201,6 +204,9 @@ export default {
     //...mapGetters(["getAdminInfo"]),
   },
   methods: {
+    goToSalesListingPage() {
+      this.$router.go(-1);
+    },
     createSale() {
       this.loading = true;
       let requestBody = {
@@ -234,7 +240,7 @@ export default {
           this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
-            this.$router.push("/sales");
+            this.$router.go(-1);
           }, 1000);
         });
     },

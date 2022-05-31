@@ -73,7 +73,7 @@
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
                     v-for="(header, i) in headers"
-                    :key="i"
+                    :key="'A' + i"
                     class="table-head"
                   >
                     <div class="d-flex ml-3">

@@ -38,7 +38,7 @@
                   </div>
                   <v-spacer></v-spacer>
                   <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined
+                    <v-btn small dense outlined @click="goToSalesPage()"
                       >Create Receipt
                       <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
                     >
@@ -73,7 +73,7 @@
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
                     v-for="(header, i) in headers"
-                    :key="i"
+                    :key="'A' + i"
                     class="table-head"
                   >
                     <div class="d-flex ml-3">
@@ -129,6 +129,9 @@ export default {
     });
   },
   methods: {
+    goToSalesPage() {
+      this.$router.push("sale-receipt-form");
+    },
     ViewReceipt(item) {
       console.log(item);
       this.$store.commit("SET_VIEW_RECEIPT", item);

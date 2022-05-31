@@ -247,7 +247,7 @@ export default {
   watch: {},
   methods: {
     goToPurchase() {
-      this.$router.push("/purchases");
+      this.$router.go(-1);
     },
     onFileChange() {
       console.log("nsde f");
@@ -328,7 +328,7 @@ export default {
           this.snackbarColor = "red";
           this.snacbarMessage = " Something went wrong";
           setTimeout(() => {
-            this.$router.push("/purchases");
+            this.$router.go(-1);
           }, 1000);
         });
     },

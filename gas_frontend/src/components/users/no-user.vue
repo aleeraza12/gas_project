@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <div class="d-flex align-start justify-start">
+    <div class="d-flex align-start justify-start" @click="goToPreviousPage()">
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="d-flex align-center justify-center mt-16">
@@ -47,6 +47,9 @@ export default {
     goToAddNewUser() {
       this.$router.push("/new-user");
     },
+    goToPreviousPage(){
+       this.$router.go(-1);
+    }
   },
 };
 </script>

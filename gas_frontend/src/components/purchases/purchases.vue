@@ -73,7 +73,7 @@
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
                     v-for="(header, i) in headers"
-                    :key="i"
+                    :key="'A' + i"
                     class="table-head"
                   >
                     <div class="d-flex ml-3">
@@ -116,7 +116,7 @@ export default {
       { text: "Amount", value: "amount" },
       { text: "Unit Price", value: "unit_price" },
       { text: "Status", value: "status" },
-      { text: "Drver's Name", value: "driver_name" },
+      { text: "Driver's Name", value: "driver_name" },
       { text: "Received By", value: "recepient_name" },
       { text: "Actions", value: "actions", sortable: false },
     ],
