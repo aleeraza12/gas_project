@@ -224,7 +224,7 @@ export default {
   created() {},
   computed: {
     getIcon() {
-      return this.snackbarColor == "primary"
+      return this.snackbarColor == "success"
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },

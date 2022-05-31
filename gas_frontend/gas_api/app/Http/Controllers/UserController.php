@@ -51,13 +51,13 @@ class UserController extends Controller
             [
                 'name' => $request->name,
                 'created_by' => $request->created_by,
-                'password'=> Hash::make($request->password),
-                'designation'=>  $request->designation,
-                'permissions'=>  $request->permissions,
-                'user_type'=>  $request->user_type,
-                'status'=>  $request->status,
+                'password' => Hash::make($request->password),
+                'designation' =>  $request->designation,
+                'permissions' =>  $request->permissions,
+                'user_type' =>  $request->user_type,
+                'status' =>  $request->status,
                 //'user_type_id'=>  $request->user_type_id,
-                'company_id'=>  $request->company_id,
+                'company_id' =>  $request->user_id,
             ]
         );
         return response()->json(['response' => $user, 'status' => 201]);
@@ -69,29 +69,16 @@ class UserController extends Controller
         return response()->json(['response' => "User deleted successfully", 'status' => 200]);
     }
 
-    
+
     public function read_user(Request $request)
     {
         $user =  User::find($request->user_id);
         return response()->json(['response' => $user, 'status' => 200]);
     }
 
-       public function read_all_user(Request $request)
+    public function read_all_user(Request $request)
     {
         $users =  User::all();
         return response()->json(['response' => $users, 'status' => 200]);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

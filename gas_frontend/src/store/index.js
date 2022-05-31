@@ -21,7 +21,7 @@ const store = {
     SET_SALES: (state, payload) => (state.sales = payload),
     SET_CUSTOMERS: (state, payload) => (state.customers = payload),
     SET_PURCHASES: (state, payload) => (state.purchases = payload),
-    SET_USERS: (state, payload) => (state.purchases = payload),
+    SET_USERS: (state, payload) => (state.users = payload),
   },
   actions: {
     // gettng all customers for a company

@@ -9,32 +9,32 @@ class User extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id',
         'name',
-        'email',
-        'phone_number',
+        'created_by',
         'password',
         'designation',
-        'status',
-        'last_login_at',
+        'user_type',
         'permissions',
-        'user_type_id',
-        'company_id'
+        'status',
+        'company_id',
+        'last_login_at'
     ];
-    public function user_type(){
+    public function user_type()
+    {
         return $this->hasOne(UserType::class);
     }
 
-    public function company(){
+    public function company()
+    {
         return $this->hasOne(Company::class);
     }
 
-    
+
     public function setPermissionsAttribute($value)
     {
         $this->attributes['permissions'] = serialize($value);
     }
-    public function getPermissonsAttribute($value)
+    public function getPermissionsAttribute($value)
     {
         return unserialize($value);
     }

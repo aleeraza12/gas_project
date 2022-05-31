@@ -132,7 +132,7 @@
 import RequestService from "../../RequestService";
 export default {
   data: () => ({
-    statuses: ["Active", "inactive"],
+    statuses: ["Active", "Iactive"],
     designations: ["Manager", "Cashier", "Sales Person", "Finance Manager"],
     user_types: ["Admin", "User", "Sub Admin"],
     user_type: "",
@@ -162,6 +162,7 @@ export default {
   },
   methods: {
     createUser() {
+      this.loading = true;
       this.permissions.push(this.permission1);
       this.permissions.push(this.permission2);
       let requestBody = {
@@ -174,23 +175,23 @@ export default {
         permissions: this.permissions,
       };
       console.log(requestBody);
-      //  RequestService.post("user/create", requestBody)
-      //    .then((res) => {
-      //      console.log("status in user", res.data.status);
-      //      if (res.data.status == 201) {
-      //        console.log("this is inside");
-      //        this.snackbar = true;
-      //        this.snackbarColor = "success";
-      //        this.snacbarMessage = "Your user(s) added successfully";
-      //        this.loading = false;
-      //      }
-      //    })
-      //    .catch(() => {
-      //      this.snackbar = true;
-      //      this.snackbarColor = "red";
-      //      this.snacbarMessage = " Something went wrong";
-      //      this.loading = false;
-      //    });
+      RequestService.post("user/create", requestBody)
+        .then((res) => {
+          console.log("status in user", res.data.status);
+          if (res.data.status == 201) {
+            console.log("this is inside");
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "New user(s) added successfully";
+            this.loading = false;
+          }
+        })
+        .catch(() => {
+          this.snackbar = true;
+          this.snackbarColor = "red";
+          this.snacbarMessage = " Something went wrong";
+          this.loading = false;
+        });
     },
   },
 };
