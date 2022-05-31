@@ -139,15 +139,16 @@
       </div>
       <div>
         <div
-          style="height: 300px; width: 300px; margin-top: 10rem"
+          style="height: 300px; width: 300px; margin-top: 10rem;cursor: pointer;"
           class="pa-10 ml-16"
+      
         >
           <div v-if="decodedBase64 != ''">
             <img :src="decodedBase64" height="70" width="80" />
-            <v-icon @click="decodedBase64 = ''">mdi-close</v-icon>
+            <v-icon @click="decodedBase64 = ''" class="ml-3" size="30">mdi-delete-sweep</v-icon>
           </div>
           <label for="file-input" v-else>
-            <v-icon size="80" class="pointer">mdi-image</v-icon
+            <v-icon size="80"  class="pointer">mdi-image</v-icon
             ><v-icon>mdi-plus</v-icon>
             <input
               id="file-input"
@@ -156,6 +157,7 @@
               @change="onFileChange"
             />
           </label>
+          <div style="text-decoration:underline"><b>Add Image</b></div>
         </div>
       </div>
     </div>
