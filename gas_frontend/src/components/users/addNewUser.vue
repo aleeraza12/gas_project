@@ -16,7 +16,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-3"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -27,7 +27,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-3"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -38,7 +38,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-3"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -49,7 +49,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-3"
             style="width: 300px"
           ></v-text-field>
         </div>
