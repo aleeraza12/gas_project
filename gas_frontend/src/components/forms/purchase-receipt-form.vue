@@ -207,7 +207,6 @@ export default {
     amount: "",
     unit_price: "",
     receipt_number: "",
-    date: "",
     driver_name: "",
     nameRules: [(v) => !!v || "This field is required"],
     decodedBase64: "",
