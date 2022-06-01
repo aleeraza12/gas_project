@@ -1,6 +1,9 @@
 <template>
   <div class="main-container">
-    <div class="d-flex align-start justify-start">
+    <div
+      class="d-flex align-start justify-start pointer"
+      @click="goToUserListings()"
+    >
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="mt-3">
@@ -168,6 +171,9 @@ export default {
     //...mapGetters(["getAdminInfo"]),
   },
   methods: {
+    goToUserListings() {
+      this.$router.go(-1);
+    },
     createUser() {
       this.loading = true;
       this.permissions.push(this.permission1);
@@ -191,6 +197,9 @@ export default {
             this.snackbarColor = "success";
             this.snacbarMessage = "New user(s) added successfully";
             this.loading = false;
+            setTimeout(() => {
+              this.$router.push("/users");
+            }, 1000);
           }
         })
         .catch(() => {
@@ -198,6 +207,9 @@ export default {
           this.snackbarColor = "red";
           this.snacbarMessage = " Something went wrong";
           this.loading = false;
+          setTimeout(() => {
+            this.$router.go(-1);
+          }, 1000);
         });
     },
   },
@@ -212,6 +224,9 @@ export default {
   color: #fff;
   min-width: 300px !important;
   border-radius: 8px !important;
+  cursor: pointer;
+}
+.pointer {
   cursor: pointer;
 }
 </style>

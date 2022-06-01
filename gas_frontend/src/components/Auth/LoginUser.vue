@@ -161,7 +161,8 @@ export default {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            //this.$store.dispatch("getOrders", response.data.data.user.id);
+            this.$store.dispatch("getSalesListings");
+            this.$store.dispatch("getUsersListings");
             let vm = this;
             setTimeout(function () {
               vm.$router.push("/dashboard");

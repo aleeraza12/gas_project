@@ -1,7 +1,11 @@
 <template>
   <div class="main-container">
-    <div class="d-flex align-start justify-start">
-      <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+    <div
+      @click="goToCustomerListings()"
+      class="d-flex align-start justify-start pointer"
+    >
+      <v-icon>mdi-chevron-left</v-icon>
+      <span>Back</span>
     </div>
     <div class="mt-3">
       <div class="d-flex align-start justify-start"><b>New Customer</b></div>
@@ -165,7 +169,12 @@ export default {
     //...mapGetters(["getAdminInfo"]),
   },
   methods: {
+    goToCustomerListings() {
+      this.$router.go(-1);
+    },
+
     createCustomer() {
+      this.loading = true;
       let requestBody = {
         name: this.name,
         email: this.email,
@@ -185,6 +194,9 @@ export default {
             this.snackbarColor = "success";
             this.snacbarMessage = "Your customer(s) added successfully";
             this.loading = false;
+            setTimeout(() => {
+              this.$router.push("/customers");
+            }, 1000);
           }
         })
         .catch(() => {
@@ -192,6 +204,9 @@ export default {
           this.snackbarColor = "red";
           this.snacbarMessage = " Something went wrong";
           this.loading = false;
+          setTimeout(() => {
+            this.$router.go(-1);
+          }, 1000);
         });
     },
   },
@@ -206,6 +221,9 @@ export default {
   color: #fff;
   min-width: 300px !important;
   border-radius: 8px !important;
+  cursor: pointer;
+}
+.pointer {
   cursor: pointer;
 }
 </style>

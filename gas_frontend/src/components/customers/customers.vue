@@ -38,7 +38,7 @@
                   </div>
                   <v-spacer></v-spacer>
                   <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined
+                    <v-btn small dense outlined @click="addNewCustomer()"
                       >Add New
                       <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
                     >
@@ -69,33 +69,58 @@
             height="230px"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
-              <th v-for="(header, i) in headers" :key="i" class="table-head">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
+              >
                 <div class="d-flex ml-3">
                   {{ header.text }}
                 </div>
               </th>
             </template>
-            <template v-slot:item.actions="{ item }">
+            <template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-eye
               </v-icon>
-              <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+            </template>
+            <template v-slot:item.actions2="{ item }">
+              <v-icon small class="mr-2" @click="deleteItem(item)">
+                mdi-eye
+              </v-icon>
             </template>
           </v-data-table>
         </div>
       </v-card-text>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-
+import RequestService from "../../RequestService";
 export default {
   data: () => ({
     loading: true,
-    
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
     headers: [
       {
         text: "Customer Name",
@@ -108,7 +133,8 @@ export default {
       { text: "Location", value: "address" },
       { text: "Customer Type", value: "customer_type" },
       { text: "Total Sales", value: "9910910191" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "Edit", value: "actions1", sortable: false },
+      { text: "Delete", value: "actions2", sortable: false },
     ],
   }),
   components: {},
@@ -125,11 +151,39 @@ export default {
   },
   computed: {
     ...mapGetters(["getCustomers"]),
+    getIcon() {
+      return this.snackbarColor == "success"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
   },
   mounted() {
     this.$store.dispatch("getCustomersListing");
   },
-  methods: {},
+  methods: {
+    addNewCustomer() {
+      this.$router.push("/new-customer");
+    },
+    editItem(item) {
+      console.log(item);
+    },
+    deleteItem(item) {
+      console.log(item);
+      let requestBody = {
+        customer_id: item.id,
+      };
+      RequestService.post("customer/delete", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          console.log("customer deleted");
+          this.loading = true;
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.snacbarMessage = "Your customer(s) deleted successfully";
+          this.$store.dispatch("getCustomersListing");
+        }
+      });
+    },
+  },
 };
 </script>
 <style scoped>

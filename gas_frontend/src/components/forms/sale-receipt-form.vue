@@ -2,9 +2,12 @@
   <div class="main-container">
     <div class="d-flex">
       <div>
-           <div class="d-flex align-start justify-start">
-      <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
-    </div>
+        <div
+          class="d-flex align-start justify-start"
+          @click="goToSalesListingPage()"
+        >
+          <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+        </div>
         <div class="mt-5 ml-3 d-flex align-start justify-start">
           <b>Sales Recepit Form</b>
         </div>
@@ -22,7 +25,7 @@
                 outlined
                 dense
                 small
-               hide-details
+                hide-details
               ></v-select>
             </div>
             <div>
@@ -201,6 +204,9 @@ export default {
     //...mapGetters(["getAdminInfo"]),
   },
   methods: {
+    goToSalesListingPage() {
+      this.$router.go(-1);
+    },
     createSale() {
       this.loading = true;
       let requestBody = {
@@ -223,6 +229,9 @@ export default {
             this.snackbarColor = "success";
             this.snacbarMessage = "Your sale(s) added successfully";
             this.loading = false;
+            setTimeout(() => {
+              this.$router.push("/sales");
+            }, 1000);
           }
         })
         .catch(() => {
@@ -230,6 +239,9 @@ export default {
           this.snackbarColor = "red";
           this.snacbarMessage = " Something went wrong";
           this.loading = false;
+          setTimeout(() => {
+            this.$router.go(-1);
+          }, 1000);
         });
     },
   },

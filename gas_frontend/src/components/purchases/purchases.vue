@@ -38,7 +38,7 @@
                   </div>
                   <v-spacer></v-spacer>
                   <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined
+                    <v-btn small dense outlined @click="goToAddPurchase()"
                       >Add Receipt
                       <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
                     >
@@ -57,7 +57,7 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-          <v-card  class="elevation-0">
+          <v-card class="elevation-0">
             <v-card-text>
               <v-data-table
                 :loading="loading"
@@ -73,7 +73,7 @@
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
                     v-for="(header, i) in headers"
-                    :key="i"
+                    :key="'A' + i"
                     class="table-head"
                   >
                     <div class="d-flex ml-3">
@@ -81,8 +81,8 @@
                     </div>
                   </th>
                 </template>
-                  <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="editItem(item)">
+                <template v-slot:item.actions="{ item }">
+                  <v-icon small class="mr-2" @click="viewPurchase(item)">
                     mdi-eye
                   </v-icon>
                 </template>
@@ -102,7 +102,7 @@ import { eventBus } from "@/main";
 export default {
   data: () => ({
     loading: true,
-    
+
     headers: [
       {
         text: "Date",
@@ -116,10 +116,9 @@ export default {
       { text: "Amount", value: "amount" },
       { text: "Unit Price", value: "unit_price" },
       { text: "Status", value: "status" },
-      { text: "Drver's Name", value: "driver_name" },
+      { text: "Driver's Name", value: "driver_name" },
       { text: "Received By", value: "recepient_name" },
-            { text: 'Actions', value: 'actions', sortable: false },
-
+      { text: "Actions", value: "actions", sortable: false },
     ],
   }),
   components: {},
@@ -131,7 +130,15 @@ export default {
       this.loading = false;
     });
   },
-  methods: {},
+  methods: {
+    viewPurchase(item) {
+      this.$store.commit("SET_VIEW_PURCHASE", item);
+      this.$router.push("purchase-details");
+    },
+    goToAddPurchase() {
+      this.$router.push("purchase-receipt-form");
+    },
+  },
   watch: {
     getPurchases() {
       console.log("response", this.getPurchases);
