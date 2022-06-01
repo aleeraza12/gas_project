@@ -24,7 +24,7 @@
       </div>
       <div class="d-flex mt-5">
         <div>
-          <v-card height="80" width="930"  style="background-color:#EBEBEA">
+          <v-card height="80" width="1000px"  style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -46,8 +46,6 @@
        <div class="mr-3"><b>Date Picker</b></div>
       </div>
       <div class="mt-3">
-        <v-card  class="elevation-0">
-          <v-card-text>
  <v-data-table
           :headers="headers"
           :items="desserts"
@@ -66,8 +64,7 @@
           
        </template>
         </v-data-table>
-          </v-card-text>
-        </v-card>
+      
        
       </div>
 </div>

@@ -19,7 +19,6 @@ const store = {
     getCustomers: (state) => state.customers,
     getUsers: (state) => state.users,
     getPurchases: (state) => state.purchases,
-    getPurchases: (state) => state.purchases,
     getSingleReceipt: (state) => state.view_single_receipt,
     getSinglePurchase: (state) => state.view_single_purchase,
   },

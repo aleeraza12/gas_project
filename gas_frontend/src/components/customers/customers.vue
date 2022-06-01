@@ -25,7 +25,7 @@
         </div>
         <div class="d-flex mt-5">
           <div>
-            <v-card height="80" width="930" style="background-color: #ebebea">
+            <v-card height="80" width="1000px" style="background-color: #ebebea">
               <v-card-text>
                 <div class="d-flex">
                   <div>
