@@ -53,7 +53,7 @@
           class="elevation-1"
             hide-default-footer
             hide-default-header
-           height="calc(100vh-500px)"
+           height="400px"
         >
           <template v-slot:[`body.prepend`]= "{headers}">
            <th v-for="(header , i) in headers" :key="i" class="table-head">

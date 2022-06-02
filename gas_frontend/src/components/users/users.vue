@@ -66,7 +66,7 @@
                 class="elevation-1"
                 hide-default-footer
                 hide-default-header
-                height="230px"
+               height="400px"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th

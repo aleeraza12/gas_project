@@ -31,7 +31,7 @@
       </div>
       <div class="d-flex mt-5">
         <div>
-          <v-card height="120" width="500"  style="background-color:#EBEBEA">
+          <v-card height="120" width="400"  style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -50,7 +50,7 @@
           </v-card>
         </div>
         <div>
-          <v-card height="120" width="500" class="ml-5"  style="background-color:#EBEBEA">
+          <v-card height="120" width="400" class="ml-5"  style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -69,7 +69,7 @@
           </v-card>
         </div>
           <div>
-          <v-card height="120" width="530" class="ml-5" style="background-color:#EBEBEA">
+          <v-card height="120" width="400" class="ml-5" style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -100,7 +100,7 @@
           :items-per-page="5"
           class="elevation-1"
             hide-default-footer
-          height="230px"
+          height="300px"
         ></v-data-table>
       </div>
     </v-card-text>
