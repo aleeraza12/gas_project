@@ -8,7 +8,9 @@
       <span>Back</span>
     </div>
     <div class="mt-3">
-      <div class="d-flex align-start justify-start"><b>New Customer</b></div>
+      <div class="d-flex align-start justify-start">
+        <b>{{ customerText }} Customer</b>
+      </div>
       <div class="d-flex align-start justify-start fonts mt-1">
         Enter the following details to create a customer profile
       </div>
@@ -142,6 +144,8 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
+
 export default {
   data: () => ({
     nameRules: [(v) => !!v || "This field is required"],
@@ -150,9 +154,11 @@ export default {
     name: "",
     email: "",
     phone_number: "",
+    customerText: "New",
     city: "",
     state: "",
     customer_type: "",
+    customer_id:null,
     address: "",
     snacbarMessage: "",
     snackbar: false,
@@ -166,13 +172,29 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    //...mapGetters(["getSingleCustomer"]),
+  },
+  created() {
+    eventBus.$on("updateCustomer", (data) => {
+      console.log("emt receved", data);
+      this.assembleData(data);
+    });
   },
   methods: {
     goToCustomerListings() {
       this.$router.go(-1);
     },
-
+    assembleData(data) {
+      this.name = data.name;
+      this.email = data.email;
+      this.phone_number = data.phone_number;
+      this.city = data.city;
+      this.state = data.state;
+      this.customer_type = data.customer_type;
+      this.address = data.address;
+      this.customer_id = data.id;
+      this.customerText = "Update";
+    },
     createCustomer() {
       this.loading = true;
       let requestBody = {
@@ -183,6 +205,7 @@ export default {
         state: this.state,
         customer_type: this.customer_type,
         address: this.address,
+        customer_id: this.customer_id
       };
       console.log(requestBody);
       RequestService.post("customer/create", requestBody)

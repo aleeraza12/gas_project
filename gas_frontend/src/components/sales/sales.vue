@@ -33,7 +33,7 @@
                       <b>Total Sales</b>
                     </div>
                     <div class="d-flex align-start justify-start">
-                      165,00,0000 NAJRA
+                      {{ total_sales }} NAJRA
                     </div>
                   </div>
                   <v-spacer></v-spacer>
@@ -81,6 +81,7 @@
                     </div>
                   </th>
                 </template>
+
                 <template v-slot:item.actions="{ item }">
                   <v-icon small class="mr-2" @click="ViewReceipt(item)">
                     mdi-eye
@@ -101,7 +102,7 @@ import { eventBus } from "@/main";
 export default {
   data: () => ({
     loading: true,
-
+    total_sales: null,
     headers: [
       {
         text: "Date",
@@ -109,12 +110,12 @@ export default {
         sortable: false,
         value: "created_at",
       },
-      //{ text: "Order Id", value: "id" },
+      { text: "Transaction Id", value: "transaction_id" },
       { text: "Customer Name", value: "customer_name" },
       { text: "Gas Quantity", value: "gas_quantity" },
       { text: "Amount", value: "total_amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "updatedsales-details_by" },
+      { text: "Update by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
       { text: "View Receipt", value: "actions", sortable: false },
     ],
@@ -141,6 +142,9 @@ export default {
   watch: {
     getSales() {
       console.log("response", this.getSales);
+      for (var i in this.getSales) {
+        this.total_sales += this.getSales[i].total_amount;
+      }
     },
   },
   mounted() {

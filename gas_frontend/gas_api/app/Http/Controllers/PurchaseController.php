@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Purchase;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class PurchaseController extends Controller
                 'unit_price' =>  $request->unit_price,
                 'recepient_name' =>  $request->recepient_name,
                 'company_id' => $request->user_id,
-                'receipt_attachment_path' =>  $request->has('attachment') ? $this->upload_attachment($request) : null,
+                'receipt_attachment_path' =>  $request->attachment == "" ? null :  $this->upload_attachment($request)
             ]
         );
         TransactionController::createTransaction($request->merge(['type' => 'purchase']));
@@ -51,7 +52,10 @@ class PurchaseController extends Controller
     {
         $purchases =  Company::find($request->user_id)->purchase;
         foreach ($purchases as $purchase) {
-            $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
+            if ($purchase['receipt_attachment_path'] !== null)
+                $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
+            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->user_id)->first();
+            $sale['transaction_id'] =  @$transaction->id;
         }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }

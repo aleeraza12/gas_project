@@ -10,19 +10,40 @@
       <v-divider></v-divider>
       <div class="d-flex align-center justify-center mt-3">
         <div
-          v-if="getSinglePurchase.base64 == ''"
+          v-if="
+            (getSinglePurchase.base64 == '' && decodedBase64 == '') ||
+            (getSinglePurchase.receipt_attachment_path == null &&
+              decodedBase64 == '')
+          "
           style="height: 150px; width: 150px; background-color: #c4c4c4"
         ></div>
         <img
           v-else
           style="border: 1px solid grey; border-radius: 5px"
           max-width="70"
-          v-bind:src="'data:image/jpeg;base64,' + getSinglePurchase.base64"
+          v-bind:src="
+            'data:image/jpeg;base64,' + decodedBase64 != ''
+              ? decodedBase64
+              : getSinglePurchase.base64
+          "
           height="120"
         />
       </div>
       <div class="d-flex align-center justify-center mt-1">
-        <div style="text-decoration: underline" class="fonts">Change Image</div>
+        <label for="file-input">
+          <div
+            style="text-decoration: underline; cursor: pointer"
+            class="fonts"
+          >
+            Change Image
+          </div>
+          <input
+            id="file-input"
+            type="file"
+            class="d-none"
+            @change="onFileChange"
+          />
+        </label>
       </div>
 
       <div class="d-flex mt-5">
@@ -59,8 +80,8 @@
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
-          <div class="fonts">Transcation Id</div>
-          <div class="fonts">000000010000</div>
+          <div class="fonts">Transaction Id</div>
+          <div class="fonts">{{ getSinglePurchase.transaction_id }}</div>
         </div>
       </div>
       <div class="mt-3" style="text-decoration: underline">
@@ -83,8 +104,8 @@
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
-          <div class="fonts">Transcation Id</div>
-          <div class="fonts">000000010000</div>
+          <div class="fonts">Gas Quantity</div>
+          <div class="fonts">{{ getSinglePurchase.gas_quantity }}</div>
         </div>
       </div>
       <div class="mt-3" style="text-decoration: underline">
@@ -142,6 +163,21 @@
         </div>
       </div>
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -149,6 +185,12 @@ import { mapGetters } from "vuex";
 export default {
   data: () => ({
     loading: false,
+    decodedBase64: "",
+    validFileSize: false,
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
+    files: "",
   }),
   watch: {
     getSinglePurchase() {
@@ -157,11 +199,60 @@ export default {
   },
   computed: {
     ...mapGetters(["getSinglePurchase"]),
+    getIcon() {
+      return this.snackbarColor == "primary"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
   },
   mounted() {
     console.log("nsde mounted", this.getSinglePurchase);
   },
   methods: {
+    onFileChange() {
+      console.log("nsde f");
+      let file_size = document.querySelector("input[type=file]").files[0].size;
+      this.validFileSize = true;
+      let fileBase64;
+      if (file_size > 2097152) {
+        this.validFileSize = false;
+      }
+      if (!this.validFileSize) {
+        this.snackbar = true;
+        this.snackbarColor = "red";
+        this.snacbarMessage = " File size should not be greater then 2 MB";
+        this.loading = false;
+        this.files = [];
+      } else {
+        let that = this;
+        const file = document.querySelector("input[type=file]").files[0];
+        const reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function () {
+            fileBase64 = reader.result; //extract file type
+            let i = file.name.lastIndexOf(".");
+            let fileType;
+            if (i > 0) {
+              fileType = file.name.substring(i + 1);
+            }
+            if (fileType == "jpg") {
+              fileType = "jpeg";
+            }
+            that.decodedBase64 = fileBase64.replace(
+              "data:image/" + fileType + ";base64,",
+              ""
+            );
+            console.log("requsetbody", that.decodedBase64);
+            event.target.value = null;
+          },
+          false
+        );
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      }
+    },
     goToPurchases() {
       this.$router.push("/purchases");
     },

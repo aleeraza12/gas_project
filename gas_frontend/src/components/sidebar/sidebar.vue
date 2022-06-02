@@ -136,9 +136,14 @@ export default {
   }),
   components: {},
   created() {},
+  mounted() {
+    this.$store.dispatch("getUsersListing");
+    this.$store.dispatch("getSalesListings");
+  },
   computed: {
     ...mapGetters(["getSales", "getUsers"]),
   },
+  watch: {},
   methods: {
     getColor(link, titleName, index) {
       titleName == link.tabName
@@ -146,15 +151,13 @@ export default {
         : (this.links[index].color = "black");
     },
     Logout(rout) {
-      console.log("logout called", rout, this.getSales.length);
-
       if (rout.text == "Logout") {
+        this.$router.push("login");
         let url = this.$store.state.url;
         let requestBody = {
           token: localStorage.getItem("token"),
         };
         axios.post(url + "logout", requestBody).then(() => {
-          this.$router.push("login");
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         });

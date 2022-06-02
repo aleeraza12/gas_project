@@ -29,7 +29,7 @@
               ></v-select>
             </div>
             <div>
-              <v-text-field
+              <!--<v-text-field
                 label="Customer Name"
                 v-model="customer_name"
                 outlined
@@ -38,7 +38,23 @@
                 placeholder="Enter Customer Name"
                 hide-details
                 class="username-feild mt-3"
-              ></v-text-field>
+              ></v-text-field>-->
+              <v-select
+                :items="
+                  Object.keys(customer_names).map((key) => ({
+                    text: customer_names[key].name,
+                    value: customer_names[key],
+                  }))
+                "
+                label="Customer Name"
+                v-model="customer_name"
+                :rules="nameRules"
+                outlined
+                class="username-feild mt-3"
+                dense
+                small
+                hide-details
+              ></v-select>
             </div>
             <div>
               <v-text-field
@@ -126,7 +142,7 @@
           "
           class="pa-10 ml-16"
         >
-          <v-form v-model="valid">
+          <v-form v-model="valid1">
             <div class="pa-2">
               <v-text-field
                 label="Enter Discount code"
@@ -136,13 +152,16 @@
                 hide-details
                 class="username-feild mt-10"
                 v-model="discount_code"
+                :rules="nameRules"
               ></v-text-field>
             </div>
             <div class="mt-5">
               <v-btn
                 small
                 class="elevation-0 btn-create"
-                @click="createSale()"
+                @click="addPromo()"
+                :disabled="!valid1"
+                :loading="loading1"
                 dense
               >
                 Submit
@@ -171,9 +190,11 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     valid: false,
+    valid1: false,
     show: false,
     show1: false,
     gas_quantity: "",
@@ -181,6 +202,7 @@ export default {
     nameRules: [(v) => !!v || "This field is required"],
     total_amount: "",
     customer_name: "",
+    customer_names: [],
     customer_phone_number: "",
     customer_types: ["Distributor", "Retailer"],
     payment_modes: ["Cash", "Prepad"],
@@ -192,6 +214,7 @@ export default {
     snackbar: false,
     snackbarColor: "",
     loading: false,
+    loading1: false,
   }),
   components: {},
   created() {},
@@ -201,9 +224,23 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    ...mapGetters(["getCustomers"]),
+  },
+  mounted() {
+    this.$store.dispatch("getCustomersListing");
+  },
+  watch: {
+    getCustomers() {
+      //for (let m = 0; m < this.getCustomers.length; m++)
+      this.customer_names = this.getCustomers;
+    },
   },
   methods: {
+    addPromo() {
+      this.snackbar = true;
+      this.snackbarColor = "success";
+      this.snacbarMessage = "Your promo(s) will be added with your sales";
+    },
     goToSalesListingPage() {
       this.$router.go(-1);
     },
@@ -213,7 +250,7 @@ export default {
         gas_quantity: this.gas_quantity,
         total_amount: this.total_amount,
         price: this.price,
-        customer_name: this.customer_name,
+        customer_id: this.customer_name.id,
         customer_type: this.customer_type,
         customer_phone_number: this.customer_phone_number,
         discount_code: this.discount_code,

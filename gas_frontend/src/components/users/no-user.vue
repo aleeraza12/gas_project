@@ -43,13 +43,19 @@ export default {
   data: () => ({
     loading: false,
   }),
+  computed: {
+    ...mapGetters(["getUsers"]),
+  },
   methods: {
     goToAddNewUser() {
       this.$router.push("/new-user");
     },
-    goToPreviousPage(){
-       this.$router.go(-1);
-    }
+    goToPreviousPage() {
+      if (this.getUsers.length == 0) {
+        console.log("prevos route");
+        this.$router.back();
+      }
+    },
   },
 };
 </script>

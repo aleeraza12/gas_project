@@ -85,7 +85,7 @@
               </v-icon>
             </template>
             <template v-slot:item.actions2="{ item }">
-              <v-icon small class="mr-2" @click="deleteItem(item)">
+              <v-icon small class="mr-2" @click="setModal(item)">
                 mdi-eye
               </v-icon>
             </template>
@@ -93,6 +93,25 @@
         </div>
       </v-card-text>
     </v-card>
+
+    <v-dialog v-model="dialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="text-h7">
+          Are you sure to delete this customer?
+        </v-card-title>
+        <v-card-text>By deleting, All of its sales will be lost.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" black" small text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="red darken-1" small text @click="deleteItem()">
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-snackbar
       v-model="snackbar"
       :timeout="2000"
@@ -118,6 +137,8 @@ import RequestService from "../../RequestService";
 export default {
   data: () => ({
     loading: true,
+    deleteable: "",
+    dialog: false,
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
@@ -132,7 +153,7 @@ export default {
       { text: "Email Address", value: "email" },
       { text: "Location", value: "address" },
       { text: "Customer Type", value: "customer_type" },
-      { text: "Total Sales", value: "9910910191" },
+      { text: "Total Sales", value: "total_sale" },
       { text: "Edit", value: "actions1", sortable: false },
       { text: "Delete", value: "actions2", sortable: false },
     ],
@@ -166,11 +187,20 @@ export default {
     },
     editItem(item) {
       console.log(item);
+      this.$router.push("/new-customer");
+      setTimeout(() => {
+        eventBus.$emit("updateCustomer", item);
+      }, 100);
+      //this.$store.commit("SET_SINGLE_CUSTOMER_DATA", item);
     },
-    deleteItem(item) {
-      console.log(item);
+    setModal(item) {
+      this.dialog = true;
+      this.deleteable = item;
+    },
+    deleteItem() {
+      this.dialog = false;
       let requestBody = {
-        customer_id: item.id,
+        customer_id: this.deleteable.id,
       };
       RequestService.post("customer/delete", requestBody).then((response) => {
         if (response.data.status == 200) {

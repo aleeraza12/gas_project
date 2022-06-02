@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Customer;
 use App\Models\Sale;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -19,7 +21,7 @@ class SaleController extends Controller
                 'gas_quantity' => $request->gas_quantity,
                 'total_amount' =>  $request->total_amount,
                 'price' =>  $request->price,
-                'customer_name' =>  $request->customer_name,
+                'customer_id' =>  $request->customer_id,
                 'customer_phone_number' =>  $request->customer_phone_number,
                 'customer_type' =>  $request->customer_type,
                 'discount_code' => $request->discount_code,
@@ -50,7 +52,10 @@ class SaleController extends Controller
         $sales =   Company::find($request->user_id)->sale;
         $name = Company::find($request->user_id);
         foreach ($sales as $sale) {
-            $sale['updated_by'] = $name->company_name;
+            $sale['updated_by'] = $name->company_name; //updated_by
+            $transaction = Transaction::where('type', 'sale')->where('outer_id', $request->user_id)->first();
+            $sale['transaction_id'] =  @$transaction->id;
+            $sale['customer_name'] =  Customer::find($sale->customer_id)->name;
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }

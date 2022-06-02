@@ -128,6 +128,7 @@
               <v-btn
                 class="elevation-0 mt-3 btn-create"
                 @click="savePurchase()"
+                :disabled="!valid"
                 :loading="loading"
                 dense
               >
@@ -295,8 +296,16 @@ export default {
     },
     savePurchase() {
       this.loading = true;
+      var d = new Date();
       let requestBody = {
-        date: this.date,
+        date:
+          this.date +
+          " " +
+          d.getHours() +
+          ":" +
+          d.getMinutes() +
+          ":" +
+          d.getSeconds(),
         receipt_number: this.receipt_number,
         company_name: this.company_name,
         company_phone_number: this.company_phone_number,

@@ -53,7 +53,7 @@
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
           <div class="fonts">Transcation Id</div>
-          <div class="fonts">000000001000</div>
+          <div class="fonts">00000000{{ getSingleReceipt.transaction_id }}</div>
         </div>
       </div>
       <div class="mt-3" style="text-decoration: underline">
@@ -76,8 +76,8 @@
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
-          <div class="fonts">Transcation Id</div>
-          <div class="fonts">000000000000</div>
+          <div class="fonts">Gas Quantity</div>
+          <div class="fonts">{{ getSingleReceipt.gas_quantity }}</div>
         </div>
       </div>
       <div class="mt-3" style="text-decoration: underline">

@@ -33,7 +33,7 @@
                       <b>Available Balance</b>
                     </div>
                     <div class="d-flex align-start justify-start">
-                      165,00,0000 NAJRA
+                      {{ total_sales }} NAJRA
                     </div>
                   </div>
                   <v-spacer></v-spacer>
@@ -102,6 +102,7 @@ import { eventBus } from "@/main";
 export default {
   data: () => ({
     loading: true,
+    total_sales: null,
 
     headers: [
       {
@@ -142,6 +143,9 @@ export default {
   watch: {
     getPurchases() {
       console.log("response", this.getPurchases);
+      for (var i in this.getPurchases) {
+        this.total_sales += this.getPurchases[i].amount;
+      }
     },
   },
   mounted() {

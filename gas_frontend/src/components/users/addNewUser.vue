@@ -7,7 +7,9 @@
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="mt-3">
-      <div class="d-flex align-start justify-start"><b>Add New User</b></div>
+      <div class="d-flex align-start justify-start">
+        <b>{{ userText }} User</b>
+      </div>
       <div class="d-flex align-start justify-start fonts mt-1">
         Enter the following details to create a user profile
       </div>
@@ -139,9 +141,10 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
 export default {
   data: () => ({
-    statuses: ["Active", "Iactive"],
+    statuses: ["Active", "Inactive"],
     designations: ["Manager", "Cashier", "Sales Person", "Finance Manager"],
     user_types: ["Admin", "User", "Sub Admin"],
     nameRules: [(v) => !!v || "This field is required"],
@@ -149,6 +152,8 @@ export default {
     designation: "",
     name: "",
     created_by: "",
+    userText: "Add New",
+    users_id: null,
     phone_number: "",
     status: "",
     customer_type: "",
@@ -170,7 +175,25 @@ export default {
     },
     //...mapGetters(["getAdminInfo"]),
   },
+  created() {
+    eventBus.$on("updateUser", (data) => {
+      console.log("emt receved", data);
+      this.assembleData(data);
+    });
+  },
   methods: {
+    assembleData(data) {
+      this.name = data.name;
+      this.created_by = data.created_by;
+      this.user_type = data.user_type;
+      this.password = data.password;
+      this.designation = data.designation;
+      this.status = data.status;
+      this.permission1 = data.permissions[0];
+      this.permission2 = data.permissions[1];
+      this.users_id = data.id;
+      this.userText = "Update";
+    },
     goToUserListings() {
       this.$router.go(-1);
     },
@@ -186,6 +209,7 @@ export default {
         designation: this.designation,
         status: this.status,
         permissions: this.permissions,
+        users_id: this.users_id,
       };
       console.log(requestBody);
       RequestService.post("user/create", requestBody)

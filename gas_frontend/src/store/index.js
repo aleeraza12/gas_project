@@ -13,6 +13,7 @@ const store = {
     users: [],
     view_single_receipt: [],
     view_single_purchase: [],
+    single_customer_to_update:""
   },
   getters: {
     getSales: (state) => state.sales,
@@ -22,6 +23,7 @@ const store = {
     getPurchases: (state) => state.purchases,
     getSingleReceipt: (state) => state.view_single_receipt,
     getSinglePurchase: (state) => state.view_single_purchase,
+    getSingleCustomer: (state) => state.single_customer_to_update,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
@@ -29,6 +31,7 @@ const store = {
     SET_PURCHASES: (state, payload) => (state.purchases = payload),
     SET_USERS: (state, payload) => (state.users = payload),
     SET_VIEW_RECEIPT: (state, payload) => (state.view_single_receipt = payload),
+    SET_SINGLE_CUSTOMER_DATA: (state, payload) => (state.single_customer_to_update = payload),
     SET_VIEW_PURCHASE: (state, payload) =>
       (state.view_single_purchase = payload),
   },
