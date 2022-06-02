@@ -169,7 +169,7 @@ export default {
 </script>
 <style scoped>
 .sidebar-card {
-  height: 660px;
+  height: 100vh;
   border-radius: 0px !important;
 }
 .navaigation-side {
