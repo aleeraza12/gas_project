@@ -100,7 +100,7 @@
           :items-per-page="5"
           class="elevation-1"
             hide-default-footer
-          height="230px"
+          height="300px"
         ></v-data-table>
       </div>
     </v-card-text>
