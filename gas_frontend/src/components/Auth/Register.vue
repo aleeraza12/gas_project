@@ -150,7 +150,7 @@
                   v-model="confirm_password"
                 ></v-text-field>
               </div>
-              <div class="mt-3">
+              <div class="mt-3 d-flex justify-start align-start">
                 <span class="forget-password" @click="$router.push('login')"
                   >Already have an account? Login</span
                 >
@@ -161,7 +161,7 @@
                   large
                   class="elevation-0 btn-create"
                   :loading="loading"
-                  :disabled="!valid"
+               
                   @click="createAccount()"
                   dense
                 >
@@ -286,7 +286,7 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-  height: 600px;
+  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -294,7 +294,7 @@ export default {
   background-color: #ebebea;
 }
 .create-screen {
-  height: 600px;
+  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -312,7 +312,7 @@ export default {
   font-size: 12px;
   color: black;
   font-weight: 500;
-  margin-left: 6rem;
+  margin-left: 4rem;
   cursor: pointer;
 }
 .content-welcome {
@@ -359,7 +359,7 @@ export default {
   border-radius: 8px;
 }
 .btn-create {
-  background-color:  #464646;
+  background-color:  #464646 !important;
   color: #fff;
   min-width: 400px !important;
   border-radius: 8px !important;

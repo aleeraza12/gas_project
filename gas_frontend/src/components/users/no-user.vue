@@ -1,10 +1,13 @@
 <template>
   <div class="main-container">
-    <div class="d-flex align-start justify-start" @click="goToPreviousPage()">
+    <div
+      class="d-flex align-start justify-start mt-7"
+      @click="goToPreviousPage()"
+    >
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="d-flex align-center justify-center mt-16">
-      <div>
+      <div style="margin-top: 6rem">
         <img
           height="150px"
           width="150px"
@@ -21,7 +24,7 @@
           Sorry, you have not yet created any user <br />
           Kindly add new user to begin
         </div>
-        <div class="mt-5 ml-16">
+        <div class="mt-5">
           <v-btn
             small
             dense
@@ -66,7 +69,7 @@ export default {
 .btn-create {
   background-color: #464646 !important;
   color: #fff;
-  min-width: 300px !important;
+  min-width: 250px !important;
   border-radius: 8px !important;
   cursor: pointer;
 }

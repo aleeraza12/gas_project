@@ -163,7 +163,12 @@ const router = new VueRouter({
       meta: { layout: "app" , title:"new-customer" },
       component: require("./components/customers/addNewCustomer.vue").default
     },
-    
+    {
+      path: "/wallet",
+      name: "wallet",
+      meta: { layout: "app" , title:"wallet" },
+      component: require("./components/wallet/wallet.vue").default
+    },
     {
       path: "/settings",
       name: "Settings",
@@ -173,18 +178,18 @@ const router = new VueRouter({
   ],
 });
 //route guard
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some((record) => record.meta.requireAuth)) {
-    if (!localStorage.getItem("token")) {
-      next({
-        name: "Login",
-      });
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach(async (to, from, next) => {
+//   if (to.matched.some((record) => record.meta.requireAuth)) {
+//     if (!localStorage.getItem("token")) {
+//       next({
+//         name: "Login",
+//       });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

@@ -76,7 +76,7 @@
 </script>
 <style scoped>
 .grey-side{
-  height: 600px;
+  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -85,7 +85,7 @@
 
 }
 .login-screen{
-  height: 600px;
+  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
