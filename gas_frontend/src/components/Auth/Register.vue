@@ -161,7 +161,7 @@
                   large
                   class="elevation-0 btn-create"
                   :loading="loading"
-                  :disabled="!valid"
+               
                   @click="createAccount()"
                   dense
                 >
@@ -286,7 +286,7 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-  height: 600px;
+  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -294,7 +294,7 @@ export default {
   background-color: #ebebea;
 }
 .create-screen {
-  height: 600px;
+  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -359,7 +359,7 @@ export default {
   border-radius: 8px;
 }
 .btn-create {
-  background-color:  #464646;
+  background-color:  #464646 !important;
   color: #fff;
   min-width: 400px !important;
   border-radius: 8px !important;
