@@ -150,7 +150,7 @@
                   v-model="confirm_password"
                 ></v-text-field>
               </div>
-              <div class="mt-3">
+              <div class="mt-3 d-flex justify-start align-start">
                 <span class="forget-password" @click="$router.push('login')"
                   >Already have an account? Login</span
                 >
@@ -312,7 +312,7 @@ export default {
   font-size: 12px;
   color: black;
   font-weight: 500;
-  margin-left: 6rem;
+  margin-left: 4rem;
   cursor: pointer;
 }
 .content-welcome {
