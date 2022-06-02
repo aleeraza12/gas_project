@@ -111,7 +111,7 @@
             large
             class="elevation-0 btn-create"
             :loading="loading"
-            :disabled="!valid"
+            
             @click="createUser()"
             dense
           >
