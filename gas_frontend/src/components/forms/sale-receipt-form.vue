@@ -8,13 +8,13 @@
         >
           <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
         </div>
-        <div class="mt-5 ml-3 d-flex align-start justify-start">
+        <div class="mt-10 ml-3 d-flex align-start justify-start">
           <b>Sales Recepit Form</b>
         </div>
         <div class="mt-2 ml-3 d-flex align-start justify-start">
           Enter the following details to cretae Recepit
         </div>
-        <div style="width: 400px" class="pa-8">
+        <div style="width: 400px" class="pa-8 mt-10">
           <v-form v-model="valid">
             <div>
               <v-select
@@ -37,7 +37,7 @@
                 :rules="nameRules"
                 placeholder="Enter Customer Name"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-5"
               ></v-text-field>
             </div>
             <div>
@@ -47,7 +47,7 @@
                 dense
                 placeholder="Enter Phone Number"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-5"
                 :rules="nameRules"
                 v-model="customer_phone_number"
               ></v-text-field>
@@ -60,7 +60,7 @@
                 dense
                 placeholder="Enter Price"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-5"
                 v-model="price"
               ></v-text-field>
             </div>
@@ -73,7 +73,7 @@
                   dense
                   placeholder="Enter Gas Quantity"
                   hide-details
-                  class="city-feild mt-3 mr-3"
+                  class="city-feild mt-5 mr-3"
                   v-model="gas_quantity"
                 ></v-text-field>
               </div>
@@ -85,12 +85,12 @@
                   dense
                   placeholder="Enter Amount"
                   hide-details
-                  class="city-feild mt-3"
+                  class="city-feild mt-5"
                   v-model="total_amount"
                 ></v-text-field>
               </div>
             </div>
-            <div class="mt-3">
+            <div class="mt-5">
               <v-select
                 :items="payment_modes"
                 v-model="payment_mode"
@@ -104,7 +104,7 @@
             </div>
             <div class="">
               <v-btn
-                class="elevation-0 btn-create mt-3"
+                class="elevation-0 btn-create mt-10"
                 @click="createSale()"
                 :disabled="!valid"
                 :loading="loading"
@@ -119,10 +119,10 @@
       <div>
         <div
           style="
-            height: 300px;
+            height:250px;
             width: 300px;
             background-color: #ebebea;
-            margin-top: 10rem;
+            margin-top: 13rem;
           "
           class="pa-10 ml-16"
         >
@@ -141,7 +141,7 @@
             <div class="mt-5">
               <v-btn
                 small
-                class="elevation-0 btn-create"
+                class="elevation-0 btn-create-1"
                 @click="createSale()"
                 dense
               >
@@ -252,6 +252,13 @@ export default {
   background-color: #464646 !important;
   color: #fff;
   min-width: 230px !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+}
+.btn-create-1 {
+  background-color: #464646 !important;
+  color: #fff;
+  min-width: 200px !important;
   border-radius: 8px !important;
   cursor: pointer;
 }

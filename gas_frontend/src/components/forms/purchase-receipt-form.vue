@@ -5,7 +5,7 @@
         <div class="d-flex align-start justify-start" @click="goToPurchase()">
           <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
         </div>
-        <div class="mt-5 ml-3 d-flex align-start justify-start">
+        <div class="mt-4 ml-3 d-flex align-start justify-start">
           <b>Purchase Recepit Form</b>
         </div>
         <div class="mt-2 ml-3 d-flex align-start justify-start">
@@ -34,7 +34,7 @@
                 dense
                 placeholder="Enter Receipt Number"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-4"
                 v-model="receipt_number"
               ></v-text-field>
             </div>
@@ -45,7 +45,7 @@
                 dense
                 placeholder="Enter Company Name"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-4"
                 v-model="company_name"
                 :rules="nameRules"
               ></v-text-field>
@@ -57,7 +57,7 @@
                 dense
                 placeholder="Enter Company Phone Number"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-4"
                 v-model="company_phone_number"
                 :rules="nameRules"
               ></v-text-field>
@@ -69,7 +69,7 @@
                 dense
                 placeholder="Enter Price"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-4"
                 v-model="unit_price"
                 :rules="nameRules"
               ></v-text-field>
@@ -82,7 +82,7 @@
                   dense
                   placeholder="Enter Gas Quantity"
                   hide-details
-                  class="city-feild mt-3 mr-3"
+                  class="city-feild mt-4 mr-3"
                   v-model="gas_quantity"
                   :rules="nameRules"
                 ></v-text-field>
@@ -94,7 +94,7 @@
                   dense
                   placeholder="Enter Amount"
                   hide-details
-                  class="city-feild mt-3"
+                  class="city-feild mt-4"
                   v-model="amount"
                   :rules="nameRules"
                 ></v-text-field>
@@ -107,7 +107,7 @@
                 dense
                 placeholder="Enter Driver Name"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-4"
                 v-model="driver_name"
                 :rules="nameRules"
               ></v-text-field>
@@ -119,14 +119,14 @@
                 dense
                 placeholder="Enter Recepient Name"
                 hide-details
-                class="username-feild mt-3"
+                class="username-feild mt-4"
                 v-model="recepient_name"
                 :rules="nameRules"
               ></v-text-field>
             </div>
             <div class="">
               <v-btn
-                class="elevation-0 mt-3 btn-create"
+                class="elevation-0 mt-4 btn-create"
                 @click="savePurchase()"
                 :loading="loading"
                 dense
@@ -190,7 +190,7 @@
       :timeout="2000"
       :value="true"
       absolute
-      class="mt-5"
+      class="mt-4"
       :color="snackbarColor"
       shaped
       :right="true"
