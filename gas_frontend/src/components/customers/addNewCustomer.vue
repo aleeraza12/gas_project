@@ -12,9 +12,12 @@
         <b>{{ customerText }} Customer</b>
       </div>
       <div class="d-flex align-start justify-start fonts mt-1">
+    <div class="mt-6">
+      <div class="d-flex align-start justify-start"><b>New Customer</b></div>
+      <div class="d-flex align-start justify-start fonts mt-6">
         Enter the following details to create a customer profile
       </div>
-      <v-form v-model="valid" class="mt-5">
+      <v-form v-model="valid" class="mt-6">
         <div>
           <v-text-field
             v-model="name"
@@ -24,7 +27,7 @@
             :rules="nameRules"
             dense
             hide-details
-            class="mt-1"
+            class="mt-6"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -37,7 +40,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-6"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -50,7 +53,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-6"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -63,7 +66,7 @@
             outlined
             dense
             hide-details
-            class="mt-1"
+            class="mt-6"
             style="width: 300px"
           ></v-text-field>
         </div>
@@ -76,11 +79,11 @@
               dense
               placeholder="Enter City"
               hide-details
-              class="city-feild mt-2 mr-3"
+              class="city-feild mt-6 mr-3"
               v-model="city"
             ></v-text-field>
           </div>
-          <div class="mt-2">
+          <div class="mt-6">
             <v-select
               :items="states"
               :rules="nameRules"
@@ -96,7 +99,7 @@
           </div>
         </div>
 
-        <div class="mt-3" style="width: 300px">
+        <div class="mt-6" style="width: 300px">
           <v-select
             :items="customer_types"
             v-model="customer_type"
@@ -110,12 +113,12 @@
           >
           </v-select>
         </div>
-        <div class="mt-5 mb-5">
+        <div class="mt-6 mb-5">
           <v-btn
             block
             large
             class="elevation-0 btn-create"
-            :disabled="!valid"
+           
             :loading="loading"
             @click="createCustomer()"
             dense
@@ -130,7 +133,7 @@
       :timeout="2000"
       :value="true"
       absolute
-      class="mt-5"
+      class="mt-6"
       :color="snackbarColor"
       shaped
       :right="true"
