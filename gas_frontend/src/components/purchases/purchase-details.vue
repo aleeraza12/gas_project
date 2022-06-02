@@ -3,12 +3,12 @@
     <div class="sales-details-page">
       <div class="d-flex">
         <div @click="goToPurchases()">
-          <v-icon class="ml-3 mt-3"> mdi-close</v-icon>
+          <v-icon class="ml-3 mt-5"> mdi-close</v-icon>
         </div>
       </div>
       <div class="mt-6"><b>Purchase Details</b></div>
       <v-divider></v-divider>
-      <div class="d-flex align-center justify-center mt-3">
+      <div class="d-flex align-center justify-center mt-5">
         <div
           v-if="getSinglePurchase.base64 == ''"
           style="height: 150px; width: 150px; background-color: #c4c4c4"
@@ -46,7 +46,7 @@
         Company Info
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-3">
+        <div class="ml-5 mt-5">
           <div class="d-flex align-start justify-start">
             <b>{{ getSinglePurchase.company_name }}</b>
           </div>
@@ -58,16 +58,16 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-3">
+        <div class="mr-8 mt-5">
           <div class="fonts">Transcation Id</div>
           <div class="fonts">000000010000</div>
         </div>
       </div>
-      <div class="mt-3" style="text-decoration: underline">
+      <div class="mt-5" style="text-decoration: underline">
         <b>Purchase Info</b>
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-3">
+        <div class="ml-5 mt-5">
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price:</b></div>
             <div class="fonts">N {{ getSinglePurchase.unit_price }}</div>
@@ -82,15 +82,15 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-3">
+        <div class="mr-8 mt-5">
           <div class="fonts">Transcation Id</div>
           <div class="fonts">000000010000</div>
         </div>
       </div>
-      <div class="mt-3" style="text-decoration: underline">
+      <div class="mt-5" style="text-decoration: underline">
         <b>Status History</b>
       </div>
-      <div class="fonts mt-3">
+      <div class="fonts mt-5">
         <div class="d-flex align-start justify-start ml-3">
           <v-radio
             label="Deleivered"
@@ -111,7 +111,7 @@
         </div>
       </div>
       <div>
-        <v-btn dense outlined small style="width: 230px" class="mt-3">
+        <v-btn class="mt-5 btn-create">
           save
         </v-btn>
       </div>
@@ -121,9 +121,8 @@
             dense
             outlined
             small
-            style="width: 100px"
-            class="mt-3 mr-3"
-            color="primary"
+            class="mt-5 "
+           style="border-color:#464646 ;width: 150px"
           >
             Edit
           </v-btn>
@@ -133,8 +132,8 @@
             dense
             outlined
             small
-            style="width: 100px"
-            class="mt-3"
+            style="width: 150px"
+            class="mt-5 ml-2"
             color="red"
           >
             Delete
@@ -169,8 +168,15 @@ export default {
 };
 </script>
 <style scoped>
+.btn-create {
+  background-color:  #464646 !important;
+  color: #fff;
+  min-width: 320px !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+}
 .sales-details-page {
-  height: 600px;
+  height: 800px;
   width: 600px;
   background-color: #ebebea;
   margin-left: 12rem;
