@@ -163,7 +163,12 @@ const router = new VueRouter({
       meta: { layout: "app" , title:"new-customer" },
       component: require("./components/customers/addNewCustomer.vue").default
     },
-    
+    {
+      path: "/wallet",
+      name: "wallet",
+      meta: { layout: "app" , title:"wallet" },
+      component: require("./components/wallet/wallet.vue").default
+    },
     {
       path: "/settings",
       name: "Settings",

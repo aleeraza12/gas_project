@@ -117,13 +117,13 @@ export default {
         tabName: "Reconcilation",
         color: "black",
       },
-      {
-        text: "Settings",
-        icon: "mdi-cog",
-        route: "/settings",
-        tabName: "Settings",
-        color: "black",
-      },
+      // {
+      //   text: "Settings",
+      //   icon: "mdi-cog",
+      //   route: "/settings",
+      //   tabName: "Settings",
+      //   color: "black",
+      // },
       {
         text: "Logout",
         icon: "mdi-logout",
