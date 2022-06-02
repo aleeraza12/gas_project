@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Sale;
+use App\Models\SaleStatusTime;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -26,11 +28,11 @@ class SaleController extends Controller
                 'customer_type' =>  $request->customer_type,
                 'discount_code' => $request->discount_code,
                 'company_id' =>  $request->user_id,
-                //'user_id' =>  $request->user_id,
                 'payment_mode' =>  $request->payment_mode,
             ]
         );
-        TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount]));
+        TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->$request->id]));
+        $this->createSaleStatus($request);
         return response()->json(['response' => $sale, 'status' => 201]);
     }
 
@@ -53,10 +55,24 @@ class SaleController extends Controller
         $name = Company::find($request->user_id);
         foreach ($sales as $sale) {
             $sale['updated_by'] = $name->company_name; //updated_by
-            $transaction = Transaction::where('type', 'sale')->where('outer_id', $request->user_id)->first();
+            $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->user_id)->first();
             $sale['transaction_id'] =  @$transaction->id;
             $sale['customer_name'] =  Customer::find($sale->customer_id)->name;
         }
         return response()->json(['response' => $sales, 'status' => 200]);
+    }
+
+    public function createSaleStatus($request)
+    {
+        return SaleStatusTime::updateOrCreate(
+            [
+                'id' => $request->sale_status_id
+            ],
+            [
+                'status' => $request->status,
+                'sale_id' => $request->outer_id,
+                'status_time' => Carbon::now()->addHours(5)
+            ]
+        );
     }
 }

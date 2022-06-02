@@ -18,7 +18,8 @@ class CreateTransactionsTable extends Migration
             $table->float('amount');
             $table->enum('status', ['verified', 'not_verified', 'declined'])->default('not_verified');
             $table->string('type'); //Sales or Purchase
-            $table->integer('outer_id'); //Sales or Purchase id
+            $table->integer('company_id'); //Company id
+            $table->integer('outer_id')->nullable(); //Sales or Purchase id
             $table->timestamps();
         });
     }

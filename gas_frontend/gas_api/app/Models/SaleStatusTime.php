@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class SaleStatusTime extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'amount', 'gas_quantity', 'type', 'outer_id', 'company_id'
-    ];
+    protected $fillable = ['status', 'status_time', 'sale_id'];
 }

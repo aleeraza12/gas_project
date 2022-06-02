@@ -38,6 +38,7 @@ return array(
     'App\\Models\\PaymentStatus' => $baseDir . '/app/Models/PaymentStatus.php',
     'App\\Models\\Purchase' => $baseDir . '/app/Models/Purchase.php',
     'App\\Models\\Sale' => $baseDir . '/app/Models/Sale.php',
+    'App\\Models\\SaleStatusTime' => $baseDir . '/app/Models/SaleStatusTime.php',
     'App\\Models\\Token' => $baseDir . '/app/Models/Token.php',
     'App\\Models\\Transaction' => $baseDir . '/app/Models/Transaction.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

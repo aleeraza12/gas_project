@@ -186,7 +186,7 @@ export default {
       this.name = data.name;
       this.created_by = data.created_by;
       this.user_type = data.user_type;
-      this.password = data.password;
+      //this.password = data.password;
       this.designation = data.designation;
       this.status = data.status;
       this.permission1 = data.permissions[0];

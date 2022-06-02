@@ -15,10 +15,19 @@ class TransactionController extends Controller
             ],
             [
                 'amount' =>  $request->amount,
+                'amount' =>  $request->amount,
                 'type' =>  $request->type,
-                'outer_id' =>  $request->user_id, //company id
+                'company_id' =>  $request->user_id, //company id
+                'outer_id' =>  $request->outer_id, //company id
             ]
         );
         return response()->json(['response' => $transaction->id, 'status' => 201]);
+    }
+
+    public static function updateTransaction(Request $request){
+        Transaction::where('transaction_id',$request->transaction_id)->update([
+            'amount' =>  $request->amount,
+            'status' =>  $request->status,
+        ]);
     }
 }

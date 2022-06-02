@@ -85,11 +85,13 @@
       </div>
       <div class="fonts mt-3">
         <div class="d-flex align-start justify-start ml-3">
-          <v-radio
-            label="Delivered"
-            color="primary"
-            value="Delivered"
-          ></v-radio>
+          <v-radio-group v-model="Delivered" column>
+            <v-radio
+              label="Delivered"
+              color="primary"
+              value="Delivered"
+            ></v-radio>
+          </v-radio-group>
         </div>
         <div class="d-flex align-start justify-start ml-8">
           23rd ,april 20222
@@ -97,7 +99,9 @@
       </div>
       <div class="fonts">
         <div class="d-flex align-start justify-start ml-3">
-          <v-radio label="paid" color="primary" value="Paid"></v-radio>
+          <v-radio-group v-model="Paid" column>
+            <v-radio label="paid" color="primary" value="Paid"></v-radio>
+          </v-radio-group>
         </div>
         <div class="d-flex align-start justify-start ml-8">
           23rd ,april 20222
@@ -143,6 +147,8 @@ import { mapGetters } from "vuex";
 export default {
   data: () => ({
     loading: false,
+    Delivered: "Delivered",
+    Paid: "Paid",
   }),
   watch: {
     getSingleReceipt() {

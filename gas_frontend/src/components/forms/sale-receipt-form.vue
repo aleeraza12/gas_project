@@ -205,7 +205,7 @@ export default {
     customer_names: [],
     customer_phone_number: "",
     customer_types: ["Distributor", "Retailer"],
-    payment_modes: ["Cash", "Prepad"],
+    payment_modes: ["Cash", "Prepaid"],
     customer_type: "",
     discount_code: "",
     payment_mode: "",
@@ -215,6 +215,7 @@ export default {
     snackbarColor: "",
     loading: false,
     loading1: false,
+    status:"unpaid"
   }),
   components: {},
   created() {},
@@ -255,6 +256,7 @@ export default {
         customer_phone_number: this.customer_phone_number,
         discount_code: this.discount_code,
         payment_mode: this.payment_mode,
+        status: this.status,
       };
       console.log(requestBody);
       RequestService.post("sale/create", requestBody)

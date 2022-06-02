@@ -548,6 +548,7 @@ class ComposerStaticInitaa7585f665cbc05de059477e0176c4e6
         'App\\Models\\PaymentStatus' => __DIR__ . '/../..' . '/app/Models/PaymentStatus.php',
         'App\\Models\\Purchase' => __DIR__ . '/../..' . '/app/Models/Purchase.php',
         'App\\Models\\Sale' => __DIR__ . '/../..' . '/app/Models/Sale.php',
+        'App\\Models\\SaleStatusTime' => __DIR__ . '/../..' . '/app/Models/SaleStatusTime.php',
         'App\\Models\\Token' => __DIR__ . '/../..' . '/app/Models/Token.php',
         'App\\Models\\Transaction' => __DIR__ . '/../..' . '/app/Models/Transaction.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

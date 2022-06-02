@@ -26,7 +26,6 @@ class CreateSalesTable extends Migration
             //$table->integer('user_id')->unsigned();
             $table->integer('company_id')->unsigned();
             $table->string('payment_mode');
-            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
