@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "./store/index";
+// import store from "./store/index";
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
@@ -429,18 +429,18 @@ const router = new VueRouter({
   ],
 });
 //route guard
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some((record) => record.meta.requireAuth)) {
-    if (!localStorage.getItem("token")) {
-      next({
-        name: "Login",
-      });
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach(async (to, from, next) => {
+//   if (to.matched.some((record) => record.meta.requireAuth)) {
+//     if (!localStorage.getItem("token")) {
+//       next({
+//         name: "Login",
+//       });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

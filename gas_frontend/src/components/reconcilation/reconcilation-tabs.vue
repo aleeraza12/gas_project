@@ -18,12 +18,7 @@
           <v-icon> mdi-bell-outline</v-icon>
         </div>
       </div>
-      <div class="d-flex mt-5">
-        <div>
-         <b> Reconcilation</b>
-        </div>
-        
-      </div>
+
       <div class="d-flex mt-5">
         <div>
           <v-card height="80" width="1000px"  style="background-color:#EBEBEA">
@@ -49,7 +44,31 @@
        <div class="mr-3"><b>Date Picker</b></div>
       </div>
       <div class="mt-3">
-        <v-data-table
+           <v-tabs
+      v-model="tab"
+      background-color="#fff"
+      color="black"
+      dark
+      class="mb-2"
+    >
+      <v-tab
+       
+      >
+        Sales
+      </v-tab>
+      
+      <v-tab
+       
+      >
+       Purchases
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+      
+      >
+          <v-data-table
           :headers="headers"
           :items="desserts"
           :items-per-page="5"
@@ -67,6 +86,31 @@
           
        </template>
         </v-data-table>
+      </v-tab-item>
+          <v-tab-item
+      
+      >
+          <v-data-table
+          :headers="headers"
+          :items="desserts"
+          :items-per-page="5"
+          class="elevation-1"
+            hide-default-footer
+            hide-default-header
+          height="400px"
+        >
+          <template v-slot:[`body.prepend`]= "{headers}">
+           <th v-for="(header , i) in headers" :key="i" class="table-head">
+             <div class="d-flex ml-3">
+                {{header.text}}
+             </div>
+           </th>
+          
+       </template>
+        </v-data-table>
+      </v-tab-item>
+    </v-tabs-items>
+     
       </div>
     </v-card-text>
   </v-card>
@@ -77,6 +121,7 @@
 
   export default {
     data: () => ({
+          tab: null,
        headers: [
           {
             text: 'Date',
@@ -195,5 +240,11 @@
   background-color: #EBEBEA;
   font-size: 12px;
   height: 50px;
+}
+</style>
+<style>
+
+.theme--dark.v-tabs>.v-tabs-bar .v-tab--disabled, .theme--dark.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active), .theme--dark.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-btn, .theme--dark.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-icon {
+    color: black !important;
 }
 </style>
