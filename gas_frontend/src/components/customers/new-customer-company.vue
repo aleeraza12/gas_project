@@ -181,7 +181,7 @@
           </div>
           <div class="d-flex justify-start align-start mt-2 ml-2">
              <div>Address : </div>
-             <div class="ml-5"><b>6, Coker Street, Town, Lagos State</b></div>
+             <div class="ml-16"><b>6, Coker Street, Town, Lagos State</b></div>
           </div>
         </div>
        
