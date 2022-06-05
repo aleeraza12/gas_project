@@ -230,6 +230,7 @@ export default {
     snackbarColor: "",
     files: "",
     loading: false,
+    loggedinUser: JSON.parse(localStorage.getItem("user")),
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
@@ -248,7 +249,6 @@ export default {
   },
   created() {
     eventBus.$on("updatePurchase", (data) => {
-      console.log("emt receved", data);
       this.assembleData(data);
     });
   },
@@ -348,6 +348,7 @@ export default {
         recepient_name: this.recepient_name,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
         purchase_id: this.purchase_id,
+        users_id: this.loggedinUser.id,
       };
       let apiName = "";
       this.purchase_id == null

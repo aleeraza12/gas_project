@@ -28,7 +28,8 @@ class PurchaseController extends Controller
                 'amount' =>  $request->amount,
                 'unit_price' =>  $request->unit_price,
                 'recepient_name' =>  $request->recepient_name,
-                'company_id' => $request->user_id,
+                'company_id' => $request->user_id, //company id
+                'user_id' => $request->users_id, //loggedin user id
                 'unpaid' => true,
                 'unpaid_at' => Carbon::now()->addHours(5),
                 'receipt_attachment_path' =>  $request->attachment == "" ? null :  $this->upload_attachment($request)
@@ -41,6 +42,7 @@ class PurchaseController extends Controller
     public function delete_purchase(Request $request)
     {
         $purchase =  Purchase::find($request->purchase_id)->delete();
+        $purchase =  Transaction::where("outer_id", $request->purchase_id)->where("type", "purchase")->delete();
         return response()->json(['response' => "Purchase deleted successfully", 'status' => 200]);
     }
 
@@ -77,6 +79,7 @@ class PurchaseController extends Controller
         $purchase->unit_price =  $request->unit_price;
         $purchase->recepient_name =  $request->recepient_name;
         $purchase->company_id = $request->user_id;
+        $purchase->user_id = $request->users_id;
         $purchase->receipt_attachment_path =  $request->attachment == "" ? null :  $this->upload_attachment($request);
         $purchase->save();
         TransactionController::updateSaleTransaction($request->merge([

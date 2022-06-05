@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "./store/index";
-let permissionsArray = JSON.parse(localStorage.getItem("user")).permissions;
+//let permissionsArray = JSON.parse(localStorage.getItem("user")).permissions;
+// import store from "./store/index";
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
@@ -60,7 +61,11 @@ const router = new VueRouter({
       name: "Dashboard",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Dashboard")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Dashboard"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -75,7 +80,11 @@ const router = new VueRouter({
       name: "Orders",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Orders")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Orders"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -90,7 +99,11 @@ const router = new VueRouter({
       name: "Sales",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Sales")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Sales"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -105,7 +118,11 @@ const router = new VueRouter({
       name: "Purchases",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Purchases")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Purchases"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -120,7 +137,11 @@ const router = new VueRouter({
       name: "Customers",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Customers")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Customers"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -135,7 +156,11 @@ const router = new VueRouter({
       name: "Users",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Users")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Users"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
             console.log("dispatch");
           } else {
@@ -151,7 +176,11 @@ const router = new VueRouter({
       name: "Reconcilation",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Reconciliation")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Reconciliation"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -163,11 +192,22 @@ const router = new VueRouter({
     },
 
     {
+      path: "/reconcilation-tabs",
+      name: "Reconcilation-tabs",
+      meta: { layout: "app", title: "Reconcilation-tabs", requireAuth: true },
+      component: require("./components/reconcilation/reconcilation-tabs")
+        .default,
+    },
+    {
       path: "/sale-receipt-form",
       name: "sale-receipt-form",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Sales")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Sales"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -182,7 +222,11 @@ const router = new VueRouter({
       name: "sale-invoice",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Sales")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Sales"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -198,7 +242,11 @@ const router = new VueRouter({
       name: "purchase-receipt-form",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Purchases")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Purchases"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -218,7 +266,11 @@ const router = new VueRouter({
       path: "/sales-details",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Sales")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Sales"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -234,7 +286,11 @@ const router = new VueRouter({
       name: "purchase-details",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Purchases")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Purchases"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -249,7 +305,11 @@ const router = new VueRouter({
       name: "order-details",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Orders")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Orders"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -264,7 +324,11 @@ const router = new VueRouter({
       name: "no-sales",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Sales")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Sales"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -279,7 +343,11 @@ const router = new VueRouter({
       name: "no-orders",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Orders")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Orders"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -294,7 +362,11 @@ const router = new VueRouter({
       name: "no-user",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Users")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Users"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -309,7 +381,11 @@ const router = new VueRouter({
       name: "new-user",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Customer")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Users"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -324,7 +400,11 @@ const router = new VueRouter({
       name: "new-customer",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Customer")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Customers"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -335,11 +415,34 @@ const router = new VueRouter({
       component: require("./components/customers/addNewCustomer.vue").default,
     },
     {
+      path: "/new-customer-company",
+      name: "new-customer-company",
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Customers"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
+      meta: { layout: "app", title: "new-customer-company" },
+      component: require("./components/customers/new-customer-company").default,
+    },
+    {
       path: "/wallet",
       name: "wallet",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Wallet")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Wallet"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -354,7 +457,11 @@ const router = new VueRouter({
       name: "Settings",
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
-          if (!permissionsArray.includes("Settings")) {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Settings"
+            )
+          ) {
             store.dispatch("checkRouteExistence");
           } else {
             next();

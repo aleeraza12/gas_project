@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -30,20 +31,18 @@ class TransactionController extends Controller
     public function readTransactions(Request $request)
     {
         $transactions = Transaction::where('company_id', $request->user_id)->get();
-        $name = Company::find($request->user_id);
         foreach ($transactions as $transaction) {
             if ($transaction->type == 'sale') {
                 $data = Sale::find($transaction->outer_id);
                 $transaction['customer_name'] = Customer::find($data->customer_id)->name;
                 $transaction['gas_quantity'] = $data->gas_quantity;
                 $transaction['payment_mode'] = $data->payment_mode;
-                $transaction['updated_by'] = $name->company_name; //updated_by
+                $transaction['updated_by'] = User::find($data->user_id)->name; //updated_by
             } else if ($transaction->type == 'purchase') {
                 $data = Purchase::find($transaction->outer_id);
-                $transaction['updated_by'] = $name->company_name; //updated_by
                 $transaction['customer_name'] = $data->company_name; //company_name
                 $transaction['gas_quantity'] = $data->gas_quantity;
-                $transaction['updated_by'] = $name->company_name; //updated_by
+                $transaction['updated_by'] = User::find($data->user_id)->name; //updated_by
             }
         }
         return response()->json(['response' => $transactions, 'status' => 200]);
