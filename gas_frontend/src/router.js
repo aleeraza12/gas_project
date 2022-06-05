@@ -91,6 +91,12 @@ const router = new VueRouter({
     },
 
     {
+      path: "/reconcilation-tabs",
+      name: "Reconcilation-tabs",
+      meta: { layout: "app", title: "Reconcilation-tabs", requireAuth: true },
+      component: require("./components/reconcilation/reconcilation-tabs").default,
+    },
+    {
       path: "/sale-receipt-form",
       name: "sale-receipt-form",
       meta: { layout: "app", title: "sale-receipt-form", requireAuth: true },
