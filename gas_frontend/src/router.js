@@ -133,6 +133,26 @@ const router = new VueRouter({
       component: require("@/views/Pages/purchases").default,
     },
     {
+      path: "/depot",
+      name: "depot",
+      //beforeEnter: (to, from, next) => {
+      //  setTimeout(() => {
+      //    if (
+      //      !(
+      //        "Customers" in
+      //        JSON.parse(localStorage.getItem("user")).permissions
+      //      )
+      //    ) {
+      //      store.dispatch("checkRouteExistence");
+      //    } else {
+      //      next();
+      //    }
+      //  }, 10);
+      //},
+      meta: { layout: "app", title: "Depot", requireAuth: true },
+      component: require("./components/purchases/depot").default,
+    },
+    {
       path: "/customers",
       name: "Customers",
       beforeEnter: (to, from, next) => {

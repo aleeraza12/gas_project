@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <div class="sales-details-page">
+    <div class="sales-details-page mb-5">
       <div class="d-flex">
         <div @click="goToPurchases()">
           <v-icon class="ml-3 mt-5"> mdi-close</v-icon>
@@ -46,8 +46,8 @@
 
       <div class="d-flex mt-5">
         <div class="ml-10">
-          <v-chip small dense color="success" label class="pa-3">
-            {{ getStatus(getSinglePurchase) }}
+          <v-chip  dense label class="pa-3" style="background-color:#EBFFEF;color:#5FBA7E">
+           <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon> {{ getStatus(getSinglePurchase) }}
           </v-chip>
         </div>
         <v-spacer></v-spacer>
@@ -167,7 +167,7 @@
             dense
             outlined
             small
-            class="mt-5"
+            class="mt-5 mb-10"
             @click="updatePurchase()"
             style="border-color: #464646; width: 150px"
           >
@@ -180,7 +180,7 @@
             outlined
             small
             style="width: 150px"
-            class="mt-5 ml-2"
+            class="mt-5 ml-2 mb-10"
             color="red"
             @click="dialog = true"
           >
@@ -419,7 +419,7 @@ export default {
   cursor: pointer;
 }
 .sales-details-page {
-  height: 800px;
+  /* height: 100vh; */
   width: 600px;
   background-color: #ebebea;
   margin-left: 12rem;

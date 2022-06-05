@@ -7,8 +7,13 @@
         </div>
         <v-spacer></v-spacer>
         <div>
-          <v-btn small dense class="mr-5 mt-5 pl-5" color="#CFCFD0"
-            ><v-icon class="" size="20">mdi-send</v-icon></v-btn
+          <v-btn  
+           height="35"
+           
+           dense color="#CFCFD0"
+            >
+            <img height="20" width="20" src="../../assets/images/send.png"/>
+            </v-btn
           >
         </div>
       </div>
@@ -17,9 +22,10 @@
       </div>
       <div class="d-flex mt-5">
         <div class="ml-10">
-          <v-chip small dense color="success" label class="pa-3">
-            {{ getStatus(getSingleReceipt) }}
+            <v-chip  dense label class="pa-3" style="background-color:#EBFFEF;color:#5FBA7E">
+           <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon> {{ getStatus(getSingleReceipt) }}
           </v-chip>
+          
         </div>
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
@@ -149,7 +155,7 @@
             dense
             outlined
             small
-            class="mt-5"
+            class="mt-5 mb-10"
             style="border-color: #464646; width: 150px"
             @click="updateSale()"
           >
@@ -162,7 +168,7 @@
             outlined
             small
             style="width: 150px"
-            class="mt-5 ml-2"
+            class="mt-5 ml-2 mb-10"
             color="red"
             @click="dialog = true"
           >
