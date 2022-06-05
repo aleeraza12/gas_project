@@ -179,10 +179,6 @@ const store = {
       let permissionsArray = JSON.parse(
         localStorage.getItem("user")
       ).permissions;
-      console.log(
-        permissionsArray.includes("Dashboard"),
-        JSON.parse(localStorage.getItem("user")).permissions
-      );
       if (permissionsArray.includes("Dashboard")) {
         router.push("/dashboard");
       } else if (permissionsArray.includes("Orders")) {
@@ -201,10 +197,9 @@ const store = {
         router.push("/wallet");
       } else if (permissionsArray.includes("Reconciliation")) {
         router.push("/reconcilation");
+      } else {
+        router.push("/pageNotFound");
       }
-      //else {
-      //  router.push("/dashboard");
-      //}
     },
   },
   modules: {},
