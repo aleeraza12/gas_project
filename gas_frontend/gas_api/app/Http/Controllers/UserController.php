@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class UserController extends Controller
             ],
             [
                 'user_type' => $request->user_type,
+                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $user_type, 'status' => 201]);
@@ -36,7 +38,7 @@ class UserController extends Controller
 
     public function read_all_user_type(Request $request)
     {
-        $user_types =  UserType::all();
+        $user_types =  Company::find($request->user_id)->user_type;
         return response()->json(['response' => $user_types, 'status' => 200]);
     }
 

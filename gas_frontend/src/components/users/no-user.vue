@@ -1,10 +1,13 @@
 <template>
   <div class="main-container">
-    <div class="d-flex align-start justify-start mt-7" @click="goToPreviousPage()">
+    <div
+      class="d-flex align-start justify-start mt-7"
+      @click="goToPreviousPage()"
+    >
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="d-flex align-center justify-center mt-16">
-      <div style="margin-top:6rem">
+      <div style="margin-top: 6rem">
         <img
           height="150px"
           width="150px"
@@ -38,18 +41,24 @@
 </template>
 
 <script>
-
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     loading: false,
   }),
+  computed: {
+    ...mapGetters(["getUsers"]),
+  },
   methods: {
     goToAddNewUser() {
       this.$router.push("/new-user");
     },
-    goToPreviousPage(){
-       this.$router.go(-1);
-    }
+    goToPreviousPage() {
+      if (this.getUsers.length == 0) {
+        console.log("prevos route");
+        this.$router.back();
+      }
+    },
   },
 };
 </script>

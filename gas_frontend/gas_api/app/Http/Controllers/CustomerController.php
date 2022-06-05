@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Customer as CustomerModel;
 use App\Models\CustomerType;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,6 +19,7 @@ class CustomerController extends Controller
             ],
             [
                 'customer_type' => $request->customer_type,
+                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $customer_type, 'status' => 201]);
@@ -36,7 +39,7 @@ class CustomerController extends Controller
 
     public function read_all_customer_type(Request $request)
     {
-        $customer_types =  CustomerType::all();
+        $customer_types = Company::find($request->user_id)->customer_type;
         return response()->json(['response' => $customer_types, 'status' => 200]);
     }
 
@@ -76,7 +79,10 @@ class CustomerController extends Controller
 
     public function read_all_customer(Request $request)
     {
-        $customers =  CustomerModel::all();
+        $customers = Company::find($request->user_id)->customer;
+        foreach ($customers as $customer) {
+            $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
+        }
         return response()->json(['response' => $customers, 'status' => 200]);
     }
 }

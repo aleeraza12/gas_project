@@ -7,7 +7,9 @@
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="mt-3">
-      <div class="d-flex align-start justify-start"><b>Add New User</b></div>
+      <div class="d-flex align-start justify-start">
+        <b>{{ userText }} User</b>
+      </div>
       <div class="d-flex align-start justify-start fonts mt-1">
         Enter the following details to create a user profile
       </div>
@@ -18,6 +20,7 @@
             label="Created By"
             :rules="nameRules"
             outlined
+            disabled
             dense
             hide-details
             class="mt-3"
@@ -75,7 +78,7 @@
         </div>
         <div class="mt-3" style="width: 300px">
           <v-select
-            :items="user_types"
+            :items="getAllUserTypes"
             :rules="nameRules"
             v-model="user_type"
             label="User Type"
@@ -91,18 +94,19 @@
         </div>
         <div class="d-flex fonts">
           <v-radio-group v-model="permission1" row dense>
-            <v-radio label="Dashboard" value="dashboard"></v-radio>
-            <v-radio label="Sales" value="sales"></v-radio>
-            <v-radio label="Orders" value="orders"></v-radio>
-            <v-radio label="Purchases" value="purchases"></v-radio>
+            <v-radio label="Dashboard" value="Dashboard"></v-radio>
+            <v-radio label="Sales" value="Sales"></v-radio>
+            <v-radio label="Orders" value="Orders"></v-radio>
+            <v-radio label="Purchases" value="Purchases"></v-radio>
+            <v-radio label="Settings" value="Settings"></v-radio>
           </v-radio-group>
         </div>
         <div class="d-flex fonts">
           <v-radio-group v-model="permission2" row dense>
-            <v-radio label="Customers" value="customers"></v-radio>
-            <v-radio label="Users" value="users"></v-radio>
-            <v-radio label="Wallet" value="wallet"></v-radio>
-            <v-radio label="Reconilcation" value="reconilcation"></v-radio>
+            <v-radio label="Customers" value="Customers"></v-radio>
+            <v-radio label="Users" value="Users"></v-radio>
+            <v-radio label="Wallet" value="Wallet"></v-radio>
+            <v-radio label="Reconciliation" value="Reconciliation"></v-radio>
           </v-radio-group>
         </div>
         <div class="mt-5 mb-5 ml-16">
@@ -111,7 +115,6 @@
             large
             class="elevation-0 btn-create"
             :loading="loading"
-            
             @click="createUser()"
             dense
           >
@@ -139,16 +142,19 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
-    statuses: ["Active", "Iactive"],
-    designations: ["Manager", "Cashier", "Sales Person", "Finance Manager"],
-    user_types: ["Admin", "User", "Sub Admin"],
+    statuses: ["Active", "Inactive"],
     nameRules: [(v) => !!v || "This field is required"],
     user_type: "",
     designation: "",
+    loggedInUser: JSON.parse(localStorage.getItem("user")),
     name: "",
     created_by: "",
+    userText: "Add New",
+    users_id: null,
     phone_number: "",
     status: "",
     customer_type: "",
@@ -168,9 +174,31 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    ...mapGetters(["getAllUserTypes"]),
+  },
+  created() {
+    eventBus.$on("updateUser", (data) => {
+      console.log("emt receved", data);
+      this.assembleData(data);
+    });
+  },
+  mounted() {
+    this.$store.dispatch("getUserTypes");
+    this.created_by = this.loggedInUser.company_name;
   },
   methods: {
+    assembleData(data) {
+      this.name = data.name;
+      this.created_by = data.created_by;
+      this.user_type = data.user_type;
+      //this.password = data.password;
+      this.designation = data.designation;
+      this.status = data.status;
+      this.permission1 = data.permissions[0];
+      this.permission2 = data.permissions[1];
+      this.users_id = data.id;
+      this.userText = "Update";
+    },
     goToUserListings() {
       this.$router.go(-1);
     },
@@ -186,6 +214,7 @@ export default {
         designation: this.designation,
         status: this.status,
         permissions: this.permissions,
+        users_id: this.users_id,
       };
       console.log(requestBody);
       RequestService.post("user/create", requestBody)

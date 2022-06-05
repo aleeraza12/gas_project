@@ -23,29 +23,24 @@
             <b> Purchases</b>
           </div>
         </div>
-        <div class="d-flex mt-5">
+        <div
+          class="d-flex mt-5 pa-5"
+          style="background-color: #ebebea; border-radius: 5px"
+        >
           <div>
-            <v-card height="80" width="1000px" style="background-color: #ebebea">
-              <v-card-text>
-                <div class="d-flex">
-                  <div>
-                    <div class="d-flex align-start justify-start">
-                      <b>Available Balance</b>
-                    </div>
-                    <div class="d-flex align-start justify-start">
-                      165,00,0000 NAJRA
-                    </div>
-                  </div>
-                  <v-spacer></v-spacer>
-                  <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined @click="goToAddPurchase()"
-                      >Add Receipt
-                      <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-                    >
-                  </div>
-                </div>
-              </v-card-text>
-            </v-card>
+            <div class="d-flex align-start justify-start">
+              <b>Available Balance</b>
+            </div>
+            <div class="d-flex align-start justify-start">
+              {{ total_sales }} NAJRA
+            </div>
+          </div>
+          <v-spacer></v-spacer>
+          <div class="d-flex align-end justify-end">
+            <v-btn small dense outlined @click="goToAddPurchase()"
+              >Add Receipt
+              <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
+            >
           </div>
         </div>
         <div class="d-flex mt-3">
@@ -57,36 +52,40 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-
-              <v-data-table
-                :loading="loading"
-                loading-text="Loading... Please wait"
-                :headers="headers"
-                :items="getPurchases"
-                :items-per-page="5"
-                class="elevation-1"
-                hide-default-footer
-                hide-default-header
-                height="400px"
+          <v-data-table
+            :loading="loading"
+            loading-text="Loading... Please wait"
+            :headers="headers"
+            :items="getPurchases"
+            :items-per-page="5"
+            class="elevation-1"
+            hide-default-footer
+            hide-default-header
+            height="400px"
+          >
+            <template v-slot:[`body.prepend`]="{ headers }">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
               >
-                <template v-slot:[`body.prepend`]="{ headers }">
-                  <th
-                    v-for="(header, i) in headers"
-                    :key="'A' + i"
-                    class="table-head"
-                  >
-                    <div class="d-flex ml-3">
-                      {{ header.text }}
-                    </div>
-                  </th>
-                </template>
-                <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="viewPurchase(item)">
-                    mdi-eye
-                  </v-icon>
-                </template>
-              </v-data-table>
-         
+                <div class="d-flex ml-3">
+                  {{ header.text }}
+                </div>
+              </th>
+            </template>
+            <template v-slot:item.date="{ item }">
+              {{ getDate(item) }}
+            </template>
+            <template v-slot:item.status="{ item }">
+              {{ getStatus(item) }}
+            </template>
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="viewPurchase(item)">
+                mdi-eye
+              </v-icon>
+            </template>
+          </v-data-table>
         </div>
       </v-card-text>
     </v-card>
@@ -96,10 +95,11 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-
+import moment from "moment";
 export default {
   data: () => ({
     loading: true,
+    total_sales: null,
 
     headers: [
       {
@@ -129,6 +129,15 @@ export default {
     });
   },
   methods: {
+    getStatus(item) {
+      if (item.paid === null && item.delivered === null) return "Unpaid";
+      else if (item.paid !== null && item.delivered === null) return "Paid";
+      else if (item.paid !== null && item.delivered !== null) return "Paid";
+      else if (item.paid == null && item.delivered !== null) return "Delivered";
+    },
+    getDate(date) {
+      return moment(date.date).format("Do MMMM YYYY, h:mm a");
+    },
     viewPurchase(item) {
       this.$store.commit("SET_VIEW_PURCHASE", item);
       this.$router.push("purchase-details");
@@ -139,7 +148,9 @@ export default {
   },
   watch: {
     getPurchases() {
-      console.log("response", this.getPurchases);
+      for (var i in this.getPurchases) {
+        this.total_sales += this.getPurchases[i].amount;
+      }
     },
   },
   mounted() {

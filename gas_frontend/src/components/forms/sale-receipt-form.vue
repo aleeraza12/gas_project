@@ -18,7 +18,7 @@
           <v-form v-model="valid">
             <div>
               <v-select
-                :items="customer_types"
+                :items="getAllCustomerTypes"
                 v-model="customer_type"
                 label="Customer Type"
                 :rules="nameRules"
@@ -29,16 +29,22 @@
               ></v-select>
             </div>
             <div>
-              <v-text-field
+              <v-select
+                :items="
+                  Object.keys(customer_names).map((key) => ({
+                    text: customer_names[key].name,
+                    value: customer_names[key],
+                  }))
+                "
                 label="Customer Name"
                 v-model="customer_name"
-                outlined
-                dense
                 :rules="nameRules"
-                placeholder="Enter Customer Name"
+                outlined
+                class="username-feild mt-3"
+                dense
+                small
                 hide-details
-                class="username-feild mt-5"
-              ></v-text-field>
+              ></v-select>
             </div>
             <div>
               <v-text-field
@@ -92,8 +98,8 @@
             </div>
             <div class="mt-5">
               <v-select
-                :items="payment_modes"
                 v-model="payment_mode"
+                :items="getAllPaymentModes"
                 label="Payment Methods"
                 :rules="nameRules"
                 outlined
@@ -119,14 +125,14 @@
       <div>
         <div
           style="
-            height:250px;
+            height: 250px;
             width: 300px;
             background-color: #ebebea;
             margin-top: 13rem;
           "
           class="pa-10 ml-16"
         >
-          <v-form v-model="valid">
+          <v-form v-model="valid1">
             <div class="pa-2">
               <v-text-field
                 label="Enter Discount code"
@@ -136,13 +142,16 @@
                 hide-details
                 class="username-feild mt-10"
                 v-model="discount_code"
+                :rules="nameRules"
               ></v-text-field>
             </div>
             <div class="mt-5">
               <v-btn
                 small
+                @click="addPromo()"
+                :disabled="!valid1"
+                :loading="loading1"
                 class="elevation-0 btn-create-1"
-                @click="createSale()"
                 dense
               >
                 Submit
@@ -171,9 +180,12 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
 export default {
   data: () => ({
     valid: false,
+    valid1: false,
     show: false,
     show1: false,
     gas_quantity: "",
@@ -181,29 +193,80 @@ export default {
     nameRules: [(v) => !!v || "This field is required"],
     total_amount: "",
     customer_name: "",
+    customer_names: [],
     customer_phone_number: "",
-    customer_types: ["Distributor", "Retailer"],
-    payment_modes: ["Cash", "Prepad"],
     customer_type: "",
     discount_code: "",
     payment_mode: "",
-    status: "",
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
     loading: false,
+    loading1: false,
+    status: "unpaid",
+    sale_id: null,
+    emitData: "",
   }),
   components: {},
-  created() {},
+  created() {
+    eventBus.$on("updateSale", (data) => {
+      console.log("emt receved", data);
+      this.assembleData(data);
+      this.emitData = data;
+    });
+  },
   computed: {
     getIcon() {
       return this.snackbarColor == "primary"
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    ...mapGetters([
+      "getCustomers",
+      "getAllPaymentModes",
+      "getAllCustomerTypes",
+    ]),
+  },
+  mounted() {
+    this.$store.dispatch("getCustomersListing");
+    this.$store.dispatch("getPaymentMethods");
+    this.$store.dispatch("getCustomerTypes");
+  },
+  watch: {
+    getCustomers() {
+      console.log(this.getCustomers);
+      for (let j = 0; j < this.getCustomers.length; j++) {
+        let customer = {
+          name: this.getCustomers[j].name,
+          id: this.getCustomers[j].id,
+        };
+        this.customer_names.push(customer);
+      }
+      let updateAblecustomer = {
+        name: this.emitData.customer_name,
+        id: this.emitData.customer_id,
+      };
+      this.customer_name = updateAblecustomer;
+    },
   },
   methods: {
+    assembleData(data) {
+      this.gas_quantity = data.gas_quantity;
+      this.total_amount = data.total_amount;
+      this.price = data.price;
+      this.customer_id = data.customer_id;
+      this.state = data.state;
+      this.customer_type = data.customer_type;
+      this.customer_phone_number = data.customer_phone_number;
+      this.discount_code = data.discount_code;
+      this.payment_mode = data.payment_mode;
+      this.sale_id = data.id;
+    },
+    addPromo() {
+      this.snackbar = true;
+      this.snackbarColor = "success";
+      this.snacbarMessage = "Your promo(s) will be added with your sales";
+    },
     goToSalesListingPage() {
       this.$router.go(-1);
     },
@@ -213,26 +276,33 @@ export default {
         gas_quantity: this.gas_quantity,
         total_amount: this.total_amount,
         price: this.price,
-        customer_name: this.customer_name,
+        customer_id: this.customer_name.id,
         customer_type: this.customer_type,
         customer_phone_number: this.customer_phone_number,
         discount_code: this.discount_code,
         payment_mode: this.payment_mode,
+        status: this.status,
+        sale_id: this.sale_id,
       };
       console.log(requestBody);
-      RequestService.post("sale/create", requestBody)
+      let apiName = "";
+      this.sale_id == null
+        ? (apiName = "sale/create")
+        : (apiName = "sale/update");
+      RequestService.post(apiName, requestBody)
         .then((res) => {
           console.log("status in purchase", res.data.status);
           if (res.data.status == 201) {
-            console.log("this is inside");
-            this.snackbar = true;
-            this.snackbarColor = "success";
             this.snacbarMessage = "Your sale(s) added successfully";
-            this.loading = false;
-            setTimeout(() => {
-              this.$router.push("/sales");
-            }, 1000);
+          } else if (res.data.status == 200) {
+            this.snacbarMessage = "Your sale(s) updated successfully";
           }
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.loading = false;
+          setTimeout(() => {
+            this.$router.push("/sales");
+          }, 1000);
         })
         .catch(() => {
           this.snackbar = true;

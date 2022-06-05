@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Purchase;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -27,10 +29,12 @@ class PurchaseController extends Controller
                 'unit_price' =>  $request->unit_price,
                 'recepient_name' =>  $request->recepient_name,
                 'company_id' => $request->user_id,
-                'receipt_attachment_path' =>  $request->has('attachment') ? $this->upload_attachment($request) : null,
+                'unpaid' => true,
+                'unpaid_at' => Carbon::now()->addHours(5),
+                'receipt_attachment_path' =>  $request->attachment == "" ? null :  $this->upload_attachment($request)
             ]
         );
-        TransactionController::createTransaction($request->merge(['type' => 'purchase']));
+        TransactionController::createTransaction($request->merge(['type' => 'purchase', 'amount' => $request->amount, 'outer_id' => $purchase->id]));
         return response()->json(['response' => $purchase, 'status' => 201]);
     }
 
@@ -51,14 +55,72 @@ class PurchaseController extends Controller
     {
         $purchases =  Company::find($request->user_id)->purchase;
         foreach ($purchases as $purchase) {
-            $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
+            if ($purchase['receipt_attachment_path'] !== null)
+                $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
+            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->user_id)->first();
+            $purchase['transaction_id'] =  @$transaction->id;
         }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
 
+
+    public function update_purchase(Request $request)
+    {
+        $purchase =  Purchase::find($request->purchase_id);
+        $purchase->date = $request->date;
+        $purchase->receipt_number =  $request->receipt_number;
+        $purchase->company_name =  $request->company_name;
+        $purchase->company_phone_number = $request->company_phone_number;
+        $purchase->driver_name =  $request->driver_name;
+        $purchase->gas_quantity =  $request->gas_quantity;
+        $purchase->amount =  $request->amount;
+        $purchase->unit_price =  $request->unit_price;
+        $purchase->recepient_name =  $request->recepient_name;
+        $purchase->company_id = $request->user_id;
+        $purchase->receipt_attachment_path =  $request->attachment == "" ? null :  $this->upload_attachment($request);
+        $purchase->save();
+        TransactionController::updateSaleTransaction($request->merge([
+            'amount' => $request->amount, 'outer_id' => $request->purchase_id, 'type' => 'purchase'
+        ]));
+        return response()->json(['response' => $purchase, 'status' => 200]);
+    }
+
+    public function updatePurchaseStatus(Request $request)
+    {
+        $purchase =  Purchase::find($request->purchase_id);
+        $key = $value = null;
+        if ($request->status == 'paid' && $purchase->paid === null && $purchase->delivered === null && $purchase->unpaid !== null) {
+            $key = 'paid';
+            $value = 'paid_at';
+        } else if ($request->status == 'delivered' && $purchase->delivered === null && $purchase->paid !== null && $purchase->unpaid !== null) {
+            $key = 'delivered';
+            $value = 'delivered_at';
+        } else if ($request->status == 'paid' && $purchase->delivered != null && $purchase->paid != null) {
+            $key = 'paid';
+            $value = 'paid_at';
+        } else if ($request->status == 'delivered' && $purchase->delivered !== null && $purchase->paid !== null) {
+            $key = 'delivered';
+            $value = 'delivered_at';
+        } else if ($request->status == 'delivered' && $purchase->delivered !== null && $purchase->paid === null) {
+            $key = 'delivered';
+            $value = 'delivered_at';
+        } else if ($request->status == 'delivered' && $purchase->delivered == null && $purchase->paid == null) {
+            $key = 'delivered';
+            $value = 'delivered_at';
+        } else if ($request->status == 'paid' && $purchase->delivered != null && $purchase->paid == null) {
+            $key = 'paid';
+            $value = 'paid_at';
+        }
+        $receipt_attachment_path = null;
+        if ($request->attachment != "")
+            $receipt_attachment_path =  $this->upload_attachment($request);
+        $purchase->update([$key => true, $value => Carbon::now()->addHours(5), 'receipt_attachment_path' => $receipt_attachment_path]);
+        return response()->json(['response' => $purchase, 'status' => 200]);
+    }
+
     public function upload_attachment($request)
     {
-        $filename = Str::random(5) . 'id' . $request->date . '.' . 'png';
+        $filename = Str::random(5) . 'id' . '.' . 'png';
         $original_file_path = 'receipt' . $filename;
         $image = $request->attachment;  // your base64 encoded
         $image = str_replace('data:image/png;base64,', '', $request->attachment);

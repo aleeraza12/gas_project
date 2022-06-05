@@ -12,19 +12,36 @@ class General extends Controller
 {
     public function Login(Request $request)
     {
-        $is_user = Company::where('company_email', $request->email)->first();
+        $is_admin = Company::where('company_email', $request->email)->first();
+        $is_user = User::where('name', $request->email)->first();
+        $status = 400;
         $message = [];
-        if ($is_user) {
-            if (Hash::check($request->password, $is_user->password)) {
-                $response = Token::create($request, $is_user->id);
+        if ($is_admin) {
+            if (Hash::check($request->password, $is_admin->password)) {
+                $response = Token::create($request, $is_admin->id);
                 $message['token'] = $response[0];
-                $message['user'] = $is_user;
+                $message['user'] = $is_admin;
                 $status = 200;
             } else {
                 $message = "Credentials didn't matched";
                 $status = 400;
             }
-        } else {
+        } else if (!$is_admin) {
+            if ($is_user) {
+                if (Hash::check($request->password, $is_user->password)) {
+                    $response = Token::create($request, $is_user->id);
+                    $message['token'] = $response[0];
+                    $message['user'] = $is_user;
+                    $status = 200;
+                } else {
+                    $message = "Credentials didn't matched";
+                    $status = 400;
+                }
+            } else {
+                $message = "Credentials didn't matched";
+                $status = 400;
+            }
+        } else if (!$is_admin && !$is_user) {
             $message = "User credentials does not match";
             $status = 400;
         }

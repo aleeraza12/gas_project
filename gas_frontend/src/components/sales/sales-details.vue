@@ -18,15 +18,15 @@
       <div class="d-flex mt-5">
         <div class="ml-10">
           <v-chip small dense color="success" label class="pa-3">
-            {{ getSingleReceipt.status }}
+            {{ getStatus(getSingleReceipt) }}
           </v-chip>
         </div>
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
           <div>
-            <b>{{ getSingleReceipt.created_at }}</b>
+            <b>{{ getDate(getSingleReceipt.created_at) }}</b>
           </div>
-          <div>02:33 pm</div>
+          <div>{{ getTme(getSingleReceipt.created_at) }}</div>
         </div>
       </div>
       <div
@@ -47,13 +47,15 @@
             {{ getSingleReceipt.customer_phone_number }}
           </div>
           <div class="d-flex align-start justify-start fonts">
-            office no abc , nowrelad activty sometec howdy
+            {{ getSingleReceipt.customer_address }}
           </div>
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-5">
           <div class="fonts">Transcation Id</div>
-          <div class="fonts">000000001000</div>
+          <div class="fonts font-weight-bold">
+            00000000{{ getSingleReceipt.transaction_id }}
+          </div>
         </div>
       </div>
       <div class="mt-5" style="text-decoration: underline">
@@ -76,20 +78,24 @@
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-5">
-          <div class="fonts">Transcation Id</div>
-          <div class="fonts">000000000000</div>
+          <div class="fonts">
+            Gas Quantity: {{ getSingleReceipt.gas_quantity }}
+          </div>
+          <div class="fonts">Updated By: {{ getSingleReceipt.updated_by }}</div>
         </div>
       </div>
-      <div class="mt-5" style="text-decoration: underline">
+      <!--<div class="mt-5" style="text-decoration: underline">
         <b>Status History</b>
-      </div>
-      <div class="fonts mt-5">
+      </div>-->
+      <!--<div class="fonts mt-5">
         <div class="d-flex align-start justify-start ml-3">
-          <v-radio
-            label="Delivered"
-            color="primary"
-            value="Delivered"
-          ></v-radio>
+          <v-radio-group v-model="Delivered" column>
+            <v-radio
+              label="Delivered"
+              color="primary"
+              value="Delivered"
+            ></v-radio>
+          </v-radio-group>
         </div>
         <div class="d-flex align-start justify-start ml-8">
           23rd ,april 20222
@@ -97,14 +103,43 @@
       </div>
       <div class="fonts">
         <div class="d-flex align-start justify-start ml-3">
-          <v-radio label="paid" color="primary" value="Paid"></v-radio>
+          <v-radio-group v-model="Paid" column>
+            <v-radio label="paid" color="primary" value="Paid"></v-radio>
+          </v-radio-group>
         </div>
         <div class="d-flex align-start justify-start ml-8">
           23rd ,april 20222
         </div>
-      </div>
+      </div>-->
+      <v-container fluid>
+        <v-radio-group v-model="radios" dense>
+          <template v-slot:label>
+            <div><strong>Status History</strong></div>
+          </template>
+          <v-radio value="delivered">
+            <template v-slot:label>
+              <div>
+                <strong>Delivered</strong>
+                <div>{{ getPaidAtDate(getSingleReceipt.delivered_at) }}</div>
+              </div>
+            </template>
+          </v-radio>
+          <v-radio value="paid">
+            <template v-slot:label>
+              <div>
+                <strong>Paid</strong>
+                <div>{{ getPaidAtDate(getSingleReceipt.paid_at) }}</div>
+              </div>
+            </template>
+          </v-radio>
+        </v-radio-group>
+      </v-container>
       <div>
-        <v-btn class="mt-5 btn-create">
+        <v-btn
+          class="mt-5 btn-create"
+          @click="updateSaleStatus()"
+          :loading="loading"
+        >
           save
         </v-btn>
       </div>
@@ -114,8 +149,9 @@
             dense
             outlined
             small
-            class="mt-5 "
-           style="border-color:#464646 ;width: 150px"
+            class="mt-5"
+            style="border-color: #464646; width: 150px"
+            @click="updateSale()"
           >
             Edit
           </v-btn>
@@ -128,33 +164,174 @@
             style="width: 150px"
             class="mt-5 ml-2"
             color="red"
+            @click="dialog = true"
           >
             Delete
           </v-btn>
         </div>
       </div>
     </div>
+    <v-dialog v-model="dialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="text-h7">
+          Are you sure to delete this sale?
+        </v-card-title>
+        <v-card-text
+          >By deleting, All of its transcation will be lost.</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" black" small text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="red darken-1" small text @click="deleteItem()">
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
+import moment from "moment";
 export default {
   data: () => ({
     loading: false,
+    Delivered: "",
+    Paid: "",
+    radios: "",
+    deleteable: "",
+    dialog: false,
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
   }),
   watch: {
     getSingleReceipt() {
       console.log("data", this.getSingleReceipt);
     },
+    radios() {
+      console.log(this.radios);
+    },
   },
   computed: {
     ...mapGetters(["getSingleReceipt"]),
+    getIcon() {
+      return this.snackbarColor == "success"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
   },
   mounted() {
-    console.log("nsde mounted", this.getSingleReceipt);
+    this.getRadioStatus(this.getSingleReceipt);
   },
   methods: {
+    getPaidAtDate(date) {
+      if (date == null) return;
+      return moment(date).format("h:mm a, Do MMMM YYYY");
+    },
+    getRadioStatus() {
+      if (
+        this.getSingleReceipt.paid === null &&
+        this.getSingleReceipt.delivered === null
+      )
+        this.radios = "";
+      else if (
+        this.getSingleReceipt.paid !== null &&
+        this.getSingleReceipt.delivered === null
+      )
+        this.radios = "paid";
+      else if (
+        this.getSingleReceipt.paid !== null &&
+        this.getSingleReceipt.delivered !== null
+      )
+        this.radios = "paid";
+      else if (
+        this.getSingleReceipt.paid == null &&
+        this.getSingleReceipt.delivered !== null
+      )
+        this.radios = "delivered";
+    },
+    updateSaleStatus() {
+      console.log(this.radios);
+      let requestBody = {
+        sale_id: this.getSingleReceipt.id,
+        status: this.radios,
+      };
+      RequestService.post("sale/update_sale_status", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            console.log("sale status updated");
+            this.loading = true;
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "Your sale status updated successfully";
+            setTimeout(() => {
+              this.$router.push("/sales");
+            }, 1500);
+          }
+        }
+      );
+    },
+    updateSale() {
+      if (this.getSingleReceipt.length != 0)
+        this.$router.push("/sale-receipt-form");
+      setTimeout(() => {
+        eventBus.$emit("updateSale", this.getSingleReceipt);
+      }, 10);
+      //this.$store.commit("SET_SINGLE_CUSTOMER_DATA", item);
+    },
+    deleteItem() {
+      this.dialog = false;
+      let requestBody = {
+        sale_id: this.getSingleReceipt.id,
+      };
+      RequestService.post("sale/delete", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          console.log("sale deleted");
+          this.loading = true;
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.snacbarMessage = "Your sale(s) deleted successfully";
+          setTimeout(() => {
+            this.$router.push("/sales");
+          }, 1500);
+        }
+      });
+    },
+    getDate(item) {
+      let date = item.split(" ");
+      return date[0] + " " + date[1] + " " + date[2];
+    },
+    getTme(item) {
+      let date = item.split(" ");
+      return date[3] + date[4];
+    },
+    getStatus(item) {
+      if (item.paid === null && item.delivered === null) return "Unpaid";
+      else if (item.paid !== null && item.delivered === null) return "Paid";
+      else if (item.paid !== null && item.delivered !== null) return "Paid";
+      else if (item.paid == null && item.delivered !== null) return "Delivered";
+    },
     goToSales() {
       this.$router.push("/sales");
     },
@@ -162,15 +339,14 @@ export default {
 };
 </script>
 <style scoped>
-
-
 .btn-create {
-  background-color:  #464646 !important;
+  background-color: #464646 !important;
   color: #fff;
   min-width: 320px !important;
   border-radius: 8px !important;
   cursor: pointer;
-}.sales-details-page {
+}
+.sales-details-page {
   height: 700px;
   width: 600px;
   background-color: #ebebea;

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomerTypesTable extends Migration
+class CreatePaymentModesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateCustomerTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_types', function (Blueprint $table) {
+        Schema::create('payment_modes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('customer_type');
+            $table->string('payment_mode');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateCustomerTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_types');
+        Schema::dropIfExists('payment_modes');
     }
 }

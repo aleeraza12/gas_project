@@ -128,6 +128,7 @@
               <v-btn
                 class="elevation-0 mt-4 btn-create"
                 @click="savePurchase()"
+                :disabled="!valid"
                 :loading="loading"
                 dense
               >
@@ -204,10 +205,12 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
 export default {
   data: () => ({
     valid: false,
     show: false,
+    purchase_id: null,
     datepicker: false,
     show1: false,
     gas_quantity: "",
@@ -243,12 +246,41 @@ export default {
     },
     //...mapGetters(["getAdminInfo"]),
   },
-  created() {},
+  created() {
+    eventBus.$on("updatePurchase", (data) => {
+      console.log("emt receved", data);
+      this.assembleData(data);
+    });
+  },
   watch: {},
   methods: {
+    assembleData(data) {
+      this.receipt_number = data.receipt_number;
+      this.company_name = data.company_name;
+      this.company_phone_number = data.company_phone_number;
+      this.driver_name = data.driver_name;
+      this.gas_quantity = data.gas_quantity;
+      this.amount = data.amount;
+      this.unit_price = data.unit_price;
+      this.recepient_name = data.recepient_name;
+      if (data.base64 && data.base64 != "")
+        this.decodedBase64 = "data:image/jpeg;base64," + data.base64;
+      else this.decodedBase64 = "";
+      this.purchase_id = data.id;
+      this.date = this.formatDate(data.date);
+      console.log("purchase d", this.purchase_id);
+    },
+    formatDate(item) {
+      let date = item.split(" ");
+      console.log(date);
+      return date[0];
+    },
     goToPurchase() {
       this.$router.go(-1);
     },
+    //onInputClick(event) {
+    //  event.target.value = "";
+    //},
     onFileChange() {
       console.log("nsde f");
       let file_size = document.querySelector("input[type=file]").files[0].size;
@@ -276,13 +308,14 @@ export default {
             if (i > 0) {
               fileType = file.name.substring(i + 1);
             }
-            if (fileType == "jpg") {
+            if (fileType == "jpg" || fileType == "png") {
               fileType = "jpeg";
             }
-            that.decodedBase64 = fileBase64.replace(
-              "data:image/" + fileType + ";base64,",
-              ""
-            );
+            that.decodedBase64 = fileBase64;
+            //that.decodedBase64 = fileBase64.replace(
+            //  "data:image/" + fileType + ";base64,",
+            //  ""
+            //);
             console.log("requsetbody", that.decodedBase64);
             event.target.value = null;
           },
@@ -295,8 +328,16 @@ export default {
     },
     savePurchase() {
       this.loading = true;
+      var d = new Date();
       let requestBody = {
-        date: this.date,
+        date:
+          this.date +
+          " " +
+          d.getHours() +
+          ":" +
+          d.getMinutes() +
+          ":" +
+          d.getSeconds(),
         receipt_number: this.receipt_number,
         company_name: this.company_name,
         company_phone_number: this.company_phone_number,
@@ -305,22 +346,26 @@ export default {
         amount: this.amount,
         unit_price: this.unit_price,
         recepient_name: this.recepient_name,
-        attachment: this.decodedBase64,
+        attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
+        purchase_id: this.purchase_id,
       };
-      console.log("requsetbody", requestBody, this.decodedBase64);
-      RequestService.post("purchase/create", requestBody)
+      let apiName = "";
+      this.purchase_id == null
+        ? (apiName = "purchase/create")
+        : (apiName = "purchase/update");
+      RequestService.post(apiName, requestBody)
         .then((res) => {
-          console.log("status in purchase", res.data.status);
           if (res.data.status == 201) {
-            console.log("this is inside");
-            this.snackbar = true;
-            this.snackbarColor = "success";
-            this.snacbarMessage = "Your purchase(s) uploaded successfully";
-            this.loading = false;
-            setTimeout(() => {
-              this.$router.push("/purchases");
-            }, 1000);
+            this.snacbarMessage = "Your purchase(s) added successfully";
+          } else if (res.data.status == 200) {
+            this.snacbarMessage = "Your purchase(s) updated successfully";
           }
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.loading = false;
+          setTimeout(() => {
+            this.$router.push("/purchases");
+          }, 1000);
         })
         .catch(() => {
           //if (err.response) {
