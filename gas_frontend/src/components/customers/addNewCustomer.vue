@@ -12,148 +12,150 @@
         <b>{{ customerText }} Customer</b>
       </div>
       <div class="d-flex align-start justify-start fonts mt-1">
-    <div class="mt-6">
-      <div class="d-flex align-start justify-start"><b>New Customer</b></div>
-      <div class="d-flex align-start justify-start fonts mt-6">
-        Enter the following details to create a customer profile
-      </div>
-      <v-form v-model="valid" class="mt-6">
-        <div>
-          <v-text-field
-            v-model="name"
-            label="Enter Name"
-            placeholder="Enter Name"
-            outlined
-            :rules="nameRules"
-            dense
-            hide-details
-            class="mt-6"
-            style="width: 300px"
-          ></v-text-field>
-        </div>
-        <div>
-          <v-text-field
-            v-model="phone_number"
-            :rules="nameRules"
-            label="Enter Phone Number"
-            placeholder="Enter Phone Number"
-            outlined
-            dense
-            hide-details
-            class="mt-6"
-            style="width: 300px"
-          ></v-text-field>
-        </div>
-        <div>
-          <v-text-field
-            v-model="email"
-            label="Enter Email Address"
-            :rules="nameRules"
-            placeholder="Enter Email Address"
-            outlined
-            dense
-            hide-details
-            class="mt-6"
-            style="width: 300px"
-          ></v-text-field>
-        </div>
-        <div>
-          <v-text-field
-            v-model="address"
-            label="Enter Street"
-            :rules="nameRules"
-            placeholder="Enter Street"
-            outlined
-            dense
-            hide-details
-            class="mt-6"
-            style="width: 300px"
-          ></v-text-field>
-        </div>
-        <div class="d-flex" style="width: 300px">
-          <div>
-            <v-text-field
-              label="City"
-              outlined
-              :rules="nameRules"
-              dense
-              placeholder="Enter City"
-              hide-details
-              class="city-feild mt-6 mr-3"
-              v-model="city"
-            ></v-text-field>
+        <div class="mt-6">
+          <div class="d-flex align-start justify-start">
+            <b>New Customer</b>
           </div>
-          <div class="mt-6">
-            <v-select
-              :items="states"
-              :rules="nameRules"
-              label="State"
-              placeholder="Enter State"
-              outlined
-              small
-              dense
-              v-model="state"
-              hide-details
-            >
-            </v-select>
+          <div class="d-flex align-start justify-start fonts mt-6">
+            Enter the following details to create a customer profile
           </div>
+          <v-form v-model="valid" class="mt-6">
+            <div>
+              <v-text-field
+                v-model="name"
+                label="Enter Name"
+                placeholder="Enter Name"
+                outlined
+                :rules="nameRules"
+                dense
+                hide-details
+                class="mt-6"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                v-model="phone_number"
+                :rules="nameRules"
+                label="Enter Phone Number"
+                placeholder="Enter Phone Number"
+                outlined
+                dense
+                hide-details
+                class="mt-6"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                v-model="email"
+                label="Enter Email Address"
+                :rules="nameRules"
+                placeholder="Enter Email Address"
+                outlined
+                dense
+                hide-details
+                class="mt-6"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                v-model="address"
+                label="Enter Street"
+                :rules="nameRules"
+                placeholder="Enter Street"
+                outlined
+                dense
+                hide-details
+                class="mt-6"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div class="d-flex" style="width: 300px">
+              <div>
+                <v-text-field
+                  label="City"
+                  outlined
+                  :rules="nameRules"
+                  dense
+                  placeholder="Enter City"
+                  hide-details
+                  class="city-feild mt-6 mr-3"
+                  v-model="city"
+                ></v-text-field>
+              </div>
+              <div class="mt-6">
+                <v-select
+                  :items="getAllStates"
+                  :rules="nameRules"
+                  label="State"
+                  placeholder="Enter State"
+                  outlined
+                  small
+                  dense
+                  v-model="state"
+                  hide-details
+                >
+                </v-select>
+              </div>
+            </div>
+
+            <div class="mt-6" style="width: 300px">
+              <v-select
+                :items="getAllCustomerTypes"
+                v-model="customer_type"
+                label="Customer Type"
+                :rules="nameRules"
+                placeholder="Select One"
+                outlined
+                hide-details
+                small
+                dense
+              >
+              </v-select>
+            </div>
+            <div class="mt-6 mb-5">
+              <v-btn
+                block
+                large
+                class="elevation-0 btn-create"
+                :loading="loading"
+                @click="createCustomer()"
+                dense
+              >
+                Save
+              </v-btn>
+            </div>
+          </v-form>
         </div>
 
-        <div class="mt-6" style="width: 300px">
-          <v-select
-            :items="customer_types"
-            v-model="customer_type"
-            label="Customer Type"
-            :rules="nameRules"
-            placeholder="Select One"
-            outlined
-            hide-details
-            small
-            dense
-          >
-          </v-select>
-        </div>
-        <div class="mt-6 mb-5">
-          <v-btn
-            block
-            large
-            class="elevation-0 btn-create"
-           
-            :loading="loading"
-            @click="createCustomer()"
-            dense
-          >
-            Save
-          </v-btn>
-        </div>
-      </v-form>
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="2000"
+          :value="true"
+          absolute
+          class="mt-6"
+          :color="snackbarColor"
+          shaped
+          :right="true"
+          :top="true"
+          text
+        >
+          <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+          {{ snacbarMessage }}
+        </v-snackbar>
+      </div>
     </div>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="2000"
-      :value="true"
-      absolute
-      class="mt-6"
-      :color="snackbarColor"
-      shaped
-      :right="true"
-      :top="true"
-      text
-    >
-      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
-      {{ snacbarMessage }}
-    </v-snackbar>
   </div>
 </template>
 <script>
 import RequestService from "../../RequestService";
 import { eventBus } from "@/main";
-
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     nameRules: [(v) => !!v || "This field is required"],
-    states: ["Foo", "Bar", "Fizz", "Buzz"],
-    customer_types: ["Distributor", "Retailer"],
     name: "",
     email: "",
     phone_number: "",
@@ -161,7 +163,7 @@ export default {
     city: "",
     state: "",
     customer_type: "",
-    customer_id:null,
+    customer_id: null,
     address: "",
     snacbarMessage: "",
     snackbar: false,
@@ -175,13 +177,17 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getSingleCustomer"]),
+    ...mapGetters(["getAllCustomerTypes", "getAllStates"]),
   },
   created() {
     eventBus.$on("updateCustomer", (data) => {
       console.log("emt receved", data);
       this.assembleData(data);
     });
+  },
+  mounted() {
+    this.$store.dispatch("getCustomerTypes");
+    this.$store.dispatch("getAllStates");
   },
   methods: {
     goToCustomerListings() {
@@ -208,7 +214,7 @@ export default {
         state: this.state,
         customer_type: this.customer_type,
         address: this.address,
-        customer_id: this.customer_id
+        customer_id: this.customer_id,
       };
       console.log(requestBody);
       RequestService.post("customer/create", requestBody)

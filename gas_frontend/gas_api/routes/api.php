@@ -8,6 +8,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Payment;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\StatesController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -118,6 +120,8 @@ Route::middleware('token')->group(function () {
     Route::prefix('purchase')->group(function () {
         Route::controller(PurchaseController::class)->group(function () {
             Route::post('create', 'create_purchase');
+            Route::post('update_purchase_status', 'updatePurchaseStatus');
+            Route::post('update', 'update_purchase');
             Route::post('delete', 'delete_purchase');
             Route::post('read', 'read_purchase');
             Route::post('read_all', 'read_all_purchases');
@@ -138,9 +142,30 @@ Route::middleware('token')->group(function () {
     Route::prefix('sale')->group(function () {
         Route::controller(SaleController::class)->group(function () {
             Route::post('create', 'create_sale');
+            Route::post('update', 'updateSale');
+            Route::post('update_sale_status', 'updateSaleStatus');
             Route::post('delete', 'delete_sale');
             Route::post('read', 'read_sale');
             Route::post('read_all', 'read_all_sale');
+        });
+    });
+
+    //States route
+    Route::prefix('states')->group(function () {
+        Route::controller(StatesController::class)->group(function () {
+            Route::post('create', 'create_states');
+            Route::post('delete', 'delete_states');
+            Route::post('read', 'read_sale');
+            Route::post('read_all', 'read_all_states');
+        });
+    });
+    //States route
+    Route::prefix('transaction')->group(function () {
+        Route::controller(TransactionController::class)->group(function () {
+            Route::post('create', 'create_states');
+            Route::post('delete', 'delete_states');
+            Route::post('read', 'read_sale');
+            Route::post('read_all', 'readTransactions');
         });
     });
 });

@@ -22,10 +22,10 @@
             <v-form v-model="valid">
               <div>
                 <v-text-field
-                  label="Username"
+                  label="email/Username"
                   outlined
                   dense
-                  placeholder="email"
+                  placeholder="email/Username"
                   hide-details
                   :rules="emailRules"
                   class="username-feild mt-6 ml-16"
@@ -162,7 +162,6 @@ export default {
               JSON.stringify(response.data.data.user)
             );
             this.$store.dispatch("getSalesListings");
-            this.$store.dispatch("getUsersListings");
             let vm = this;
             setTimeout(function () {
               vm.$router.push("/dashboard");

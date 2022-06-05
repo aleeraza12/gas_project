@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SaleStatusTime extends Model
+class States extends Model
 {
     use HasFactory;
-    protected $fillable = ['status', 'status_time', 'sale_id'];
+    protected $fillable = [
+        'state_name', 'company_id'
+    ];
 }

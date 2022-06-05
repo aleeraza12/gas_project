@@ -9,6 +9,6 @@ class PaymentMode extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'payment_mode'
+        'payment_mode', 'company_id'
     ];
 }

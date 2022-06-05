@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSaleStatusTimesTable extends Migration
+class CreateStatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateSaleStatusTimesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sale_status_times', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->text('status');
-            $table->date('status_time');
-            $table->integer('sale_id')->unsigned();
-            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateSaleStatusTimesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sale_status_times');
+        Schema::dropIfExists('states');
     }
 }

@@ -9,7 +9,10 @@
       >
         <v-list-item class="d-flex align-center justify-center ma-2">
           <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+            <!--<v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>-->
+            <v-avatar color="white">
+              <v-icon dark> mdi-account-circle </v-icon>
+            </v-avatar>
           </v-list-item-avatar>
         </v-list-item>
         <v-divider></v-divider>
@@ -17,7 +20,7 @@
           <v-list-item
             @click="Logout(link)"
             class="d-flex align-center pl-4 sidebar-item"
-            v-for="(link, i) in links"
+            v-for="(link, i) in showable_links"
             :key="i"
             router
             @click.stop="mini = !mini"
@@ -111,19 +114,19 @@ export default {
         color: "black",
       },
       {
-        text: "Reconcilation",
+        text: "Reconciliation",
         icon: "mdi-trackpad",
         route: "/reconcilation",
         tabName: "Reconcilation",
         color: "black",
       },
-      // {
-      //   text: "Settings",
-      //   icon: "mdi-cog",
-      //   route: "/settings",
-      //   tabName: "Settings",
-      //   color: "black",
-      // },
+      {
+        text: "Settings",
+        icon: "mdi-cog",
+        route: "/settings",
+        tabName: "Settings",
+        color: "black",
+      },
       {
         text: "Logout",
         icon: "mdi-logout",
@@ -132,19 +135,32 @@ export default {
         color: "black",
       },
     ],
+    permissions: JSON.parse(localStorage.getItem("user")).permissions,
     mini: false,
+    showable_links: [],
   }),
   components: {},
   created() {},
   mounted() {
     this.$store.dispatch("getUsersListing");
     this.$store.dispatch("getSalesListings");
+    this.setPerimssions();
   },
   computed: {
     ...mapGetters(["getSales", "getUsers"]),
   },
   watch: {},
   methods: {
+    setPerimssions() {
+      this.showable_links = [];
+      for (let j = 0; j < this.permissions.length; j++) {
+        for (let w = 0; w < this.links.length; w++) {
+          if (this.links[w].text === this.permissions[j])
+            this.showable_links.push(this.links[w]);
+        }
+      }
+      this.showable_links.push(this.links[this.links.length - 1]);
+    },
     getColor(link, titleName, index) {
       titleName == link.tabName
         ? (this.links[index].color = "#215549")

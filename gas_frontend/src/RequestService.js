@@ -10,9 +10,9 @@ let token = "";
 const RequestService = {
   post: (endpoint, body) => {
     token = localStorage.getItem("token");
-    console.log("nsde ths");
     let user = JSON.parse(localStorage.getItem("user"));
-    body.user_id = user.id;
+    if ("company_id" in user) body.user_id = user.company_id;
+    else body.user_id = user.id;
     return new Promise((resolve, reject) => {
       customAxios = axios.create({
         headers: {

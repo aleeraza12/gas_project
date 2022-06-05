@@ -23,29 +23,23 @@
             <b> Users</b>
           </div>
         </div>
-        <div class="d-flex mt-5">
+        <div
+          class="d-flex mt-5 pa-5"
+          style="background-color: #ebebea; border-radius: 5px"
+        >
           <div>
-            <v-card height="80" width="1000px" style="background-color: #ebebea">
-              <v-card-text>
-                <div class="d-flex">
-                  <div>
-                    <div class="d-flex align-start justify-start">
-                      <b>Total Users</b>
-                    </div>
-                    <div class="d-flex align-start justify-start">
-                      {{ getUsers.length }}
-                    </div>
-                  </div>
-                  <v-spacer></v-spacer>
-                  <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined @click="addNewUser()"
-                      >Add New
-                      <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-                    >
-                  </div>
-                </div>
-              </v-card-text>
-            </v-card>
+            <div class="d-flex align-start justify-start">
+              <b>Total Users</b>
+            </div>
+            <div class="d-flex align-start justify-start">
+              {{ getUsers.length }}
+            </div>
+          </div>
+          <v-spacer></v-spacer>
+          <div class="d-flex align-end justify-end">
+            <v-btn small dense outlined @click="addNewUser()"
+              >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
+            >
           </div>
         </div>
         <div class="d-flex mt-3">
@@ -57,40 +51,39 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-              <v-data-table
-                :loading="loading"
-                loading-text="Loading... Please wait"
-                :headers="headers"
-                :items="getUsers"
-                :items-per-page="5"
-                class="elevation-1"
-                hide-default-footer
-                hide-default-header
-               height="400px"
+          <v-data-table
+            :loading="loading"
+            loading-text="Loading... Please wait"
+            :headers="headers"
+            :items="getUsers"
+            :items-per-page="5"
+            class="elevation-1"
+            hide-default-footer
+            hide-default-header
+            height="400px"
+          >
+            <template v-slot:[`body.prepend`]="{ headers }">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
               >
-                <template v-slot:[`body.prepend`]="{ headers }">
-                  <th
-                    v-for="(header, i) in headers"
-                    :key="'A' + i"
-                    class="table-head"
-                  >
-                    <div class="d-flex ml-3">
-                      {{ header.text }}
-                    </div>
-                  </th>
-                </template>
-                <template v-slot:item.actions1="{ item }">
-                  <v-icon small class="mr-2" @click="editItem(item)">
-                    mdi-eye
-                  </v-icon>
-                </template>
-                <template v-slot:item.actions2="{ item }">
-                  <v-icon small class="mr-2" @click="setModal(item)">
-                    mdi-eye
-                  </v-icon>
-                </template>
-              </v-data-table>
-          
+                <div class="d-flex ml-3">
+                  {{ header.text }}
+                </div>
+              </th>
+            </template>
+            <template v-slot:item.actions1="{ item }">
+              <v-icon small class="mr-2" @click="editItem(item)">
+                mdi-eye
+              </v-icon>
+            </template>
+            <template v-slot:item.actions2="{ item }">
+              <v-icon small class="mr-2" @click="setModal(item)">
+                mdi-eye
+              </v-icon>
+            </template>
+          </v-data-table>
         </div>
       </v-card-text>
     </v-card>
@@ -161,9 +154,7 @@ export default {
   }),
   components: {},
   watch: {
-    getUsers() {
-      console.log("response", this.getUsers);
-    },
+    getUsers() {},
   },
   computed: {
     ...mapGetters(["getUsers"]),
@@ -174,9 +165,7 @@ export default {
     },
   },
   created() {
-
     eventBus.$on("responseArrived", () => {
-      console.log("emt arrved");
       this.loading = false;
     });
   },
@@ -188,7 +177,6 @@ export default {
       this.$router.push("/new-user");
     },
     editItem(item) {
-      console.log(item);
       this.$router.push("/new-user");
       setTimeout(() => {
         eventBus.$emit("updateUser", item);
@@ -200,13 +188,12 @@ export default {
       this.deleteable = item;
     },
     deleteItem() {
-       this.dialog = false;
+      this.dialog = false;
       let requestBody = {
         users_id: this.deleteable.id,
       };
       RequestService.post("user/delete", requestBody).then((response) => {
         if (response.data.status == 200) {
-          console.log("users deleted");
           this.loading = true;
           this.snackbar = true;
           this.snackbarColor = "success";

@@ -23,14 +23,11 @@
             <b> Customers</b>
           </div>
         </div>
-        <div class="d-flex mt-5">
-          <div>
-            <v-card height="80" width="1000px" style="background-color: #ebebea">
-              <v-card-text>
-                <div class="d-flex">
+        <div class="d-flex mt-5 pa-5" style="background-color:#EBEBEA;border-radius:5px;">
+       
                   <div>
                     <div class="d-flex align-start justify-start">
-                      <b>Total Users</b>
+                      <b>Total Customers</b>
                     </div>
                     <div class="d-flex align-start justify-start">
                       {{ getCustomers.length }}
@@ -43,10 +40,7 @@
                       <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
                     >
                   </div>
-                </div>
-              </v-card-text>
-            </v-card>
-          </div>
+           
         </div>
         <div class="d-flex mt-3">
           <div><b>Transactions</b></div>
@@ -66,7 +60,7 @@
             class="elevation-1"
             hide-default-footer
             hide-default-header
-            height="230px"
+             height="400px"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
               <th

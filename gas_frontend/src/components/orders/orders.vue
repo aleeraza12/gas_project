@@ -22,11 +22,8 @@
         </div>
         
       </div>
-      <div class="d-flex mt-5">
-        <div>
-          <v-card height="80" width="1000px"  style="background-color:#EBEBEA">
-            <v-card-text>
-              <div class="d-flex">
+      <div class="d-flex mt-5 pa-5" style="background-color:#EBEBEA;border-radius:5px;">
+             
                 <div>
                   <div class="d-flex align-start justify-start"><b>Pending</b></div>
                   <div  class="d-flex align-start justify-start">17</div>
@@ -35,10 +32,7 @@
                 <div  class="d-flex align-end justify-end">
                  <v-btn small dense outlined >View All <v-icon small dense  class="ml-2">mdi-eye-outline</v-icon></v-btn>
                 </div>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
+       
       </div>
       <div class=" d-flex mt-3">
        <div><b>History</b></div>

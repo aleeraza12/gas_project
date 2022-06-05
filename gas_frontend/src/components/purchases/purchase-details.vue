@@ -3,17 +3,19 @@
     <div class="sales-details-page">
       <div class="d-flex">
         <div @click="goToPurchases()">
-          <v-icon class="ml-3 mt-3"> mdi-close</v-icon>
+          <v-icon class="ml-3 mt-5"> mdi-close</v-icon>
         </div>
       </div>
-      <div class="mt-6"><b>Purchase Details</b></div>
+      <div class="mt-6">
+        <b>Purchase Details</b>
+      </div>
       <v-divider></v-divider>
-      <div class="d-flex align-center justify-center mt-3">
+      <div class="d-flex align-center justify-center mt-5">
         <div
           v-if="
-            (getSinglePurchase.base64 == '' && decodedBase64 == '') ||
-            (getSinglePurchase.receipt_attachment_path == null &&
-              decodedBase64 == '')
+            (image === '' && decodedBase64 === '') ||
+            (getSinglePurchase.receipt_attachment_path === null &&
+              decodedBase64 === '')
           "
           style="height: 150px; width: 150px; background-color: #c4c4c4"
         ></div>
@@ -21,11 +23,7 @@
           v-else
           style="border: 1px solid grey; border-radius: 5px"
           max-width="70"
-          v-bind:src="
-            'data:image/jpeg;base64,' + decodedBase64 != ''
-              ? decodedBase64
-              : getSinglePurchase.base64
-          "
+          v-bind:src="decodedBase64 != '' ? decodedBase64 : image"
           height="120"
         />
       </div>
@@ -49,15 +47,15 @@
       <div class="d-flex mt-5">
         <div class="ml-10">
           <v-chip small dense color="success" label class="pa-3">
-            {{ getSinglePurchase.payment_status }}
+            {{ getStatus(getSinglePurchase) }}
           </v-chip>
         </div>
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
           <div>
-            <b>{{ getSinglePurchase.date }}</b>
+            <b>{{ getDate(getSinglePurchase.date) }}</b>
           </div>
-          <div>02:33 pm</div>
+          <div>{{ getTme(getSinglePurchase.date) }}</div>
         </div>
       </div>
       <div
@@ -67,7 +65,7 @@
         Company Info
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-3">
+        <div class="ml-5 mt-5">
           <div class="d-flex align-start justify-start">
             <b>{{ getSinglePurchase.company_name }}</b>
           </div>
@@ -79,16 +77,16 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-3">
-          <div class="fonts">Transaction Id</div>
-          <div class="fonts">{{ getSinglePurchase.transaction_id }}</div>
+        <div class="mr-8 mt-5">
+          <div class="fonts">Transcation Id</div>
+          <div class="fonts">000000010000</div>
         </div>
       </div>
-      <div class="mt-3" style="text-decoration: underline">
+      <div class="mt-5" style="text-decoration: underline">
         <b>Purchase Info</b>
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-3">
+        <div class="ml-5 mt-5">
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price:</b></div>
             <div class="fonts">N {{ getSinglePurchase.unit_price }}</div>
@@ -103,15 +101,15 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-3">
-          <div class="fonts">Gas Quantity</div>
-          <div class="fonts">{{ getSinglePurchase.gas_quantity }}</div>
+        <div class="mr-8 mt-5">
+          <div class="fonts">Transcation Id</div>
+          <div class="fonts">000000010000</div>
         </div>
       </div>
-      <div class="mt-3" style="text-decoration: underline">
+      <!--<div class="mt-5" style="text-decoration: underline">
         <b>Status History</b>
       </div>
-      <div class="fonts mt-3">
+      <div class="fonts mt-5">
         <div class="d-flex align-start justify-start ml-3">
           <v-radio
             label="Deleivered"
@@ -130,9 +128,36 @@
         <div class="d-flex align-start justify-start ml-8">
           23rd ,april 20222
         </div>
-      </div>
+      </div>-->
+      <v-container fluid>
+        <v-radio-group v-model="radios" dense>
+          <template v-slot:label>
+            <div><strong>Status History</strong></div>
+          </template>
+          <v-radio value="delivered">
+            <template v-slot:label>
+              <div>
+                <strong>Delivered</strong>
+                <div>{{ getPaidAtDate(getSinglePurchase.delivered_at) }}</div>
+              </div>
+            </template>
+          </v-radio>
+          <v-radio value="paid">
+            <template v-slot:label>
+              <div>
+                <strong>Paid</strong>
+                <div>{{ getPaidAtDate(getSinglePurchase.paid_at) }}</div>
+              </div>
+            </template>
+          </v-radio>
+        </v-radio-group>
+      </v-container>
       <div>
-        <v-btn dense outlined small style="width: 230px" class="mt-3">
+        <v-btn
+          class="mt-5 btn-create"
+          @click="updatePurchaseStatus()"
+          :loading="loading"
+        >
           save
         </v-btn>
       </div>
@@ -142,9 +167,9 @@
             dense
             outlined
             small
-            style="width: 100px"
-            class="mt-3 mr-3"
-            color="primary"
+            class="mt-5"
+            @click="updatePurchase()"
+            style="border-color: #464646; width: 150px"
           >
             Edit
           </v-btn>
@@ -154,9 +179,10 @@
             dense
             outlined
             small
-            style="width: 100px"
-            class="mt-3"
+            style="width: 150px"
+            class="mt-5 ml-2"
             color="red"
+            @click="dialog = true"
           >
             Delete
           </v-btn>
@@ -178,19 +204,48 @@
       <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
       {{ snacbarMessage }}
     </v-snackbar>
+    <v-dialog v-model="dialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="text-h7">
+          Are you sure to delete this sale?
+        </v-card-title>
+        <v-card-text
+          >By deleting, All of its transcation will be lost.</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" black" small text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="red darken-1" small text @click="deleteItem()">
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
+import moment from "moment";
+
 export default {
   data: () => ({
     loading: false,
+    Delivered: "",
+    Paid: "",
+    radios: "",
     decodedBase64: "",
     validFileSize: false,
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
     files: "",
+    deleteable: "",
+    dialog: false,
+    image: "",
   }),
   watch: {
     getSinglePurchase() {
@@ -206,9 +261,105 @@ export default {
     },
   },
   mounted() {
+    this.getRadioStatus();
     console.log("nsde mounted", this.getSinglePurchase);
+    if (this.getSinglePurchase.base64 && this.getSinglePurchase.base64 != "")
+      this.image = "data:image/jpeg;base64," + this.getSinglePurchase.base64;
   },
   methods: {
+    getPaidAtDate(date) {
+      if (date == null) return;
+      return moment(date).format("h:mm a, Do MMMM YYYY");
+    },
+    getRadioStatus() {
+      if (
+        this.getSinglePurchase.paid === null &&
+        this.getSinglePurchase.delivered === null
+      )
+        this.radios = "";
+      else if (
+        this.getSinglePurchase.paid !== null &&
+        this.getSinglePurchase.delivered === null
+      )
+        this.radios = "paid";
+      else if (
+        this.getSinglePurchase.paid !== null &&
+        this.getSinglePurchase.delivered !== null
+      )
+        this.radios = "paid";
+      else if (
+        this.getSinglePurchase.paid == null &&
+        this.getSinglePurchase.delivered !== null
+      )
+        this.radios = "delivered";
+    },
+    updatePurchaseStatus() {
+      console.log(this.radios);
+      let requestBody = {
+        purchase_id: this.getSinglePurchase.id,
+        status: this.radios,
+        attachment:
+          this.decodedBase64 != ""
+            ? this.decodedBase64.replace("data:image/jpeg;base64,", "")
+            : this.image.replace("data:image/jpeg;base64,", ""),
+      };
+      RequestService.post("purchase/update_purchase_status", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            console.log("purchase status updated");
+            this.loading = true;
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "Your purchase status updated successfully";
+            setTimeout(() => {
+              this.$router.push("/purchases");
+            }, 1500);
+          }
+        }
+      );
+    },
+    getStatus(item) {
+      if (item.paid === null && item.delivered === null) return "Unpaid";
+      else if (item.paid !== null && item.delivered === null) return "Paid";
+      else if (item.paid !== null && item.delivered !== null) return "Paid";
+      else if (item.paid == null && item.delivered !== null) return "Delivered";
+    },
+    updatePurchase() {
+      if (this.getSinglePurchase.length != 0)
+        this.$router.push("/purchase-receipt-form");
+      setTimeout(() => {
+        eventBus.$emit("updatePurchase", this.getSinglePurchase);
+      }, 10);
+    },
+    deleteItem() {
+      this.dialog = false;
+      let requestBody = {
+        purchase_id: this.getSinglePurchase.id,
+      };
+      RequestService.post("purchase/delete", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          console.log("purchase deleted");
+          this.loading = true;
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.snacbarMessage = "Your purchase deleted successfully";
+          setTimeout(() => {
+            this.$router.push("/purchases");
+          }, 1500);
+        }
+      });
+    },
+    getDate(item) {
+      let date = item.split(" ");
+      console.log(date);
+      return date[0];
+    },
+    getTme(item) {
+      let date = item.split(" ");
+      console.log(date[1]);
+      let time = date[1];
+      return moment(time, "HH:mm:ss").format("hh:mm a");
+    },
     onFileChange() {
       console.log("nsde f");
       let file_size = document.querySelector("input[type=file]").files[0].size;
@@ -260,8 +411,15 @@ export default {
 };
 </script>
 <style scoped>
+.btn-create {
+  background-color: #464646 !important;
+  color: #fff;
+  min-width: 320px !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+}
 .sales-details-page {
-  height: 600px;
+  height: 800px;
   width: 600px;
   background-color: #ebebea;
   margin-left: 12rem;

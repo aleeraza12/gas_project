@@ -10,7 +10,7 @@ class Sale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'gas_quantity', 'total_amount',  'discount_code', 'customer_id', 'customer_type', 'payment_mode', 'status', 'company_id', 'price',  'customer_phone_number'
+        'gas_quantity', 'total_amount',  'discount_code', 'customer_id', 'customer_type', 'payment_mode', 'status', 'company_id', 'price',  'customer_phone_number', 'paid', 'paid_at', 'unpaid', 'unpaid_at', 'delivered', 'delivered_at'
     ];
     public function getCreatedAtAttribute($value)
     {
@@ -21,10 +21,5 @@ class Sale extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function salestatustime()
-    {
-        return $this->hasMany(SaleStatusTime::class);
     }
 }

@@ -24,11 +24,8 @@
         </div>
         
       </div>
-      <div class="d-flex mt-5">
-        <div>
-          <v-card height="80" width="1000px"  style="background-color:#EBEBEA">
-            <v-card-text>
-              <div class="d-flex">
+      <div class="d-flex mt-5 pa-5" style="background-color:#EBEBEA;border-radius:5px;">
+        
                 <div>
                   <div class="d-flex align-start justify-start"><b>Available Balance</b></div>
                   <div  class="d-flex align-start justify-start">NA , 945000000</div>
@@ -37,10 +34,7 @@
                 <div  class="d-flex align-end justify-end">
                  <v-btn small dense outlined >Withdraw <v-icon small dense  class="ml-2">mdi-plus</v-icon></v-btn>
                 </div>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
+           
       </div>
       <div class=" d-flex mt-3">
        <div><b>Withdraw History</b></div>

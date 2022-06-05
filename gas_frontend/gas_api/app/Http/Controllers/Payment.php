@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\PaymentMode;
 use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class Payment extends Controller
             ],
             [
                 'payment_mode' => $request->payment_mode,
+                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $payment_mode, 'status' => 201]);
@@ -37,10 +39,11 @@ class Payment extends Controller
 
     public function read_all_payment_mode(Request $request)
     {
-        $payment_modes =  PaymentMode::all();
+        $payment_modes = Company::find($request->user_id)->payment_mode;
+
         return response()->json(['response' => $payment_modes, 'status' => 200]);
     }
- 
+
     //CRUD for Payment Status like paid,unpaid
     public function create_payment_status(Request $request)
     {
@@ -72,5 +75,4 @@ class Payment extends Controller
         $payment_statuses =  PaymentStatus::all();
         return response()->json(['response' => $payment_statuses, 'status' => 200]);
     }
-    
 }

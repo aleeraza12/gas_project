@@ -19,6 +19,7 @@ class CustomerController extends Controller
             ],
             [
                 'customer_type' => $request->customer_type,
+                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $customer_type, 'status' => 201]);
@@ -38,7 +39,7 @@ class CustomerController extends Controller
 
     public function read_all_customer_type(Request $request)
     {
-        $customer_types =  CustomerType::all();
+        $customer_types = Company::find($request->user_id)->customer_type;
         return response()->json(['response' => $customer_types, 'status' => 200]);
     }
 

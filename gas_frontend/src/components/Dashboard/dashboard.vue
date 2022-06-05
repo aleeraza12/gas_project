@@ -1,7 +1,6 @@
 <template>
 <div class="main-container">
-  <v-card class="dashboard-card pa-0 elevation-0">
-    <v-card-text>
+
       <div class="d-flex top-bar pt-2">
         <div class="ml-2">
           <v-text-field
@@ -30,8 +29,8 @@
         </div>
       </div>
       <div class="d-flex mt-5">
-        <div>
-          <v-card height="120" width="400"  style="background-color:#EBEBEA">
+        
+          <v-card height="120"   style="background-color:#EBEBEA;min-width:390px">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -48,9 +47,9 @@
               </div>
             </v-card-text>
           </v-card>
-        </div>
-        <div>
-          <v-card height="120" width="400" class="ml-5"  style="background-color:#EBEBEA">
+      
+      
+          <v-card height="120"  class="ml-5"  style="background-color:#EBEBEA;min-width:390px">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -67,9 +66,8 @@
               </div>
             </v-card-text>
           </v-card>
-        </div>
-          <div>
-          <v-card height="120" width="400" class="ml-5" style="background-color:#EBEBEA">
+      
+          <v-card height="120"  class="ml-5" style="background-color:#EBEBEA;min-width:390px">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -86,7 +84,7 @@
               </div>
             </v-card-text>
           </v-card>
-        </div>
+       
       </div>
       <div class=" d-flex mt-3">
        <div><b>Orders</b></div>
@@ -103,8 +101,7 @@
           height="300px"
         ></v-data-table>
       </div>
-    </v-card-text>
-  </v-card>
+
 </div>
 </template>
 
@@ -220,6 +217,7 @@
   background-color: #EBEBEA;
   height: 55px;
   border-radius: 20px;
+
 }
 .searchbar{
   border-radius: 10px;

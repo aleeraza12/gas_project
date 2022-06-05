@@ -23,29 +23,24 @@
             <b> Sales</b>
           </div>
         </div>
-        <div class="d-flex mt-5">
+        <div
+          class="d-flex mt-5 pa-5"
+          style="background-color: #ebebea; border-radius: 5px"
+        >
           <div>
-            <v-card height="80" width="1000px" style="background-color: #ebebea">
-              <v-card-text>
-                <div class="d-flex">
-                  <div>
-                    <div class="d-flex align-start justify-start">
-                      <b>Total Sales</b>
-                    </div>
-                    <div class="d-flex align-start justify-start">
-                      {{ total_sales }} NAJRA
-                    </div>
-                  </div>
-                  <v-spacer></v-spacer>
-                  <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined @click="goToSalesPage()"
-                      >Create Receipt
-                      <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-                    >
-                  </div>
-                </div>
-              </v-card-text>
-            </v-card>
+            <div class="d-flex align-start justify-start">
+              <b>Total Sales</b>
+            </div>
+            <div class="d-flex align-start justify-start">
+              {{ total_sales }} NAJRA
+            </div>
+          </div>
+          <v-spacer></v-spacer>
+          <div class="d-flex align-end justify-end">
+            <v-btn small dense outlined @click="goToSalesPage()"
+              >Create Receipt
+              <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
+            >
           </div>
         </div>
         <div class="d-flex mt-3">
@@ -57,37 +52,37 @@
           <div class="mr-3"><b>Date Picker</b></div>
         </div>
         <div class="mt-3">
-      
-              <v-data-table
-                :loading="loading"
-                loading-text="Loading... Please wait"
-                :headers="headers"
-                :items="getSales"
-                :items-per-page="5"
-                class="elevation-1"
-                hide-default-footer
-                hide-default-header
-                 height="400px"
+          <v-data-table
+            :loading="loading"
+            loading-text="Loading... Please wait"
+            :headers="headers"
+            :items="getSales"
+            :items-per-page="5"
+            class="elevation-1"
+            hide-default-footer
+            hide-default-header
+            height="400px"
+          >
+            <template v-slot:[`body.prepend`]="{ headers }">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
               >
-                <template v-slot:[`body.prepend`]="{ headers }">
-                  <th
-                    v-for="(header, i) in headers"
-                    :key="'A' + i"
-                    class="table-head"
-                  >
-                    <div class="d-flex ml-3">
-                      {{ header.text }}
-                    </div>
-                  </th>
-                </template>
-
-                <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="ViewReceipt(item)">
-                    mdi-eye
-                  </v-icon>
-                </template>
-              </v-data-table>
-          
+                <div class="d-flex ml-3">
+                  {{ header.text }}
+                </div>
+              </th>
+            </template>
+            <template v-slot:item.status="{ item }">
+              {{ getStatus(item) }}
+            </template>
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="ViewReceipt(item)">
+                mdi-eye
+              </v-icon>
+            </template>
+          </v-data-table>
         </div>
       </v-card-text>
     </v-card>
@@ -128,18 +123,22 @@ export default {
     });
   },
   methods: {
+    getStatus(item) {
+      if (item.paid === null && item.delivered === null) return "Unpaid";
+      else if (item.paid !== null && item.delivered === null) return "Paid";
+      else if (item.paid !== null && item.delivered !== null) return "Paid";
+      else if (item.paid == null && item.delivered !== null) return "Delivered";
+    },
     goToSalesPage() {
       this.$router.push("sale-receipt-form");
     },
     ViewReceipt(item) {
-      console.log(item);
       this.$store.commit("SET_VIEW_RECEIPT", item);
       this.$router.push("sales-details");
     },
   },
   watch: {
     getSales() {
-      console.log("response", this.getSales);
       for (var i in this.getSales) {
         this.total_sales += this.getSales[i].total_amount;
       }

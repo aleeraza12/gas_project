@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class CompanyController extends Controller
 {
-    
+
     public function create_company(Request $request)
     {
         $company = Company::updateOrCreate(
@@ -20,14 +20,15 @@ class CompanyController extends Controller
             [
                 'owner_name' => $request->owner_name,
                 'company_email' =>  $request->company_email,
-                'company_name'=>  $request->company_name,
-                'password'=> Hash::make($request->password),
-                'company_phone_number'=>  $request->company_phone_number,
-                'city'=>  $request->city,
-                'state'=>  $request->state,
-                'gas_plant_type'=>  $request->gas_plant_type,
+                'company_name' =>  $request->company_name,
+                'password' => Hash::make($request->password),
+                'company_phone_number' =>  $request->company_phone_number,
+                'city' =>  $request->city,
+                'state' =>  $request->state,
+                'gas_plant_type' =>  $request->gas_plant_type,
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
                 //'company_profile_picture'=>  $this->upload_attachment($request),
-                'address'=>  $request->address,
+                'address' =>  $request->address,
             ]
         );
         return response()->json(['response' => $company, 'status' => 201]);
@@ -39,14 +40,14 @@ class CompanyController extends Controller
         return response()->json(['response' => "Customer deleted successfully", 'status' => 200]);
     }
 
-    
+
     public function read_company(Request $request)
     {
         $company =  Company::find($request->company_id);
         return response()->json(['response' => $company, 'status' => 200]);
     }
 
-       public function read_all_companies(Request $request)
+    public function read_all_companies(Request $request)
     {
         $companies =  Company::all();
         return response()->json(['response' => $companies, 'status' => 200]);
@@ -62,5 +63,4 @@ class CompanyController extends Controller
         Storage::disk('local')->put($original_file_path, base64_decode($image));
         return $original_file_path;
     }
-
 }

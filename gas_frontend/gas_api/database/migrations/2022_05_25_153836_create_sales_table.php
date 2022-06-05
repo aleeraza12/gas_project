@@ -16,8 +16,14 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('gas_quantity');
-            $table->float('total_amount');
-            $table->float('price');
+            $table->boolean('paid')->nullable();
+            $table->dateTime('paid_at')->nullable();
+            $table->boolean('unpaid')->nullable();
+            $table->dateTime('unpaid_at')->nullable();
+            $table->boolean('delivered')->nullable();
+            $table->dateTime('delivered_at')->nullable();
+            $table->double('total_amount');
+            $table->double('price');
             $table->string('discount_code')->nullable();
             $table->integer('customer_id')->unsigned();
             //$table->string('customer_name');

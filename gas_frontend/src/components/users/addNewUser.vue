@@ -20,6 +20,7 @@
             label="Created By"
             :rules="nameRules"
             outlined
+            disabled
             dense
             hide-details
             class="mt-3"
@@ -77,7 +78,7 @@
         </div>
         <div class="mt-3" style="width: 300px">
           <v-select
-            :items="user_types"
+            :items="getAllUserTypes"
             :rules="nameRules"
             v-model="user_type"
             label="User Type"
@@ -93,18 +94,19 @@
         </div>
         <div class="d-flex fonts">
           <v-radio-group v-model="permission1" row dense>
-            <v-radio label="Dashboard" value="dashboard"></v-radio>
-            <v-radio label="Sales" value="sales"></v-radio>
-            <v-radio label="Orders" value="orders"></v-radio>
-            <v-radio label="Purchases" value="purchases"></v-radio>
+            <v-radio label="Dashboard" value="Dashboard"></v-radio>
+            <v-radio label="Sales" value="Sales"></v-radio>
+            <v-radio label="Orders" value="Orders"></v-radio>
+            <v-radio label="Purchases" value="Purchases"></v-radio>
+            <v-radio label="Settings" value="Settings"></v-radio>
           </v-radio-group>
         </div>
         <div class="d-flex fonts">
           <v-radio-group v-model="permission2" row dense>
-            <v-radio label="Customers" value="customers"></v-radio>
-            <v-radio label="Users" value="users"></v-radio>
-            <v-radio label="Wallet" value="wallet"></v-radio>
-            <v-radio label="Reconilcation" value="reconilcation"></v-radio>
+            <v-radio label="Customers" value="Customers"></v-radio>
+            <v-radio label="Users" value="Users"></v-radio>
+            <v-radio label="Wallet" value="Wallet"></v-radio>
+            <v-radio label="Reconciliation" value="Reconciliation"></v-radio>
           </v-radio-group>
         </div>
         <div class="mt-5 mb-5 ml-16">
@@ -113,7 +115,6 @@
             large
             class="elevation-0 btn-create"
             :loading="loading"
-            
             @click="createUser()"
             dense
           >
@@ -142,14 +143,14 @@
 <script>
 import RequestService from "../../RequestService";
 import { eventBus } from "@/main";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     statuses: ["Active", "Inactive"],
-    designations: ["Manager", "Cashier", "Sales Person", "Finance Manager"],
-    user_types: ["Admin", "User", "Sub Admin"],
     nameRules: [(v) => !!v || "This field is required"],
     user_type: "",
     designation: "",
+    loggedInUser: JSON.parse(localStorage.getItem("user")),
     name: "",
     created_by: "",
     userText: "Add New",
@@ -173,13 +174,17 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    ...mapGetters(["getAllUserTypes"]),
   },
   created() {
     eventBus.$on("updateUser", (data) => {
       console.log("emt receved", data);
       this.assembleData(data);
     });
+  },
+  mounted() {
+    this.$store.dispatch("getUserTypes");
+    this.created_by = this.loggedInUser.company_name;
   },
   methods: {
     assembleData(data) {
