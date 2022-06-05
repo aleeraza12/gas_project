@@ -160,8 +160,28 @@
             <v-icon size="80" class="pointer">mdi-image</v-icon
             ><v-icon>mdi-plus</v-icon>
           </div>
-          <div class="d-flex align-center jsutify-center" style="cursor: pointer;margin-left: 11rem;margin-top:2rem">
+          <div class="d-flex justify-center align-center" style="cursor: pointer;margin-top:2rem">
               <b style="text-decoration:underline">Change Image</b>
+          </div>
+          <div class="d-flex justify-start align-start mt-5 ml-2">
+             <div>Owner's Name : </div>
+             <div class="ml-5"><b>Chima obi,</b></div>
+          </div>
+           <div class="d-flex justify-start align-start mt-2 ml-2">
+             <div>Company's Name : </div>
+             <div class="ml-5"><b>Lit, ENgernies</b></div>
+          </div>
+           <div class="d-flex justify-start align-start mt-4 ml-2">
+             <div>Phone Number : </div>
+             <div class="ml-5"><b>093230394940940,</b></div>
+          </div>
+          <div class="d-flex justify-start align-start mt-2 ml-2">
+             <div>Email Address : </div>
+             <div class="ml-5"><b>abc@gmail.com</b></div>
+          </div>
+          <div class="d-flex justify-start align-start mt-2 ml-2">
+             <div>Address : </div>
+             <div class="ml-5"><b>6, Coker Street, Town, Lagos State</b></div>
           </div>
         </div>
        
