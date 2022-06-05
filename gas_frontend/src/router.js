@@ -391,6 +391,26 @@ const router = new VueRouter({
       component: require("./components/customers/addNewCustomer.vue").default,
     },
     {
+      path: "/new-customer-company",
+      name: "new-customer-company",
+      //beforeEnter: (to, from, next) => {
+      //  setTimeout(() => {
+      //    if (
+      //      !(
+      //        "Customers" in
+      //        JSON.parse(localStorage.getItem("user")).permissions
+      //      )
+      //    ) {
+      //      store.dispatch("checkRouteExistence");
+      //    } else {
+      //      next();
+      //    }
+      //  }, 10);
+      //},
+      meta: { layout: "app", title: "new-customer-company" },
+      component: require("./components/customers/new-customer-company").default,
+    },
+    {
       path: "/wallet",
       name: "wallet",
       //beforeEnter: (to, from, next) => {
