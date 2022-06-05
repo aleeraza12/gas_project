@@ -28,9 +28,10 @@
            <div>Monday 4th, April 2022</div>
         </div>
       </div>
-      <div class="d-flex mt-5">
-        
-          <v-card height="120"   style="background-color:#EBEBEA;min-width:390px">
+      
+      <v-row>
+        <v-col md="4" lg="4" xl="4" sm="12">
+             <v-card height="120"   style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -47,9 +48,10 @@
               </div>
             </v-card-text>
           </v-card>
-      
-      
-          <v-card height="120"  class="ml-5"  style="background-color:#EBEBEA;min-width:390px">
+        </v-col>
+         <v-col md="4" lg="4" xl="4" sm="12">
+           
+          <v-card height="120"  class="ml-5"  style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -66,8 +68,10 @@
               </div>
             </v-card-text>
           </v-card>
-      
-          <v-card height="120"  class="ml-5" style="background-color:#EBEBEA;min-width:390px">
+         </v-col>
+          <v-col md="4" lg="4" xl="4" sm="12">
+
+          <v-card height="120"  class="ml-5" style="background-color:#EBEBEA">
             <v-card-text>
               <div class="d-flex">
                 <div>
@@ -84,8 +88,8 @@
               </div>
             </v-card-text>
           </v-card>
-       
-      </div>
+          </v-col>
+      </v-row>
       <div class=" d-flex mt-3">
        <div><b>Orders</b></div>
        <v-spacer></v-spacer>
