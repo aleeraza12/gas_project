@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\UserType;
@@ -44,7 +45,7 @@ class UserController extends Controller
 
 
 
-    public function create_user(Request $request)
+    public function create_user(Users $request)
     {
         $user = User::updateOrCreate(
             [
@@ -58,7 +59,6 @@ class UserController extends Controller
                 'permissions' =>  $request->permissions,
                 'user_type' =>  $request->user_type,
                 'status' =>  $request->status,
-                //'user_type_id'=>  $request->user_type_id,
                 'company_id' =>  $request->user_id,
             ]
         );

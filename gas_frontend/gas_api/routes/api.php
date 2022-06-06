@@ -156,7 +156,7 @@ Route::middleware('token')->group(function () {
             Route::post('create', 'create_states');
             Route::post('delete', 'delete_states');
             Route::post('read', 'read_sale');
-            Route::post('read_all', 'read_all_states');
+            Route::post('read_all', 'read_all_states')->withoutMiddleware('token');
         });
     });
     //States route

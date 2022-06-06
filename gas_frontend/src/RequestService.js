@@ -28,8 +28,13 @@ const RequestService = {
             localStorage.clear();
             router.push("/login");
           }
+          console.log(res);
+          if (res.data.status == 422) {
+            console.log(res.data);
+          }
         })
         .catch((err) => {
+          console.log(err);
           if (err.response.status == 401) {
             console.log("error 401", err);
             localStorage.clear();

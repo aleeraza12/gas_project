@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Purchases;
 use App\Models\Company;
 use App\Models\Purchase;
 use App\Models\Transaction;
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 
 class PurchaseController extends Controller
 {
-    public function create_purchase(Request $request)
+    public function create_purchase(Purchases $request)
     {
         $purchase = Purchase::updateOrCreate(
             [

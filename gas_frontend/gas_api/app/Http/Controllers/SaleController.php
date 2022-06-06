@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Sales;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Sale;
-use App\Models\SaleStatusTime;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class SaleController extends Controller
 {
 
-    public function create_sale(Request $request)
+    public function create_sale(Sales $request)
     {
         $sale = Sale::updateOrCreate(
             [

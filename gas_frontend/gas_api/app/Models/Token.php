@@ -4,8 +4,9 @@
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 namespace App\Models;
+
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 
 class Token extends Model
 {
-    
+
 
     protected $fillable = [
         'token',
@@ -52,6 +53,4 @@ class Token extends Model
         Token::where('token', $request->header('token'))->delete();
         return [(object)[], 200];
     }
-
-      
 }

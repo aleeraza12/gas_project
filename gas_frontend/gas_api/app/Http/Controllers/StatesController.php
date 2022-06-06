@@ -36,8 +36,11 @@ class StatesController extends Controller
 
     public function read_all_states(Request $request)
     {
-        $states = Company::find($request->user_id)->states;
-
-        return response()->json(['response' => $states, 'status' => 200]);
+        $response = '';
+        if ($request->user_id)
+            $response = Company::find($request->user_id)->states;
+        else
+            $response = States::all();
+        return response()->json(['response' => $response, 'status' => 200]);
     }
 }

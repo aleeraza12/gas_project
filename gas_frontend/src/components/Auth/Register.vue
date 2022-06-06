@@ -97,7 +97,7 @@
                 <div class="mt-2 ml-2" style="width: 240px">
                   <v-select
                     v-model="state"
-                    :items="states"
+                    :items="getAllStates"
                     :rules="nameRules"
                     label="State"
                     outlined
@@ -193,6 +193,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     valid: false,
@@ -209,7 +210,6 @@ export default {
     snackbarColor: "",
     confirm_password: "",
     city: "",
-    states: ["Punjab", "KPK", "Balochistan", "Sindh"],
     state: "",
     plant: "",
     plants: ["plant 1", "plant 2", "plant 3", "plant 4", "plant 5"],
@@ -222,15 +222,31 @@ export default {
   }),
   components: {},
   created() {},
+  mounted() {
+    this.getAllStatesData();
+  },
   computed: {
     getIcon() {
       return this.snackbarColor == "success"
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    ...mapGetters(["getAllStates"]),
   },
   methods: {
+    getAllStatesData() {
+      let requestBody = {};
+      let url = this.$store.state.url;
+      axios.post(url + "states/read_all", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          let states = [];
+          for (let j = 0; j < response.data.response.length; j++) {
+            states.push(response.data.response[j].state_name);
+          }
+          this.$store.commit("SET_STATES", states);
+        }
+      });
+    },
     createAccount() {
       this.loading = true;
       if (this.password !== this.confirm_password) {
@@ -273,11 +289,23 @@ export default {
               this.loading = false;
             }
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err.response.data.errors);
+
             this.snackbar = true;
             this.snackbarColor = "red";
-            this.snackbarMsg = "Something went wrong";
             this.loading = false;
+            if (err.response.status == 422) {
+              let errorArray = [];
+              for (let item in err.response.data.errors) {
+                errorArray.push(item);
+              }
+              let error = err.response.data.errors[errorArray[0]];
+              console.log(err.response.data.errors.owner_name);
+              this.snackbarMsg = error[0];
+            } else {
+              this.snackbarMsg = "Something went wrong";
+            }
           });
       }
     },

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Customers;
 use App\Models\Company;
 use App\Models\Customer as CustomerModel;
 use App\Models\CustomerType;
 use App\Models\Sale;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -43,7 +43,7 @@ class CustomerController extends Controller
         return response()->json(['response' => $customer_types, 'status' => 200]);
     }
 
-    public function create_customer(Request $request)
+    public function create_customer(Customers $request)
     {
         $customer = CustomerModel::updateOrCreate(
             [

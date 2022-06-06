@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SignUp;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
 class CompanyController extends Controller
 {
 
-    public function create_company(Request $request)
+    public function create_company(SignUp $request)
     {
         $company = Company::updateOrCreate(
             [
