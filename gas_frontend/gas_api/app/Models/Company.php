@@ -22,7 +22,7 @@ class Company extends Model
 
     public function token()
     {
-        return $this->hasOne(Token::class);
+        return $this->hasMany(Token::class);
     }
 
     public function purchase()
@@ -36,6 +36,10 @@ class Company extends Model
     public function customer()
     {
         return $this->hasMany(Customer::class);
+    }
+    public function user()
+    {
+        return $this->hasMany(User::class);
     }
     public function customer_type()
     {

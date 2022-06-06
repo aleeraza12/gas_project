@@ -206,6 +206,7 @@ export default {
     status: "unpaid",
     sale_id: null,
     emitData: "",
+    loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
   components: {},
   created() {
@@ -283,6 +284,7 @@ export default {
         payment_mode: this.payment_mode,
         status: this.status,
         sale_id: this.sale_id,
+        users_id: this.loggedinUser.id,
       };
       console.log(requestBody);
       let apiName = "";

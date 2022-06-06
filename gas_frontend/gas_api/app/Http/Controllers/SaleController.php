@@ -31,8 +31,7 @@ class SaleController extends Controller
                 'payment_mode' =>  $request->payment_mode,
                 'unpaid' => true,
                 'unpaid_at' => Carbon::now()->addHours(5),
-                'updating_user_id' => $request->updating_user_id
-                
+                'user_id' => $request->users_id, //loggedin user id
             ]
         );
         TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->id]));
@@ -42,6 +41,7 @@ class SaleController extends Controller
     public function delete_sale(Request $request)
     {
         $sale =  Sale::find($request->sale_id)->delete();
+        $sale =  Transaction::where("outer_id", $request->sale_id)->where("type", "sale")->delete();
         return response()->json(['response' => "Sale deleted successfully", 'status' => 200]);
     }
 

@@ -122,6 +122,7 @@
                 class="elevation-0 btn-create"
                 :loading="loading"
                 @click="createCustomer()"
+                :disabled="!valid"
                 dense
               >
                 Save

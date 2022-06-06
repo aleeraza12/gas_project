@@ -37,7 +37,7 @@
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex align-end justify-end">
-            <v-btn small dense outlined
+            <v-btn small dense outlined @click="ViewAllTransactions()"
               >View All
               <v-icon small dense class="ml-2">mdi-eye-outline</v-icon></v-btn
             >
@@ -80,7 +80,16 @@
               {{ getDate(item) }}
             </template>
             <template v-slot:item.status="{ item }">
-              {{ item.status == "not_verified" ? "Pending" : "Reconcilled" }}
+              <v-chip
+                class="ma-2"
+                small
+                :color="item.status == 'not_verified' ? 'red' : 'green'"
+                label
+                outlined
+                >{{
+                  item.status == "not_verified" ? "Pending" : "Reconcilled"
+                }}</v-chip
+              >
             </template>
             <template v-slot:item.payment_mode="{ item }" class="ml-3">
               {{ item.payment_mode ? item.payment_mode : "---" }}
@@ -117,7 +126,7 @@ export default {
       { text: "Gas Quantity", value: "gas_quantity" },
       { text: "Amount", value: "amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "updated_by" },
+      { text: "Updated by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
       { text: "View Receipt", value: "actions", sortable: false },
     ],
@@ -135,8 +144,10 @@ export default {
     this.$store.dispatch("getAllTransacton");
   },
   methods: {
+    ViewAllTransactions() {
+      this.$router.push("/reconcilation-tabs");
+    },
     getDate(date) {
-      console.log("dateeeeee", date);
       return moment(date.created_at).format("Do MMMM YYYY, h:mm a");
     },
   },

@@ -29,7 +29,7 @@ class General extends Controller
         } else if (!$is_admin) {
             if ($is_user) {
                 if (Hash::check($request->password, $is_user->password)) {
-                    $response = Token::create($request, $is_user->id);
+                    $response = Token::create($request, $is_user->company_id);
                     $message['token'] = $response[0];
                     $message['user'] = $is_user;
                     $status = 200;

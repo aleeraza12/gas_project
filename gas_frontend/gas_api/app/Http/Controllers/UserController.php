@@ -80,7 +80,7 @@ class UserController extends Controller
 
     public function read_all_user(Request $request)
     {
-        $users =  User::all();
+        $users =  Company::find($request->user_id)->user;
         return response()->json(['response' => $users, 'status' => 200]);
     }
 }

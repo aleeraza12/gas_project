@@ -161,7 +161,7 @@
                   large
                   class="elevation-0 btn-create"
                   :loading="loading"
-               
+                  :disabled="!valid"
                   @click="createAccount()"
                   dense
                 >
@@ -359,7 +359,7 @@ export default {
   border-radius: 8px;
 }
 .btn-create {
-  background-color:  #464646 !important;
+  background-color: #464646 !important;
   color: #fff;
   min-width: 400px !important;
   border-radius: 8px !important;

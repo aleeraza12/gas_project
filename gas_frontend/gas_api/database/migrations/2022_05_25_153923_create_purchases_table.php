@@ -31,10 +31,12 @@ class CreatePurchasesTable extends Migration
             $table->double('amount');
             $table->double('unit_price');
             $table->integer('company_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->enum('status', ['pending', 'delivered', 'cancelled'])->default('pending');
             $table->string('recepient_name')->nullable();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
