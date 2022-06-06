@@ -64,6 +64,7 @@
                   large
                   class="elevation-0 btn-login"
                   @click="login()"
+                  :disabled="!valid"
                   :loading="loading"
                   dense
                 >

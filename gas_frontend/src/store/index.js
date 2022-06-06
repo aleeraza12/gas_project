@@ -20,6 +20,11 @@ const store = {
     customer_types: [],
     user_types: [],
     states: [],
+    //settngs
+    payment_modes_settings: [],
+    customer_types_settings: [],
+    user_types_settings: [],
+    states_settings: [],
     transactions: [],
   },
   getters: {
@@ -34,6 +39,12 @@ const store = {
     getAllCustomerTypes: (state) => state.customer_types,
     getAllUserTypes: (state) => state.user_types,
     getAllStates: (state) => state.states,
+    //settngs
+    getAllCustomerTypesSettings: (state) => state.customer_types_settings,
+    getAllUserTypesSettings: (state) => state.user_types_settings,
+    getAllStatesSettings: (state) => state.states_settings,
+    getAllPaymentModesSettings: (state) => state.payment_modes_settings,
+    //
     getAllTransactions: (state) => state.transactions,
   },
   mutations: {
@@ -42,6 +53,15 @@ const store = {
     SET_CUSTOMER_TYPES: (state, payload) => (state.customer_types = payload),
     SET_USER_TYPES: (state, payload) => (state.user_types = payload),
     SET_STATES: (state, payload) => (state.states = payload),
+    //Settngs
+    SET_PAYMENT_MODES_SETTINGS: (state, payload) =>
+      (state.payment_modes_settings = payload),
+    SET_CUSTOMER_TYPES_SETTINGS: (state, payload) =>
+      (state.customer_types_settings = payload),
+    SET_USER_TYPES_SETTINGS: (state, payload) =>
+      (state.user_types_settings = payload),
+    SET_STATES_SETTINGS: (state, payload) => (state.states_settings = payload),
+
     SET_CUSTOMERS: (state, payload) => (state.customers = payload),
     SET_PURCHASES: (state, payload) => (state.purchases = payload),
     SET_USERS: (state, payload) => (state.users = payload),
@@ -93,7 +113,6 @@ const store = {
       let requestBody = {};
       RequestService.post("purchase/read_all", requestBody).then((response) => {
         if (response.data.status == 200) {
-          console.log("purchase fetched");
           context.commit("SET_PURCHASES", response.data.response);
           eventBus.$emit("responseArrived");
         }
@@ -161,6 +180,64 @@ const store = {
         }
       });
     },
+
+    //Get payment methods
+    getPaymentMethodsSettings(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("payment/mode/read_all", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit(
+              "SET_PAYMENT_MODES_SETTINGS",
+              response.data.response
+            );
+          }
+          eventBus.$emit("responseArrivedPaymentMode");
+        }
+      );
+    },
+    //Get customers type
+    getCustomerTypesSettings(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("customer_type/read_all", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit(
+              "SET_CUSTOMER_TYPES_SETTINGS",
+              response.data.response
+            );
+            eventBus.$emit("responseArrivedCustomerTypes");
+          }
+        }
+      );
+    },
+    //Get user type
+    getUserTypesSettings(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("user_type/read_all", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_USER_TYPES_SETTINGS", response.data.response);
+            eventBus.$emit("responseArrivedUserTypes");
+          }
+        }
+      );
+    },
+    //Get states
+    getAllStatesSettings(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("states/read_all", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_STATES_SETTINGS", response.data.response);
+          eventBus.$emit("responseArrivedStates");
+        }
+      });
+    },
+
     //Get Transaction
     getAllTransacton(context, data) {
       console.log(data);
@@ -174,7 +251,6 @@ const store = {
         }
       );
     },
-
     checkRouteExistence() {
       let permissionsArray = JSON.parse(
         localStorage.getItem("user")

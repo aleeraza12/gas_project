@@ -155,7 +155,6 @@ export default {
   components: {},
   created() {
     eventBus.$on("responseArrived", () => {
-      console.log("emt ar");
       this.loading = false;
     });
   },

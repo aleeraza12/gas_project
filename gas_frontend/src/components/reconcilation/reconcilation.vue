@@ -148,7 +148,6 @@ export default {
       this.$router.push("/reconcilation-tabs");
     },
     getDate(date) {
-      console.log("dateeeeee", date);
       return moment(date.created_at).format("Do MMMM YYYY, h:mm a");
     },
   },
