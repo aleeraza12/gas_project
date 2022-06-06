@@ -156,8 +156,13 @@
           <div class="d-flex justify-start align-start">
                 <b>Company Profile</b>
           </div>
-          <div class="d-flex justify-center align-center pa-10" style="background-color:#C4C4C4;border-radius: 50%; width:40%;margin-top:5rem;margin-left: 8rem;">
-            <v-icon size="80" class="pointer">mdi-image</v-icon
+          <div class="d-flex justify-center align-center pa-10" style="    background-color: rgb(196, 196, 196);
+    border-radius: 50%;
+    width: 24%;
+    height: 20%;
+    margin-top: 5rem;
+    margin-left: 13rem;">
+            <v-icon size="70" class="pointer">mdi-image</v-icon
             ><v-icon>mdi-plus</v-icon>
           </div>
           <div class="d-flex justify-center align-center" style="cursor: pointer;margin-top:2rem">
