@@ -304,19 +304,19 @@ const router = new VueRouter({
     {
       path: "/purchase-details",
       name: "purchase-details",
-      beforeEnter: (to, from, next) => {
-        setTimeout(() => {
-          if (
-            !JSON.parse(localStorage.getItem("user")).permissions.includes(
-              "Purchases"
-            )
-          ) {
-            store.dispatch("checkRouteExistence");
-          } else {
-            next();
-          }
-        }, 10);
-      },
+      // beforeEnter: (to, from, next) => {
+      //   setTimeout(() => {
+      //     if (
+      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
+      //         "Purchases"
+      //       )
+      //     ) {
+      //       store.dispatch("checkRouteExistence");
+      //     } else {
+      //       next();
+      //     }
+      //   }, 10);
+      // },
       meta: { layout: "app", title: "purchase-details" },
       component: require("./components/purchases/purchase-details").default,
     },

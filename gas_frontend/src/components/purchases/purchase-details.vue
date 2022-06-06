@@ -9,7 +9,7 @@
       <div class="mt-6">
         <b>Purchase Details</b>
       </div>
-      <v-divider></v-divider>
+      <v-divider class="ml-5 mr-5 mt-2"></v-divider>
       <div class="d-flex align-center justify-center mt-5">
         <div
           v-if="
@@ -24,7 +24,7 @@
           style="border: 1px solid grey; border-radius: 5px"
           max-width="70"
           v-bind:src="decodedBase64 != '' ? decodedBase64 : image"
-          height="120"
+          height="150"
         />
       </div>
       <div class="d-flex align-center justify-center mt-1">
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div
-        class="d-flex align-start justify-start ml-5"
+        class="d-flex align-start justify-start ml-5 mt-10"
         style="font-size: 16px; font-weight: 600"
       >
         Company Info
@@ -82,7 +82,7 @@
           <div class="fonts">000000010000</div>
         </div>
       </div>
-      <div class="mt-5" style="text-decoration: underline">
+      <div class="mt-5 ml-5 d-flex align-start justify-start">
         <b>Purchase Info</b>
       </div>
       <div class="d-flex">
