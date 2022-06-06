@@ -17,12 +17,13 @@
           >
         </div>
       </div>
-      <div class="mt-6" style="text-decoration: underline">
+      <div class="mt-6 mb-2">
         <b>Sales Details</b>
       </div>
+      <v-divider></v-divider>
       <div class="d-flex mt-5">
         <div class="ml-10">
-            <v-chip  dense label class="pa-3" style="background-color:#EBFFEF;color:#5FBA7E">
+            <v-chip  dense label class="pa-3" style="background-color:#EBFFEF;color:#5FBA7E;">
            <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon> {{ getStatus(getSingleReceipt) }}
           </v-chip>
           
@@ -36,7 +37,7 @@
         </div>
       </div>
       <div
-        class="d-flex align-start justify-start ml-5"
+        class="d-flex align-start justify-start ml-5 mt-10"
         style="font-size: 16px; font-weight: 600"
       >
         Customer Info
@@ -64,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-5" style="text-decoration: underline">
+      <div class="mt-5 ml-5 d-flex justify-start align-start">
         <b>Sales Info</b>
       </div>
       <div class="d-flex">
