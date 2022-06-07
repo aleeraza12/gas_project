@@ -95,11 +95,11 @@
             <template v-slot:item.payment_mode="{ item }" class="ml-3">
               {{ item.payment_mode ? item.payment_mode : "---" }}
             </template>
-            <template v-slot:item.actions="{ item }">
+            <!--<template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="ViewReceipt(item)">
                 mdi-eye
               </v-icon>
-            </template>
+            </template>-->
           </v-data-table>
         </div>
       </v-card-text>
@@ -130,7 +130,7 @@ export default {
       { text: "Status", value: "status" },
       { text: "Updated by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
-      { text: "View Receipt", value: "actions", sortable: false },
+      //{ text: "View Receipt", value: "actions", sortable: false },
     ],
   }),
   computed: {

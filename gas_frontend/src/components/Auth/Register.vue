@@ -13,9 +13,9 @@
               access to clean cooking LPG fuel
             </div>
           </div>
-          <div class="create-screen">
-            <div class="sign-in-content d-flex align-start justify-start">
-              Welcome
+            <div class="create-screen">
+              <div class="sign-in-content d-flex align-start justify-start">
+                Welcome
             </div>
             <div class="sign-in-subcontent d-flex align-start justify-start">
               Create your account to get started

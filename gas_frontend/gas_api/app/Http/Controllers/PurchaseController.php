@@ -66,6 +66,18 @@ class PurchaseController extends Controller
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
 
+    public function read(Request $request)
+    {
+        $purchases =  Purchase::all();
+        foreach ($purchases as $purchase) {
+            if ($purchase['receipt_attachment_path'] !== null)
+                $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
+            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->user_id)->first();
+            $purchase['transaction_id'] =  @$transaction->id;
+        }
+        return response()->json(['response' => $purchases, 'status' => 200]);
+    }
+
 
     public function update_purchase(Purchases $request)
     {
@@ -119,6 +131,9 @@ class PurchaseController extends Controller
         if ($request->attachment != "")
             $receipt_attachment_path =  $this->upload_attachment($request);
         $purchase->update([$key => true, $value => Carbon::now()->addHours(5), 'receipt_attachment_path' => $receipt_attachment_path]);
+        if ($key == 'paid') TransactionController::updateTransaction($request->merge([
+            'outer_id' => $request->purchase_id, 'type' => 'purchase'
+        ]));
         return response()->json(['response' => $purchase, 'status' => 200]);
     }
 

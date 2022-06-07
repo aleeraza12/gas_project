@@ -11,8 +11,19 @@ let token = "";
 
 const RequestService = {
   post: (endpoint, body) => {
+    let apiName = "";
     token = localStorage.getItem("token");
     let user = JSON.parse(localStorage.getItem("user"));
+    if (user.permissions.includes("Companies")) {
+      if (endpoint === "customer/read_all") apiName = "customer/read";
+      else if (endpoint === "user/read_all") apiName = "user/read";
+      else if (endpoint === "sale/read_all") apiName = "sale/read";
+      else if (endpoint === "company/read_all") apiName = "company/read";
+      else if (endpoint === "purchase/read_all") apiName = "purchase/read";
+      else if (endpoint === "transaction/read_all")
+        apiName = "transaction/read";
+      else apiName = endpoint;
+    } else apiName = endpoint;
     if ("company_id" in user) body.user_id = user.company_id;
     else body.user_id = user.id;
     return new Promise((resolve, reject) => {
@@ -22,7 +33,7 @@ const RequestService = {
         },
       });
       customAxios
-        .post(`${baseUrl}/${endpoint}`, body)
+        .post(`${baseUrl}/${apiName}`, body)
         .then((res) => {
           resolve(res);
 

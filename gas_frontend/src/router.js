@@ -94,6 +94,25 @@ const router = new VueRouter({
       component: require("@/views/Pages/orders").default,
     },
     {
+      path: "/companies",
+      name: "Companies",
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Companies"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
+      meta: { layout: "app", title: "Companies", requireAuth: true },
+      component: require("../src/components/Companies/Companies.vue").default,
+    },
+    {
       path: "/sales",
       name: "Sales",
       beforeEnter: (to, from, next) => {

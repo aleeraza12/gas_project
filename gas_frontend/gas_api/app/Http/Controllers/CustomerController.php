@@ -76,6 +76,15 @@ class CustomerController extends Controller
         return response()->json(['response' => $customer, 'status' => 200]);
     }
 
+    public function read(Request $request)
+    {
+        $customers = CustomerModel::all();
+        foreach ($customers as $customer) {
+            $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
+        }
+        return response()->json(['response' => $customers, 'status' => 200]);
+    }
+
     public function read_all_customer(Request $request)
     {
         $customers = Company::find($request->user_id)->customer;

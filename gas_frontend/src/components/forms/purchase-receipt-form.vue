@@ -262,7 +262,11 @@ export default {
       this.snacbarMessage = error[0];
     });
   },
-  watch: {},
+  watch: {
+    gas_quantity() {
+      this.amount = this.gas_quantity * this.unit_price;
+    },
+  },
   methods: {
     assembleData(data) {
       this.receipt_number = data.receipt_number;
@@ -358,7 +362,10 @@ export default {
         recepient_name: this.recepient_name,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
         purchase_id: this.purchase_id,
-        users_id: this.loggedinUser.id,
+        users_id:
+          "user_id" in this.loggedinUser
+            ? this.loggedinUser.user_id
+            : this.loggedinUser.id,
       };
       let apiName = "";
       this.purchase_id == null

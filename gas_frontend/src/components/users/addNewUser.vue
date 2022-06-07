@@ -98,7 +98,7 @@
             <v-radio label="Sales" value="Sales"></v-radio>
             <v-radio label="Orders" value="Orders"></v-radio>
             <v-radio label="Purchases" value="Purchases"></v-radio>
-            <v-radio label="Settings" value="Settings"></v-radio>
+            <!--<v-radio label="Settings" value="Settings"></v-radio>-->
           </v-radio-group>
         </div>
         <div class="d-flex fonts">

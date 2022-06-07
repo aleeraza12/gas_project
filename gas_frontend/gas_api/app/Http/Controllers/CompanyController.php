@@ -32,7 +32,7 @@ class CompanyController extends Controller
                 'address' =>  $request->address,
             ]
         );
-        UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
+        UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
 
         return response()->json(['response' => $company, 'status' => 201]);
     }
@@ -50,7 +50,7 @@ class CompanyController extends Controller
         return response()->json(['response' => $company, 'status' => 200]);
     }
 
-    public function read_all_companies(Request $request)
+    public function read(Request $request)
     {
         $companies =  Company::all();
         return response()->json(['response' => $companies, 'status' => 200]);

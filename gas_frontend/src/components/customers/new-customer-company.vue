@@ -10,7 +10,7 @@
           <span>Back</span>
         </div>
         <div class="mt-3">
-          <div class="d-flex align-start justify-start">
+          <div class="d-flex align-center justify-center">
             <b>Update Company Data</b>
           </div>
           <div class="d-flex align-start justify-start fonts mt-1">
@@ -18,115 +18,133 @@
               <div class="d-flex align-start justify-start">
                 <!--<b>New Customer</b>-->
               </div>
-              <div class="d-flex align-start justify-start fonts mt-6">
-                Enter the following details toupdate your company
-              </div>
-              <v-form v-model="valid" class="mt-6">
+              <v-form v-model="valid">
                 <div>
                   <v-text-field
-                    v-model="name"
-                    label="Enter Name"
-                    placeholder="Enter Name"
+                    label="Owners Full Name"
                     outlined
-                    :rules="nameRules"
                     dense
+                    placeholder="Owners Full Name"
                     hide-details
-                    class="mt-6"
-                    style="width: 300px"
+                    :rules="nameRules"
+                    class="username-feild mt-2 ml-16"
+                    v-model="owners_name"
                   ></v-text-field>
                 </div>
                 <div>
                   <v-text-field
+                    label="Company Name"
+                    outlined
+                    dense
+                    placeholder="Company Name"
+                    :rules="nameRules"
+                    hide-details
+                    class="username-feild mt-2 ml-16"
+                    v-model="company_name"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Compnay Email Address"
+                    outlined
+                    dense
+                    placeholder="Email Address"
+                    hide-details
+                    class="username-feild mt-2 ml-16"
+                    v-model="email_address"
+                    :rules="emailRules"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Company Phone Number"
+                    outlined
+                    dense
+                    placeholder="Phone Number"
+                    :rules="nameRules"
+                    hide-details
+                    class="username-feild mt-2 ml-16"
                     v-model="phone_number"
-                    :rules="nameRules"
-                    label="Enter Phone Number"
-                    placeholder="Enter Phone Number"
-                    outlined
-                    dense
-                    hide-details
-                    class="mt-6"
-                    style="width: 300px"
                   ></v-text-field>
                 </div>
                 <div>
                   <v-text-field
-                    v-model="email"
-                    label="Enter Email Address"
-                    :rules="nameRules"
-                    placeholder="Enter Email Address"
+                    label="Address"
                     outlined
                     dense
+                    :rules="nameRules"
+                    placeholder="Address"
                     hide-details
-                    class="mt-6"
-                    style="width: 300px"
-                  ></v-text-field>
-                </div>
-                <div>
-                  <v-text-field
+                    class="username-feild mt-2 ml-16"
                     v-model="address"
-                    label="Enter Street"
-                    :rules="nameRules"
-                    placeholder="Enter Street"
-                    outlined
-                    dense
-                    hide-details
-                    class="mt-6"
-                    style="width: 300px"
                   ></v-text-field>
                 </div>
-                <div class="d-flex" style="width: 300px">
+                <div class="d-flex">
                   <div>
                     <v-text-field
                       label="City"
                       outlined
-                      :rules="nameRules"
                       dense
-                      placeholder="Enter City"
+                      placeholder="City"
+                      :rules="nameRules"
                       hide-details
-                      class="city-feild mt-6 mr-3"
+                      class="city-feild mt-2 ml-16"
                       v-model="city"
                     ></v-text-field>
                   </div>
-                  <div class="mt-6">
+                  <div class="mt-2 ml-2" style="width: 240px">
                     <v-select
+                      v-model="state"
                       :items="getAllStates"
                       :rules="nameRules"
                       label="State"
-                      placeholder="Enter State"
                       outlined
-                      small
                       dense
-                      v-model="state"
-                      hide-details
-                    >
-                    </v-select>
+                    ></v-select>
                   </div>
                 </div>
-
-                <div class="mt-6" style="width: 300px">
+                <div
+                  class="ml-16 mt-0"
+                  style="width: 400px; position: absolute"
+                >
                   <v-select
-                    :items="getAllCustomerTypes"
-                    v-model="customer_type"
-                    label="Customer Type"
+                    v-model="plant"
+                    :items="plants"
                     :rules="nameRules"
-                    placeholder="Select One"
+                    label="Select Plants"
                     outlined
-                    hide-details
-                    small
                     dense
-                  >
-                  </v-select>
+                    small
+                  ></v-select>
                 </div>
-                <div class="mt-6 mb-5">
+                <div>
+                  <v-text-field
+                    outlined
+                    :append-icon="
+                      show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
+                    "
+                    :type="show ? 'text' : 'password'"
+                    @click:append="show = !show"
+                    label="Password"
+                    dense
+                    placeholder="Password"
+                    :rules="nameRules"
+                    hide-details
+                    class="password-feild mt-13 ml-16"
+                    v-model="password"
+                  ></v-text-field>
+                </div>
+                <div class="mt-5 ml-16">
                   <v-btn
                     block
                     large
                     class="elevation-0 btn-create"
                     :loading="loading"
-                    @click="createCustomer()"
+                    :disabled="!valid"
+                    @click="updateCompany()"
                     dense
                   >
-                    Save
+                    Update Account
                   </v-btn>
                 </div>
               </v-form>
@@ -168,8 +186,16 @@
               margin-left: 13rem;
             "
           >
-            <v-icon size="70" class="pointer">mdi-image</v-icon
-            ><v-icon>mdi-plus</v-icon>
+            <!--<label for="file-input">-->
+              <v-icon size="70" class="pointer">mdi-image</v-icon
+              ><v-icon>mdi-plus</v-icon>
+              <!--<input
+                id="file-input"
+                type="file"
+                class="d-none"
+                @change="onFileChange"
+              />-->
+            <!--</label>-->
           </div>
           <div
             class="d-flex justify-center align-center"
@@ -218,21 +244,31 @@ import { eventBus } from "@/main";
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
-    nameRules: [(v) => !!v || "This field is required"],
-    name: "",
-    email: "",
+    valid: false,
+    show: false,
+    show1: false,
+    owners_name: "",
+    company_name: "",
+    email_address: "",
     phone_number: "",
-    customerText: "New",
-    city: "",
-    state: "",
-    customer_type: "",
-    customer_id: null,
     address: "",
+    password: "",
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
+    decodedBase64: "",
+    files: "",
+    city: "",
+    state: "",
+    plant: "",
+    data: JSON.parse(localStorage.getItem("user")),
+    plants: ["plant 1", "plant 2", "plant 3", "plant 4", "plant 5"],
+    nameRules: [(v) => !!v || "This field is required"],
+    emailRules: [
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+/.test(v) || "E-mail must be valid",
+    ],
     loading: false,
-    valid: false,
     loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
   computed: {
@@ -244,64 +280,118 @@ export default {
     ...mapGetters(["getAllCustomerTypes", "getAllStates"]),
   },
   created() {
-    eventBus.$on("updateCustomer", (data) => {
-      this.assembleData(data);
+    eventBus.$on("validationFailed", (err) => {
+      this.snackbar = true;
+      this.snackbarColor = "red";
+      let errorArray = [];
+      for (let item in err.response.data.errors) {
+        errorArray.push(item);
+      }
+      let error = err.response.data.errors[errorArray[0]];
+      this.snacbarMessage = error[0];
     });
   },
   mounted() {
-    this.$store.dispatch("getCustomerTypes");
     this.$store.dispatch("getAllStates");
+    this.assembleData();
   },
   methods: {
     goToCustomerListings() {
       this.$router.go(-1);
     },
-    assembleData(data) {
-      this.name = data.name;
-      this.email = data.email;
-      this.phone_number = data.phone_number;
-      this.city = data.city;
-      this.state = data.state;
-      this.customer_type = data.customer_type;
-      this.address = data.address;
-      this.customer_id = data.id;
-      this.customerText = "Update";
+    assembleData() {
+      this.owners_name = this.data.owner_name;
+      this.email_address = this.data.email_address;
+      this.company_name = this.data.company_name;
+      this.phone_number = this.data.company_phone_number;
+      this.city = this.data.city;
+      this.state = this.data.state;
+      this.plant = this.data.gas_plant_type;
+      this.address = this.data.address;
+      this.password = "";
     },
-    createCustomer() {
+    updateCompany() {
       this.loading = true;
       let requestBody = {
-        name: this.name,
-        email: this.email,
-        phone_number: this.phone_number,
+        owner_name: this.owners_name,
+        company_email: this.email_address,
+        company_name: this.company_name,
+        company_phone_number: this.phone_number,
         city: this.city,
         state: this.state,
-        customer_type: this.customer_type,
+        gas_plant_type: this.plant,
         address: this.address,
-        customer_id: this.customer_id,
+        password: this.password,
+        company_id: this.id,
       };
       console.log(requestBody);
-      RequestService.post("customer/create", requestBody)
+      RequestService.post("company/create", requestBody)
         .then((res) => {
           console.log("status in customer", res.data.status);
           if (res.data.status == 201) {
             this.snackbar = true;
             this.snackbarColor = "success";
-            this.snacbarMessage = "Your customer(s) added successfully";
+            this.snacbarMessage = "Company data updated successfully";
             this.loading = false;
-            setTimeout(() => {
-              this.$router.push("/customers");
-            }, 1000);
+            //setTimeout(() => {
+            //  this.$router.push("/customers");
+            //}, 1000);
           }
         })
         .catch(() => {
-          this.snackbar = true;
-          this.snackbarColor = "red";
-          this.snacbarMessage = " Something went wrong";
+          //this.snackbar = true;
+          //this.snackbarColor = "red";
+          //this.snacbarMessage = " Something went wrong";
           this.loading = false;
-          setTimeout(() => {
-            this.$router.go(-1);
-          }, 1000);
+          //setTimeout(() => {
+          //  this.$router.go(-1);
+          //}, 1000);
         });
+    },
+    onFileChange() {
+      console.log("nsde f");
+      let file_size = document.querySelector("input[type=file]").files[0].size;
+      this.validFileSize = true;
+      let fileBase64;
+      if (file_size > 2097152) {
+        this.validFileSize = false;
+      }
+      if (!this.validFileSize) {
+        this.snackbar = true;
+        this.snackbarColor = "red";
+        this.snacbarMessage = " File size should not be greater then 2 MB";
+        this.loading = false;
+        this.files = [];
+      } else {
+        let that = this;
+        const file = document.querySelector("input[type=file]").files[0];
+        const reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function () {
+            fileBase64 = reader.result; //extract file type
+            let i = file.name.lastIndexOf(".");
+            let fileType;
+            if (i > 0) {
+              fileType = file.name.substring(i + 1);
+            }
+            if (fileType == "jpg" || fileType == "png") {
+              fileType = "jpeg";
+            }
+            that.decodedBase64 = fileBase64;
+            //that.decodedBase64 = fileBase64.replace(
+            //  "data:image/" + fileType + ";base64,",
+            //  ""
+            //);
+            console.log("requsetbody", that.decodedBase64);
+            event.target.value = null;
+          },
+          false
+        );
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      }
     },
   },
 };
@@ -318,6 +408,86 @@ export default {
   cursor: pointer;
 }
 .pointer {
+  cursor: pointer;
+}
+.grey-side {
+  height: 100vh;
+  width: 746px;
+  left: 0px;
+  top: 0px;
+  border-radius: 0px;
+  background-color: #ebebea;
+}
+.create-screen {
+  height: 100vh;
+  width: 746px;
+  left: 0px;
+  top: 0px;
+  border-radius: 0px;
+  background-color: #fff;
+}
+.inner-box {
+  height: 300px;
+  width: 300px;
+  background-color: #d2d2d2;
+  margin-top: 6rem;
+  margin-left: 10rem;
+}
+.forget-password {
+  font-size: 12px;
+  color: black;
+  font-weight: 500;
+  margin-left: 4rem;
+  cursor: pointer;
+}
+.content-welcome {
+  font-weight: 600;
+  font-size: 18px;
+  color: black;
+  margin-top: 2rem;
+  margin-left: 18rem;
+}
+.sub-content-welcome {
+  font-weight: 300;
+  font-size: 14px;
+  color: black;
+  margin-top: 0.5rem;
+  margin-left: 10rem;
+}
+.sign-in-content {
+  font-weight: 600;
+  font-size: 16px;
+  color: black;
+  margin-top: 1rem;
+  margin-left: 4.5rem;
+}
+.sign-in-subcontent {
+  font-weight: 400;
+  font-size: 12px;
+  color: black;
+  margin-top: 0.5rem;
+  margin-left: 4.5rem;
+}
+.username-feild {
+  width: 400px;
+  border-color: #d6d6d6;
+  border-radius: 8px;
+}
+.city-feild {
+  width: 150px;
+  border-color: #d6d6d6;
+  border-radius: 8px;
+}
+.password-feild {
+  width: 400px;
+  border-color: #d6d6d6;
+  border-radius: 8px;
+}
+.btn-create {
+  background-color: #464646 !important;
+  color: #fff;
+  min-width: 400px !important;
+  border-radius: 8px !important;
   cursor: pointer;
 }
 </style>

@@ -79,6 +79,13 @@ export default {
         color: "black",
       },
       {
+        text: "Companies",
+        icon: "mdi-home-modern",
+        route: "/companies",
+        tabName: "Companies",
+        color: "black",
+      },
+      {
         text: "Sales",
         icon: "mdi-cart-outline",
         route: "/sales",
@@ -116,7 +123,7 @@ export default {
       {
         text: "Reconciliation",
         icon: "mdi-trackpad",
-        route: "/reconcilation",
+        route: "/reconcilation-tabs",
         tabName: "Reconcilation",
         color: "black",
       },

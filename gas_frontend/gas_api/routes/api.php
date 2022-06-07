@@ -59,7 +59,8 @@ Route::middleware('token')->group(function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::post('create', 'create_customer');
             Route::post('delete', 'delete_customer');
-            Route::post('read', 'read_customer');
+            Route::post('read_specific_customer', 'read_customer');
+            Route::post('read', 'read');
             Route::post('read_all', 'read_all_customer');
         });
     });
@@ -70,7 +71,8 @@ Route::middleware('token')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::post('create', 'create_user')->withoutMiddleware('token');
             Route::post('delete', 'delete_user');
-            Route::post('read', 'read_user');
+            Route::post('read_specific_user', 'read_user');
+            Route::post('read', 'read');
             Route::post('read_all', 'read_all_user');
         });
     });
@@ -123,7 +125,8 @@ Route::middleware('token')->group(function () {
             Route::post('update_purchase_status', 'updatePurchaseStatus');
             Route::post('update', 'update_purchase');
             Route::post('delete', 'delete_purchase');
-            Route::post('read', 'read_purchase');
+            Route::post('read_specific_purchase', 'read_purchase');
+            Route::post('read', 'read');
             Route::post('read_all', 'read_all_purchases');
         });
     });
@@ -133,7 +136,8 @@ Route::middleware('token')->group(function () {
         Route::controller(CompanyController::class)->group(function () {
             Route::post('create', 'create_company')->withoutMiddleware('token');
             Route::post('delete', 'delete_company');
-            Route::post('read', 'read_company');
+            Route::post('read_specific_company', 'read_company');
+            Route::post('read', 'read');
             Route::post('read_all', 'read_all_companies');
         });
     });
@@ -145,7 +149,8 @@ Route::middleware('token')->group(function () {
             Route::post('update', 'updateSale');
             Route::post('update_sale_status', 'updateSaleStatus');
             Route::post('delete', 'delete_sale');
-            Route::post('read', 'read_sale');
+            Route::post('read_specific_sale', 'read_sale');
+            Route::post('read', 'read');
             Route::post('read_all', 'read_all_sale');
         });
     });
@@ -162,9 +167,7 @@ Route::middleware('token')->group(function () {
     //States route
     Route::prefix('transaction')->group(function () {
         Route::controller(TransactionController::class)->group(function () {
-            Route::post('create', 'create_states');
-            Route::post('delete', 'delete_states');
-            Route::post('read', 'read_sale');
+            Route::post('read', 'read');
             Route::post('read_all', 'readTransactions');
         });
     });

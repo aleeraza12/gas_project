@@ -26,6 +26,7 @@ const store = {
     user_types_settings: [],
     states_settings: [],
     transactions: [],
+    companies: [],
   },
   getters: {
     getSales: (state) => state.sales,
@@ -46,6 +47,7 @@ const store = {
     getAllPaymentModesSettings: (state) => state.payment_modes_settings,
     //
     getAllTransactions: (state) => state.transactions,
+    getCompanies: (state) => state.companies,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
@@ -53,6 +55,7 @@ const store = {
     SET_CUSTOMER_TYPES: (state, payload) => (state.customer_types = payload),
     SET_USER_TYPES: (state, payload) => (state.user_types = payload),
     SET_STATES: (state, payload) => (state.states = payload),
+    SET_COMPANIES: (state, payload) => (state.companies = payload),
     //Settngs
     SET_PAYMENT_MODES_SETTINGS: (state, payload) =>
       (state.payment_modes_settings = payload),
@@ -102,6 +105,18 @@ const store = {
       RequestService.post("sale/read_all", requestBody).then((response) => {
         if (response.data.status == 200) {
           context.commit("SET_SALES", response.data.response);
+          eventBus.$emit("responseArrived");
+        }
+      });
+    },
+
+    // gettng all orders of a company
+    getCompaniesListing(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("company/read_all", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_COMPANIES", response.data.response);
           eventBus.$emit("responseArrived");
         }
       });

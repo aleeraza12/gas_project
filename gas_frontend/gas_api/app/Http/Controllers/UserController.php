@@ -102,4 +102,10 @@ class UserController extends Controller
         $users =  Company::find($request->user_id)->user;
         return response()->json(['response' => $users, 'status' => 200]);
     }
+
+    public function read(Request $request)
+    {
+        $users =  User::all();
+        return response()->json(['response' => $users, 'status' => 200]);
+    }
 }

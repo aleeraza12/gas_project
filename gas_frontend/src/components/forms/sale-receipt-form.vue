@@ -243,6 +243,9 @@ export default {
     this.$store.dispatch("getCustomerTypes");
   },
   watch: {
+    gas_quantity() {
+      this.total_amount = this.gas_quantity * this.price;
+    },
     getCustomers() {
       console.log(this.getCustomers);
       for (let j = 0; j < this.getCustomers.length; j++) {
@@ -293,7 +296,10 @@ export default {
         payment_mode: this.payment_mode,
         status: this.status,
         sale_id: this.sale_id,
-        users_id: this.loggedinUser.id,
+        users_id:
+          "user_id" in this.loggedinUser
+            ? this.loggedinUser.user_id
+            : this.loggedinUser.id,
       };
       console.log(requestBody);
       let apiName = "";

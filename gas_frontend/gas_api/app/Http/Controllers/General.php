@@ -21,6 +21,9 @@ class General extends Controller
                 $response = Token::create($request, $is_admin->id);
                 $message['token'] = $response[0];
                 $message['user'] = $is_admin;
+                $user_id = $is_admin->user;
+                $message['user']->user_id =  $user_id[0]->id;
+                unset($message['user']['user']);
                 $status = 200;
             } else {
                 $message = "Credentials didn't matched";

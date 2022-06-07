@@ -23,10 +23,9 @@ class CompanySeeder extends Seeder
                 'password' => Hash::make('Test123'),
                 'company_phone_number' =>  '31241425',
                 'city' =>  'TestCty',
-                'state' => 'TestState',
-                'gas_plant_type' =>  'Palnt1',
+                'state' => 'Abia',
+                'gas_plant_type' =>  'plant 3',
                 'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
-                //'company_profile_picture'=>  $this->upload_attachment($request),
                 'address' =>  'Test address',
             ]
         );

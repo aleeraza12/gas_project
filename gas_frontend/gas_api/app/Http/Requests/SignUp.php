@@ -24,7 +24,7 @@ class SignUp extends FormRequest
     public function rules()
     {
         $array['owner_name'] = 'required|string';
-        $array['company_email'] = 'required|email|unique:companies';
+        $array['company_email'] = 'required|email';
         $array['company_name'] = 'required';
         $array['password'] = 'required';
         $array['company_phone_number'] = 'required';

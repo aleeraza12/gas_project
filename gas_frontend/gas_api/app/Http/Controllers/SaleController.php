@@ -67,6 +67,20 @@ class SaleController extends Controller
         return response()->json(['response' => $sales, 'status' => 200]);
     }
 
+    public function read(Request $request)
+    {
+        $sales =  Sale::all();
+        foreach ($sales as $sale) {
+            $sale['updated_by'] = Company::find($sale->company_id)->company_name; //updated_by
+            $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
+            $sale['transaction_id'] =  @$transaction->id;
+            $customer = Customer::find($sale->customer_id);
+            $sale['customer_name'] =  $customer->name;
+            $sale['customer_address'] =   $customer->address;
+        }
+        return response()->json(['response' => $sales, 'status' => 200]);
+    }
+
     public function updateSale(Request $request)
     {
         $sale =  Sale::find($request->sale_id);
@@ -111,7 +125,11 @@ class SaleController extends Controller
             $key = 'paid';
             $value = 'paid_at';
         }
+
         $sale->update([$key => true, $value => Carbon::now()->addHours(5)]);
+        if ($key == 'paid') TransactionController::updateTransaction($request->merge([
+            'outer_id' => $request->sale_id, 'type' => 'sale'
+        ]));
         return response()->json(['response' => $sale, 'status' => 200]);
     }
 }

@@ -33,12 +33,12 @@
             </div>
           </div>
           <v-spacer></v-spacer>
-          <div class="d-flex align-end justify-end">
+          <!--<div class="d-flex align-end justify-end">
             <v-btn small dense outlined @click="ViewAllTransactions()"
               >View All
               <v-icon small dense class="ml-2">mdi-eye-outline</v-icon></v-btn
             >
-          </div>
+          </div>-->
         </div>
         <div class="d-flex mt-3">
           <div><b>Reconcilation</b></div>
@@ -99,11 +99,11 @@
                 <template v-slot:item.payment_mode="{ item }" class="ml-3">
                   {{ item.payment_mode ? item.payment_mode : "---" }}
                 </template>
-                <template v-slot:item.actions="{ item }">
+                <!--<template v-slot:item.actions="{ item }">
                   <v-icon small class="mr-2" @click="ViewReceipt(item)">
                     mdi-eye
                   </v-icon>
-                </template>
+                </template>-->
               </v-data-table>
             </v-tab-item>
             <v-tab-item>
@@ -182,7 +182,7 @@ export default {
       { text: "Status", value: "status" },
       { text: "Updated by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
-      { text: "View Receipt", value: "actions", sortable: false },
+      //{ text: "View Receipt", value: "actions", sortable: false },
     ],
   }),
   computed: {
