@@ -186,7 +186,7 @@
               margin-left: 13rem;
             "
           >
-            <!--<label for="file-input">-->
+            <!--<label for="file-input">  -->
               <v-icon size="70" class="pointer">mdi-image</v-icon
               ><v-icon>mdi-plus</v-icon>
               <!--<input
