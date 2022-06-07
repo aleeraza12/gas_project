@@ -19,7 +19,6 @@ class UserController extends Controller
             ],
             [
                 'user_type' => $request->user_type,
-                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $user_type, 'status' => 201]);
@@ -39,13 +38,33 @@ class UserController extends Controller
 
     public function read_all_user_type(Request $request)
     {
-        $user_types =  Company::find($request->user_id)->user_type;
+        $user_types =  UserType::all();
         return response()->json(['response' => $user_types, 'status' => 200]);
     }
 
 
 
     public function create_user(Users $request)
+    {
+        $user = User::updateOrCreate(
+            [
+                'id' => $request->users_id
+            ],
+            [
+                'name' => $request->name,
+                'created_by' => $request->created_by,
+                'password' => Hash::make($request->password),
+                'designation' =>  $request->designation,
+                'permissions' =>  $request->permissions,
+                'user_type' =>  $request->user_type,
+                'status' =>  $request->status,
+                'company_id' =>  $request->user_id,
+            ]
+        );
+        return response()->json(['response' => $user, 'status' => 201]);
+    }
+
+    public static function create_company_user(Request $request)
     {
         $user = User::updateOrCreate(
             [

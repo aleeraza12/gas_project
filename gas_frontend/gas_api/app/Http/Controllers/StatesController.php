@@ -16,7 +16,6 @@ class StatesController extends Controller
             ],
             [
                 'state_name' => $request->state_name,
-                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $states, 'status' => 201]);
@@ -36,11 +35,7 @@ class StatesController extends Controller
 
     public function read_all_states(Request $request)
     {
-        $response = '';
-        if ($request->user_id)
-            $response = Company::find($request->user_id)->states;
-        else
-            $response = States::all();
+        $response = States::all();
         return response()->json(['response' => $response, 'status' => 200]);
     }
 }

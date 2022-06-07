@@ -17,13 +17,11 @@ class UserTypeSeeder extends Seeder
         UserType::insert([
 
             [
-                'company_id' => 1,
                 'user_type' => 'Admin',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'company_id' => 1,
                 'user_type' => 'User',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

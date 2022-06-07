@@ -16,8 +16,6 @@ class CreateUserTypesTable extends Migration
         Schema::create('user_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_type');
-            $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

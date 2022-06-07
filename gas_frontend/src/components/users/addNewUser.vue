@@ -182,6 +182,18 @@ export default {
       console.log("emt receved", data);
       this.assembleData(data);
     });
+    eventBus.$on("validationFailed", (err) => {
+      console.log("emt receved");
+      this.snackbar = true;
+      this.snackbarColor = "red";
+      let errorArray = [];
+      for (let item in err.response.data.errors) {
+        errorArray.push(item);
+      }
+      let error = err.response.data.errors[errorArray[0]];
+      console.log(error);
+      this.snacbarMessage = error[0];
+    });
   },
   mounted() {
     this.$store.dispatch("getUserTypes");
@@ -233,9 +245,9 @@ export default {
           }
         })
         .catch(() => {
-          this.snackbar = true;
-          this.snackbarColor = "red";
-          this.snacbarMessage = " Something went wrong";
+          //this.snackbar = true;
+          //this.snackbarColor = "red";
+          //this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
             this.$router.go(-1);

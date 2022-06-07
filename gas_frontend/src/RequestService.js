@@ -1,5 +1,7 @@
 import axios from "axios";
 import router from "../src/router";
+import { eventBus } from "@/main";
+
 //const baseUrl = "http://api.coloradomountainvacationhomes.com/api";
 const baseUrl = "http://127.0.0.1:8000/api";
 //Customized axios request
@@ -28,19 +30,14 @@ const RequestService = {
             localStorage.clear();
             router.push("/login");
           }
-          console.log(res);
-          if (res.data.status == 422) {
-            console.log(res.data);
-          }
         })
         .catch((err) => {
-          console.log(err);
-          if (err.response.status == 401) {
-            console.log("error 401", err);
-            localStorage.clear();
-            router.push({ name: "login" });
-          }
           reject(err);
+          if (err.response.status == 422) {
+            eventBus.$emit("validationFailed", err);
+          } else {
+            this.snackbarMsg = "Something went wrong";
+          }
         });
     });
   },

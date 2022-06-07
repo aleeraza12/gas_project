@@ -11,6 +11,7 @@
               prepend-inner-icon="mdi-magnify"
               hide-details
               class="searchbar"
+              v-model="search"
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
@@ -70,6 +71,7 @@
                 hide-default-footer
                 hide-default-header
                 height="400px"
+                :search="search"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -113,6 +115,7 @@
                 hide-default-footer
                 hide-default-header
                 height="400px"
+                :search="search"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -162,6 +165,7 @@ export default {
   data: () => ({
     tab: null,
     loading: true,
+    search: "",
     getPurchasedTransaction: [],
     getSalesTransaction: [],
     headers: [

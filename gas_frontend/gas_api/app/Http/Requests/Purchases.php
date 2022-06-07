@@ -23,7 +23,7 @@ class Purchases extends FormRequest
      */
     public function rules()
     {
-        $array['date'] = 'required|string';
+        $array['date'] = 'required|date';
         $array['receipt_number'] = 'required';
         $array['company_name'] = 'required';
         $array['company_phone_number'] = 'required';
@@ -32,7 +32,6 @@ class Purchases extends FormRequest
         $array['amount'] = 'required';
         $array['unit_price'] = 'required';
         $array['recepient_name'] = 'required';
-        $array['company_id'] = 'required';
         $array['user_id'] = 'required';
         return $array;
     }

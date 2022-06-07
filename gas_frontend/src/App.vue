@@ -1,10 +1,8 @@
 <template>
   <v-app id="app">
     <v-main>
-        <component :is="layout" />
-        
+      <component :is="layout" />
     </v-main>
-   
   </v-app>
 </template>
 <script>
@@ -13,26 +11,24 @@ export default {
   components: {
     "simple-layout": () => import("@/components/Layouts/simpleLayout"),
     "app-layout": () => import("@/components/Layouts/AppLayout"),
-   
   },
   computed: {
     layout() {
       return (this.$route.meta.layout || default_layout) + "-layout";
-    }
+    },
   },
-  watch:{
-     $route : {
-       handler:(to)=>{
-         document.title = to.meta.title + '-' +  `Sample` 
-       },
-       immediate:true,
-     }
+  created() {},
+  watch: {
+    $route: {
+      handler: (to) => {
+        document.title = to.meta.title + "-" + `Sample`;
+      },
+      immediate: true,
+    },
   },
   data() {
-    return {
-
-    };
-  }
+    return {};
+  },
 };
 </script>
 

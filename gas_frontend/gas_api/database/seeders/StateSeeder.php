@@ -18,13 +18,11 @@ class StateSeeder extends Seeder
         States::insert([
 
             [
-                'company_id' => 1,
                 'state_name' => 'Abia',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'company_id' => 1,
                 'state_name' => 'Ekiti',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

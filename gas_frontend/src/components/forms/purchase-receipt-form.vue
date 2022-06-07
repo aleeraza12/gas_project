@@ -251,6 +251,16 @@ export default {
     eventBus.$on("updatePurchase", (data) => {
       this.assembleData(data);
     });
+    eventBus.$on("validationFailed", (err) => {
+      this.snackbar = true;
+      this.snackbarColor = "red";
+      let errorArray = [];
+      for (let item in err.response.data.errors) {
+        errorArray.push(item);
+      }
+      let error = err.response.data.errors[errorArray[0]];
+      this.snacbarMessage = error[0];
+    });
   },
   watch: {},
   methods: {
@@ -370,9 +380,9 @@ export default {
         })
         .catch(() => {
           //if (err.response) {
-          this.snackbar = true;
-          this.snackbarColor = "red";
-          this.snacbarMessage = " Something went wrong";
+          //this.snackbar = true;
+          //this.snackbarColor = "red";
+          //this.snacbarMessage = " Something went wrong";
           setTimeout(() => {
             this.$router.go(-1);
           }, 1000);

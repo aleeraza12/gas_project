@@ -67,7 +67,7 @@ class PurchaseController extends Controller
     }
 
 
-    public function update_purchase(Request $request)
+    public function update_purchase(Purchases $request)
     {
         $purchase =  Purchase::find($request->purchase_id);
         $purchase->date = $request->date;

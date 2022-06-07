@@ -11,6 +11,7 @@
               prepend-inner-icon="mdi-magnify"
               hide-details
               class="searchbar"
+              v-model="search"
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
@@ -114,6 +115,7 @@ import moment from "moment";
 export default {
   data: () => ({
     loading: true,
+    search:"",
     headers: [
       {
         text: "Date",

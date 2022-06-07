@@ -46,8 +46,14 @@
 
       <div class="d-flex mt-5">
         <div class="ml-10">
-          <v-chip  dense label class="pa-3" style="background-color:#EBFFEF;color:#5FBA7E">
-           <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon> {{ getStatus(getSinglePurchase) }}
+          <v-chip
+            dense
+            label
+            class="pa-3"
+            style="background-color: #ebffef; color: #5fba7e"
+          >
+            <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon>
+            {{ getStatus(getSinglePurchase) }}
           </v-chip>
         </div>
         <v-spacer></v-spacer>
@@ -263,6 +269,8 @@ export default {
   mounted() {
     this.getRadioStatus();
     console.log("nsde mounted", this.getSinglePurchase);
+    if (this.getSinglePurchase.length == 0) this.$router.push("/purchases");
+
     if (this.getSinglePurchase.base64 && this.getSinglePurchase.base64 != "")
       this.image = "data:image/jpeg;base64," + this.getSinglePurchase.base64;
   },

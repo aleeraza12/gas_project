@@ -24,10 +24,9 @@ class Customers extends FormRequest
     public function rules()
     {
         $array['name'] = 'required|string';
-        $array['email'] = 'required|email|unique:customers';
+        $array['email'] = 'required|email';
         $array['phone_number'] = 'required';
         $array['customer_type'] = 'required';
-        $array['company_id'] = 'required';
         $array['city'] = 'required';
         $array['state'] = 'required';
         $array['address'] = 'required';
@@ -41,4 +40,3 @@ class Customers extends FormRequest
         ];
     }
 }
-p

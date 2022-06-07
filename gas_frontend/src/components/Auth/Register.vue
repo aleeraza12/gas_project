@@ -271,7 +271,6 @@ export default {
           .post(url + "company/create", requestBody)
           .then((response) => {
             this.snackbar = true;
-            console.log(response.data[1]);
             if (response.data.status == 201) {
               this.snackbarColor = "success";
               this.snackbarMsg = "Company created successfully";
@@ -290,7 +289,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log(err.response.data.errors);
 
             this.snackbar = true;
             this.snackbarColor = "red";
@@ -301,7 +299,6 @@ export default {
                 errorArray.push(item);
               }
               let error = err.response.data.errors[errorArray[0]];
-              console.log(err.response.data.errors.owner_name);
               this.snackbarMsg = error[0];
             } else {
               this.snackbarMsg = "Something went wrong";

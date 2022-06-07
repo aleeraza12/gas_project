@@ -182,8 +182,17 @@ export default {
   },
   created() {
     eventBus.$on("updateCustomer", (data) => {
-      console.log("emt receved", data);
       this.assembleData(data);
+    });
+    eventBus.$on("validationFailed", (err) => {
+      this.snackbar = true;
+      this.snackbarColor = "red";
+      let errorArray = [];
+      for (let item in err.response.data.errors) {
+        errorArray.push(item);
+      }
+      let error = err.response.data.errors[errorArray[0]];
+      this.snacbarMessage = error[0];
     });
   },
   mounted() {
@@ -222,7 +231,6 @@ export default {
         .then((res) => {
           console.log("status in customer", res.data.status);
           if (res.data.status == 201) {
-            console.log("this is inside");
             this.snackbar = true;
             this.snackbarColor = "success";
             this.snacbarMessage = "Your customer(s) added successfully";
@@ -233,9 +241,9 @@ export default {
           }
         })
         .catch(() => {
-          this.snackbar = true;
-          this.snackbarColor = "red";
-          this.snacbarMessage = " Something went wrong";
+          //this.snackbar = true;
+          //this.snackbarColor = "red";
+          //this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
             this.$router.go(-1);

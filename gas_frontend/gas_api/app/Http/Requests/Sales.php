@@ -30,8 +30,7 @@ class Sales extends FormRequest
         $array['customer_phone_number'] = 'required';
         $array['customer_type'] = 'required';
         $array['discount_code'] = 'sometimes';
-        $array['company_id'] = 'required';
-        $array['payment_mode'] = 'sometimes|array';
+        $array['payment_mode'] = 'required';
         $array['user_id'] = 'required';
         return $array;
     }

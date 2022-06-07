@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StateSeeder::class);
         $this->call(PaymentModeSeeder::class);
         $this->call(CustomerSeeder::class);
+        $this->call(UserSeeder::class);
 
         $this->command->info('Company table seeded!');
         $this->command->info('User type table seeded!');

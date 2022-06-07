@@ -7,14 +7,9 @@
         </div>
         <v-spacer></v-spacer>
         <div>
-          <v-btn  
-           height="35"
-           
-           dense color="#CFCFD0"
-            >
-            <img height="20" width="20" src="../../assets/images/send.png"/>
-            </v-btn
-          >
+          <v-btn height="35" dense color="#CFCFD0" @click="goToinvoicePage()">
+            <img height="20" width="20" src="../../assets/images/send.png" />
+          </v-btn>
         </div>
       </div>
       <div class="mt-6 mb-2">
@@ -23,10 +18,15 @@
       <v-divider></v-divider>
       <div class="d-flex mt-5">
         <div class="ml-10">
-            <v-chip  dense label class="pa-3" style="background-color:#EBFFEF;color:#5FBA7E;">
-           <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon> {{ getStatus(getSingleReceipt) }}
+          <v-chip
+            dense
+            label
+            class="pa-3"
+            style="background-color: #ebffef; color: #5fba7e"
+          >
+            <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon>
+            {{ getStatus(getSingleReceipt) }}
           </v-chip>
-          
         </div>
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
@@ -250,8 +250,14 @@ export default {
   },
   mounted() {
     this.getRadioStatus(this.getSingleReceipt);
+    if (this.getSingleReceipt.length == 0) {
+      this.$router.push("/sales");
+    }
   },
   methods: {
+    goToinvoicePage() {
+      this.$router.push("/sale-invoice");
+    },
     getPaidAtDate(date) {
       if (date == null) return;
       return moment(date).format("h:mm a, Do MMMM YYYY");
@@ -354,7 +360,7 @@ export default {
   cursor: pointer;
 }
 .sales-details-page {
-  height: 700px;
+  height: 770px;
   width: 600px;
   background-color: #ebebea;
   margin-left: 12rem;

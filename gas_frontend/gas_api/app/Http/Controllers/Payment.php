@@ -19,7 +19,6 @@ class Payment extends Controller
             ],
             [
                 'payment_mode' => $request->payment_mode,
-                'company_id' => $request->user_id,
             ]
         );
         return response()->json(['response' => $payment_mode, 'status' => 201]);
@@ -39,7 +38,7 @@ class Payment extends Controller
 
     public function read_all_payment_mode(Request $request)
     {
-        $payment_modes = Company::find($request->user_id)->payment_mode;
+        $payment_modes = PaymentMode::all();
 
         return response()->json(['response' => $payment_modes, 'status' => 200]);
     }

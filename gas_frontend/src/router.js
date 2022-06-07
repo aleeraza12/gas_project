@@ -1,8 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "./store/index";
-//let permissionsArray = JSON.parse(localStorage.getItem("user")).permissions;
-// import store from "./store/index";
+
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
@@ -135,20 +134,20 @@ const router = new VueRouter({
     {
       path: "/depot",
       name: "depot",
-      //beforeEnter: (to, from, next) => {
-      //  setTimeout(() => {
-      //    if (
-      //      !(
-      //        "Customers" in
-      //        JSON.parse(localStorage.getItem("user")).permissions
-      //      )
-      //    ) {
-      //      store.dispatch("checkRouteExistence");
-      //    } else {
-      //      next();
-      //    }
-      //  }, 10);
-      //},
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !(
+              "Customers" in
+              JSON.parse(localStorage.getItem("user")).permissions
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
       meta: { layout: "app", title: "Depot", requireAuth: true },
       component: require("./components/purchases/depot").default,
     },
@@ -182,7 +181,6 @@ const router = new VueRouter({
             )
           ) {
             store.dispatch("checkRouteExistence");
-            console.log("dispatch");
           } else {
             next();
           }
@@ -304,19 +302,19 @@ const router = new VueRouter({
     {
       path: "/purchase-details",
       name: "purchase-details",
-      // beforeEnter: (to, from, next) => {
-      //   setTimeout(() => {
-      //     if (
-      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
-      //         "Purchases"
-      //       )
-      //     ) {
-      //       store.dispatch("checkRouteExistence");
-      //     } else {
-      //       next();
-      //     }
-      //   }, 10);
-      // },
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Purchases"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
       meta: { layout: "app", title: "purchase-details" },
       component: require("./components/purchases/purchase-details").default,
     },
@@ -437,19 +435,19 @@ const router = new VueRouter({
     {
       path: "/new-customer-company",
       name: "new-customer-company",
-      // beforeEnter: (to, from, next) => {
-      //   setTimeout(() => {
-      //     if (
-      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
-      //         "Customers"
-      //       )
-      //     ) {
-      //       store.dispatch("checkRouteExistence");
-      //     } else {
-      //       next();
-      //     }
-      //   }, 10);
-      // },
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Customers"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
       meta: { layout: "app", title: "new-customer-company" },
       component: require("./components/customers/new-customer-company").default,
     },
@@ -489,7 +487,8 @@ const router = new VueRouter({
         }, 10);
       },
       meta: { layout: "app", title: "Settings", requireAuth: true },
-      component: require("@/views/Pages/setting").default,
+      component: require("../src/components/customers/new-customer-company.vue")
+        .default,
     },
   ],
 });

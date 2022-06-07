@@ -16,8 +16,6 @@ class CreatePaymentModesTable extends Migration
         Schema::create('payment_modes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('payment_mode');
-            $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

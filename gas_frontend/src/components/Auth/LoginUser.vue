@@ -64,7 +64,6 @@
                   large
                   class="elevation-0 btn-login"
                   @click="login()"
-                  :disabled="!valid"
                   :loading="loading"
                   dense
                 >
@@ -152,7 +151,6 @@ export default {
         .post(url + "login", body)
         .then((response) => {
           this.snackbar = true;
-          console.log("response user", response.data.status);
           if (response.data.status == 200) {
             this.snackbarColor = "primary";
             this.snackbarMsg = "Login successfully";

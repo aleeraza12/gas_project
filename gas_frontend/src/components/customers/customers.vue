@@ -11,6 +11,7 @@
               prepend-inner-icon="mdi-magnify"
               hide-details
               class="searchbar"
+              v-model="search"
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
@@ -23,24 +24,24 @@
             <b> Customers</b>
           </div>
         </div>
-        <div class="d-flex mt-5 pa-5" style="background-color:#EBEBEA;border-radius:5px;">
-       
-                  <div>
-                    <div class="d-flex align-start justify-start">
-                      <b>Total Customers</b>
-                    </div>
-                    <div class="d-flex align-start justify-start">
-                      {{ getCustomers.length }}
-                    </div>
-                  </div>
-                  <v-spacer></v-spacer>
-                  <div class="d-flex align-end justify-end">
-                    <v-btn small dense outlined @click="addNewCustomer()"
-                      >Add New
-                      <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-                    >
-                  </div>
-           
+        <div
+          class="d-flex mt-5 pa-5"
+          style="background-color: #ebebea; border-radius: 5px"
+        >
+          <div>
+            <div class="d-flex align-start justify-start">
+              <b>Total Customers</b>
+            </div>
+            <div class="d-flex align-start justify-start">
+              {{ getCustomers.length }}
+            </div>
+          </div>
+          <v-spacer></v-spacer>
+          <div class="d-flex align-end justify-end">
+            <v-btn small dense outlined @click="addNewCustomer()"
+              >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
+            >
+          </div>
         </div>
         <div class="d-flex mt-3">
           <div><b>Transactions</b></div>
@@ -60,7 +61,8 @@
             class="elevation-1"
             hide-default-footer
             hide-default-header
-             height="400px"
+            height="400px"
+            :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
               <th
@@ -131,6 +133,7 @@ import RequestService from "../../RequestService";
 export default {
   data: () => ({
     loading: true,
+    search: "",
     deleteable: "",
     dialog: false,
     snacbarMessage: "",
@@ -160,7 +163,6 @@ export default {
   },
   watch: {
     getCustomers() {
-      console.log("response", this.getCustomers);
     },
   },
   computed: {
@@ -197,7 +199,6 @@ export default {
       };
       RequestService.post("customer/delete", requestBody).then((response) => {
         if (response.data.status == 200) {
-          console.log("customer deleted");
           this.loading = true;
           this.snackbar = true;
           this.snackbarColor = "success";

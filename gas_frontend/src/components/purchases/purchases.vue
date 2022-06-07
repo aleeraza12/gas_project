@@ -11,6 +11,7 @@
               prepend-inner-icon="mdi-magnify"
               hide-details
               class="searchbar"
+              v-model="search"
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
@@ -62,6 +63,7 @@
             hide-default-footer
             hide-default-header
             height="400px"
+            :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
               <th
@@ -99,6 +101,7 @@ import moment from "moment";
 export default {
   data: () => ({
     loading: true,
+    search: "",
     total_sales: null,
 
     headers: [

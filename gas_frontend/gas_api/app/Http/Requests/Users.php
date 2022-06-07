@@ -30,7 +30,6 @@ class Users extends FormRequest
         $array['permissions'] = 'required';
         $array['user_type'] = 'required';
         $array['status'] = 'required';
-        $array['company_id'] = 'required';
         return $array;
     }
 

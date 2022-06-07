@@ -211,9 +211,18 @@ export default {
   components: {},
   created() {
     eventBus.$on("updateSale", (data) => {
-      console.log("emt receved", data);
       this.assembleData(data);
       this.emitData = data;
+    });
+    eventBus.$on("validationFailed", (err) => {
+      this.snackbar = true;
+      this.snackbarColor = "red";
+      let errorArray = [];
+      for (let item in err.response.data.errors) {
+        errorArray.push(item);
+      }
+      let error = err.response.data.errors[errorArray[0]];
+      this.snacbarMessage = error[0];
     });
   },
   computed: {
@@ -307,9 +316,9 @@ export default {
           }, 1000);
         })
         .catch(() => {
-          this.snackbar = true;
-          this.snackbarColor = "red";
-          this.snacbarMessage = " Something went wrong";
+          //this.snackbar = true;
+          //this.snackbarColor = "red";
+          //this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
             this.$router.go(-1);
