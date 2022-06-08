@@ -98,12 +98,15 @@
         </v-card>
       </v-col>
     </v-row>
-    <div class="d-flex mt-3">
+    <div
+      class="d-flex mt-3"
+      v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+    >
       <div><b>Orders</b></div>
       <v-spacer></v-spacer>
       <div class="mr-3"><b>Date Picker</b></div>
     </div>
-    <div class="mt-3">
+    <div class="mt-3" v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
       <v-data-table
         :headers="headers"
         :items="desserts"
@@ -127,6 +130,7 @@
 export default {
   data: () => ({
     search: "",
+    loggedinUser: JSON.parse(localStorage.getItem("user")),
     headers: [
       {
         text: "Date",

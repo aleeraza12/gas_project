@@ -509,6 +509,25 @@ const router = new VueRouter({
       component: require("../src/components/customers/new-customer-company.vue")
         .default,
     },
+    {
+      path: "/admin-settings",
+      name: "AdminSettings",
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "AdminSettings"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
+      meta: { layout: "app", title: "AdminSettings", requireAuth: true },
+      component: require("../src/components/setting/setting.vue").default,
+    },
   ],
 });
 //route guard

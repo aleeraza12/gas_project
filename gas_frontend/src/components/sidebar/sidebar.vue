@@ -135,6 +135,13 @@ export default {
         color: "black",
       },
       {
+        text: "AdminSettings",
+        icon: "mdi-cog",
+        route: "/admin-settings",
+        tabName: "AdminSettings",
+        color: "black",
+      },
+      {
         text: "Logout",
         icon: "mdi-logout",
         route: "/logout",
