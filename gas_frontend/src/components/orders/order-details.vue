@@ -11,13 +11,15 @@
       <div class="d-flex mt-5">
         <div class="ml-10">
           <v-chip small dense color="success" label class="pa-3">
-            Picked Up
+            {{ getSinglePurchase.status }}
           </v-chip>
         </div>
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
-          <div><b>24th , April 2022</b></div>
-          <div>02:33 pm</div>
+          <div>
+            <b>{{ getDate(getSinglePurchase.created_at) }}</b>
+          </div>
+          <div>{{ getTme(getSinglePurchase.created_at) }}</div>
         </div>
       </div>
       <div
@@ -29,7 +31,9 @@
       <div class="d-flex">
         <div class="ml-5 mt-3">
           <div class="d-flex align-start justify-start fonts">Distributor</div>
-          <div class="d-flex align-start justify-start"><b>Ola Adlyan</b></div>
+          <div class="d-flex align-start justify-start">
+            <b>{{ getSinglePurchase.customer_name }}</b>
+          </div>
           <div class="d-flex align-start justify-start fonst">04566000433</div>
           <div class="d-flex align-start justify-start fonts">
             office no abc , nowrelad activty sometec howdy
@@ -38,7 +42,7 @@
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
           <div class="fonts">Order Id</div>
-          <div class="fonts">000000000000</div>
+          <div class="fonts">{{ getSinglePurchase.order_id }}</div>
         </div>
       </div>
       <div class="mt-3 d-flex align-start justify-start ml-3">
@@ -48,25 +52,25 @@
         <div class="ml-5 mt-3">
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price:</b></div>
-            <div class="fonts">N1 , 340</div>
+            <div class="fonts">N {{ getSinglePurchase.unit_price }}</div>
           </div>
           <div class="d-flex">
             <div class="fonts"><b>Total Amount:</b></div>
-            <div class="fonts">N1, 18000</div>
+            <div class="fonts">N{{ getSinglePurchase.amount }}</div>
           </div>
           <div class="d-flex">
             <div class="fonts"><b>Payment Mode:</b></div>
-            <div class="fonts">Cash</div>
+            <div class="fonts">{{ getSinglePurchase.payment_mode }}</div>
           </div>
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
           <div class="fonts">Gas Quanity : 12</div>
-          <div class="fonts">000000000000</div>
+          <div class="fonts">{{ getSinglePurchase.gas_quantity }}</div>
         </div>
         <div class="mr-8 mt-3">
           <div class="fonts">Updated By</div>
-          <div class="fonts">James</div>
+          <div class="fonts">{{ getSinglePurchase.company_name }}</div>
         </div>
       </div>
       <div class="mt-3" style="text-decoration: underline">
@@ -81,7 +85,7 @@
           ></v-radio>
         </div>
         <div class="d-flex align-start justify-start ml-8">
-          23rd ,april 20222
+          {{ getSinglePurchase.updated_at }}
         </div>
       </div>
 
@@ -89,22 +93,110 @@
         <v-btn dense small style="width: 230px" class="mt-3"> Delivered </v-btn>
       </div>
       <div>
-        <v-btn dense outlined small style="width: 230px" class="mt-3">
+        <v-btn
+          dense
+          outlined
+          small
+          style="width: 230px"
+          class="mt-3"
+          @click="dialog = true"
+        >
           Delete
         </v-btn>
       </div>
     </div>
+    <v-dialog v-model="dialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="text-h7">
+          Are you sure to delete this order?
+        </v-card-title>
+        <v-card-text>By deleting,it will removed permanently.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" black" small text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="red darken-1" small text @click="deleteItem()">
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import RequestService from "../../RequestService";
+import { eventBus } from "@/main";
+import moment from "moment";
+
 export default {
-  data: () => ({}),
+  data: () => ({
+    dialog: false,
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
+  }),
   components: {},
+  mounted() {
+    if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
+  },
   created() {},
   methods: {
     goToOrders() {
       this.$router.push("Orders");
+    },
+    getDate(item) {
+      let date = item.split(" ");
+      console.log(date);
+      return date[0] + " " + date[1] + " " + date[2];
+    },
+    getTme(item) {
+      let date = item.split(" ");
+      console.log(date[1]);
+      return date[3] + date[4];
+      //return moment(time, "HH:mm:ss").format("hh:mm a");
+    },
+    deleteItem() {
+      this.dialog = false;
+      let requestBody = {
+        order_id: this.getSinglePurchase.id,
+      };
+      RequestService.post("order/delete", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          console.log("order deleted");
+          this.snackbar = true;
+          this.snackbarColor = "success";
+          this.snacbarMessage = "Your order deleted successfully";
+          setTimeout(() => {
+            this.$router.push("/dashboard");
+          }, 1500);
+        }
+      });
+    },
+  },
+  computed: {
+    ...mapGetters(["getSinglePurchase"]),
+    getIcon() {
+      return this.snackbarColor == "primary"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
     },
   },
 };

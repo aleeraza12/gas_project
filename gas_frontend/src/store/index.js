@@ -30,6 +30,7 @@ const store = {
     price: [],
     depos: [],
     dashboard: [],
+    orders: [],
   },
   getters: {
     getSales: (state) => state.sales,
@@ -44,6 +45,7 @@ const store = {
     getAllUserTypes: (state) => state.user_types,
     getAllStates: (state) => state.states,
     getAllDepos: (state) => state.depos,
+    getAllOrders: (state) => state.orders,
     //settngs
     getAllCustomerTypesSettings: (state) => state.customer_types_settings,
     getAllUserTypesSettings: (state) => state.user_types_settings,
@@ -65,6 +67,7 @@ const store = {
     SET_PRICE: (state, payload) => (state.price = payload),
     SET_DEPOS: (state, payload) => (state.depos = payload),
     SET_DASHBOARD: (state, payload) => (state.dashboard = payload),
+    SET_ORDERS: (state, payload) => (state.orders = payload),
     //Settngs
     SET_PAYMENT_MODES_SETTINGS: (state, payload) =>
       (state.payment_modes_settings = payload),
@@ -282,6 +285,18 @@ const store = {
       RequestService.post("depo/read_one", requestBody).then((response) => {
         if (response.data.status == 200) {
           context.commit("SET_PRICE", response.data.response);
+          eventBus.$emit("priceResponseArrived");
+        }
+      });
+    },
+
+    //Orders
+    getOrderListing(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("order/read_all", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_ORDERS", response.data.response);
           eventBus.$emit("responseArrived");
         }
       });

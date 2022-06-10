@@ -67,6 +67,11 @@ class Company extends Model
         return $this->hasMany(States::class);
     }
 
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function depos()
     {
         return $this->hasOne(Depos::class);

@@ -28,14 +28,16 @@
     >
       <div>
         <div class="d-flex align-start justify-start"><b>Pending</b></div>
-        <div class="d-flex align-start justify-start">6</div>
+        <div class="d-flex align-start justify-start">
+          {{ getAllOrders.length }}
+        </div>
       </div>
       <v-spacer></v-spacer>
       <div class="d-flex align-end justify-end">
-        <v-btn small dense outlined
+        <!--<v-btn small dense outlined
           >View All
           <v-icon small dense class="ml-2">mdi-eye-outline</v-icon></v-btn
-        >
+        >-->
       </div>
     </div>
     <div class="d-flex mt-3">
@@ -46,16 +48,16 @@
     <div class="mt-3">
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="getAllOrders"
         :items-per-page="5"
         class="elevation-1"
         hide-default-footer
-        hide-default-header
-        height="400px"
+        height="370px"
         :search="search"
+        :loading="tableloading"
       >
         <template v-slot:[`body.prepend`]="{ headers }">
-          <th v-for="(header, i) in headers" :key="i" class="table-head">
+          <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
             <div class="d-flex ml-3">
               {{ header.text }}
             </div>
@@ -72,102 +74,49 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
 export default {
   data: () => ({
     search: "",
+    tableloading: true,
     headers: [
       {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "name",
+        value: "created_at",
       },
-      { text: "Order Id", value: "id" },
-      { text: "Customer Name", value: "name" },
-      { text: "Gas Quantity", value: "quantity" },
+      { text: "Order Id", value: "order_id" },
+      { text: "Customer Name", value: "customer_name" },
+      { text: "Gas Quantity", value: "gas_quantity" },
       { text: "Amount", value: "amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "update_by" },
-      { text: "Payment Mode", value: "payment" },
+      //{ text: "Updated by", value: "updated_by" },
+      { text: "Payment Mode", value: "payment_mode" },
       { text: "View Details", value: "actions", sortable: false },
-    ],
-    desserts: [
-      {
-        date: "04 april 2022 01:32 am",
-        id: "100",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "101",
-        name: "Bran",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "102",
-        name: "Asla",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "103",
-        name: "Urab",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "104",
-        name: "Sanam",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "105",
-        name: "Steve",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "106",
-        name: "Alex",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
     ],
   }),
   components: {},
-  created() {},
+  computed: {
+    //getIcon() {
+    //  return this.snackbarColor == "primary"
+    //    ? "mdi-checkbox-marked-circle"
+    //    : "mdi-close-circle";
+    //},
+    ...mapGetters(["getAllOrders"]),
+  },
+  created() {
+    eventBus.$on("responseArrived", () => {
+      this.tableloading = false;
+    });
+  },
+  mounted() {
+    this.$store.dispatch("getOrderListing");
+  },
   methods: {
-    ViewOrders() {
+    ViewOrders(item) {
+      this.$store.commit("SET_VIEW_PURCHASE", item);
       this.$router.push("/order-details");
     },
   },

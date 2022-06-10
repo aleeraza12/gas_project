@@ -33,7 +33,7 @@
               <b>Available Balance</b>
             </div>
             <div class="d-flex align-start justify-start">
-              {{ total_sales }} NAJRA
+              {{ total_sales }} ₦
             </div>
           </div>
           <v-spacer></v-spacer>

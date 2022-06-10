@@ -19,16 +19,15 @@ class CreateOrdersTable extends Migration
             $table->string('unit_price');
             $table->float('amount');
             $table->string('order_id');
-            $table->enum('status', ['pending', 'delivered','cancelled'])->default('pending');
-            $table->integer('customer_id')->unsigned();
+            $table->enum('status', ['Pickedup', 'Delivered', 'Cancelled', 'Paid', 'Unpaid'])->default('Pickedup');
+            $table->string('customer_name');
+            $table->string('payment_mode');
             $table->integer('user_id')->unsigned();
-            //$table->integer('payment_mode_id')->unsigned();
-            $table->integer('payment_status_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->timestamps();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            //$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            //$table->foreign('payment_mode_id')->references('id')->on('payment_modes');
-            $table->foreign('payment_status_id')->references('id')->on('payment_statuses');
+            $table->foreign('company_id')->references('id')->on('companies');
         });
     }
 

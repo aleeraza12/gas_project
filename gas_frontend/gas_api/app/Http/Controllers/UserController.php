@@ -81,7 +81,7 @@ class UserController extends Controller
                 'company_id' =>  $request->user_id,
             ]
         );
-        return response()->json(['response' => $user, 'status' => 201]);
+        return $user;
     }
 
     public function delete_user(Request $request)
