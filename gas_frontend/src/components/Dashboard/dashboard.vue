@@ -51,7 +51,7 @@
 
     <v-row>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="120" style="background-color: #ebebea">
+        <v-card height="150" style="background-color: #ebebea">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -67,14 +67,14 @@
                 <v-icon>mdi-image</v-icon>
               </div>
             </div>
-            <div class="d-flex align-start justify-start mt-5">
+            <div class="d-flex align-start justify-start mt-12">
               <b>Total Available Gas</b>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="120" class="ml-5" style="background-color: #ebebea">
+        <v-card height="150" class="ml-5" style="background-color: #ebebea">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -90,14 +90,14 @@
                 <v-icon>mdi-image</v-icon>
               </div>
             </div>
-            <div class="d-flex align-start justify-start mt-5">
+            <div class="d-flex align-start justify-start mt-16">
               <b>Total Customers</b>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="120" class="ml-5" style="background-color: #ebebea">
+        <v-card height="150" class="ml-5" style="background-color: #ebebea">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -113,7 +113,7 @@
                 <v-icon>mdi-image</v-icon>
               </div>
             </div>
-            <div class="d-flex align-start justify-start mt-5">
+            <div class="d-flex align-start justify-start mt-16">
               <b>Total Sales</b>
             </div>
           </v-card-text>
@@ -130,7 +130,7 @@
     </div>
     <div
       class="mt-3"
-      v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+   
     >
       <v-data-table
         :headers="headers"
