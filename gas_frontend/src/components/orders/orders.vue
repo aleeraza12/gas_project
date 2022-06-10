@@ -51,10 +51,11 @@
         :items="getAllOrders"
         :items-per-page="5"
         class="elevation-1"
-        hide-default-footer
         height="370px"
         :search="search"
         :loading="tableloading"
+        hide-default-footer
+        hide-default-header
       >
         <template v-slot:[`body.prepend`]="{ headers }">
           <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
