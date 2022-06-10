@@ -43,6 +43,13 @@ Route::middleware('token')->group(function () {
             Route::post('read_all', 'read_all_customer_type');
         });
     });
+    //Dashboard
+    Route::prefix('dashboard')->group(function () {
+        Route::controller(General::class)->group(function () {
+            Route::post('read_all', 'get_dashboard_stats');
+            Route::post('read', 'get_dashboard_all');
+        });
+    });
 
     //User Type routes
     Route::prefix('user_type')->group(function () {
@@ -112,8 +119,8 @@ Route::middleware('token')->group(function () {
         Route::controller(DepoController::class)->group(function () {
             Route::post('create', 'create_depo_price');
             Route::post('delete', 'delete_depo_price');
-            Route::post('read', 'read_depo_price');
-            Route::post('read_all', 'read_all_depo_prices');
+            Route::post('read_one', 'read_depo_price');
+            Route::post('read', 'read_all_depo_prices');
         });
     });
 

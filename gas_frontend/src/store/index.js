@@ -27,6 +27,9 @@ const store = {
     states_settings: [],
     transactions: [],
     companies: [],
+    price: [],
+    depos: [],
+    dashboard: [],
   },
   getters: {
     getSales: (state) => state.sales,
@@ -40,6 +43,7 @@ const store = {
     getAllCustomerTypes: (state) => state.customer_types,
     getAllUserTypes: (state) => state.user_types,
     getAllStates: (state) => state.states,
+    getAllDepos: (state) => state.depos,
     //settngs
     getAllCustomerTypesSettings: (state) => state.customer_types_settings,
     getAllUserTypesSettings: (state) => state.user_types_settings,
@@ -48,6 +52,8 @@ const store = {
     //
     getAllTransactions: (state) => state.transactions,
     getCompanies: (state) => state.companies,
+    getPrice: (state) => state.price,
+    getDashboardData: (state) => state.dashboard,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
@@ -56,6 +62,9 @@ const store = {
     SET_USER_TYPES: (state, payload) => (state.user_types = payload),
     SET_STATES: (state, payload) => (state.states = payload),
     SET_COMPANIES: (state, payload) => (state.companies = payload),
+    SET_PRICE: (state, payload) => (state.price = payload),
+    SET_DEPOS: (state, payload) => (state.depos = payload),
+    SET_DASHBOARD: (state, payload) => (state.dashboard = payload),
     //Settngs
     SET_PAYMENT_MODES_SETTINGS: (state, payload) =>
       (state.payment_modes_settings = payload),
@@ -261,6 +270,42 @@ const store = {
         (response) => {
           if (response.data.status == 200) {
             context.commit("SET_TRANSATIONS", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
+        }
+      );
+    },
+    //Gas price
+    getCurrentPrice(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("depo/read_one", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_PRICE", response.data.response);
+          eventBus.$emit("responseArrived");
+        }
+      });
+    },
+
+    //Gas all depos
+    getAllDepos(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("depo/read", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_DEPOS", response.data.response);
+          eventBus.$emit("responseArrived");
+        }
+      });
+    },
+    getDashboardStats(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("dashboard/read_all", requestBody).then(
+        (response) => {
+          console.log(response.data.status);
+          if (response.data.status == 200) {
+            context.commit("SET_DASHBOARD", response.data.response);
             eventBus.$emit("responseArrived");
           }
         }

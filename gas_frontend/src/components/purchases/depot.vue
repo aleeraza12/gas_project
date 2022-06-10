@@ -10,6 +10,7 @@
               dense
               prepend-inner-icon="mdi-magnify"
               hide-details
+              v-model="search"
               class="searchbar"
             ></v-text-field>
           </div>
@@ -43,9 +44,10 @@
             >
           </div>
         </div>
-        <div class="mt-3 d-flex align-end justify-end" style="font-size:16px">
+
+        <!--<div class="mt-3 d-flex align-end justify-end" style="font-size: 16px">
           View Current Depot Prices <v-icon>mdi-chevron-down</v-icon>
-        </div>
+        </div>-->
         <div class="d-flex mt-3">
           <div><b>Current depot prices </b></div>
           <v-spacer></v-spacer>
@@ -56,12 +58,13 @@
             :loading="loading"
             loading-text="Loading... Please wait"
             :headers="headers"
-            :items="getPurchases"
+            :items="getAllDepos"
             :items-per-page="5"
             class="elevation-1"
             hide-default-footer
             hide-default-header
             height="400px"
+            :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
               <th
@@ -74,17 +77,6 @@
                 </div>
               </th>
             </template>
-            <template v-slot:item.date="{ item }">
-              {{ getDate(item) }}
-            </template>
-            <template v-slot:item.status="{ item }">
-              {{ getStatus(item) }}
-            </template>
-            <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="viewPurchase(item)">
-                mdi-eye
-              </v-icon>
-            </template>
           </v-data-table>
         </div>
       </v-card-text>
@@ -95,21 +87,21 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-import moment from "moment";
 export default {
   data: () => ({
     loading: true,
+    search: "",
     total_sales: null,
 
     headers: [
-      { text: "Depot Name", value: "receipt_number" },
-      { text: "Location", value: "company_name" },
-      { text: "Price per unit", value: "gas_quantity" },
+      { text: "Depot Name", value: "depo_name" },
+      { text: "Location", value: "location" },
+      { text: "Price(per 20MT)", value: "price_per_twenty_million_ton" },
     ],
   }),
   components: {},
   computed: {
-    ...mapGetters(["getPurchases"]),
+    ...mapGetters(["getAllDepos"]),
   },
   created() {
     eventBus.$on("responseArrived", () => {
@@ -117,19 +109,6 @@ export default {
     });
   },
   methods: {
-    getStatus(item) {
-      if (item.paid === null && item.delivered === null) return "Unpaid";
-      else if (item.paid !== null && item.delivered === null) return "Paid";
-      else if (item.paid !== null && item.delivered !== null) return "Paid";
-      else if (item.paid == null && item.delivered !== null) return "Delivered";
-    },
-    getDate(date) {
-      return moment(date.date).format("Do MMMM YYYY, h:mm a");
-    },
-    viewPurchase(item) {
-      this.$store.commit("SET_VIEW_PURCHASE", item);
-      this.$router.push("purchase-details");
-    },
     goToAddPurchase() {
       this.$router.push("purchase-receipt-form");
     },
@@ -142,7 +121,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getPurchaseListing");
+    this.$store.dispatch("getAllDepos");
   },
 };
 </script>

@@ -205,6 +205,7 @@ export default {
     loading1: false,
     status: "unpaid",
     sale_id: null,
+    updateable: false,
     emitData: "",
     loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
@@ -213,6 +214,7 @@ export default {
     eventBus.$on("updateSale", (data) => {
       this.assembleData(data);
       this.emitData = data;
+      this.updateable = true;
     });
     eventBus.$on("validationFailed", (err) => {
       this.snackbar = true;
@@ -235,15 +237,26 @@ export default {
       "getCustomers",
       "getAllPaymentModes",
       "getAllCustomerTypes",
+      "getPrice",
     ]),
   },
   mounted() {
     this.$store.dispatch("getCustomersListing");
     this.$store.dispatch("getPaymentMethods");
     this.$store.dispatch("getCustomerTypes");
+    setTimeout(() => {
+      if (!this.updateable) this.$store.dispatch("getCurrentPrice");
+    }, 1000);
   },
   watch: {
+    getPrice() {
+      console.log("watcher called");
+      this.price = this.getPrice.price_per_twenty_million_ton;
+    },
     gas_quantity() {
+      this.total_amount = this.gas_quantity * this.price;
+    },
+    price() {
       this.total_amount = this.gas_quantity * this.price;
     },
     getCustomers() {

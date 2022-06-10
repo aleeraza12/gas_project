@@ -48,7 +48,7 @@ class Token extends Model
      * @param Request $request
      * @return $empty array and status_code
      */
-    public function delete_token($request)
+    public static function delete_token($request)
     {
         Token::where('token', $request->header('token'))->delete();
         return [(object)[], 200];

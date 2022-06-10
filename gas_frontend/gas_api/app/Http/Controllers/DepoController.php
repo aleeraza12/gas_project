@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Depo;
+use App\Models\Company;
+use App\Models\Depos;
 use Illuminate\Http\Request;
 
 class DepoController extends Controller
@@ -11,13 +12,16 @@ class DepoController extends Controller
     //CRUD for Depo prices
     public function create_depo_price(Request $request)
     {
-        $depo_price = Depo::updateOrCreate(
+        $depo_price = Depos::updateOrCreate(
             [
                 'id' => $request->depo_id
             ],
             [
-                'price_per_million_ton' => $request->price_per_million_ton,
+                'depo_name' => $request->depo_name,
+                'price_per_twenty_million_ton' => $request->price_per_twenty_million_ton,
                 'location' => $request->location,
+                'company_id' =>  $request->user_id,
+
             ]
         );
         return response()->json(['response' => $depo_price, 'status' => 201]);
@@ -25,19 +29,19 @@ class DepoController extends Controller
 
     public function delete_depo_price(Request $request)
     {
-        Depo::find($request->depo_id)->delete();
+        Depos::find($request->depo_id)->delete();
         return response()->json(['response' => "Depo price deleted successfully", 'status' => 200]);
     }
 
     public function read_depo_price(Request $request)
     {
-        $depo_price =  Depo::find($request->depo_id);
+        $depo_price =  Company::find($request->user_id)->depos;
         return response()->json(['response' => $depo_price, 'status' => 200]);
     }
 
     public function read_all_depo_prices()
     {
-        $depo_prices =  Depo::all();
+        $depo_prices =  Depos::all();
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
 }

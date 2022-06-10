@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Customer;
+use App\Models\Purchase;
+use App\Models\Sale;
 use App\Models\Token;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,18 +24,16 @@ class General extends Controller
                 $response = Token::create($request, $is_admin->id);
                 $message['token'] = $response[0];
                 $message['user'] = $is_admin;
-                if ($request->email !== 'Superadmin@gmail.com') {
-                    $user_id = $is_admin->user;
-                    $message['user']->user_id =  $user_id[0]->id;
-                    unset($message['user']['user']);
-                }
+                $user_id = $is_admin->user;
+                $message['user']->user_id =  $user_id[0]->id;
+                unset($message['user']['user']);
                 $status = 200;
             } else {
                 $message = "Credentials didn't matched";
                 $status = 400;
             }
         } else if (!$is_admin) {
-            if ($is_user) {
+            if ($is_user && $is_user->status == "Active") {
                 if (Hash::check($request->password, $is_user->password)) {
                     $response = Token::create($request, $is_user->company_id);
                     $message['token'] = $response[0];
@@ -56,5 +57,23 @@ class General extends Controller
     {
         Token::delete_token($request);
         return response()->json(['message' => 'User Logout successfully', 'status' => 200]);
+    }
+
+    public function get_dashboard_stats(Request $request)
+    {
+        $response['total_gas_quantity'] = Purchase::where('company_id', $request->user_id)->sum('gas_quantity');
+        $response['total_gas_price'] = Purchase::where('company_id', $request->user_id)->sum('amount');
+        $response['total_customer'] = Customer::where('company_id', $request->user_id)->count();
+        $response['total_sales'] = Sale::where('company_id', $request->user_id)->sum('total_amount');
+        return response()->json(['response' => $response, 'status' => 200]);
+    }
+
+    public function get_dashboard_all(Request $request)
+    {
+        $response['total_gas_quantity'] = Purchase::sum('gas_quantity');
+        $response['total_gas_price'] = Purchase::sum('amount');
+        $response['total_customer'] = Customer::count();
+        $response['total_sales'] = Sale::sum('total_amount');
+        return response()->json(['response' => $response, 'status' => 200]);
     }
 }

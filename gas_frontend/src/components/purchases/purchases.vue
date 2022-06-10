@@ -44,6 +44,14 @@
             >
           </div>
         </div>
+
+        <div class="d-flex mt-3">
+          <div></div>
+          <v-spacer></v-spacer>
+          <div class="pointer" @click="goToDepos()">
+            View Current Depo Prices
+          </div>
+        </div>
         <div class="d-flex mt-3">
           <div><b>History</b></div>
           <v-spacer></v-spacer>
@@ -132,6 +140,9 @@ export default {
     });
   },
   methods: {
+    goToDepos() {
+      this.$router.push("/depot");
+    },
     getStatus(item) {
       if (item.paid === null && item.delivered === null) return "Unpaid";
       else if (item.paid !== null && item.delivered === null) return "Paid";
@@ -151,9 +162,10 @@ export default {
   },
   watch: {
     getPurchases() {
-      for (var i in this.getPurchases) {
-        this.total_sales += this.getPurchases[i].amount;
-      }
+      if (this.getPurchases.length > 0) {
+        for (let i in this.getPurchases)
+          this.total_sales += this.getPurchases[i].amount;
+      } else this.total_sales = 0;
     },
   },
   mounted() {
@@ -181,5 +193,8 @@ export default {
   background-color: #ebebea;
   font-size: 12px;
   height: 50px;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

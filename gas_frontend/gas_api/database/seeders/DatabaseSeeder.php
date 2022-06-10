@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentModeSeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(Company2::class);
+        $this->call(SuperAdmin::class);
+        $this->call(SuperAdminUser::class);
 
 
         $this->command->info('Company table seeded!');

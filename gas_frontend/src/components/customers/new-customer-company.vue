@@ -45,14 +45,15 @@
                 </div>
                 <div>
                   <v-text-field
-                    label="Compnay Email Address"
                     outlined
                     dense
-                    placeholder="Email Address"
-                    hide-details
+                    depressed
+                    placeholder="You can not change your email address"
+                    label="You can not change your email address"
+                    hide-details="auto"
                     class="username-feild mt-2 ml-16"
                     v-model="email_address"
-                    :rules="emailRules"
+                    readonly
                   ></v-text-field>
                 </div>
                 <div>
@@ -176,6 +177,7 @@
             <b>Company Profile</b>
           </div>
           <div
+            v-if="decodedBase64 == ''"
             class="d-flex justify-center align-center pa-10"
             style="
               background-color: rgb(196, 196, 196);
@@ -186,22 +188,38 @@
               margin-left: 13rem;
             "
           >
-            <!--<label for="file-input">  -->
-              <v-icon size="70" class="pointer">mdi-image</v-icon
-              ><v-icon>mdi-plus</v-icon>
-              <!--<input
+            <v-icon size="70" class="pointer">mdi-image</v-icon
+            ><v-icon>mdi-plus</v-icon>
+          </div>
+          <div
+            v-else
+            class="d-flex justify-center align-center pa-10"
+            style="
+              width: 24%;
+              height: 20%;
+              margin-top: 5rem;
+              margin-left: 13rem;
+            "
+          >
+            <v-avatar size="136px">
+              <img :src="decodedBase64" alt="John" />
+            </v-avatar>
+          </div>
+          <div
+            class="d-flex justify-center align-center"
+            style="margin-top: 2rem"
+          >
+            <label for="file-input">
+              <b style="text-decoration: underline" class="pointer"
+                >Change Image</b
+              >
+              <input
                 id="file-input"
                 type="file"
                 class="d-none"
                 @change="onFileChange"
-              />-->
-            <!--</label>-->
-          </div>
-          <div
-            class="d-flex justify-center align-center"
-            style="cursor: pointer; margin-top: 2rem"
-          >
-            <b style="text-decoration: underline">Change Image</b>
+              />
+            </label>
           </div>
           <div class="d-flex justify-start align-start mt-5 ml-2">
             <div>Owner's Name :</div>
@@ -258,6 +276,8 @@ export default {
     snackbarColor: "",
     decodedBase64: "",
     files: "",
+    fileType: "",
+    id: "",
     city: "",
     state: "",
     plant: "",
@@ -273,7 +293,7 @@ export default {
   }),
   computed: {
     getIcon() {
-      return this.snackbarColor == "primary"
+      return this.snackbarColor == "success"
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
@@ -301,7 +321,7 @@ export default {
     },
     assembleData() {
       this.owners_name = this.data.owner_name;
-      this.email_address = this.data.email_address;
+      this.email_address = this.data.company_email;
       this.company_name = this.data.company_name;
       this.phone_number = this.data.company_phone_number;
       this.city = this.data.city;
@@ -309,12 +329,20 @@ export default {
       this.plant = this.data.gas_plant_type;
       this.address = this.data.address;
       this.password = "";
+      this.id = this.data.id;
+      if (
+        this.data.company_profile_picture &&
+        this.data.company_profile_picture != null
+      )
+        this.decodedBase64 =
+          "data:image/jpeg;base64," + this.data.company_profile_picture;
+      else this.decodedBase64 = "";
     },
     updateCompany() {
       this.loading = true;
       let requestBody = {
         owner_name: this.owners_name,
-        company_email: this.email_address,
+        company_email: this.data.company_email,
         company_name: this.company_name,
         company_phone_number: this.phone_number,
         city: this.city,
@@ -323,16 +351,17 @@ export default {
         address: this.address,
         password: this.password,
         company_id: this.id,
+        attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
       };
-      console.log(requestBody);
       RequestService.post("company/create", requestBody)
         .then((res) => {
-          console.log("status in customer", res.data.status);
           if (res.data.status == 201) {
             this.snackbar = true;
             this.snackbarColor = "success";
             this.snacbarMessage = "Company data updated successfully";
             this.loading = false;
+            localStorage.setItem("user", JSON.stringify(res.data.response));
+            location.reload();
             //setTimeout(() => {
             //  this.$router.push("/customers");
             //}, 1000);
@@ -348,8 +377,8 @@ export default {
           //}, 1000);
         });
     },
+
     onFileChange() {
-      console.log("nsde f");
       let file_size = document.querySelector("input[type=file]").files[0].size;
       this.validFileSize = true;
       let fileBase64;
@@ -378,12 +407,14 @@ export default {
             if (fileType == "jpg" || fileType == "png") {
               fileType = "jpeg";
             }
-            that.decodedBase64 = fileBase64;
-            //that.decodedBase64 = fileBase64.replace(
-            //  "data:image/" + fileType + ";base64,",
-            //  ""
-            //);
-            console.log("requsetbody", that.decodedBase64);
+            if (fileType == "PNG") {
+              fileType = "png";
+            }
+            //that.decodedBase64 = fileBase64
+            that.decodedBase64 = fileBase64.replace(
+              "data:image/" + fileType + ";base64,",
+              "data:image/jpeg;base64,"
+            );
             event.target.value = null;
           },
           false

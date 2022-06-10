@@ -9,8 +9,11 @@
       >
         <v-list-item class="d-flex align-center justify-center ma-2">
           <v-list-item-avatar>
-            <!--<v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>-->
-            <v-avatar color="white">
+            <v-img
+              :src="'data:image/jpeg;base64,' + user.company_profile_picture"
+              v-if="user.company_profile_picture != null"
+            ></v-img>
+            <v-avatar color="white" v-else>
               <v-icon dark> mdi-account-circle </v-icon>
             </v-avatar>
           </v-list-item-avatar>
@@ -63,6 +66,7 @@ export default {
   data: () => ({
     drawer: true,
     titleName: "",
+    user: JSON.parse(localStorage.getItem("user")),
     links: [
       {
         text: "Dashboard",

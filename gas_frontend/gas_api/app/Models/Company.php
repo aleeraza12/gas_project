@@ -4,11 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
 {
     use HasFactory;
     protected $fillable = ['owner_name', 'company_email', 'company_name', 'company_phone_number', 'address', 'city', 'state', 'gas_plant_type', 'password',   'permissions', 'company_profile_picture'];
+
+    public function getCompanyProfilePictureAttribute($value)
+    {
+        if ($value != null) {
+            return base64_encode(Storage::get($value));
+        }
+        return null;
+    }
 
     public function setPermissionsAttribute($value)
     {
@@ -56,5 +65,10 @@ class Company extends Model
     public function states()
     {
         return $this->hasMany(States::class);
+    }
+
+    public function depos()
+    {
+        return $this->hasOne(Depos::class);
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Company;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class Company2 extends Seeder
+class SuperAdmin extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,9 +18,9 @@ class Company2 extends Seeder
         Company::create(
             [
                 'owner_name' => 'Super Admin',
-                'company_email' =>  'superadmin@gmail.com',
+                'company_email' =>  config('app.super_admin_email'),
                 'company_name' =>  'Super Admin',
-                'password' => Hash::make('Superadmin123.'),
+                'password' => Hash::make(config('app.super_admin_password')),
                 'company_phone_number' =>  '901201',
                 'city' =>  'Super Admin',
                 'state' => 'Super Admin',

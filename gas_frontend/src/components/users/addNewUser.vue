@@ -93,22 +93,95 @@
           <b>Access Granted</b>
         </div>
         <div class="d-flex fonts">
-          <v-radio-group v-model="permission1" row dense>
+          <v-row>
+            <v-col cols="9" sm="3" md="3">
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Dashboard"
+                color="black"
+                value="Dashboard"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Sales"
+                color="black"
+                value="Sales"
+                hide-details
+              ></v-checkbox>
+            </v-col>
+            <v-col cols="9" sm="3" md="3">
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Orders"
+                color="black"
+                value="Orders"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Purchases"
+                color="black"
+                value="Purchases"
+                hide-details
+              ></v-checkbox>
+            </v-col>
+            <v-col cols="9" sm="3" md="3">
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Customers"
+                color="black"
+                value="Customers"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Users"
+                color="black"
+                value="Users"
+                hide-details
+              ></v-checkbox>
+            </v-col>
+            <v-col cols="9" sm="" md="3">
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Wallet"
+                color="black"
+                value="Wallet"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Reconciliation"
+                color="black"
+                value="Reconciliation"
+                hide-details
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+          <!--<v-radio-group v-model="permission1" row dense>
             <v-radio label="Dashboard" value="Dashboard"></v-radio>
             <v-radio label="Sales" value="Sales"></v-radio>
             <v-radio label="Orders" value="Orders"></v-radio>
             <v-radio label="Purchases" value="Purchases"></v-radio>
-            <!--<v-radio label="Settings" value="Settings"></v-radio>-->
-          </v-radio-group>
+          </v-radio-group>-->
         </div>
-        <div class="d-flex fonts">
+        <!--<div class="d-flex fonts">
           <v-radio-group v-model="permission2" row dense>
             <v-radio label="Customers" value="Customers"></v-radio>
             <v-radio label="Users" value="Users"></v-radio>
             <v-radio label="Wallet" value="Wallet"></v-radio>
             <v-radio label="Reconciliation" value="Reconciliation"></v-radio>
           </v-radio-group>
-        </div>
+        </div>-->
         <div class="mt-5 mb-5 ml-16">
           <v-btn
             block
@@ -166,8 +239,6 @@ export default {
     loading: false,
     valid: false,
     permissions: [],
-    permission1: null,
-    permission2: null,
   }),
   computed: {
     getIcon() {
@@ -207,8 +278,7 @@ export default {
       //this.password = data.password;
       this.designation = data.designation;
       this.status = data.status;
-      this.permission1 = data.permissions[0];
-      this.permission2 = data.permissions[1];
+      this.permissions = data.permissions;
       this.users_id = data.id;
       this.userText = "Update";
     },
@@ -217,8 +287,6 @@ export default {
     },
     createUser() {
       this.loading = true;
-      this.permissions.push(this.permission1);
-      this.permissions.push(this.permission2);
       let requestBody = {
         name: this.name,
         created_by: this.created_by,

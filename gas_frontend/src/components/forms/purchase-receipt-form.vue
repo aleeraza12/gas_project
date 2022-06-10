@@ -205,6 +205,7 @@
 </template>
 <script>
 import RequestService from "../../RequestService";
+import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 export default {
   data: () => ({
@@ -230,6 +231,7 @@ export default {
     snackbarColor: "",
     files: "",
     loading: false,
+    updateable: false,
     loggedinUser: JSON.parse(localStorage.getItem("user")),
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -245,11 +247,12 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    //...mapGetters(["getAdminInfo"]),
+    ...mapGetters(["getPrice"]),
   },
   created() {
     eventBus.$on("updatePurchase", (data) => {
       this.assembleData(data);
+      this.updateable = true;
     });
     eventBus.$on("validationFailed", (err) => {
       this.snackbar = true;
@@ -266,6 +269,19 @@ export default {
     gas_quantity() {
       this.amount = this.gas_quantity * this.unit_price;
     },
+    unit_price() {
+      this.amount = this.gas_quantity * this.unit_price;
+    },
+    getPrice() {
+      console.log("watcher called");
+      this.unit_price = this.getPrice.price_per_twenty_million_ton;
+    },
+  },
+
+  mounted() {
+    setTimeout(() => {
+      if (!this.updateable) this.$store.dispatch("getCurrentPrice");
+    }, 1000);
   },
   methods: {
     assembleData(data) {
@@ -296,7 +312,6 @@ export default {
     //  event.target.value = "";
     //},
     onFileChange() {
-      console.log("nsde f");
       let file_size = document.querySelector("input[type=file]").files[0].size;
       this.validFileSize = true;
       let fileBase64;

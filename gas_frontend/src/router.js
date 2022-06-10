@@ -156,9 +156,8 @@ const router = new VueRouter({
       beforeEnter: (to, from, next) => {
         setTimeout(() => {
           if (
-            !(
-              "Customers" in
-              JSON.parse(localStorage.getItem("user")).permissions
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Purchases"
             )
           ) {
             store.dispatch("checkRouteExistence");

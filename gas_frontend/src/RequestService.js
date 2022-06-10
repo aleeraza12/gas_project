@@ -20,6 +20,7 @@ const RequestService = {
       else if (endpoint === "sale/read_all") apiName = "sale/read";
       else if (endpoint === "company/read_all") apiName = "company/read";
       else if (endpoint === "purchase/read_all") apiName = "purchase/read";
+      else if (endpoint === "dashboard/read_all") apiName = "dashboard/read";
       else if (endpoint === "transaction/read_all")
         apiName = "transaction/read";
       else apiName = endpoint;

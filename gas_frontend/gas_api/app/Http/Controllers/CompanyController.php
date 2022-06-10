@@ -28,15 +28,26 @@ class CompanyController extends Controller
                 'state' =>  $request->state,
                 'gas_plant_type' =>  $request->gas_plant_type,
                 'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
-                //'company_profile_picture'=>  $this->upload_attachment($request),
+                'company_profile_picture' =>  $request->attachment == "" ? null :  $this->upload_attachment($request),
                 'address' =>  $request->address,
             ]
         );
-        UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
-
+        if (!$request->company_id) {
+            UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
+            //$company['company_profile_picture'] = $this->getAttachment($company);
+        } else if ($request->company_id && $request->user_id) {
+            UserController::create_company_user($request->merge(['users_id' =>  $request->user_id, 'name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
+            $company['user_id'] = $request->user_id;
+            //$company['company_profile_picture'] = $this->getAttachment($company);
+        }
         return response()->json(['response' => $company, 'status' => 201]);
     }
 
+    public function getAttachment($company)
+    {
+        if ($company['company_profile_picture'] !== null)
+            return base64_encode(Storage::get($company['company_profile_picture']));
+    }
     public function delete_company(Request $request)
     {
         $company =  Company::find($request->company_id)->delete();
@@ -58,10 +69,10 @@ class CompanyController extends Controller
 
     public function upload_attachment($request)
     {
-        $filename = Str::random(5) . 'id' . $request->date . '.' . $request->extension;
-        $original_file_path = 'receipt' . $filename;
+        $filename = Str::random(5) . 'id' . $request->date . '.' . 'png';
+        $original_file_path = 'company_profile' . $filename;
         $image = $request->image;  // your base64 encoded
-        $image = str_replace('data:image/png;base64,', '', $request->attachment);
+        $image = str_replace('data:image/jpeg;base64,', '', $request->attachment);
         $image = str_replace(' ', '+', $image);
         Storage::disk('local')->put($original_file_path, base64_decode($image));
         return $original_file_path;
