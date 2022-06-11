@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container">
-    <v-card class="elevation-1">
+  <div class="main-container d-flex align-center justify-center">
+    <v-card class="elevation-1 " width="700">
       <v-card-text>
         <div class="sales-details-page">
           <div class="d-flex align-start justify-start" @click="goToSales()">
@@ -19,10 +19,10 @@
               <div class="fonts">015980000045</div>
             </div>
           </div>
-          <div><b>Sales Recepit</b></div>
+          <div class="mb-3"><b>Sales Recepit</b></div>
           <v-divider></v-divider>
           <div
-            class="d-flex align-start justify-start ml-5"
+            class="d-flex align-start justify-start ma-5"
             style="font-size: 16px; font-weight: 600"
           >
             Customer Details
