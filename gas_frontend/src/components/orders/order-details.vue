@@ -7,13 +7,20 @@
         </div>
       </div>
       <div class="mt-6"><b>Orders Details</b></div>
-      <v-divider class="mt-2"></v-divider>
+      <v-divider class="ml-5 mr-5 mt-2"></v-divider>
       <div class="d-flex mt-5">
         <div class="ml-10">
-          <v-chip small dense color="success" label class="pa-3">
+          <v-chip
+            dense
+            label
+            class="pa-3"
+            style="background-color: #ebffef; color: #5fba7e"
+          >
+            <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon>
             {{ getSinglePurchase.status }}
           </v-chip>
         </div>
+
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
           <div>
@@ -23,7 +30,7 @@
         </div>
       </div>
       <div
-        class="d-flex align-start justify-start ml-5"
+        class="d-flex align-start justify-start ml-5 mt-5"
         style="font-size: 16px; font-weight: 600"
       >
         Customer Info
@@ -45,7 +52,7 @@
           <div class="fonts">{{ getSinglePurchase.order_id }}</div>
         </div>
       </div>
-      <div class="mt-3 d-flex align-start justify-start ml-3">
+      <div class="mt-5 d-flex align-start justify-start ml-5">
         <b>Order Info</b>
       </div>
       <div class="d-flex">
@@ -73,10 +80,10 @@
           <div class="fonts">{{ getSinglePurchase.company_name }}</div>
         </div>
       </div>
-      <div class="mt-3" style="text-decoration: underline">
+      <div class="mt-5 mb-5 ml-5 d-flex justify-start align-start">
         <b>Status History</b>
       </div>
-      <div class="fonts mt-3">
+      <div class="fonts mt-3 mb-5">
         <div class="d-flex align-start justify-start ml-3">
           <v-radio
             label="Deleivered"
@@ -143,8 +150,8 @@
 <script>
 import { mapGetters } from "vuex";
 import RequestService from "../../RequestService";
-//import { eventBus } from "@/main";
-//import moment from "moment";
+// import { eventBus } from "@/main";
+// import moment from "moment";
 
 export default {
   data: () => ({
@@ -155,7 +162,7 @@ export default {
   }),
   components: {},
   mounted() {
-    if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
+     if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
   },
   created() {},
   methods: {
@@ -203,7 +210,7 @@ export default {
 </script>
 <style scoped>
 .sales-details-page {
-  height: 600px;
+  height: 650px;
   width: 600px;
   background-color: #ebebea;
   margin-left: 12rem;

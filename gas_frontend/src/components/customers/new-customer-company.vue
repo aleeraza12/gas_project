@@ -173,23 +173,17 @@
       </v-col>
       <v-col md="6" lg="6" xl="6">
         <div class="pa-5" style="background-color: #f9f9f8; height: 100vh">
-          <div class="d-flex justify-start align-start">
+          <div class="d-flex justify-start align-start mt-5">
             <b>Company Profile</b>
           </div>
           <div
             v-if="decodedBase64 == ''"
-            class="d-flex justify-center align-center pa-10"
-            style="
-              background-color: rgb(196, 196, 196);
-              border-radius: 50%;
-              width: 24%;
-              height: 20%;
-              margin-top: 5rem;
-              margin-left: 13rem;
-            "
+            class="d-flex justify-center align-center"
+            style="margin-top:10rem"
           >
-            <v-icon size="70" class="pointer">mdi-image</v-icon
-            ><v-icon>mdi-plus</v-icon>
+          <img src="../../assets/images/circle.png" height="150" style="position:absolute"/>
+          <img src="../../assets/images/imageicon.png" height="100" style="position:relative"/>
+            
           </div>
           <div
             v-else
@@ -221,7 +215,7 @@
               />
             </label>
           </div>
-          <div class="d-flex justify-start align-start mt-5 ml-2">
+          <!-- <div class="d-flex justify-start align-start mt-5 ml-2">
             <div>Owner's Name :</div>
             <div class="ml-5">
               <b>{{ loggedinUser.owner_name }},</b>
@@ -250,7 +244,7 @@
             <div class="ml-16">
               <b>{{ loggedinUser.address }} - {{ loggedinUser.city }}</b>
             </div>
-          </div>
+          </div> -->
         </div>
       </v-col>
     </v-row>

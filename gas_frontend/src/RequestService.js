@@ -48,7 +48,6 @@ const RequestService = {
       } else {
         console.log("5555");
         body.user_id = user.id; //for token auth
-        body.company_id = body.company_id; //for query
       }
     } else {
       //if regular user/company
