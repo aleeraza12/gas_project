@@ -155,8 +155,7 @@
             >
           </div>
           <label for="file-input" v-else>
-            <v-icon size="80" class="pointer">mdi-image</v-icon
-            ><v-icon>mdi-plus</v-icon>
+            <img height="100" src="../../assets/images/imageicon.png"/>
             <input
               id="file-input"
               type="file"
