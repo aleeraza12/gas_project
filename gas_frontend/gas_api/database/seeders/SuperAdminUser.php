@@ -23,7 +23,8 @@ class SuperAdminUser extends Seeder
                 'designation' =>  'Super Admin',
                 'permissions' =>    ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'],
                 'user_type' =>  'Super Admin',
-                'status' =>  'Active',
+                'status' =>  'InActive',
+                'is_company' =>  true,
                 'company_id' =>  2,
             ]
         );

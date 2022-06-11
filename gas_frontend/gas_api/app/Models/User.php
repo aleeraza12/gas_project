@@ -18,6 +18,7 @@ class User extends Model
         'status',
         'company_id',
         'user_id',
+        'is_company',
         'last_login_at'
     ];
     public function user_type()

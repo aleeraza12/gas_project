@@ -20,7 +20,7 @@ class TransactionController extends Controller
             [
                 'amount' =>  $request->amount,
                 'type' =>  $request->type,
-                'company_id' =>  $request->user_id, //company id
+                'company_id' =>  $request->company_id, //company id
                 'outer_id' =>  $request->outer_id, //Sale|purchase id
             ]
         );
@@ -29,7 +29,7 @@ class TransactionController extends Controller
 
     public function readTransactions(Request $request)
     {
-        $transactions = Transaction::where('company_id', $request->user_id)->where('status', 'verified')->get();
+        $transactions = Transaction::where('company_id', $request->company_id)->where('status', 'verified')->get();
         foreach ($transactions as $transaction) {
             if ($transaction->type == 'sale') {
                 $data = Sale::find($transaction->outer_id);

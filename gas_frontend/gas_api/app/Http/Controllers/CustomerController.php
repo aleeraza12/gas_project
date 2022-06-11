@@ -56,7 +56,7 @@ class CustomerController extends Controller
                 'state' =>  $request->state,
                 //'customer_type_id'=>  $request->customer_type_id,
                 'customer_type' =>  $request->customer_type,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
                 'address' =>  $request->address,
             ]
         );
@@ -87,7 +87,7 @@ class CustomerController extends Controller
 
     public function read_all_customer(Request $request)
     {
-        $customers = Company::find($request->user_id)->customer;
+        $customers = Company::find($request->company_id)->customer;
         foreach ($customers as $customer) {
             $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
         }

@@ -206,6 +206,7 @@ export default {
     status: "unpaid",
     sale_id: null,
     updateable: false,
+    company_id: null,
     emitData: "",
     loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
@@ -251,7 +252,9 @@ export default {
   watch: {
     getPrice() {
       console.log("watcher called");
-      this.price = this.getPrice.price_per_twenty_million_ton;
+      this.price = this.getPrice
+        ? this.getPrice.price_per_twenty_million_ton
+        : this.price;
     },
     gas_quantity() {
       this.total_amount = this.gas_quantity * this.price;
@@ -287,6 +290,7 @@ export default {
       this.discount_code = data.discount_code;
       this.payment_mode = data.payment_mode;
       this.sale_id = data.id;
+      this.company_id = data.company_id;
     },
     addPromo() {
       this.snackbar = true;
@@ -314,6 +318,9 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
+      if (this.company_id != null) {
+        requestBody.company_id = this.company_id;
+      }
       console.log(requestBody);
       let apiName = "";
       this.sale_id == null

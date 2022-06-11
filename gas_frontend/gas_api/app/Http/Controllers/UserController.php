@@ -58,7 +58,9 @@ class UserController extends Controller
                 'permissions' =>  $request->permissions,
                 'user_type' =>  $request->user_type,
                 'status' =>  $request->status,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
+                'is_company' => false,
+
             ]
         );
         return response()->json(['response' => $user, 'status' => 201]);
@@ -78,7 +80,8 @@ class UserController extends Controller
                 'permissions' =>  $request->permissions,
                 'user_type' =>  $request->user_type,
                 'status' =>  $request->status,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
+                'is_company' => true,
             ]
         );
         return $user;
@@ -99,13 +102,13 @@ class UserController extends Controller
 
     public function read_all_user(Request $request)
     {
-        $users =  Company::find($request->user_id)->user;
+        $users =  Company::find($request->company_id)->user()->where('is_company', false)->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
 
-    public function read(Request $request)
+    public function read()
     {
-        $users =  User::all();
+        $users =  User::where('is_company', false)->get();
         return response()->json(['response' => $users, 'status' => 200]);
     }
 }

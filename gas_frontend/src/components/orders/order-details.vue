@@ -143,8 +143,8 @@
 <script>
 import { mapGetters } from "vuex";
 import RequestService from "../../RequestService";
-import { eventBus } from "@/main";
-import moment from "moment";
+//import { eventBus } from "@/main";
+//import moment from "moment";
 
 export default {
   data: () => ({

@@ -350,7 +350,6 @@ export default {
         gas_plant_type: this.plant,
         address: this.address,
         password: this.password,
-        company_id: this.id,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
       };
       RequestService.post("company/create", requestBody)

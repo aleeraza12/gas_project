@@ -171,6 +171,7 @@ export default {
     snackbarColor: "",
     loading: false,
     valid: false,
+    company_id: null,
   }),
   computed: {
     getIcon() {
@@ -213,6 +214,7 @@ export default {
       this.address = data.address;
       this.customer_id = data.id;
       this.customerText = "Update";
+      this.company_id = data.company_id;
     },
     createCustomer() {
       this.loading = true;
@@ -226,6 +228,9 @@ export default {
         address: this.address,
         customer_id: this.customer_id,
       };
+      if (this.company_id != null) {
+        requestBody.company_id = this.company_id;
+      }
       console.log(requestBody);
       RequestService.post("customer/create", requestBody)
         .then((res) => {

@@ -31,6 +31,7 @@ const store = {
     depos: [],
     dashboard: [],
     orders: [],
+    wallets: [],
   },
   getters: {
     getSales: (state) => state.sales,
@@ -56,6 +57,7 @@ const store = {
     getCompanies: (state) => state.companies,
     getPrice: (state) => state.price,
     getDashboardData: (state) => state.dashboard,
+    getWallet: (state) => state.wallets,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
@@ -68,6 +70,7 @@ const store = {
     SET_DEPOS: (state, payload) => (state.depos = payload),
     SET_DASHBOARD: (state, payload) => (state.dashboard = payload),
     SET_ORDERS: (state, payload) => (state.orders = payload),
+    SET_WALLETS: (state, payload) => (state.wallets = payload),
     //Settngs
     SET_PAYMENT_MODES_SETTINGS: (state, payload) =>
       (state.payment_modes_settings = payload),
@@ -313,6 +316,19 @@ const store = {
         }
       });
     },
+
+    //Wallet
+    getAllWallets(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("wallet/read", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_WALLETS", response.data.response);
+          eventBus.$emit("responseArrived");
+        }
+      });
+    },
+
     getDashboardStats(context, data) {
       console.log(data);
       let requestBody = {};

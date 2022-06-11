@@ -239,6 +239,7 @@ export default {
     menu: false,
     modal: false,
     menu2: false,
+    company_id: null,
   }),
   components: {},
   computed: {
@@ -274,7 +275,9 @@ export default {
     },
     getPrice() {
       console.log("watcher called");
-      this.unit_price = this.getPrice.price_per_twenty_million_ton;
+      this.unit_price = this.getPrice
+        ? this.getPrice.price_per_twenty_million_ton
+        : this.unit_price;
     },
   },
 
@@ -293,6 +296,7 @@ export default {
       this.amount = data.amount;
       this.unit_price = data.unit_price;
       this.recepient_name = data.recepient_name;
+      this.company_id = data.company_id;
       if (data.base64 && data.base64 != "")
         this.decodedBase64 = "data:image/jpeg;base64," + data.base64;
       else this.decodedBase64 = "";
@@ -382,6 +386,9 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
+      if (this.company_id != null) {
+        requestBody.company_id = this.company_id;
+      }
       let apiName = "";
       this.purchase_id == null
         ? (apiName = "purchase/create")

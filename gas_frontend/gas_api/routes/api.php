@@ -11,6 +11,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -176,6 +177,15 @@ Route::middleware('token')->group(function () {
         Route::controller(TransactionController::class)->group(function () {
             Route::post('read', 'read');
             Route::post('read_all', 'readTransactions');
+        });
+    });
+
+    //Wallet route
+    Route::prefix('wallet')->group(function () {
+        Route::controller(WalletController::class)->group(function () {
+            Route::post('create', 'create_wallet');
+            Route::post('read', 'read');
+            Route::post('read_all', 'read');
         });
     });
 });

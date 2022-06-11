@@ -38,9 +38,9 @@
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex align-end justify-end">
-            <v-btn small dense outlined @click="addNewCustomer()"
+            <!--<v-btn small dense outlined @click="addNewCustomer()"
               >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-            >
+            >-->
           </div>
         </div>
         <div class="d-flex mt-3">
@@ -75,11 +75,11 @@
                 </div>
               </th>
             </template>
-            <template v-slot:item.actions1="{ item }">
+            <!--<template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-eye
               </v-icon>
-            </template>
+            </template>-->
             <template v-slot:item.actions2="{ item }">
               <v-icon small class="mr-2" @click="setModal(item)">
                 mdi-eye
@@ -93,9 +93,11 @@
     <v-dialog v-model="dialog" persistent max-width="390">
       <v-card>
         <v-card-title class="text-h7">
-          Are you sure to delete this customer?
+          Are you sure to delete this company?
         </v-card-title>
-        <v-card-text>By deleting, All of its sales will be lost.</v-card-text>
+        <v-card-text
+          >By deleting, All of this company data will be lost.</v-card-text
+        >
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color=" black" small text @click="dialog = false">
@@ -151,14 +153,13 @@ export default {
       { text: "Company Phone Number", value: "company_phone_number" },
       { text: "City", value: "city" },
       { text: "State", value: "state" },
-      { text: "Edit", value: "actions1", sortable: false },
+      //{ text: "Edit", value: "actions1", sortable: false },
       { text: "Delete", value: "actions2", sortable: false },
     ],
   }),
   components: {},
   created() {
     eventBus.$on("responseArrived", () => {
-      console.log("asasdasasdasd");
       this.loading = false;
     });
   },
@@ -192,15 +193,15 @@ export default {
     deleteItem() {
       this.dialog = false;
       let requestBody = {
-        customer_id: this.deleteable.id,
+        company_id: this.deleteable.id,
       };
-      RequestService.post("customer/delete", requestBody).then((response) => {
+      RequestService.post("company/delete", requestBody).then((response) => {
         if (response.data.status == 200) {
           this.loading = true;
           this.snackbar = true;
           this.snackbarColor = "success";
-          this.snacbarMessage = "Your customer(s) deleted successfully";
-          this.$store.dispatch("getCustomersListing");
+          this.snacbarMessage = "Your company(s) deleted successfully";
+          this.$store.dispatch("getCompaniesListing");
         }
       });
     },
