@@ -109,8 +109,8 @@ Route::middleware('token')->group(function () {
         Route::controller(OrderController::class)->group(function () {
             Route::post('create', 'create_order');
             Route::post('delete', 'delete_order');
-            Route::post('read', 'read_order');
-            Route::post('read_all', 'read_all_order');
+            Route::post('read_all', 'read_order');
+            Route::post('read', 'read_all_order');
         });
     });
 

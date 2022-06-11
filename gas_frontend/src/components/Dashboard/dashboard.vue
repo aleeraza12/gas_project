@@ -59,7 +59,7 @@
                   <b>{{ getDashboardData.total_gas_quantity }} Kg</b>
                 </div>
                 <div class="d-flex align-start justify-start">
-                  NA {{ getDashboardData.total_gas_price }}
+                  ₦ {{ getDashboardData.total_gas_price }}
                 </div>
               </div>
               <v-spacer></v-spacer>
@@ -134,12 +134,13 @@
     >
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="getAllOrders"
         :items-per-page="5"
         class="elevation-1"
         hide-default-footer
         height="370px"
         :search="search"
+        :loading="tableloading"
       >
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="ViewOrders(item)">
@@ -228,6 +229,7 @@ import { eventBus } from "@/main";
 export default {
   data: () => ({
     nameRules: [(v) => !!v || "This field is required"],
+    tableloading: true,
     loading: false,
     valid: false,
     priceLoader: true,
@@ -246,88 +248,16 @@ export default {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "date",
+        value: "created_at",
       },
-      { text: "Order Id", value: "id" },
-      { text: "Customer Name", value: "name" },
-      { text: "Gas Quantity", value: "quantity" },
+      { text: "Order Id", value: "order_id" },
+      { text: "Customer Name", value: "customer_name" },
+      { text: "Gas Quantity", value: "gas_quantity" },
       { text: "Amount", value: "amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "update_by" },
-      { text: "Payment Mode", value: "payment" },
+      //{ text: "Updated by", value: "updated_by" },
+      { text: "Payment Mode", value: "payment_mode" },
       { text: "View Details", value: "actions", sortable: false },
-    ],
-    desserts: [
-      {
-        date: "04 april 2022 01:32 am",
-        id: "100",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "101",
-        name: "Bran",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "102",
-        name: "Asla",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "103",
-        name: "Urab",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "104",
-        name: "Sanam",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "105",
-        name: "Steve",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "106",
-        name: "Alex",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
     ],
   }),
   components: {},
@@ -335,6 +265,7 @@ export default {
   mounted() {
     this.$store.dispatch("getCurrentPrice");
     this.$store.dispatch("getDashboardStats");
+    this.$store.dispatch("getOrderListing");
   },
   computed: {
     getIcon() {
@@ -342,7 +273,7 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    ...mapGetters(["getPrice", "getDashboardData"]),
+    ...mapGetters(["getPrice", "getDashboardData", "getAllOrders"]),
   },
   watch: {
     getDashboardData() {
@@ -350,8 +281,11 @@ export default {
     },
   },
   created() {
-    eventBus.$on("responseArrived", () => {
+    eventBus.$on("priceResponseArrived", () => {
       this.priceLoader = false;
+    });
+    eventBus.$on("responseArrived", () => {
+      this.tableloading = false;
     });
   },
   methods: {
@@ -399,7 +333,8 @@ export default {
           }
         });
     },
-    ViewOrders() {
+    ViewOrders(item) {
+      this.$store.commit("SET_VIEW_PURCHASE", item);
       this.$router.push("/order-details");
     },
   },

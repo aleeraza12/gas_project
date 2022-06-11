@@ -33,8 +33,9 @@ class CompanyController extends Controller
             ]
         );
         if (!$request->company_id) {
-            UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
-            //$company['company_profile_picture'] = $this->getAttachment($company);
+            $user = UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
+            $seeder = new \Database\Seeders\OrderSeeder();
+            $seeder->run($company->id, $user->id);
         } else if ($request->company_id && $request->user_id) {
             UserController::create_company_user($request->merge(['users_id' =>  $request->user_id, 'name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
             $company['user_id'] = $request->user_id;

@@ -32,7 +32,7 @@
             <div class="d-flex align-start justify-start">
               <b>Available Balance</b>
             </div>
-            <div class="d-flex align-start justify-start">NA , 945000000</div>
+            <div class="d-flex align-start justify-start">₦ 945000000</div>
           </div>
           <v-spacer></v-spacer>
           <!--<div class="d-flex align-end justify-end">
