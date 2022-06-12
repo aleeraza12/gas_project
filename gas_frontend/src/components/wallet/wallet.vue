@@ -48,7 +48,19 @@
           <div><b>Withdraw History</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
+            <v-btn
+              @click="btnClick()"
+              depressed
+              light
+              text
+              :ripple="false"
+              height="5px"
+              x-small
+              dense
+              class="text-capitalize pa-4 mb-n1 mt-2"
+            >
+              <span class="black--text">Export </span></v-btn
+            >
           </div>
           <div class="mr-3"><date-picker /></div>
         </div>
@@ -84,6 +96,11 @@
         </div>
       </v-card-text>
     </v-card>
+    <download-csv :json-data="getWallet">
+      <v-btn style="display: none" id="myBtn">
+        <b>My custom button</b>
+      </v-btn>
+    </download-csv>
   </div>
 </template>
 
@@ -91,6 +108,9 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import datePicker from "../../views/Pages/datePicker.vue";
+import VueJsonToCsv from "vue-json-to-csv";
+import Vue from "vue";
+Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     search: "",
@@ -137,6 +157,9 @@ export default {
     },
   },
   methods: {
+    btnClick() {
+      document.getElementById("myBtn").click();
+    },
     getWalletListing(date) {
       this.tableloading = true;
       let requestBody = {

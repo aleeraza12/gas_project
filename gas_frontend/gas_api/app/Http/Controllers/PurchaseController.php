@@ -54,6 +54,7 @@ class PurchaseController extends Controller
         return response()->json(['response' => $purchase, 'status' => 200]);
     }
 
+    //for company/user
     public function read_all_purchases(Request $request)
     {
         $purchases =  Company::find($request->company_id)->purchase()->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
@@ -66,6 +67,7 @@ class PurchaseController extends Controller
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
 
+    //for super admn
     public function read(Request $request)
     {
         $purchases =  Purchase::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
@@ -74,6 +76,7 @@ class PurchaseController extends Controller
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
             $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->company_id)->first();
             $purchase['transaction_id'] =  @$transaction->id;
+            $purchase['created_company_name'] = Company::find($purchase->company_id)->company_name;
         }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }

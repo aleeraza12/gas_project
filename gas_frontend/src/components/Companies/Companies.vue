@@ -82,7 +82,7 @@
             </template>-->
             <template v-slot:item.actions2="{ item }">
               <v-icon small class="mr-2" @click="setModal(item)">
-                mdi-eye
+                mdi-delete-forever
               </v-icon>
             </template>
           </v-data-table>
@@ -90,7 +90,7 @@
       </v-card-text>
     </v-card>
 
-    <v-dialog v-model="dialog" persistent max-width="390">
+    <v-dialog v-model="dialog" persistent max-width="410">
       <v-card>
         <v-card-title class="text-h7">
           Are you sure to delete this company?

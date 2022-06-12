@@ -51,7 +51,7 @@ class SaleController extends Controller
         $sale =  Sale::find($request->sale_id);
         return response()->json(['response' => $sale, 'status' => 200]);
     }
-
+    //for companes
     public function read_all_sale(Request $request)
     {
         $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
@@ -66,7 +66,7 @@ class SaleController extends Controller
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
-
+    //for super admn
     public function read(Request $request)
     {
         $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->get();

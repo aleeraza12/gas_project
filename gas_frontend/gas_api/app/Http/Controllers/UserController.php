@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Users;
+use App\Http\Requests\UserTypeRequest;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\UserType;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function create_user_type(Request $request)
+    public function create_user_type(UserTypeRequest $request)
     {
         $user_type = UserType::updateOrCreate(
             [

@@ -28,6 +28,24 @@
                 hide-details
               ></v-select>
             </div>
+            <div v-if="loggedinUser.company_email == 'superadmin@gmail.com'">
+              <v-select
+                :items="
+                  Object.keys(company_names).map((key) => ({
+                    text: company_names[key].name,
+                    value: company_names[key],
+                  }))
+                "
+                label="Select one company for purchase"
+                v-model="company_name"
+                :rules="nameRules"
+                outlined
+                class="username-feild mt-3"
+                dense
+                small
+                hide-details
+              ></v-select>
+            </div>
             <div>
               <v-select
                 :items="
@@ -179,13 +197,12 @@
   </div>
 </template>
 <script>
-import RequestService from "../../RequestService";
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
+import axios from "axios";
+import RequestService from "../../RequestService";
 export default {
   data: () => ({
-    start_date: "2021-01-01",
-    end_date: new Date().toISOString().substr(0, 10),
     valid: false,
     valid1: false,
     show: false,
@@ -209,7 +226,11 @@ export default {
     sale_id: null,
     updateable: false,
     company_id: null,
+    start_date: "2022-01-01",
+    end_date: new Date().toISOString().substr(0, 10),
     emitData: "",
+    company_names: [],
+    company_name: "",
     loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
   components: {},
@@ -241,6 +262,7 @@ export default {
       "getAllPaymentModes",
       "getAllCustomerTypes",
       "getPrice",
+      "getCompanies",
     ]),
   },
   mounted() {
@@ -248,12 +270,23 @@ export default {
       start_date: this.start_date,
       end_date: this.end_date.concat(" 23:59:00"),
     };
-    this.$store.dispatch("getCustomersListing", requestBody);
+    //this is bcz we want only company user for creating sale
+    if (this.loggedinUser.company_email !== "superadmin@gmail.com") {
+      this.$store.dispatch("getCustomersListing", requestBody);
+    }
     this.$store.dispatch("getPaymentMethods");
     this.$store.dispatch("getCustomerTypes");
     setTimeout(() => {
       if (!this.updateable) this.$store.dispatch("getCurrentPrice");
     }, 1000);
+    //if super admn wants to create sale than we get companes to assign a sale to specific company
+    if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+      let requestBody = {
+        start_date: this.start_date,
+        end_date: this.end_date.concat(" 23:59:00"),
+      };
+      this.$store.dispatch("getCompaniesListing", requestBody);
+    }
   },
   watch: {
     getPrice() {
@@ -268,8 +301,30 @@ export default {
     price() {
       this.total_amount = this.gas_quantity * this.price;
     },
+    company_name() {
+      if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+        this.getCompanyCustomers(this.company_name.id);
+      } else console.log(this.company_name);
+    },
+    getCompanies() {
+      this.customer_names = [];
+      for (let j = 0; j < this.getCompanies.length; j++) {
+        console.log(this.getCompanies[j].company_name);
+        let company = {
+          name: this.getCompanies[j].company_name,
+          id: this.getCompanies[j].id,
+        };
+        this.company_names.push(company);
+      }
+      console.log(this.emitData, "emtdata");
+      let updateAblecompany = {
+        name: this.emitData.updated_by,
+        id: this.emitData.company_id,
+      };
+      this.company_name = updateAblecompany;
+    },
     getCustomers() {
-      console.log(this.getCustomers);
+      this.customer_names = [];
       for (let j = 0; j < this.getCustomers.length; j++) {
         let customer = {
           name: this.getCustomers[j].name,
@@ -285,6 +340,37 @@ export default {
     },
   },
   methods: {
+    getCompanyCustomers(id) {
+      console.log("id", id);
+
+      let url = this.$store.state.url;
+      let requestBody = {
+        company_id: id,
+        user_id: this.loggedinUser.id,
+        start_date: "2022-01-01",
+        end_date: this.end_date.concat(" 23:59:00"),
+      };
+      let customAxios;
+      customAxios = axios.create({
+        headers: {
+          Token: localStorage.getItem("token"),
+        },
+      });
+      customAxios;
+      customAxios
+        .post(url + "customer/read_all", requestBody)
+        .then((response) => {
+          console.log("response customer", response.data.response);
+          this.customer_names = [];
+          for (let j = 0; j < response.data.response.length; j++) {
+            let customer = {
+              name: response.data.response[j].name,
+              id: response.data.response[j].id,
+            };
+            this.customer_names.push(customer);
+          }
+        });
+    },
     assembleData(data) {
       this.gas_quantity = data.gas_quantity;
       this.total_amount = data.total_amount;
@@ -297,6 +383,13 @@ export default {
       this.payment_mode = data.payment_mode;
       this.sale_id = data.id;
       this.company_id = data.company_id;
+      let requestBody = {
+        start_date: this.start_date,
+        end_date: this.end_date.concat(" 23:59:00"),
+      };
+      if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+        this.$store.dispatch("getCustomersListing", requestBody);
+      }
     },
     addPromo() {
       this.snackbar = true;
@@ -324,8 +417,17 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
-      if (this.company_id != null) {
+      if (
+        this.company_id != null &&
+        this.loggedinUser.company_email !== "superadmin@gmail.com"
+      ) {
         requestBody.company_id = this.company_id;
+      }
+      if (
+        this.company_name !== "" &&
+        this.loggedinUser.company_email == "superadmin@gmail.com"
+      ) {
+        requestBody.company_id = this.company_name.id;
       }
       console.log(requestBody);
       let apiName = "";

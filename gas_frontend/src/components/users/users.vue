@@ -46,9 +46,6 @@
         <div class="d-flex mt-3">
           <div><b>Transactions</b></div>
           <v-spacer></v-spacer>
-          <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
-          </div>
           <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">

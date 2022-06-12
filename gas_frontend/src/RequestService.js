@@ -11,11 +11,6 @@ let token = "";
 
 const RequestService = {
   post: (endpoint, body, date) => {
-    console.log(
-      body,
-      body && // 👈 null and undefined check
-        Object.keys(body).length === 0
-    );
     let apiName = "";
     token = localStorage.getItem("token");
     let user = JSON.parse(localStorage.getItem("user"));
@@ -33,43 +28,35 @@ const RequestService = {
         apiName = "transaction/read";
       else apiName = endpoint;
     } else apiName = endpoint; //setting end point for regular user/company
-    console.log(body.company_id == undefined);
     // if Super admin is updating any data
     if (
       user.permissions.includes("Companies") &&
       body && // 👈 null and undefined check
       Object.keys(body).length !== 0
     ) {
-      console.log("000", body);
       //if super admin
       if (body.company_id == undefined) {
-        console.log("44444");
         body.user_id = user.id; //for token auth
         body.company_id = user.id; //for query
       } else {
-        console.log("5555");
         body.user_id = user.id; //for token auth
       }
     } else {
       //if regular user/company
       if ("company_id" in user) {
-        console.log("111");
         //if company created user
         body.user_id = user.company_id;
         body.company_id = user.company_id;
       } else {
         //if company
-        console.log("222");
         body.company_id = user.id;
         body.user_id = user.id;
       }
     }
-    console.log("checng start date", date);
     if (
       date && // 👈 null and undefined check
       Object.keys(date).length !== 0
     ) {
-      console.log("date present");
       body.start_date = date.start_date;
       body.end_date = date.end_date;
     }

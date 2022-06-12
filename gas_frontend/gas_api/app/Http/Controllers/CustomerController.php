@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Customers;
+use App\Http\Requests\CustomerTypeRequest;
 use App\Models\Company;
 use App\Models\Customer as CustomerModel;
 use App\Models\CustomerType;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    public function create_customer_type(Request $request)
+    public function create_customer_type(CustomerTypeRequest $request)
     {
         $customer_type = CustomerType::updateOrCreate(
             [

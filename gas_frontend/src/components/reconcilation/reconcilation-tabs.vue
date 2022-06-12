@@ -44,7 +44,19 @@
           <div><b>Reconcilation</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
+            <v-btn
+              @click="btnClick()"
+              depressed
+              light
+              text
+              :ripple="false"
+              height="5px"
+              x-small
+              dense
+              class="text-capitalize pa-4 mb-n1 mt-2"
+            >
+              <span class="black--text">Export </span></v-btn
+            >
           </div>
           <div class="mr-3"><date-picker /></div>
         </div>
@@ -54,11 +66,12 @@
             background-color="#fff"
             color="black"
             dark
+            dense
             class="mb-2"
           >
-            <v-tab> Sales </v-tab>
+            <v-tab dense> Sales </v-tab>
 
-            <v-tab> Purchases </v-tab>
+            <v-tab dense> Purchases </v-tab>
           </v-tabs>
 
           <v-tabs-items v-model="tab">
@@ -156,6 +169,11 @@
         </div>
       </v-card-text>
     </v-card>
+    <download-csv :json-data="getAllTransactions">
+      <v-btn style="display: none" id="myBtn">
+        <b>My custom button</b>
+      </v-btn>
+    </download-csv>
   </div>
 </template>
 
@@ -163,6 +181,9 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import datePicker from "../../views/Pages/datePicker.vue";
+import VueJsonToCsv from "vue-json-to-csv";
+import Vue from "vue";
+Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     tab: null,
@@ -217,6 +238,9 @@ export default {
     this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+     btnClick() {
+      document.getElementById("myBtn").click();
+    },
     getTransactions(date) {
       this.loading = true;
       let requestBody = {

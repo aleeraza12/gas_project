@@ -27,7 +27,7 @@ class CompanyController extends Controller
                 'city' =>  $request->city,
                 'state' =>  $request->state,
                 'gas_plant_type' =>  $request->gas_plant_type,
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
+                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'] : ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
                 'company_profile_picture' =>  $request->attachment == "" ? null :  $this->upload_attachment($request),
                 'address' =>  $request->address,
             ]

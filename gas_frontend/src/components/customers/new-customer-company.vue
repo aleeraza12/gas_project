@@ -31,7 +31,9 @@
                     v-model="owners_name"
                   ></v-text-field>
                 </div>
-                <div>
+                <div
+                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                >
                   <v-text-field
                     label="Company Name"
                     outlined
@@ -56,7 +58,9 @@
                     readonly
                   ></v-text-field>
                 </div>
-                <div>
+                <div
+                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                >
                   <v-text-field
                     label="Company Phone Number"
                     outlined
@@ -68,7 +72,9 @@
                     v-model="phone_number"
                   ></v-text-field>
                 </div>
-                <div>
+                <div
+                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                >
                   <v-text-field
                     label="Address"
                     outlined
@@ -80,8 +86,14 @@
                     v-model="address"
                   ></v-text-field>
                 </div>
-                <div class="d-flex">
-                  <div>
+
+                <div
+                  class="d-flex"
+                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                >
+                  <div
+                    v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                  >
                     <v-text-field
                       label="City"
                       outlined
@@ -93,8 +105,15 @@
                       v-model="city"
                     ></v-text-field>
                   </div>
-                  <div class="mt-2 ml-2" style="width: 240px">
+                  <div
+                    class="mt-2 ml-2"
+                    style="width: 240px"
+                    v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                  >
                     <v-select
+                      v-if="
+                        loggedinUser.company_email !== 'superadmin@gmail.com'
+                      "
                       v-model="state"
                       :items="getAllStates"
                       :rules="nameRules"
@@ -107,8 +126,10 @@
                 <div
                   class="ml-16 mt-0"
                   style="width: 400px; position: absolute"
+                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
                 >
                   <v-select
+                    v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
                     v-model="plant"
                     :items="plants"
                     :rules="nameRules"
@@ -179,11 +200,18 @@
           <div
             v-if="decodedBase64 == ''"
             class="d-flex justify-center align-center"
-            style="margin-top:10rem"
+            style="margin-top: 10rem"
           >
-          <img src="../../assets/images/circle.png" height="150" style="position:absolute"/>
-          <img src="../../assets/images/imageicon.png" height="100" style="position:relative"/>
-            
+            <img
+              src="../../assets/images/circle.png"
+              height="150"
+              style="position: absolute"
+            />
+            <img
+              src="../../assets/images/imageicon.png"
+              height="100"
+              style="position: relative"
+            />
           </div>
           <div
             v-else
@@ -215,36 +243,51 @@
               />
             </label>
           </div>
-          <!-- <div class="d-flex justify-start align-start mt-5 ml-2">
+          <div
+            class="d-flex justify-start align-start mt-5 ml-2"
+            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+          >
             <div>Owner's Name :</div>
             <div class="ml-5">
               <b>{{ loggedinUser.owner_name }},</b>
             </div>
           </div>
-          <div class="d-flex justify-start align-start mt-2 ml-2">
+          <div
+            class="d-flex justify-start align-start mt-2 ml-2"
+            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+          >
             <div>Company's Name :</div>
             <div class="ml-5">
               <b>{{ loggedinUser.company_name }}</b>
             </div>
           </div>
-          <div class="d-flex justify-start align-start mt-4 ml-2">
+          <div
+            class="d-flex justify-start align-start mt-4 ml-2"
+            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+          >
             <div>Phone Number :</div>
             <div class="ml-5">
               <b>{{ loggedinUser.company_phone_number }},</b>
             </div>
           </div>
-          <div class="d-flex justify-start align-start mt-2 ml-2">
+          <div
+            class="d-flex justify-start align-start mt-2 ml-2"
+            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+          >
             <div>Email Address :</div>
             <div class="ml-5">
               <b>{{ loggedinUser.company_email }}</b>
             </div>
           </div>
-          <div class="d-flex justify-start align-start mt-2 ml-2">
+          <div
+            class="d-flex justify-start align-start mt-2 ml-2"
+            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+          >
             <div>Address :</div>
             <div class="ml-16">
               <b>{{ loggedinUser.address }} - {{ loggedinUser.city }}</b>
             </div>
-          </div> -->
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -346,6 +389,9 @@ export default {
         password: this.password,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
       };
+      if (this.loggedinUser.company_email == "superadmin@gmail.com")
+        requestBody.permissions = this.loggedinUser.permissions;
+      console.log(requestBody);
       RequestService.post("company/create", requestBody)
         .then((res) => {
           if (res.data.status == 201) {

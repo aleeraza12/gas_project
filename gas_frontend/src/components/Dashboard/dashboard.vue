@@ -22,7 +22,7 @@
         <b> Welcome Ola,</b>
       </div>
       <v-spacer></v-spacer>
-      <div>
+      <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
         <div>Current gas price</div>
 
         <div class="d-flex">

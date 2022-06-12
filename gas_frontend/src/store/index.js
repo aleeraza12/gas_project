@@ -341,7 +341,7 @@ const store = {
       RequestService.post("depo/read", requestBody).then((response) => {
         if (response.data.status == 200) {
           context.commit("SET_DEPOS", response.data.response);
-          eventBus.$emit("responseArrived");
+          eventBus.$emit("responseArrivedDepo");
         }
       });
     },

@@ -48,7 +48,7 @@
         <div class="d-flex mt-3">
           <div></div>
           <v-spacer></v-spacer>
-          <div class="pointer" @click="goToDepos()">
+          <div class="pointer" @click="myFunction()">
             View Current Depo Prices
           </div>
         </div>
@@ -56,18 +56,55 @@
           <div><b>History</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
+            <v-btn
+              @click="btnClick()"
+              depressed
+              light
+              text
+              :ripple="false"
+              height="5px"
+              x-small
+              dense
+              class="text-capitalize pa-4 mb-n1 mt-2"
+            >
+              <span class="black--text">Export </span></v-btn
+            >
           </div>
           <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
+          <v-data-table
+            id="myDIV"
+            :loading="loading"
+            loading-text="Loading... Please wait"
+            :headers="Depoheaders"
+            :items="getAllDepos"
+            :items-per-page="5"
+            class="elevation-1"
+            hide-default-footer
+            hide-default-header
+            height="400px"
+            :search="search"
+          >
+            <template v-slot:[`body.prepend`]="{ headers }">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
+              >
+                <div class="d-flex ml-3">
+                  {{ header.text }}
+                </div>
+              </th>
+            </template>
+          </v-data-table>
           <v-data-table
             :loading="loading"
             loading-text="Loading... Please wait"
             :headers="headers"
             :items="getPurchases"
             :items-per-page="5"
-            class="elevation-1"
+            class="elevation-1 mt-5"
             hide-default-footer
             hide-default-header
             height="400px"
@@ -99,6 +136,11 @@
         </div>
       </v-card-text>
     </v-card>
+    <download-csv :json-data="getPurchases">
+      <v-btn style="display: none" id="myBtn">
+        <b>My custom button</b>
+      </v-btn>
+    </download-csv>
   </div>
 </template>
 
@@ -107,13 +149,23 @@ import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import moment from "moment";
 import datePicker from "../../views/Pages/datePicker.vue";
+import VueJsonToCsv from "vue-json-to-csv";
+import Vue from "vue";
+Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     loading: true,
+    depoLoading: true,
+    isDepo: false,
     search: "",
     total_sales: null,
     start_date: new Date().toISOString().substr(0, 10),
     end_date: new Date().toISOString().substr(0, 10),
+    Depoheaders: [
+      { text: "Depot Name", value: "depo_name" },
+      { text: "Location", value: "location" },
+      { text: "Price(per 20MT)", value: "price_per_twenty_million_ton" },
+    ],
     headers: [
       {
         text: "Date",
@@ -136,11 +188,14 @@ export default {
     datePicker,
   },
   computed: {
-    ...mapGetters(["getPurchases"]),
+    ...mapGetters(["getPurchases", "getAllDepos"]),
   },
   created() {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
+    });
+    eventBus.$on("responseArrivedDepo", () => {
+      this.depoLoading = false;
     });
     eventBus.$on("selectedPurchasesDateFilter", (value) => {
       console.log(value, "value");
@@ -148,6 +203,17 @@ export default {
     });
   },
   methods: {
+    btnClick() {
+      document.getElementById("myBtn").click();
+    },
+    myFunction() {
+      var x = document.getElementById("myDIV");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    },
     getPurchasesListing(date) {
       this.loading = true;
       let requestBody = {
@@ -187,8 +253,10 @@ export default {
     },
   },
   mounted() {
+    document.getElementById("myDIV").style.display = "none";
     this.getPurchasesListing([this.start_date, this.end_date]);
     this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.dispatch("getAllDepos");
   },
 };
 </script>

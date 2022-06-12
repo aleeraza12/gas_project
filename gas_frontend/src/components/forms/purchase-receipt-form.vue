@@ -26,6 +26,24 @@
                 :rules="nameRules"
               ></v-text-field>
             </div>
+            <div v-if="loggedinUser.company_email == 'superadmin@gmail.com'">
+              <v-select
+                :items="
+                  Object.keys(purchased_company_names).map((key) => ({
+                    text: purchased_company_names[key].name,
+                    value: purchased_company_names[key],
+                  }))
+                "
+                label="Select one company for purchase"
+                v-model="purchased_company_name"
+                :rules="nameRules"
+                outlined
+                class="username-feild mt-3"
+                dense
+                small
+                hide-details
+              ></v-select>
+            </div>
             <div>
               <v-text-field
                 label="Receipt Number"
@@ -155,7 +173,7 @@
             >
           </div>
           <label for="file-input" v-else>
-            <img height="100" src="../../assets/images/imageicon.png"/>
+            <img height="100" src="../../assets/images/imageicon.png" />
             <input
               id="file-input"
               type="file"
@@ -220,6 +238,8 @@ export default {
     amount: "",
     unit_price: "",
     receipt_number: "",
+    purchased_company_names: [],
+    purchased_company_name: "",
     driver_name: "",
     nameRules: [(v) => !!v || "This field is required"],
     decodedBase64: "",
@@ -228,8 +248,11 @@ export default {
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
+    emitData: "",
     files: "",
     loading: false,
+    start_date: "2022-01-01",
+    end_date: new Date().toISOString().substr(0, 10),
     updateable: false,
     loggedinUser: JSON.parse(localStorage.getItem("user")),
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -247,7 +270,7 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    ...mapGetters(["getPrice"]),
+    ...mapGetters(["getPrice", "getCompanies"]),
   },
   created() {
     eventBus.$on("updatePurchase", (data) => {
@@ -278,15 +301,40 @@ export default {
         ? this.getPrice.price_per_twenty_million_ton
         : this.unit_price;
     },
+    getCompanies() {
+      this.customer_names = [];
+      for (let j = 0; j < this.getCompanies.length; j++) {
+        console.log(this.getCompanies[j].company_name);
+        let company = {
+          name: this.getCompanies[j].company_name,
+          id: this.getCompanies[j].id,
+        };
+        this.purchased_company_names.push(company);
+      }
+      console.log(this.emitData, "emtdata");
+      let updateAblecompany = {
+        name: this.emitData.created_company_name,
+        id: this.emitData.company_id,
+      };
+      this.purchased_company_name = updateAblecompany;
+    },
   },
 
   mounted() {
+    if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+      let requestBody = {
+        start_date: this.start_date,
+        end_date: this.end_date.concat(" 23:59:00"),
+      };
+      this.$store.dispatch("getCompaniesListing", requestBody);
+    }
     setTimeout(() => {
       if (!this.updateable) this.$store.dispatch("getCurrentPrice");
     }, 1000);
   },
   methods: {
     assembleData(data) {
+      this.emitData = data;
       this.receipt_number = data.receipt_number;
       this.company_name = data.company_name;
       this.company_phone_number = data.company_phone_number;
@@ -385,8 +433,17 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
-      if (this.company_id != null) {
+      if (
+        this.company_id != null &&
+        this.loggedinUser.company_email !== "superadmin@gmail.com"
+      ) {
         requestBody.company_id = this.company_id;
+      }
+      if (
+        this.purchased_company_name !== "" &&
+        this.loggedinUser.company_email == "superadmin@gmail.com"
+      ) {
+        requestBody.company_id = this.purchased_company_name.id;
       }
       let apiName = "";
       this.purchase_id == null

@@ -45,9 +45,6 @@
           </div>
         </div>
 
-        <!--<div class="mt-3 d-flex align-end justify-end" style="font-size: 16px">
-          View Current Depot Prices <v-icon>mdi-chevron-down</v-icon>
-        </div>-->
         <div class="d-flex mt-3">
           <div><b>Current depot prices </b></div>
           <v-spacer></v-spacer>
