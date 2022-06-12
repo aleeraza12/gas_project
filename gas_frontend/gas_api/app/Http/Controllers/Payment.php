@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use App\Models\PaymentMode;
 use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
