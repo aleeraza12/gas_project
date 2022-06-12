@@ -46,7 +46,7 @@
           <div class="mr-3" style="border-bottom: 1px solid grey">
             Export Csv
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-tabs
@@ -72,6 +72,7 @@
                 hide-default-header
                 height="400px"
                 :search="search"
+                :loading="loading"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -116,6 +117,7 @@
                 hide-default-header
                 height="400px"
                 :search="search"
+                :loading="loading"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -160,11 +162,13 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-import moment from "moment";
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     tab: null,
     loading: true,
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     search: "",
     getPurchasedTransaction: [],
     getSalesTransaction: [],
@@ -173,7 +177,7 @@ export default {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "date",
+        value: "created_at",
       },
       { text: "Transaction Id", value: "id" },
       { text: "Customer Name", value: "customer_name" },
@@ -188,10 +192,15 @@ export default {
   computed: {
     ...mapGetters(["getAllTransactions"]),
   },
-  components: {},
+  components: {
+    datePicker,
+  },
   created() {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
+    });
+    eventBus.$on("selectedReconcilationDateFilter", (value) => {
+      this.getTransactions(value);
     });
   },
   watch: {
@@ -204,14 +213,22 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getAllTransacton");
+    this.getTransactions([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+    getTransactions(date) {
+      this.loading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      this.getPurchasedTransaction = [];
+      this.getSalesTransaction = [];
+      this.$store.dispatch("getAllTransactions", requestBody);
+    },
     ViewAllTransactions() {
       this.$router.push("/reconcilation");
-    },
-    getDate(date) {
-      return moment(date.created_at).format("Do MMMM YYYY, h:mm a");
     },
   },
 };

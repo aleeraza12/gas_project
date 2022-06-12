@@ -10,7 +10,7 @@ var customAxios;
 let token = "";
 
 const RequestService = {
-  post: (endpoint, body) => {
+  post: (endpoint, body, date) => {
     console.log(
       body,
       body && // 👈 null and undefined check
@@ -28,6 +28,7 @@ const RequestService = {
       else if (endpoint === "company/read_all") apiName = "company/read";
       else if (endpoint === "purchase/read_all") apiName = "purchase/read";
       else if (endpoint === "dashboard/read_all") apiName = "dashboard/read";
+      else if (endpoint === "order/read_all") apiName = "order/read";
       else if (endpoint === "transaction/read_all")
         apiName = "transaction/read";
       else apiName = endpoint;
@@ -62,6 +63,15 @@ const RequestService = {
         body.company_id = user.id;
         body.user_id = user.id;
       }
+    }
+    console.log("checng start date", date);
+    if (
+      date && // 👈 null and undefined check
+      Object.keys(date).length !== 0
+    ) {
+      console.log("date present");
+      body.start_date = date.start_date;
+      body.end_date = date.end_date;
     }
     return new Promise((resolve, reject) => {
       customAxios = axios.create({

@@ -78,7 +78,7 @@ class CustomerController extends Controller
 
     public function read(Request $request)
     {
-        $customers = CustomerModel::all();
+        $customers = CustomerModel::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($customers as $customer) {
             $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
         }
@@ -87,7 +87,7 @@ class CustomerController extends Controller
 
     public function read_all_customer(Request $request)
     {
-        $customers = Company::find($request->company_id)->customer;
+        $customers = Company::find($request->company_id)->customer()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($customers as $customer) {
             $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
         }

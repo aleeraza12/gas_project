@@ -49,7 +49,7 @@
           <div class="mr-3" style="border-bottom: 1px solid grey">
             Export Csv
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
@@ -129,6 +129,7 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import RequestService from "../../RequestService";
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     loading: true,
@@ -138,6 +139,8 @@ export default {
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
         text: "User Name",
@@ -155,7 +158,9 @@ export default {
       { text: "Delete", value: "actions2", sortable: false },
     ],
   }),
-  components: {},
+  components: {
+    datePicker,
+  },
   watch: {
     getUsers() {},
   },
@@ -171,11 +176,25 @@ export default {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
     });
+    eventBus.$on("selectedUsersDateFilter", (value) => {
+      console.log(value, "value");
+      this.getUsersListing(value);
+    });
   },
   mounted() {
-    this.$store.dispatch("getUsersListing");
+    this.getUsersListing([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+    getUsersListing(date) {
+      this.loading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      console.log("before dispatching", requestBody);
+      this.$store.dispatch("getUsersListing", requestBody);
+    },
     addNewUser() {
       this.$router.push("/new-user");
     },

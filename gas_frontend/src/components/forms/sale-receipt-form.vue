@@ -184,6 +184,8 @@ import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 export default {
   data: () => ({
+    start_date: "2021-01-01",
+    end_date: new Date().toISOString().substr(0, 10),
     valid: false,
     valid1: false,
     show: false,
@@ -242,7 +244,11 @@ export default {
     ]),
   },
   mounted() {
-    this.$store.dispatch("getCustomersListing");
+    let requestBody = {
+      start_date: this.start_date,
+      end_date: this.end_date.concat(" 23:59:00"),
+    };
+    this.$store.dispatch("getCustomersListing", requestBody);
     this.$store.dispatch("getPaymentMethods");
     this.$store.dispatch("getCustomerTypes");
     setTimeout(() => {

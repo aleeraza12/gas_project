@@ -207,6 +207,7 @@ const router = new VueRouter({
       meta: { layout: "app", title: "Users" },
       component: require("@/views/Pages/users").default,
     },
+
     {
       path: "/reconcilation",
       name: "Reconcilation",
@@ -223,13 +224,6 @@ const router = new VueRouter({
           }
         }, 10);
       },
-      meta: { layout: "app", title: "Reconcilation", requireAuth: true },
-      component: require("@/views/Pages/reconcilation").default,
-    },
-
-    {
-      path: "/reconcilation-tabs",
-      name: "Reconcilation-tabs",
       meta: { layout: "app", title: "Reconcilation-tabs", requireAuth: true },
       component: require("./components/reconcilation/reconcilation-tabs")
         .default,

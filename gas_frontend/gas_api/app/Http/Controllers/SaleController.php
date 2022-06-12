@@ -54,7 +54,7 @@ class SaleController extends Controller
 
     public function read_all_sale(Request $request)
     {
-        $sales =   Company::find($request->company_id)->sale;
+        $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         $name = Company::find($request->company_id);
         foreach ($sales as $sale) {
             $sale['updated_by'] = $name->company_name; //updated_by
@@ -69,7 +69,7 @@ class SaleController extends Controller
 
     public function read(Request $request)
     {
-        $sales =  Sale::all();
+        $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($sales as $sale) {
             $sale['updated_by'] = Company::find($sale->company_id)->company_name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();

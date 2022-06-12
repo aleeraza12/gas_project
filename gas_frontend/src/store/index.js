@@ -32,6 +32,7 @@ const store = {
     dashboard: [],
     orders: [],
     wallets: [],
+    date: "",
   },
   getters: {
     getSales: (state) => state.sales,
@@ -58,6 +59,7 @@ const store = {
     getPrice: (state) => state.price,
     getDashboardData: (state) => state.dashboard,
     getWallet: (state) => state.wallets,
+    getSelectedDateRange: (state) => state.date,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
@@ -79,6 +81,7 @@ const store = {
     SET_USER_TYPES_SETTINGS: (state, payload) =>
       (state.user_types_settings = payload),
     SET_STATES_SETTINGS: (state, payload) => (state.states_settings = payload),
+    setSelectedDateRange: (state, payload) => (state.date = payload),
 
     SET_CUSTOMERS: (state, payload) => (state.customers = payload),
     SET_PURCHASES: (state, payload) => (state.purchases = payload),
@@ -91,62 +94,113 @@ const store = {
       (state.view_single_purchase = payload),
   },
   actions: {
-    // gettng all customers for a company
-    getCustomersListing(context) {
+    //Wallet     &
+    getAllWallets(context, data) {
+      console.log(data);
       let requestBody = {};
-      RequestService.post("customer/read_all", requestBody).then((response) => {
+      RequestService.post("wallet/read", requestBody, data).then((response) => {
         if (response.data.status == 200) {
-          eventBus.$emit("responseArrived");
-          context.commit("SET_CUSTOMERS", response.data.response);
-        }
-      });
-    },
-
-    // gettng all users for a company
-    getUsersListing(context) {
-      let requestBody = {};
-      RequestService.post("user/read_all", requestBody).then((response) => {
-        if (response.data.status == 200) {
-          context.commit("SET_USERS", response.data.response);
+          context.commit("SET_WALLETS", response.data.response);
           eventBus.$emit("responseArrived");
         }
       });
     },
+    // gettng all customers for a company      7
+    getCustomersListing(context, data) {
+      let requestBody = {};
+      RequestService.post("customer/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            eventBus.$emit("responseArrived");
+            context.commit("SET_CUSTOMERS", response.data.response);
+          }
+        }
+      );
+    },
 
-    // gettng all orders of a company
+    // gettng all users for a company      6
+    getUsersListing(context, data) {
+      console.log("data for user", data);
+      let requestBody = {};
+      RequestService.post("user/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_USERS", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
+        }
+      );
+    },
+
+    // gettng all orders of a company     5
     getSalesListings(context, data) {
       console.log(data);
       let requestBody = {};
-      RequestService.post("sale/read_all", requestBody).then((response) => {
-        if (response.data.status == 200) {
-          context.commit("SET_SALES", response.data.response);
-          eventBus.$emit("responseArrived");
+      RequestService.post("sale/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_SALES", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
         }
-      });
+      );
     },
 
-    // gettng all orders of a company
+    // gettng all orders of a company     4
     getCompaniesListing(context, data) {
       console.log(data);
       let requestBody = {};
-      RequestService.post("company/read_all", requestBody).then((response) => {
-        if (response.data.status == 200) {
-          context.commit("SET_COMPANIES", response.data.response);
-          eventBus.$emit("responseArrived");
+      RequestService.post("company/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_COMPANIES", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
         }
-      });
+      );
     },
 
-    // gettng all purchases of a company
+    // gettng all purchases of a company      3
     getPurchaseListing(context, data) {
       console.log(data);
       let requestBody = {};
-      RequestService.post("purchase/read_all", requestBody).then((response) => {
-        if (response.data.status == 200) {
-          context.commit("SET_PURCHASES", response.data.response);
-          eventBus.$emit("responseArrived");
+      RequestService.post("purchase/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_PURCHASES", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
         }
-      });
+      );
+    },
+
+    //Get Transaction       2
+    getAllTransactions(context, data) {
+      console.log("sdasdasddasdasd", data);
+      let requestBody = {};
+      context.commit("SET_TRANSATIONS", "");
+      RequestService.post("transaction/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_TRANSATIONS", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
+        }
+      );
+    },
+
+    //Orders      1
+    getOrderListing(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("order/read_all", requestBody, data).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_ORDERS", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
+        }
+      );
     },
     //Get payment methods
     getPaymentMethods(context, data) {
@@ -268,19 +322,6 @@ const store = {
       });
     },
 
-    //Get Transaction
-    getAllTransacton(context, data) {
-      console.log(data);
-      let requestBody = {};
-      RequestService.post("transaction/read_all", requestBody).then(
-        (response) => {
-          if (response.data.status == 200) {
-            context.commit("SET_TRANSATIONS", response.data.response);
-            eventBus.$emit("responseArrived");
-          }
-        }
-      );
-    },
     //Gas price
     getCurrentPrice(context, data) {
       console.log(data);
@@ -293,18 +334,6 @@ const store = {
       });
     },
 
-    //Orders
-    getOrderListing(context, data) {
-      console.log(data);
-      let requestBody = {};
-      RequestService.post("order/read_all", requestBody).then((response) => {
-        if (response.data.status == 200) {
-          context.commit("SET_ORDERS", response.data.response);
-          eventBus.$emit("responseArrived");
-        }
-      });
-    },
-
     //Gas all depos
     getAllDepos(context, data) {
       console.log(data);
@@ -312,18 +341,6 @@ const store = {
       RequestService.post("depo/read", requestBody).then((response) => {
         if (response.data.status == 200) {
           context.commit("SET_DEPOS", response.data.response);
-          eventBus.$emit("responseArrived");
-        }
-      });
-    },
-
-    //Wallet
-    getAllWallets(context, data) {
-      console.log(data);
-      let requestBody = {};
-      RequestService.post("wallet/read", requestBody).then((response) => {
-        if (response.data.status == 200) {
-          context.commit("SET_WALLETS", response.data.response);
           eventBus.$emit("responseArrived");
         }
       });

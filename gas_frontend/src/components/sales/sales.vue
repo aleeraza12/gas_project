@@ -50,7 +50,7 @@
           <div class="mr-3" style="border-bottom: 1px solid grey">
             Export Csv
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
@@ -93,12 +93,14 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     loading: true,
     total_sales: null,
     search: "",
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
         text: "Date",
@@ -116,13 +118,19 @@ export default {
       { text: "View Receipt", value: "actions", sortable: false },
     ],
   }),
-  components: {},
+  components: {
+    datePicker,
+  },
   computed: {
     ...mapGetters(["getSales"]),
   },
   created() {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
+    });
+    eventBus.$on("selectedSalesDateFilter", (value) => {
+      console.log(value, "value");
+      this.getSalesListings(value);
     });
   },
   methods: {
@@ -139,16 +147,27 @@ export default {
       this.$store.commit("SET_VIEW_RECEIPT", item);
       this.$router.push("sales-details");
     },
+    getSalesListings(date) {
+      this.loading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      console.log("before dispatching", requestBody);
+      this.$store.dispatch("getSalesListings", requestBody);
+    },
   },
   watch: {
     getSales() {
+      this.total_sales = 0;
       for (var i in this.getSales) {
         this.total_sales += this.getSales[i].total_amount;
       }
     },
   },
   mounted() {
-    this.$store.dispatch("getSalesListings");
+    this.getSalesListings([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
 };
 </script>

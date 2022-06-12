@@ -93,22 +93,23 @@ class UserController extends Controller
         return response()->json(['response' => "User deleted successfully", 'status' => 200]);
     }
 
-
+    //read specific user
     public function read_user(Request $request)
     {
         $user =  User::find($request->users_id);
         return response()->json(['response' => $user, 'status' => 200]);
     }
 
+    //read all users for a company
     public function read_all_user(Request $request)
     {
-        $users =  Company::find($request->company_id)->user()->where('is_company', false)->get()->toArray();
+        $users =  Company::find($request->company_id)->user()->where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
-
-    public function read()
+    //read all users for super admn
+    public function read(Request $request)
     {
-        $users =  User::where('is_company', false)->get();
+        $users =  User::where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
 }

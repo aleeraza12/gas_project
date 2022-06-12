@@ -56,7 +56,7 @@ class PurchaseController extends Controller
 
     public function read_all_purchases(Request $request)
     {
-        $purchases =  Company::find($request->company_id)->purchase;
+        $purchases =  Company::find($request->company_id)->purchase()->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         foreach ($purchases as $purchase) {
             if ($purchase['receipt_attachment_path'] !== null)
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
@@ -68,7 +68,7 @@ class PurchaseController extends Controller
 
     public function read(Request $request)
     {
-        $purchases =  Purchase::all();
+        $purchases =  Purchase::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($purchases as $purchase) {
             if ($purchase['receipt_attachment_path'] !== null)
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));

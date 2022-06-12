@@ -58,7 +58,7 @@
           <div class="mr-3" style="border-bottom: 1px solid grey">
             Export Csv
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
@@ -106,12 +106,14 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import moment from "moment";
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     loading: true,
     search: "",
     total_sales: null,
-
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
         text: "Date",
@@ -130,7 +132,9 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
   }),
-  components: {},
+  components: {
+    datePicker,
+  },
   computed: {
     ...mapGetters(["getPurchases"]),
   },
@@ -138,8 +142,21 @@ export default {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
     });
+    eventBus.$on("selectedPurchasesDateFilter", (value) => {
+      console.log(value, "value");
+      this.getPurchasesListing(value);
+    });
   },
   methods: {
+    getPurchasesListing(date) {
+      this.loading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      console.log("before dispatching", requestBody);
+      this.$store.dispatch("getPurchaseListing", requestBody);
+    },
     goToDepos() {
       this.$router.push("/depot");
     },
@@ -163,13 +180,15 @@ export default {
   watch: {
     getPurchases() {
       if (this.getPurchases.length > 0) {
+        this.total_sales = 0;
         for (let i in this.getPurchases)
           this.total_sales += this.getPurchases[i].amount;
       } else this.total_sales = 0;
     },
   },
   mounted() {
-    this.$store.dispatch("getPurchaseListing");
+    this.getPurchasesListing([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
 };
 </script>

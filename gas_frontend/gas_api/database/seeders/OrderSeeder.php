@@ -25,6 +25,8 @@ class OrderSeeder extends Seeder
                 'payment_mode' =>  'Prepaid',
                 'order_id' =>  '0000000' . mt_rand(100, 999),
                 'company_id' =>  $company_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'gas_quantity' => '180',
@@ -36,6 +38,8 @@ class OrderSeeder extends Seeder
                 'payment_mode' =>  'Cash',
                 'order_id' =>  '0000000' . mt_rand(100, 999),
                 'company_id' =>  $company_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'gas_quantity' => '555',
@@ -47,6 +51,8 @@ class OrderSeeder extends Seeder
                 'payment_mode' =>  'Prepaid',
                 'order_id' =>  '0000000' . mt_rand(100, 999),
                 'company_id' =>  $company_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'gas_quantity' => '143',
@@ -58,6 +64,8 @@ class OrderSeeder extends Seeder
                 'payment_mode' =>  'Cash',
                 'order_id' =>  '0000000' . mt_rand(100, 999),
                 'company_id' =>  $company_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
 
             [
@@ -70,6 +78,8 @@ class OrderSeeder extends Seeder
                 'payment_mode' =>  'Prepaid',
                 'order_id' =>  '0000000' . mt_rand(100, 999),
                 'company_id' =>  $company_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ]);
     }

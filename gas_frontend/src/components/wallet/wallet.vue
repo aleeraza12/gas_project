@@ -50,7 +50,7 @@
           <div class="mr-3" style="border-bottom: 1px solid grey">
             Export Csv
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
@@ -90,9 +90,12 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     search: "",
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     total_wallet_balance: null,
     tableloading: true,
     headers: [
@@ -113,23 +116,39 @@ export default {
   computed: {
     ...mapGetters(["getWallet"]),
   },
-  components: {},
+  components: {
+    datePicker,
+  },
   created() {
     eventBus.$on("responseArrived", () => {
       this.tableloading = false;
     });
+    eventBus.$on("selectedWalletDateFilter", (value) => {
+      this.getWalletListing(value);
+    });
   },
   watch: {
     getWallet() {
+      this.total_wallet_balance = 0;
       if (this.getWallet.length > 0) {
         for (let i in this.getWallet)
           this.total_wallet_balance += this.getWallet[i].amount;
       } else this.total_wallet_balance = 0;
     },
   },
-  methods: {},
+  methods: {
+    getWalletListing(date) {
+      this.tableloading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      this.$store.dispatch("getAllWallets", requestBody);
+    },
+  },
   mounted() {
-    this.$store.dispatch("getAllWallets");
+    this.getWalletListing([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
 };
 </script>
