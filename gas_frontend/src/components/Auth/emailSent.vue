@@ -1,55 +1,154 @@
 <template>
-<div class="main-container">
-  <v-card>
-    <v-card-text class="pa-0">
-      <div class="d-flex">
-        <div class="grey-side">
-        </div>
-        <div class="login-screen">
-          <div class="inner-box">
-             
+  <div class="main-container">
+    <v-card>
+      <v-card-text class="pa-0">
+        <div class="d-flex">
+          <div class="grey-side"></div>
+          <div class="login-screen">
+            <div class="inner-box"></div>
+            <div class="sign-in-content d-flex align-center justify-center">
+              Recovery Email Sent
+            </div>
+            <div class="sign-in-subcontent d-flex align-start justify-start">
+              Kindly check your email for the password reset code that has been
+              sent to you
+            </div>
+            <div
+              class="mt-5 resend-text d-flex align-center justify-center"
+              @click="resend()"
+            >
+              Didn’t receive any email? <b>Resend</b>
+            </div>
+            <div class="ma-auto position-relative" style="max-width: 300px">
+              <v-otp-input
+                v-model="otp"
+                :disabled="loading"
+                @finish="onFinish"
+                dense
+              ></v-otp-input>
+              <v-overlay absolute :value="loading">
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
+              </v-overlay>
+            </div>
+            <div class="text--caption">Type or copy/paste.</div>
           </div>
-          <div class="sign-in-content d-flex align-center justify-center">Recovery Email Sent</div>
-          <div class="sign-in-subcontent  d-flex align-start justify-start">Kindly check your email for the password reset link that has been sent to you</div>
-           <div class="mt-5 resend-text d-flex align-center justify-center" @click="resend()">Didn’t receive any email? <b>Resend</b></div>
         </div>
-      </div>
-    </v-card-text>
-  </v-card>
-</div>
+      </v-card-text>
+    </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snackbarMsg }}
+    </v-snackbar>
+  </div>
 </template>
 
 <script>
-
-  export default {
-    data: () => ({
-      valid: false,
-      email:""
-    }),
-    components:{},
-    created(){
-     
+import axios from "axios";
+import { eventBus } from "../../main";
+export default {
+  data: () => ({
+    valid: false,
+    email: "",
+    loading: false,
+    snackbarMsg: "",
+    snackbar: false,
+    snackbarColor: "",
+    otp: "",
+    text: "",
+    expectedOtp: "133707",
+  }),
+  components: {},
+  created() {
+    eventBus.$on("Email", (email) => {
+      console.log(email);
+      this.email = email;
+    });
+  },
+  computed: {
+    getIcon() {
+      return this.snackbarColor == "success"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
     },
-    methods:{
-      resend(){
-         this.$router.push({
-           name:"PasswordRecover"
-         })
-      }
-    }
-  }
+  },
+  methods: {
+    resend() {
+      this.$router.push({
+        name: "PasswordRecover",
+      });
+    },
+    onFinish() {
+      console.log(this.email);
+      this.loading = true;
+      let url = this.$store.state.url;
+      let body = {
+        otp: this.otp,
+        email: this.email,
+      };
+      console.log(body);
+      axios
+        .post(url + "verify_otp", body)
+        .then((response) => {
+          this.snackbar = true;
+          this.loading = false;
+          if (response.data.status == 200) {
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snackbarMsg = "OTP verified";
+            //setTimeout(() => {
+            this.$router.push({
+              name: "Update Password",
+            });
+            //}, 1000);
+            setTimeout(() => {
+              eventBus.$emit("EmailPassword", this.email);
+            }, 100);
+          } else if (response.data.status == 400) {
+            this.snackbar = true;
+            this.snackbarColor = "red";
+            this.snackbarMsg = "Wrong OTP";
+          }
+        })
+        .catch(() => {
+          this.snackbar = true;
+          this.snackbarColor = "red";
+          this.loading = false;
+          this.snackbarMsg = "Something went wrong";
+        });
+    },
+    //setTimeout(() => {
+    //  this.loading = false;
+    //  this.snackbarColor = rsp === this.expectedOtp ? "success" : "warning";
+    //  this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`;
+    //  this.snackbar = true;
+    //}, 3500);
+  },
+};
 </script>
 <style scoped>
-.grey-side{
+.grey-side {
   height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
   border-radius: 0px;
-  background-color: #EBEBEA;
-
+  background-color: #ebebea;
 }
-.login-screen{
+.login-screen {
   height: 100vh;
   width: 746px;
   left: 0px;
@@ -57,66 +156,66 @@
   border-radius: 0px;
   background-color: #fff;
 }
-.inner-box{
+.inner-box {
   height: 250px;
   width: 300px;
-  background-color:  #D2D2D2;
-  margin-top:4rem;
-  margin-left:10rem
+  background-color: #d2d2d2;
+  margin-top: 4rem;
+  margin-left: 10rem;
 }
-.content-welcome{
+.content-welcome {
   font-weight: 600;
-  font-size:18px;
-  color:black;
-   margin-top:2rem;
-  margin-left:15rem
+  font-size: 18px;
+  color: black;
+  margin-top: 2rem;
+  margin-left: 15rem;
 }
-.sub-content-welcome{
+.sub-content-welcome {
   font-weight: 300;
-  font-size:14px;
-  color:black;
-  margin-top:0.5rem;
-  margin-left:13rem
+  font-size: 14px;
+  color: black;
+  margin-top: 0.5rem;
+  margin-left: 13rem;
 }
-.sign-in-content{
- font-weight: 600;
- font-size:18px;
- color:black;
- margin-top:3rem;
- margin-right:8rem;
+.sign-in-content {
+  font-weight: 600;
+  font-size: 18px;
+  color: black;
+  margin-top: 3rem;
+  margin-right: 8rem;
 }
 .sign-in-subcontent {
- font-weight: 400;
- font-size:14px;
- color:black;
- margin-top:1rem;
- margin-left: 4.5rem;
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  margin-top: 1rem;
+  margin-left: 4.5rem;
 }
-.username-feild{
+.username-feild {
   width: 400px;
-  border-color: #D6D6D6;
+  border-color: #d6d6d6;
   border-radius: 8px;
 }
-.password-feild{
+.password-feild {
   width: 400px;
-  border-color: #D6D6D6;
+  border-color: #d6d6d6;
   border-radius: 8px;
 }
-.forget-passowrd{
+.forget-passowrd {
   font-size: 12px;
-  color:black;
+  color: black;
   font-weight: 500;
-  margin-left:23rem;
+  margin-left: 23rem;
 }
 .btn-login {
   background-color: #464646 !important;
-  color:#fff;
-  min-width:400px !important;
+  color: #fff;
+  min-width: 400px !important;
   border-radius: 8px !important;
   cursor: pointer;
 }
-.resend-text{
-  margin-right:5rem;
+.resend-text {
+  margin-right: 5rem;
   cursor: pointer;
 }
 </style>

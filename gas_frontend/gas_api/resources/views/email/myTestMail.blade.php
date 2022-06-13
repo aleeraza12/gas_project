@@ -1,15 +1,2 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>ItsolutionStuff.com</title>
-</head>
-
-<body>
-    <h1>{{ $details['title'] }}</h1>
-    <p>{{ $details['body'] }}</p>
-
-    <p>Thank you</p>
-</body>
-
-</html>
+<h1>Hi,</h1>
+<p>Your code to reset password is. {{$code}}</p>

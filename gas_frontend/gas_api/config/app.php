@@ -56,6 +56,7 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
     'super_admin_email' => env('SUPERADMINEMAIL'),
+    'reset_password_email' => env('MAIL_USERNAME'),
     'super_admin_password' => env('SUPERADMINPASSWORD'),
 
     /*
