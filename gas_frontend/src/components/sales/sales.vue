@@ -119,7 +119,7 @@ export default {
     loading: true,
     total_sales: null,
     search: "",
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date:'2022-01-01',
     end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
@@ -190,7 +190,7 @@ export default {
   },
   mounted() {
     this.getSalesListings([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
   },
 };
 </script>

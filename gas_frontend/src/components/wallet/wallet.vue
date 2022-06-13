@@ -114,7 +114,7 @@ Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     search: "",
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: '2022-01-01',
     end_date: new Date().toISOString().substr(0, 10),
     total_wallet_balance: null,
     tableloading: true,
@@ -171,7 +171,7 @@ export default {
   },
   mounted() {
     this.getWalletListing([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
   },
 };
 </script>

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
 class CompanyController extends Controller
 {
 
@@ -75,4 +74,5 @@ class CompanyController extends Controller
         Storage::disk('local')->put($original_file_path, base64_decode($image));
         return $original_file_path;
     }
+
 }

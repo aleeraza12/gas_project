@@ -82,7 +82,7 @@ export default {
   data: () => ({
     search: "",
     tableloading: true,
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: '2022-01-01',
     end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
@@ -123,7 +123,7 @@ export default {
   },
   mounted() {
     this.getOrderListing([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
   },
   methods: {
     getOrderListing(date) {

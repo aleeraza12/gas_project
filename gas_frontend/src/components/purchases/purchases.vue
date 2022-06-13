@@ -159,7 +159,7 @@ export default {
     isDepo: false,
     search: "",
     total_sales: null,
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: '2022-01-01',
     end_date: new Date().toISOString().substr(0, 10),
     Depoheaders: [
       { text: "Depot Name", value: "depo_name" },
@@ -255,7 +255,7 @@ export default {
   mounted() {
     document.getElementById("myDIV").style.display = "none";
     this.getPurchasesListing([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
     this.$store.dispatch("getAllDepos");
   },
 };

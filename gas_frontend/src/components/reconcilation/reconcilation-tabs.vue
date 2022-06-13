@@ -188,7 +188,7 @@ export default {
   data: () => ({
     tab: null,
     loading: true,
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: '2022-01-01',
     end_date: new Date().toISOString().substr(0, 10),
     search: "",
     getPurchasedTransaction: [],
@@ -235,7 +235,7 @@ export default {
   },
   mounted() {
     this.getTransactions([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
   },
   methods: {
      btnClick() {

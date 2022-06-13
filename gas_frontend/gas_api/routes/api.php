@@ -188,4 +188,7 @@ Route::middleware('token')->group(function () {
             Route::post('read_all', 'read');
         });
     });
+
+    //Wallet route
+  
 });

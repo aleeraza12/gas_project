@@ -37,6 +37,7 @@ const router = new VueRouter({
       meta: { layout: "simple", title: "Mail Sent" },
       component: require("@/views/Pages/emailSent").default,
     },
+    
     {
       path: "/pageNotFound",
       name: "pageNotFound",

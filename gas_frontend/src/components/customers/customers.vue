@@ -133,7 +133,7 @@ import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     loading: true,
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: '2022-01-01',
     end_date: new Date().toISOString().substr(0, 10),
     search: "",
     deleteable: "",
@@ -182,7 +182,7 @@ export default {
   },
   mounted() {
     this.getCustomersListing([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
   },
   methods: {
     getCustomersListing(date) {

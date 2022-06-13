@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container d-flex align-center justify-center">
-    <v-card class="elevation-1 " width="700">
+  <div class="main-container d-flex align-center justify-center" >
+    <v-card class="elevation-1" width="700" id="print">
       <v-card-text>
         <div class="sales-details-page">
           <div class="d-flex align-start justify-start" @click="goToSales()">
@@ -121,6 +121,7 @@
           </div>
           <div class="d-flex align-center justify-center mt-3">
             <v-btn
+              @click="printReceipt()"
               small
               dense
               style="
@@ -139,20 +140,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-//import RequestService from "../../RequestService";
-//import { eventBus } from "@/main";
-//import moment from "moment";
 export default {
   data() {
     return {};
   },
   computed: {
     ...mapGetters(["getSingleReceipt"]),
-    //getIcon() {
-    //  return this.snackbarColor == "success"
-    //    ? "mdi-checkbox-marked-circle"
-    //    : "mdi-close-circle";
-    //},
   },
   mounted() {
     if (this.getSingleReceipt.length == 0) {
@@ -160,6 +153,33 @@ export default {
     }
   },
   methods: {
+    printReceipt() {
+    let prtContent = document.getElementById("print");
+    let stylesHtml = '';
+    for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
+       stylesHtml += node.outerHTML;
+    }
+
+// Open the print window
+    let WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+
+    WinPrint.document.write(`<!DOCTYPE html>
+    <html>
+    <head>
+    ${stylesHtml}
+    </head>
+    <body>
+    ${prtContent}
+    </body>
+    </html>`);
+     setTimeout(()=>{
+    WinPrint.document.write(prtContent.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
+    },100);
+    },
     goToSales() {
       this.$router.push("/sales");
     },
