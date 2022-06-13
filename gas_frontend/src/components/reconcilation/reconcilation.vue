@@ -111,11 +111,10 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import moment from "moment";
-
 export default {
   data: () => ({
     loading: true,
-    search:"",
+    search: "",
     headers: [
       {
         text: "Date",
@@ -136,7 +135,6 @@ export default {
   computed: {
     ...mapGetters(["getAllTransactions"]),
   },
-  components: {},
   created() {
     eventBus.$on("responseArrived", () => {
       this.loading = false;

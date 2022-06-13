@@ -22,7 +22,8 @@ class UserSeeder extends Seeder
                 'password' =>  Hash::make('Test123'),
                 'designation' =>  'Finance',
                 'permissions' =>   ['Sales', 'Purchases'],
-                'user_type' =>  'User',
+                'user_type' =>  'InActive',
+                'is_company' =>  true,
                 'status' =>  'Active',
                 'company_id' =>  1,
             ]

@@ -10,10 +10,12 @@ var customAxios;
 let token = "";
 
 const RequestService = {
-  post: (endpoint, body) => {
+  post: (endpoint, body, date) => {
     let apiName = "";
     token = localStorage.getItem("token");
     let user = JSON.parse(localStorage.getItem("user"));
+
+    //setting end point for super admin
     if (user.permissions.includes("Companies")) {
       if (endpoint === "customer/read_all") apiName = "customer/read";
       else if (endpoint === "user/read_all") apiName = "user/read";
@@ -21,12 +23,43 @@ const RequestService = {
       else if (endpoint === "company/read_all") apiName = "company/read";
       else if (endpoint === "purchase/read_all") apiName = "purchase/read";
       else if (endpoint === "dashboard/read_all") apiName = "dashboard/read";
+      else if (endpoint === "order/read_all") apiName = "order/read";
       else if (endpoint === "transaction/read_all")
         apiName = "transaction/read";
       else apiName = endpoint;
-    } else apiName = endpoint;
-    if ("company_id" in user) body.user_id = user.company_id;
-    else body.user_id = user.id;
+    } else apiName = endpoint; //setting end point for regular user/company
+    // if Super admin is updating any data
+    if (
+      user.permissions.includes("Companies") &&
+      body && // 👈 null and undefined check
+      Object.keys(body).length !== 0
+    ) {
+      //if super admin
+      if (body.company_id == undefined) {
+        body.user_id = user.id; //for token auth
+        body.company_id = user.id; //for query
+      } else {
+        body.user_id = user.id; //for token auth
+      }
+    } else {
+      //if regular user/company
+      if ("company_id" in user) {
+        //if company created user
+        body.user_id = user.company_id;
+        body.company_id = user.company_id;
+      } else {
+        //if company
+        body.company_id = user.id;
+        body.user_id = user.id;
+      }
+    }
+    if (
+      date && // 👈 null and undefined check
+      Object.keys(date).length !== 0
+    ) {
+      body.start_date = date.start_date;
+      body.end_date = date.end_date;
+    }
     return new Promise((resolve, reject) => {
       customAxios = axios.create({
         headers: {

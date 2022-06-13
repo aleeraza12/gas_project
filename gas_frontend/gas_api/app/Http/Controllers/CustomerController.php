@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Customers;
+use App\Http\Requests\CustomerTypeRequest;
 use App\Models\Company;
 use App\Models\Customer as CustomerModel;
 use App\Models\CustomerType;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    public function create_customer_type(Request $request)
+    public function create_customer_type(CustomerTypeRequest $request)
     {
         $customer_type = CustomerType::updateOrCreate(
             [
@@ -56,7 +57,7 @@ class CustomerController extends Controller
                 'state' =>  $request->state,
                 //'customer_type_id'=>  $request->customer_type_id,
                 'customer_type' =>  $request->customer_type,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
                 'address' =>  $request->address,
             ]
         );
@@ -78,7 +79,7 @@ class CustomerController extends Controller
 
     public function read(Request $request)
     {
-        $customers = CustomerModel::all();
+        $customers = CustomerModel::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($customers as $customer) {
             $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
         }
@@ -87,7 +88,7 @@ class CustomerController extends Controller
 
     public function read_all_customer(Request $request)
     {
-        $customers = Company::find($request->user_id)->customer;
+        $customers = Company::find($request->company_id)->customer()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($customers as $customer) {
             $customer['total_sale'] = Sale::where('customer_id', $customer->id)->sum('total_amount');
         }

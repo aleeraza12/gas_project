@@ -22,7 +22,7 @@
         <b> Welcome Ola,</b>
       </div>
       <v-spacer></v-spacer>
-      <div>
+      <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
         <div>Current gas price</div>
 
         <div class="d-flex">
@@ -64,8 +64,24 @@
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
+<<<<<<< HEAD
                 <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
                 <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
+=======
+                <img
+                  src="../../assets/images/dashboardicon.png"
+                  height="55"
+                  style="position: absolute"
+                />
+                <img
+                  src="../../assets/images/Chalkboard.png"
+                  style="
+                    position: relative;
+                    margin-bottom: 8px;
+                    margin-right: 7px;
+                  "
+                />
+>>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-12">
@@ -111,9 +127,26 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
+<<<<<<< HEAD
                <div class="d-flex align-end justify-end mt-6">
                 <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
                 <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
+=======
+              <div class="d-flex align-end justify-end mt-6">
+                <img
+                  src="../../assets/images/dashboardicon.png"
+                  height="55"
+                  style="position: absolute"
+                />
+                <img
+                  src="../../assets/images/Chalkboard.png"
+                  style="
+                    position: relative;
+                    margin-bottom: 8px;
+                    margin-right: 7px;
+                  "
+                />
+>>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-10">
@@ -129,22 +162,37 @@
     >
       <div><b>Orders</b></div>
       <v-spacer></v-spacer>
+<<<<<<< HEAD
       <div class="mr-3"><b>Date Picker</b></div>
     </div> -->
+=======
+      <div class="mr-3">
+        <date-picker />
+      </div>
+    </div>
+>>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
     <div
       class="mt-3"
-   
+      v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
     >
       <v-data-table
         :headers="headers"
         :items="getAllOrders"
         :items-per-page="5"
         class="elevation-1"
-        hide-default-footer
         height="370px"
         :search="search"
         :loading="tableloading"
+        hide-default-footer
+        hide-default-header
       >
+        <template v-slot:[`body.prepend`]="{ headers }">
+          <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
+            <div class="d-flex ml-3">
+              {{ header.text }}
+            </div>
+          </th>
+        </template>
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="ViewOrders(item)">
             mdi-eye
@@ -228,7 +276,7 @@
 import RequestService from "../../RequestService";
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     nameRules: [(v) => !!v || "This field is required"],
@@ -236,6 +284,8 @@ export default {
     loading: false,
     valid: false,
     priceLoader: true,
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     isModal: false,
     price: "",
     depo_id: null,
@@ -245,6 +295,10 @@ export default {
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
+    picker: [
+      new Date().toISOString().substr(0, 10),
+      new Date().toISOString().substr(0, 10),
+    ],
     loggedinUser: JSON.parse(localStorage.getItem("user")),
     headers: [
       {
@@ -263,12 +317,15 @@ export default {
       { text: "View Details", value: "actions", sortable: false },
     ],
   }),
-  components: {},
+  components: {
+    datePicker,
+  },
 
   mounted() {
+    this.getOrderListing([this.start_date, this.end_date]);
     this.$store.dispatch("getCurrentPrice");
     this.$store.dispatch("getDashboardStats");
-    this.$store.dispatch("getOrderListing");
+    this.$store.commit("setSelectedDateRange", "Today");
   },
   computed: {
     getIcon() {
@@ -290,8 +347,21 @@ export default {
     eventBus.$on("responseArrived", () => {
       this.tableloading = false;
     });
+    eventBus.$on("selectedDashboardDateFilter", (value) => {
+      console.log(value, "value");
+      this.getOrderListing(value);
+    });
   },
   methods: {
+    getOrderListing(date) {
+      this.tableloading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      console.log("before dispatching", requestBody);
+      this.$store.dispatch("getOrderListing", requestBody);
+    },
     setModal() {
       if (this.getPrice) {
         this.depo_name = this.getPrice.depo_name;
@@ -358,5 +428,10 @@ export default {
   border-radius: 10px;
   background-color: white !important;
   width: 500px;
+}
+.table-head {
+  background-color: #ebebea;
+  font-size: 12px;
+  height: 50px;
 }
 </style>

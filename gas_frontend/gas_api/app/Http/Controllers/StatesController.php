@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Http\Requests\StatesTypeRequest;
 use App\Models\States;
 use Illuminate\Http\Request;
 
 class StatesController extends Controller
 {
-    public function create_states(Request $request)
+    public function create_states(StatesTypeRequest $request)
     {
         $states = States::updateOrCreate(
             [

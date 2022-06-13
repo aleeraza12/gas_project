@@ -239,6 +239,7 @@ export default {
     loading: false,
     valid: false,
     permissions: [],
+    company_id: null,
   }),
   computed: {
     getIcon() {
@@ -280,6 +281,7 @@ export default {
       this.status = data.status;
       this.permissions = data.permissions;
       this.users_id = data.id;
+      this.company_id = data.company_id;
       this.userText = "Update";
     },
     goToUserListings() {
@@ -297,6 +299,9 @@ export default {
         permissions: this.permissions,
         users_id: this.users_id,
       };
+      if (this.company_id != null) {
+        requestBody.company_id = this.company_id;
+      }
       console.log(requestBody);
       RequestService.post("user/create", requestBody)
         .then((res) => {

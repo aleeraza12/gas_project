@@ -46,10 +46,8 @@
         <div class="d-flex mt-3">
           <div><b>Transactions</b></div>
           <v-spacer></v-spacer>
-          <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
-          </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
@@ -130,9 +128,13 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import RequestService from "../../RequestService";
+import datePicker from "../../views/Pages/datePicker.vue";
+
 export default {
   data: () => ({
     loading: true,
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     search: "",
     deleteable: "",
     dialog: false,
@@ -155,15 +157,20 @@ export default {
       { text: "Delete", value: "actions2", sortable: false },
     ],
   }),
-  components: {},
+  components: {
+    datePicker,
+  },
   created() {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
     });
+    eventBus.$on("selectedCustomersDateFilter", (value) => {
+      console.log(value, "value");
+      this.getCustomersListing(value);
+    });
   },
   watch: {
-    getCustomers() {
-    },
+    getCustomers() {},
   },
   computed: {
     ...mapGetters(["getCustomers"]),
@@ -174,9 +181,19 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getCustomersListing");
+    this.getCustomersListing([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+    getCustomersListing(date) {
+      this.loading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      console.log("before dispatching", requestBody);
+      this.$store.dispatch("getCustomersListing", requestBody);
+    },
     addNewCustomer() {
       this.$router.push("/new-customer");
     },

@@ -29,7 +29,7 @@ class PurchaseController extends Controller
                 'amount' =>  $request->amount,
                 'unit_price' =>  $request->unit_price,
                 'recepient_name' =>  $request->recepient_name,
-                'company_id' => $request->user_id, //company id
+                'company_id' => $request->company_id, //company id
                 'user_id' => $request->users_id, //loggedin user id
                 'unpaid' => true,
                 'unpaid_at' => Carbon::now()->addHours(5),
@@ -54,26 +54,29 @@ class PurchaseController extends Controller
         return response()->json(['response' => $purchase, 'status' => 200]);
     }
 
+    //for company/user
     public function read_all_purchases(Request $request)
     {
-        $purchases =  Company::find($request->user_id)->purchase;
+        $purchases =  Company::find($request->company_id)->purchase()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($purchases as $purchase) {
             if ($purchase['receipt_attachment_path'] !== null)
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
-            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->user_id)->first();
+            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->company_id)->first();
             $purchase['transaction_id'] =  @$transaction->id;
         }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
 
+    //for super admn
     public function read(Request $request)
     {
-        $purchases =  Purchase::all();
+        $purchases =  Purchase::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($purchases as $purchase) {
             if ($purchase['receipt_attachment_path'] !== null)
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
-            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->user_id)->first();
+            $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->company_id)->first();
             $purchase['transaction_id'] =  @$transaction->id;
+            $purchase['created_company_name'] = Company::find($purchase->company_id)->company_name;
         }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }
@@ -91,7 +94,7 @@ class PurchaseController extends Controller
         $purchase->amount =  $request->amount;
         $purchase->unit_price =  $request->unit_price;
         $purchase->recepient_name =  $request->recepient_name;
-        $purchase->company_id = $request->user_id;
+        $purchase->company_id = $request->company_id;
         $purchase->user_id = $request->users_id;
         $purchase->receipt_attachment_path =  $request->attachment == "" ? null :  $this->upload_attachment($request);
         $purchase->save();

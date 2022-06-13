@@ -20,7 +20,7 @@ class DepoController extends Controller
                 'depo_name' => $request->depo_name,
                 'price_per_twenty_million_ton' => $request->price_per_twenty_million_ton,
                 'location' => $request->location,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
 
             ]
         );
@@ -35,7 +35,7 @@ class DepoController extends Controller
 
     public function read_depo_price(Request $request)
     {
-        $depo_price =  Company::find($request->user_id)->depos;
+        $depo_price =  Company::find($request->company_id)->depos;
         return response()->json(['response' => $depo_price, 'status' => 200]);
     }
 

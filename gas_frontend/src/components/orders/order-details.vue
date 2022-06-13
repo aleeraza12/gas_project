@@ -9,7 +9,7 @@
       <div class="mt-6"><b>Orders Details</b></div>
       <v-divider class="ml-5 mr-5 mt-2"></v-divider>
       <div class="d-flex mt-5">
-            <div class="ml-10">
+        <div class="ml-10">
           <v-chip
             dense
             label
@@ -17,10 +17,10 @@
             style="background-color: #ebffef; color: #5fba7e"
           >
             <v-icon size="10" color="#5FBA7E" class="mr-4">mdi-circle</v-icon>
-            {{getSinglePurchase.status }}
+            {{ getSinglePurchase.status }}
           </v-chip>
         </div>
-        
+
         <v-spacer></v-spacer>
         <div class="mr-10 fonts">
           <div>
@@ -162,7 +162,7 @@ export default {
   }),
   components: {},
   mounted() {
-    // if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
+     if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
   },
   created() {},
   methods: {
@@ -210,7 +210,7 @@ export default {
 </script>
 <style scoped>
 .sales-details-page {
-  height: 600px;
+  height: 650px;
   width: 600px;
   background-color: #ebebea;
   margin-left: 12rem;

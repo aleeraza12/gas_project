@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Http\Requests\PaymentModeRequest;
 use App\Models\PaymentMode;
 use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ class Payment extends Controller
 {
 
     //CRUD for Payment Mode like cash,prepaid
-    public function create_payment_mode(Request $request)
+    public function create_payment_mode(PaymentModeRequest $request)
     {
         $payment_mode = PaymentMode::updateOrCreate(
             [

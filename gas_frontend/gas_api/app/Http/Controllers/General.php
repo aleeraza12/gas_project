@@ -19,7 +19,7 @@ class General extends Controller
         $is_user = User::where('name', $request->email)->first();
         $status = 400;
         $message = [];
-        if ($is_admin) {
+        if ($is_admin) { //if company & super admin
             if (Hash::check($request->password, $is_admin->password)) {
                 $response = Token::create($request, $is_admin->id);
                 $message['token'] = $response[0];
@@ -32,7 +32,7 @@ class General extends Controller
                 $message = "Credentials didn't matched";
                 $status = 400;
             }
-        } else if (!$is_admin) {
+        } else if (!$is_admin) { //if company created user
             if ($is_user && $is_user->status == "Active") {
                 if (Hash::check($request->password, $is_user->password)) {
                     $response = Token::create($request, $is_user->company_id);
@@ -61,10 +61,10 @@ class General extends Controller
 
     public function get_dashboard_stats(Request $request)
     {
-        $response['total_gas_quantity'] = Purchase::where('company_id', $request->user_id)->sum('gas_quantity');
-        $response['total_gas_price'] = Purchase::where('company_id', $request->user_id)->sum('amount');
-        $response['total_customer'] = Customer::where('company_id', $request->user_id)->count();
-        $response['total_sales'] = Sale::where('company_id', $request->user_id)->sum('total_amount');
+        $response['total_gas_quantity'] = Purchase::where('company_id', $request->company_id)->sum('gas_quantity');
+        $response['total_gas_price'] = Purchase::where('company_id', $request->company_id)->sum('amount');
+        $response['total_customer'] = Customer::where('company_id', $request->company_id)->count();
+        $response['total_sales'] = Sale::where('company_id', $request->company_id)->sum('total_amount');
         return response()->json(['response' => $response, 'status' => 200]);
     }
 

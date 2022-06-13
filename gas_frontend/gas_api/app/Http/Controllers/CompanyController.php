@@ -27,19 +27,16 @@ class CompanyController extends Controller
                 'city' =>  $request->city,
                 'state' =>  $request->state,
                 'gas_plant_type' =>  $request->gas_plant_type,
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
+                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'] : ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
                 'company_profile_picture' =>  $request->attachment == "" ? null :  $this->upload_attachment($request),
                 'address' =>  $request->address,
             ]
         );
+        //if company is created first time than we create user
         if (!$request->company_id) {
-            $user = UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
+            $user = UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'Active', 'company_id' => $company->id]));
             $seeder = new \Database\Seeders\OrderSeeder();
             $seeder->run($company->id, $user->id);
-        } else if ($request->company_id && $request->user_id) {
-            UserController::create_company_user($request->merge(['users_id' =>  $request->user_id, 'name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'active', 'user_id' => $company->id]));
-            $company['user_id'] = $request->user_id;
-            //$company['company_profile_picture'] = $this->getAttachment($company);
         }
         return response()->json(['response' => $company, 'status' => 201]);
     }
@@ -52,7 +49,7 @@ class CompanyController extends Controller
     public function delete_company(Request $request)
     {
         $company =  Company::find($request->company_id)->delete();
-        return response()->json(['response' => "Customer deleted successfully", 'status' => 200]);
+        return response()->json(['response' => "Company deleted successfully", 'status' => 200]);
     }
 
 
@@ -64,7 +61,7 @@ class CompanyController extends Controller
 
     public function read(Request $request)
     {
-        $companies =  Company::all();
+        $companies =  Company::whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         return response()->json(['response' => $companies, 'status' => 200]);
     }
 

@@ -105,6 +105,8 @@ export default {
     snackbar: false,
     snackbarColor: "",
     loading: false,
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+/.test(v) || "E-mail must be valid",
@@ -160,7 +162,11 @@ export default {
               "user",
               JSON.stringify(response.data.data.user)
             );
-            this.$store.dispatch("getSalesListings");
+            let requestBody = {
+              start_date: this.start_date,
+              end_date: this.end_date.concat(" 23:59:00"),
+            };
+            this.$store.dispatch("getSalesListings", requestBody);
             let vm = this;
             setTimeout(function () {
               vm.$router.push("/dashboard");

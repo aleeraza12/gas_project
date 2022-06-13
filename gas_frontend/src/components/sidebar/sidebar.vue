@@ -67,6 +67,8 @@ export default {
     drawer: true,
     titleName: "",
     user: JSON.parse(localStorage.getItem("user")),
+    start_date: "2021-01-01",
+    end_date: new Date().toISOString().substr(0, 10),
     links: [
       {
         text: "Dashboard",
@@ -127,7 +129,7 @@ export default {
       {
         text: "Reconciliation",
         icon: "mdi-trackpad",
-        route: "/reconcilation-tabs",
+        route: "/reconcilation",
         tabName: "Reconcilation",
         color: "black",
       },
@@ -160,9 +162,19 @@ export default {
   components: {},
   created() {},
   mounted() {
+<<<<<<< HEAD
     // this.$store.dispatch("getUsersListing");
     // this.$store.dispatch("getSalesListings");
     // this.setPerimssions();
+=======
+    let requestBody = {
+      start_date: this.start_date,
+      end_date: this.end_date.concat(" 23:59:00"),
+    };
+    this.$store.dispatch("getUsersListing", requestBody);
+    this.$store.dispatch("getSalesListings", requestBody);
+    this.setPerimssions();
+>>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
   },
   computed: {
     ...mapGetters(["getSales", "getUsers"]),

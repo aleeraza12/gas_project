@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(SuperAdmin::class);
         $this->call(SuperAdminUser::class);
+        $this->call(WalletSeeder::class);
 
 
         $this->command->info('Company table seeded!');
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Payment mode table seeded!');
         $this->command->info('Customer table seeded!');
         $this->command->info('Super admn seeded!');
+        $this->command->info('Wallet seeded!');
     }
 }

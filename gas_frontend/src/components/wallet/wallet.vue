@@ -32,7 +32,9 @@
             <div class="d-flex align-start justify-start">
               <b>Available Balance</b>
             </div>
-            <div class="d-flex align-start justify-start">₦ 945000000</div>
+            <div class="d-flex align-start justify-start">
+              ₦ {{ total_wallet_balance }}
+            </div>
           </div>
           <v-spacer></v-spacer>
           <!--<div class="d-flex align-end justify-end">
@@ -46,136 +48,131 @@
           <div><b>Withdraw History</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
+            <v-btn
+              @click="btnClick()"
+              depressed
+              light
+              text
+              :ripple="false"
+              height="5px"
+              x-small
+              dense
+              class="text-capitalize pa-4 mb-n1 mt-2"
+            >
+              <span class="black--text">Export </span></v-btn
+            >
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="getWallet"
             :items-per-page="5"
             class="elevation-1"
             hide-default-footer
             hide-default-header
             height="400px"
             :search="search"
+            :loading="tableloading"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
-              <th v-for="(header, i) in headers" :key="i" class="table-head">
+              <th
+                v-for="(header, i) in headers"
+                :key="'A' + i"
+                class="table-head"
+              >
                 <div class="d-flex ml-3">
                   {{ header.text }}
                 </div>
               </th>
             </template>
-            <template v-slot:item.actions="{ item }">
+            <!--<template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-eye
               </v-icon>
-            </template>
+            </template>-->
           </v-data-table>
         </div>
       </v-card-text>
     </v-card>
+    <download-csv :json-data="getWallet">
+      <v-btn style="display: none" id="myBtn">
+        <b>My custom button</b>
+      </v-btn>
+    </download-csv>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { eventBus } from "@/main";
+import datePicker from "../../views/Pages/datePicker.vue";
+import VueJsonToCsv from "vue-json-to-csv";
+import Vue from "vue";
+Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     search: "",
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
+    total_wallet_balance: null,
+    tableloading: true,
     headers: [
       {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "date",
+        value: "created_at",
       },
-      { text: "Order Id", value: "id" },
-      { text: "Customer Name", value: "name" },
-      { text: "Gas Quantity", value: "quantity" },
+      { text: "Transaction_id", value: "transaction_id" },
+      { text: "Account Name", value: "account_name" },
+      { text: "Account Number", value: "account_number" },
       { text: "Amount", value: "amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "update_by" },
-      { text: "Payment Mode", value: "payment" },
-      { text: "Views", value: "actions" },
-    ],
-    desserts: [
-      {
-        date: "04 april 2022 01:32 am",
-        id: "100",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "101",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "102",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "103",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "104",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "105",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
-      {
-        date: "04 april 2022 01:32 am",
-        id: "106",
-        name: "John",
-        quantity: 6,
-        amount: 2400,
-        status: "Paid",
-        update_by: "abc",
-        payment: "cash",
-      },
+      { text: "Authorized By", value: "authorized_by" },
     ],
   }),
-  components: {},
-  created() {},
-  methods: {},
+  computed: {
+    ...mapGetters(["getWallet"]),
+  },
+  components: {
+    datePicker,
+  },
+  created() {
+    eventBus.$on("responseArrived", () => {
+      this.tableloading = false;
+    });
+    eventBus.$on("selectedWalletDateFilter", (value) => {
+      this.getWalletListing(value);
+    });
+  },
+  watch: {
+    getWallet() {
+      this.total_wallet_balance = 0;
+      if (this.getWallet.length > 0) {
+        for (let i in this.getWallet)
+          this.total_wallet_balance += this.getWallet[i].amount;
+      } else this.total_wallet_balance = 0;
+    },
+  },
+  methods: {
+    btnClick() {
+      document.getElementById("myBtn").click();
+    },
+    getWalletListing(date) {
+      this.tableloading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      this.$store.dispatch("getAllWallets", requestBody);
+    },
+  },
+  mounted() {
+    this.getWalletListing([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
+  },
 };
 </script>
 <style scoped>

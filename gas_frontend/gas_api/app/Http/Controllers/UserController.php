@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Users;
+use App\Http\Requests\UserTypeRequest;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\UserType;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function create_user_type(Request $request)
+    public function create_user_type(UserTypeRequest $request)
     {
         $user_type = UserType::updateOrCreate(
             [
@@ -58,7 +59,9 @@ class UserController extends Controller
                 'permissions' =>  $request->permissions,
                 'user_type' =>  $request->user_type,
                 'status' =>  $request->status,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
+                'is_company' => false,
+
             ]
         );
         return response()->json(['response' => $user, 'status' => 201]);
@@ -78,7 +81,8 @@ class UserController extends Controller
                 'permissions' =>  $request->permissions,
                 'user_type' =>  $request->user_type,
                 'status' =>  $request->status,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
+                'is_company' => true,
             ]
         );
         return $user;
@@ -90,22 +94,23 @@ class UserController extends Controller
         return response()->json(['response' => "User deleted successfully", 'status' => 200]);
     }
 
-
+    //read specific user
     public function read_user(Request $request)
     {
         $user =  User::find($request->users_id);
         return response()->json(['response' => $user, 'status' => 200]);
     }
 
+    //read all users for a company
     public function read_all_user(Request $request)
     {
-        $users =  Company::find($request->user_id)->user;
+        $users =  Company::find($request->company_id)->user()->where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
-
+    //read all users for super admn
     public function read(Request $request)
     {
-        $users =  User::all();
+        $users =  User::where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
 }

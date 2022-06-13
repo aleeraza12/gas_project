@@ -27,7 +27,7 @@ class SaleController extends Controller
                 'customer_phone_number' =>  $request->customer_phone_number,
                 'customer_type' =>  $request->customer_type,
                 'discount_code' => $request->discount_code,
-                'company_id' =>  $request->user_id,
+                'company_id' =>  $request->company_id,
                 'payment_mode' =>  $request->payment_mode,
                 'unpaid' => true,
                 'unpaid_at' => Carbon::now()->addHours(5),
@@ -51,14 +51,14 @@ class SaleController extends Controller
         $sale =  Sale::find($request->sale_id);
         return response()->json(['response' => $sale, 'status' => 200]);
     }
-
+    //for companes
     public function read_all_sale(Request $request)
     {
-        $sales =   Company::find($request->user_id)->sale;
-        $name = Company::find($request->user_id);
+        $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $name = Company::find($request->company_id);
         foreach ($sales as $sale) {
             $sale['updated_by'] = $name->company_name; //updated_by
-            $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->user_id)->first();
+            $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->company_id)->first();
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
             $sale['customer_name'] =  $customer->name;
@@ -66,10 +66,10 @@ class SaleController extends Controller
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
-
+    //for super admn
     public function read(Request $request)
     {
-        $sales =  Sale::all();
+        $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($sales as $sale) {
             $sale['updated_by'] = Company::find($sale->company_id)->company_name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
@@ -91,7 +91,7 @@ class SaleController extends Controller
         $sale->customer_phone_number =  $request->customer_phone_number;
         $sale->customer_type =  $request->customer_type;
         $sale->discount_code = $request->discount_code;
-        $sale->company_id =  $request->user_id;
+        $sale->company_id =  $request->company_id;
         $sale->payment_mode =  $request->payment_mode;
         $sale->save();
         TransactionController::updateSaleTransaction($request->merge([

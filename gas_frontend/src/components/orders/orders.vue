@@ -43,7 +43,7 @@
     <div class="d-flex mt-3">
       <div><b>History</b></div>
       <v-spacer></v-spacer>
-      <div class="mr-3"><b>Date Picker</b></div>
+      <div class="mr-3"><date-picker /></div>
     </div>
     <div class="mt-3">
       <v-data-table
@@ -77,10 +77,13 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
+import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     search: "",
     tableloading: true,
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
         text: "Date",
@@ -98,7 +101,9 @@ export default {
       { text: "View Details", value: "actions", sortable: false },
     ],
   }),
-  components: {},
+  components: {
+    datePicker,
+  },
   computed: {
     //getIcon() {
     //  return this.snackbarColor == "primary"
@@ -111,11 +116,25 @@ export default {
     eventBus.$on("responseArrived", () => {
       this.tableloading = false;
     });
+    eventBus.$on("selectedOrdersDateFilter", (value) => {
+      console.log(value, "value");
+      this.getOrderListing(value);
+    });
   },
   mounted() {
-    this.$store.dispatch("getOrderListing");
+    this.getOrderListing([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+    getOrderListing(date) {
+      this.tableloading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      console.log("before dispatching", requestBody);
+      this.$store.dispatch("getOrderListing", requestBody);
+    },
     ViewOrders(item) {
       this.$store.commit("SET_VIEW_PURCHASE", item);
       this.$router.push("/order-details");

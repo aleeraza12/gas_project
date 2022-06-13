@@ -44,9 +44,21 @@
           <div><b>Reconcilation</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
+            <v-btn
+              @click="btnClick()"
+              depressed
+              light
+              text
+              :ripple="false"
+              height="5px"
+              x-small
+              dense
+              class="text-capitalize pa-4 mb-n1 mt-2"
+            >
+              <span class="black--text">Export </span></v-btn
+            >
           </div>
-          <div class="mr-3"><b>Date Picker</b></div>
+          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-tabs
@@ -54,11 +66,12 @@
             background-color="#fff"
             color="black"
             dark
+            dense
             class="mb-2"
           >
-            <v-tab> Sales </v-tab>
+            <v-tab dense> Sales </v-tab>
 
-            <v-tab> Purchases </v-tab>
+            <v-tab dense> Purchases </v-tab>
           </v-tabs>
 
           <v-tabs-items v-model="tab">
@@ -72,6 +85,7 @@
                 hide-default-header
                 height="400px"
                 :search="search"
+                :loading="loading"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -116,6 +130,7 @@
                 hide-default-header
                 height="400px"
                 :search="search"
+                :loading="loading"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -154,17 +169,27 @@
         </div>
       </v-card-text>
     </v-card>
+    <download-csv :json-data="getAllTransactions">
+      <v-btn style="display: none" id="myBtn">
+        <b>My custom button</b>
+      </v-btn>
+    </download-csv>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-import moment from "moment";
+import datePicker from "../../views/Pages/datePicker.vue";
+import VueJsonToCsv from "vue-json-to-csv";
+import Vue from "vue";
+Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     tab: null,
     loading: true,
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
     search: "",
     getPurchasedTransaction: [],
     getSalesTransaction: [],
@@ -173,7 +198,7 @@ export default {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "date",
+        value: "created_at",
       },
       { text: "Transaction Id", value: "id" },
       { text: "Customer Name", value: "customer_name" },
@@ -188,10 +213,15 @@ export default {
   computed: {
     ...mapGetters(["getAllTransactions"]),
   },
-  components: {},
+  components: {
+    datePicker,
+  },
   created() {
     eventBus.$on("responseArrived", () => {
       this.loading = false;
+    });
+    eventBus.$on("selectedReconcilationDateFilter", (value) => {
+      this.getTransactions(value);
     });
   },
   watch: {
@@ -204,14 +234,25 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getAllTransacton");
+    this.getTransactions([this.start_date, this.end_date]);
+    this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+     btnClick() {
+      document.getElementById("myBtn").click();
+    },
+    getTransactions(date) {
+      this.loading = true;
+      let requestBody = {
+        start_date: date[0],
+        end_date: date[1].concat(" 23:59:00"),
+      };
+      this.getPurchasedTransaction = [];
+      this.getSalesTransaction = [];
+      this.$store.dispatch("getAllTransactions", requestBody);
+    },
     ViewAllTransactions() {
       this.$router.push("/reconcilation");
-    },
-    getDate(date) {
-      return moment(date.created_at).format("Do MMMM YYYY, h:mm a");
     },
   },
 };
