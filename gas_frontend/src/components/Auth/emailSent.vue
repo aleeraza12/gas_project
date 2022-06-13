@@ -9,9 +9,9 @@
           <div class="inner-box">
              
           </div>
-          <div class="sign-in-content">Recovery Email Sent</div>
-          <div class="sign-in-subcontent">Kindly check your email for the password reset link that has been sent to you</div>
-           <div class="mt-5 resend-text" @click="resend()">Didn’t receive any email? <b>Resend</b></div>
+          <div class="sign-in-content d-flex align-center justify-center">Recovery Email Sent</div>
+          <div class="sign-in-subcontent  d-flex align-start justify-start">Kindly check your email for the password reset link that has been sent to you</div>
+           <div class="mt-5 resend-text d-flex align-center justify-center" @click="resend()">Didn’t receive any email? <b>Resend</b></div>
         </div>
       </div>
     </v-card-text>
@@ -83,7 +83,7 @@
  font-size:18px;
  color:black;
  margin-top:3rem;
- margin-left: 2.5rem;
+ margin-right:8rem;
 }
 .sign-in-subcontent {
  font-weight: 400;
@@ -116,7 +116,7 @@
   cursor: pointer;
 }
 .resend-text{
-  margin-left:4.5rem;
+  margin-right:5rem;
   cursor: pointer;
 }
 </style>
