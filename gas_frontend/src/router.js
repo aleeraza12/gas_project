@@ -453,19 +453,19 @@ const router = new VueRouter({
     {
       path: "/new-customer-company",
       name: "new-customer-company",
-      beforeEnter: (to, from, next) => {
-        setTimeout(() => {
-          if (
-            !JSON.parse(localStorage.getItem("user")).permissions.includes(
-              "Customers"
-            )
-          ) {
-            store.dispatch("checkRouteExistence");
-          } else {
-            next();
-          }
-        }, 10);
-      },
+      // beforeEnter: (to, from, next) => {
+      //   setTimeout(() => {
+      //     if (
+      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
+      //         "Customers"
+      //       )
+      //     ) {
+      //       store.dispatch("checkRouteExistence");
+      //     } else {
+      //       next();
+      //     }
+      //   }, 10);
+      // },
       meta: { layout: "app", title: "new-customer-company" },
       component: require("./components/customers/new-customer-company").default,
     },
