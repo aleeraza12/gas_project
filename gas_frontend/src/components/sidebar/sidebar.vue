@@ -7,7 +7,7 @@
         permanent
         class="navaigation-side"
       >
-        <v-list-item class="d-flex align-center justify-center ma-2">
+        <!-- <v-list-item class="d-flex align-center justify-center ma-2">
           <v-list-item-avatar>
             <v-img
               :src="'data:image/jpeg;base64,' + user.company_profile_picture"
@@ -17,7 +17,7 @@
               <v-icon dark> mdi-account-circle </v-icon>
             </v-avatar>
           </v-list-item-avatar>
-        </v-list-item>
+        </v-list-item> -->
         <v-divider></v-divider>
         <v-list dense>
           <v-list-item
@@ -153,16 +153,16 @@ export default {
         color: "black",
       },
     ],
-    permissions: JSON.parse(localStorage.getItem("user")).permissions,
+    // permissions: JSON.parse(localStorage.getItem("user")).permissions,
     mini: false,
     showable_links: [],
   }),
   components: {},
   created() {},
   mounted() {
-    this.$store.dispatch("getUsersListing");
-    this.$store.dispatch("getSalesListings");
-    this.setPerimssions();
+    // this.$store.dispatch("getUsersListing");
+    // this.$store.dispatch("getSalesListings");
+    // this.setPerimssions();
   },
   computed: {
     ...mapGetters(["getSales", "getUsers"]),

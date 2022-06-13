@@ -58,19 +58,19 @@ const router = new VueRouter({
     {
       path: "/dashboard",
       name: "Dashboard",
-      beforeEnter: (to, from, next) => {
-        setTimeout(() => {
-          if (
-            !JSON.parse(localStorage.getItem("user")).permissions.includes(
-              "Dashboard"
-            )
-          ) {
-            store.dispatch("checkRouteExistence");
-          } else {
-            next();
-          }
-        }, 10);
-      },
+      // beforeEnter: (to, from, next) => {
+      //   setTimeout(() => {
+      //     if (
+      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
+      //         "Dashboard"
+      //       )
+      //     ) {
+      //       store.dispatch("checkRouteExistence");
+      //     } else {
+      //       next();
+      //     }
+      //   }, 10);
+      // },
       meta: { layout: "app", title: "Dashboard", requireAuth: true },
       component: require("@/views/Pages/dashboard").default,
     },
