@@ -55,7 +55,7 @@
           <v-card-text>
             <div class="d-flex">
               <div>
-                <div class="d-flex align-start justify-start">
+                <div class="d-flex align-start justify-start mt-5">
                   <b>{{ getDashboardData.total_gas_quantity }} Kg</b>
                 </div>
                 <div class="d-flex align-start justify-start">
@@ -64,19 +64,8 @@
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/dashboardicon.png"
-                  height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 7px;
-                  "
-                />
+                <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
+                <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-12">
@@ -90,7 +79,7 @@
           <v-card-text>
             <div class="d-flex">
               <div>
-                <div class="d-flex align-start justify-start">
+                <div class="d-flex align-start justify-start mt-7">
                   <b>{{ getDashboardData.total_customer }}</b>
                 </div>
                 <div class="d-flex align-start justify-start">
@@ -98,20 +87,9 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-              <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/dashboardicon.png"
-                  height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 7px;
-                  "
-                />
+               <div class="d-flex align-end justify-end mt-6">
+                <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
+                <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-10">
@@ -128,25 +106,14 @@
                 <div class="d-flex align-start justify-start">
                   <b>{{ getDashboardData.total_sales }}</b>
                 </div>
-                <div class="d-flex align-start justify-start">
+                <div class="d-flex align-start justify-start mt-7">
                   45 New Connections
                 </div>
               </div>
               <v-spacer></v-spacer>
-              <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/dashboardicon.png"
-                  height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 7px;
-                  "
-                />
+               <div class="d-flex align-end justify-end mt-6">
+                <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
+                <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-10">
@@ -156,7 +123,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <div
+    <!-- <div
       class="d-flex mt-3"
       v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
     >

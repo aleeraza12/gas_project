@@ -31,7 +31,7 @@
         <label for="file-input">
           <div
             style="text-decoration: underline; cursor: pointer"
-            class="fonts"
+            class="fonts mr-2"
           >
             Change Image
           </div>
@@ -57,12 +57,12 @@
           </v-chip>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-10 fonts">
+        <!-- <div class="mr-10 fonts">
           <div>
             <b>{{ getDate(getSinglePurchase.date) }}</b>
           </div>
           <div>{{ getTme(getSinglePurchase.date) }}</div>
-        </div>
+        </div> -->
       </div>
       <div
         class="d-flex align-start justify-start ml-5 mt-10"
