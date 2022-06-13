@@ -64,24 +64,8 @@
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
-<<<<<<< HEAD
                 <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
                 <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
-=======
-                <img
-                  src="../../assets/images/dashboardicon.png"
-                  height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 7px;
-                  "
-                />
->>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-12">
@@ -127,26 +111,9 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-<<<<<<< HEAD
                <div class="d-flex align-end justify-end mt-6">
                 <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
                 <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
-=======
-              <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/dashboardicon.png"
-                  height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 7px;
-                  "
-                />
->>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-10">
@@ -162,15 +129,10 @@
     >
       <div><b>Orders</b></div>
       <v-spacer></v-spacer>
-<<<<<<< HEAD
-      <div class="mr-3"><b>Date Picker</b></div>
-    </div> -->
-=======
       <div class="mr-3">
         <date-picker />
       </div>
     </div>
->>>>>>> 7a0342be4f0e636d0696435d80bd5c70c95b6450
     <div
       class="mt-3"
       v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"

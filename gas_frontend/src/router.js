@@ -294,19 +294,19 @@ const router = new VueRouter({
 
     {
       path: "/sales-details",
-      beforeEnter: (to, from, next) => {
-        setTimeout(() => {
-          if (
-            !JSON.parse(localStorage.getItem("user")).permissions.includes(
-              "Sales"
-            )
-          ) {
-            store.dispatch("checkRouteExistence");
-          } else {
-            next();
-          }
-        }, 10);
-      },
+      // beforeEnter: (to, from, next) => {
+      //   setTimeout(() => {
+      //     if (
+      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
+      //         "Sales"
+      //       )
+      //     ) {
+      //       store.dispatch("checkRouteExistence");
+      //     } else {
+      //       next();
+      //     }
+      //   }, 10);
+      // },
       name: "sales-details",
       meta: { layout: "app", title: "sales-details" },
       component: require("./components/sales/sales-details.vue").default,
