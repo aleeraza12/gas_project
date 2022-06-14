@@ -6,7 +6,7 @@
           <div class="grey-side"></div>
           <div class="login-screen">
             <div class="inner-box"></div>
-            <div class="sign-in-content d-flex align-center justify-center">
+            <div class="sign-in-content d-flex align-start justify-start">
               Recovery Email Sent
             </div>
             <div class="sign-in-subcontent d-flex align-start justify-start">
@@ -14,12 +14,12 @@
               sent to you
             </div>
             <div
-              class="mt-5 resend-text d-flex align-center justify-center"
+              class="mt-5 resend-text d-flex align-start justify-start ml-12"
               @click="resend()"
             >
-              Didn’t receive any email? <b>Resend</b>
+              Didn’t receive any email? <b class="ml-2">Resend</b>
             </div>
-            <div class="ma-auto position-relative" style="max-width: 300px">
+            <div class=" ml-12 position-relative mt-3 d-flex align-start justify-start" style="max-width: 300px">
               <v-otp-input
                 v-model="otp"
                 :disabled="loading"
@@ -33,7 +33,7 @@
                 ></v-progress-circular>
               </v-overlay>
             </div>
-            <div class="text--caption">Type or copy/paste.</div>
+            <div class="text--caption d-flex align-start jutsiy-start ml-12 mt-2">Type or copy/paste.</div>
           </div>
         </div>
       </v-card-text>
@@ -161,7 +161,7 @@ export default {
   width: 300px;
   background-color: #d2d2d2;
   margin-top: 4rem;
-  margin-left: 10rem;
+  margin-left: 3rem;
 }
 .content-welcome {
   font-weight: 600;
@@ -181,15 +181,15 @@ export default {
   font-weight: 600;
   font-size: 18px;
   color: black;
-  margin-top: 3rem;
-  margin-right: 8rem;
+  margin-top: 1rem;
+  margin-left: 3rem;
 }
 .sign-in-subcontent {
   font-weight: 400;
   font-size: 14px;
   color: black;
   margin-top: 1rem;
-  margin-left: 4.5rem;
+  margin-left:3rem;
 }
 .username-feild {
   width: 400px;
