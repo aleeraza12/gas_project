@@ -13,17 +13,19 @@
         ></v-text-field>
       </div>
       <v-spacer></v-spacer>
-      <div class="mr-5 mt-2">
+      <!--<div class="mr-5 mt-2">
         <v-icon> mdi-bell-outline</v-icon>
-      </div>
+      </div>-->
     </div>
     <div class="d-flex mt-2">
       <div>
-        <b> Welcome Ola,</b>
+        <b> Welcome {{ loggedinUser.owner_name }},</b>
       </div>
       <v-spacer></v-spacer>
       <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
-        <div style="font-size: 16px;margin-right:4rem">Current gas price</div>
+        <div style="font-size: 16px; margin-right: 0.5rem">
+          Current gas price
+        </div>
 
         <div class="d-flex">
           <v-skeleton-loader
@@ -31,7 +33,7 @@
             type="list-item-avatar-three-line"
           ></v-skeleton-loader>
           <div v-else-if="!priceLoader">
-            <b style="font-size: 19px" class="ml-9" v-if="getPrice"
+            <b style="font-size: 19px" class="ml-16" v-if="getPrice"
               >N{{ getPrice.price_per_twenty_million_ton }}</b
             >
             <b style="font-size: 16px" class="ml-5" v-else>Not set</b>
@@ -39,23 +41,25 @@
           <div
             v-if="!priceLoader"
             @click="setModal()"
-            class="ml-3 mt-1"
+            class="mt-1"
             style="font-size: 13px; text-decoration: underline; cursor: pointer"
           >
             <b v-if="!priceLoader">edit</b>
           </div>
         </div>
-        <div v-if="!priceLoader && getPrice">{{ getPrice.created_at }}</div>
+        <div class="mr-12" v-if="!priceLoader && getPrice">
+          {{ getPrice.created_at }}
+        </div>
       </div>
     </div>
 
     <v-row>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="160" style="background-color: #ebebea">
+        <v-card height="150" style="background-color: #ebebea">
           <v-card-text>
             <div class="d-flex">
               <div>
-                <div class="d-flex align-start justify-start mt-5">
+                <div class="d-flex align-start justify-start">
                   <b>{{ getDashboardData.total_gas_quantity }} Kg</b>
                 </div>
                 <div class="d-flex align-start justify-start">
@@ -64,22 +68,33 @@
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
-                <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
-                <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
+                <img
+                  src="../../assets/images/dashboardicon.png"
+                  height="55"
+                  style="position: absolute"
+                />
+                <img
+                  src="../../assets/images/Chalkboard.png"
+                  style="
+                    position: relative;
+                    margin-bottom: 8px;
+                    margin-right: 9px;
+                  "
+                />
               </div>
             </div>
-            <div class="d-flex align-start justify-start mt-12">
+            <div class="d-flex align-start justify-start mt-8">
               <b>Total Available Gas</b>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="160" class="ml-5" style="background-color: #ebebea">
+        <v-card height="150" class="ml-5" style="background-color: #ebebea">
           <v-card-text>
             <div class="d-flex">
               <div>
-                <div class="d-flex align-start justify-start mt-7">
+                <div class="d-flex align-start justify-start">
                   <b>{{ getDashboardData.total_customer }}</b>
                 </div>
                 <div class="d-flex align-start justify-start">
@@ -87,36 +102,58 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-               <div class="d-flex align-end justify-end mt-6">
-                <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
-                <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
+              <div class="d-flex align-end justify-end mt-6">
+                <img
+                  src="../../assets/images/dashboardicon.png"
+                  height="55"
+                  style="position: absolute"
+                />
+                <img
+                  src="../../assets/images/Chalkboard.png"
+                  style="
+                    position: relative;
+                    margin-bottom: 8px;
+                    margin-right: 9px;
+                  "
+                />
               </div>
             </div>
-            <div class="d-flex align-start justify-start mt-10">
+            <div class="d-flex align-start justify-start mt-7">
               <b>Total Customers</b>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="160" class="ml-5" style="background-color: #ebebea">
+        <v-card height="150" class="ml-5" style="background-color: #ebebea">
           <v-card-text>
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <b>{{ getDashboardData.total_sales }}</b>
+                  <b>{{ getDashboardData.total_sales }} ₦</b>
                 </div>
                 <div class="d-flex align-start justify-start mt-7">
                   45 New Connections
                 </div>
               </div>
               <v-spacer></v-spacer>
-               <div class="d-flex align-end justify-end mt-6">
-                <img src="../../assets/images/dashboardicon.png" height="55" style="position:absolute"/>
-                <img src="../../assets/images/Chalkboard.png" style="position:relative;margin-bottom: 8px;margin-right: 9px;"/>
+              <div class="d-flex align-end justify-end mt-6">
+                <img
+                  src="../../assets/images/dashboardicon.png"
+                  height="55"
+                  style="position: absolute"
+                />
+                <img
+                  src="../../assets/images/Chalkboard.png"
+                  style="
+                    position: relative;
+                    margin-bottom: 8px;
+                    margin-right: 9px;
+                  "
+                />
               </div>
             </div>
-            <div class="d-flex align-start justify-start mt-10">
+            <div class="d-flex align-start justify-start mt-7">
               <b>Total Sales</b>
             </div>
           </v-card-text>
@@ -134,18 +171,16 @@
       </div>
     </div>
     <div
-      class="mt-2"
+      class="mt-0"
       v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
     >
       <v-data-table
         :headers="headers"
         :items="getAllOrders"
-        :items-per-page="5"
         class="elevation-1"
-        height="200px"
+        height="220px"
         :search="search"
         :loading="tableloading"
-        hide-default-footer
         hide-default-header
       >
         <template v-slot:[`body.prepend`]="{ headers }">

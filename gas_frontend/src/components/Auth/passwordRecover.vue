@@ -5,6 +5,12 @@
         <div class="d-flex">
           <div class="grey-side"></div>
           <div class="login-screen">
+            <div
+              class="d-flex align-start justify-start pointer mt-5"
+              @click="goToLogin()"
+            >
+              <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+            </div>
             <div class="sign-in-content d-flex align-start justify-start">
               Password Recovery
             </div>
@@ -29,7 +35,7 @@
                   block
                   large
                   :loading="loading"
-                  :disabled="!valid"
+                  :disabled="!valid || loading"
                   class="elevation-0 btn-login"
                   @click="sendMail(), (loader = 'loading2')"
                   dense
@@ -66,7 +72,7 @@
 
 <script>
 import axios from "axios";
-import { eventBus } from "../../main";
+
 export default {
   data: () => ({
     valid: false,
@@ -88,6 +94,9 @@ export default {
     },
   },
   methods: {
+    goToLogin() {
+      this.$router.push("/login");
+    },
     sendMail() {
       this.loading = true;
       let url = this.$store.state.url;
@@ -102,18 +111,21 @@ export default {
             this.snackbar = true;
             this.snackbarColor = "success";
             this.snackbarMsg = "Please check you mail to reset your password";
-
-            this.$router.push({
-              name: "MailSent",
-            });
-            //eventBus.$emit("Email", this.email);
-            //}, 1000);
+            this.$store.commit("SET_RECOVERY_EMAIL", this.email);
             setTimeout(() => {
-              eventBus.$emit("Email", this.email);
-            }, 100);
+              this.$router.push({
+                name: "MailSent",
+              });
+            }, 1500);
+          } else if (response.data.status == 400) {
+            this.snackbar = true;
+            this.loading = false;
+            this.snackbarColor = "red";
+            this.snackbarMsg = response.data.response;
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log("errr", err);
           this.snackbar = true;
           this.snackbarColor = "red";
           this.loading = false;
@@ -196,6 +208,9 @@ export default {
   color: #fff;
   min-width: 400px !important;
   border-radius: 8px !important;
+  cursor: pointer;
+}
+.pointer {
   cursor: pointer;
 }
 </style>

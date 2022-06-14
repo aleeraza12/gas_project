@@ -1,22 +1,41 @@
 <template>
-  <div class="main-container d-flex align-center justify-center" >
-    <v-card class="elevation-1" width="700" id="print">
+  <div
+    class="main-container d-flex align-center justify-center no-print"
+    id="printAble"
+  >
+    <v-card class="elevation-1" width="700">
       <v-card-text>
         <div class="sales-details-page">
-          <div class="d-flex align-start justify-start" @click="goToSales()">
+          <div
+            class="d-flex align-start justify-start no-print"
+            @click="goToSales()"
+          >
             <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
           </div>
           <div class="d-flex mt-3 pa-5">
             <div>
-              <v-icon class="ml-10" size="80" color="#EBEBEA">
+              <v-avatar
+                size="60px"
+                v-if="getSingleReceipt.company_profile_picture"
+              >
+                <img
+                  :src="
+                    'data:image/jpeg;base64,' +
+                    getSingleReceipt.company_profile_picture
+                  "
+                  alt="John"
+                />
+              </v-avatar>
+              <v-icon class="ml-10" size="80" color="#EBEBEA" v-else>
                 mdi-circle</v-icon
               >
             </div>
+
             <v-spacer></v-spacer>
             <div class="mr-5">
               <div><b>LIT Engineers</b></div>
-              <div class="fonts"><b>18,chokar town auto street 19</b></div>
-              <div class="fonts">015980000045</div>
+              <!--<div class="fonts"><b>18,chokar town auto street 19</b></div>
+              <div class="fonts">015980000045</div>-->
             </div>
           </div>
           <div class="mb-3"><b>Sales Recepit</b></div>
@@ -57,7 +76,7 @@
           <div class="d-flex" style="background-color: #ebebea">
             <div class="ml-5 mt-3">
               <div class="d-flex">
-                <div class="fonts"><b>Payment Mthod:</b></div>
+                <div class="fonts"><b>Payment Method:</b></div>
                 <div class="fonts">{{ getSingleReceipt.payment_mode }}</div>
               </div>
             </div>
@@ -102,7 +121,7 @@
             </v-simple-table>
           </div>
           <v-divider></v-divider>
-          <div class="mt-3" style="width:300px;float:right">
+          <div class="mt-5" style="width: 300px; float: right">
             <div class="d-flex pa-2" style="background-color: #f6f6f5">
               <div>Total Amount</div>
               <div class="ml-5">{{ getSingleReceipt.total_amount }}</div>
@@ -116,12 +135,15 @@
               <div class="ml-12">No</div>
             </div>
           </div>
-          <div class="d-flex align-center justify-center" style="margin-top: 10rem;">
+          <div
+            class="d-flex align-center justify-center"
+            style="margin-top: 10rem"
+          >
             <b>Powered By GA3QSD</b>
           </div>
           <div class="d-flex align-center justify-center mt-3">
             <v-btn
-              @click="printReceipt()"
+              @click="printReceipt('printAble')"
               small
               dense
               style="
@@ -153,17 +175,24 @@ export default {
     }
   },
   methods: {
-    printReceipt() {
-    let prtContent = document.getElementById("print");
-    let stylesHtml = '';
-    for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
-       stylesHtml += node.outerHTML;
-    }
+    printReceipt(printAble) {
+      let prtContent = document.getElementById(printAble);
+      let stylesHtml = "";
+      for (const node of [
+        ...document.querySelectorAll('link[rel="stylesheet"], style'),
+      ]) {
+        stylesHtml += node.outerHTML;
+        console.log(stylesHtml);
+      }
 
-// Open the print window
-    let WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+      // Open the print window
+      let WinPrint = window.open(
+        "",
+        "",
+        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+      );
 
-    WinPrint.document.write(`<!DOCTYPE html>
+      WinPrint.document.write(`<!DOCTYPE html>
     <html>
     <head>
     ${stylesHtml}
@@ -172,13 +201,13 @@ export default {
     ${prtContent}
     </body>
     </html>`);
-     setTimeout(()=>{
-    WinPrint.document.write(prtContent.innerHTML);
-    WinPrint.document.close();
-    WinPrint.focus();
-    WinPrint.print();
-    WinPrint.close();
-    },100);
+      setTimeout(() => {
+        WinPrint.document.write(prtContent.innerHTML);
+        //WinPrint.document.close();
+        //WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+      }, 100);
     },
     goToSales() {
       this.$router.push("/sales");
@@ -195,5 +224,11 @@ export default {
 }
 .fonts {
   font-size: 12px;
+}
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
 }
 </style>

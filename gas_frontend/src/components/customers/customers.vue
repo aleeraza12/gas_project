@@ -15,9 +15,9 @@
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-5 mt-2">
+          <!--<div class="mr-5 mt-2">
             <v-icon> mdi-bell-outline</v-icon>
-          </div>
+          </div>-->
         </div>
         <div class="d-flex mt-5">
           <div>
@@ -56,10 +56,9 @@
             :headers="headers"
             :items="getCustomers"
             :items-per-page="5"
-              class="elevation-1"
+            class="elevation-1"
             hide-default-header
             height="260px"
-     
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -75,12 +74,12 @@
             </template>
             <template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
-                mdi-eye
+                mdi-pencil
               </v-icon>
             </template>
             <template v-slot:item.actions2="{ item }">
-              <v-icon small class="mr-2" @click="setModal(item)">
-                mdi-eye
+              <v-icon small class="mr-2" @click="setModal(item)" color="red">
+                mdi-delete-empty
               </v-icon>
             </template>
           </v-data-table>
@@ -133,7 +132,7 @@ import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
     loading: true,
-    start_date: '2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     search: "",
     deleteable: "",

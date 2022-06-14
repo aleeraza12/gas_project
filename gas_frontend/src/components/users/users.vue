@@ -15,9 +15,9 @@
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-5 mt-2">
+          <!--<div class="mr-5 mt-2">
             <v-icon> mdi-bell-outline</v-icon>
-          </div>
+          </div>-->
         </div>
         <div class="d-flex mt-5">
           <div>
@@ -73,12 +73,12 @@
             </template>
             <template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
-                mdi-eye
+                mdi-pencil
               </v-icon>
             </template>
             <template v-slot:item.actions2="{ item }">
-              <v-icon small class="mr-2" @click="setModal(item)">
-                mdi-eye
+              <v-icon small class="mr-2" @click="setModal(item)" color="red">
+                mdi-delete-empty
               </v-icon>
             </template>
           </v-data-table>
@@ -135,7 +135,7 @@ export default {
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
-    start_date: '2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {

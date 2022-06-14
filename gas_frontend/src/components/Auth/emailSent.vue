@@ -5,6 +5,12 @@
         <div class="d-flex">
           <div class="grey-side"></div>
           <div class="login-screen">
+            <div
+              class="d-flex align-start justify-start pointer mt-5"
+              @click="goToLogin()"
+            >
+              <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+            </div>
             <div class="inner-box"></div>
             <div class="sign-in-content d-flex align-center justify-center">
               Recovery Email Sent
@@ -58,7 +64,8 @@
 
 <script>
 import axios from "axios";
-import { eventBus } from "../../main";
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
     valid: false,
@@ -72,20 +79,19 @@ export default {
     expectedOtp: "133707",
   }),
   components: {},
-  created() {
-    eventBus.$on("Email", (email) => {
-      console.log(email);
-      this.email = email;
-    });
-  },
+  created() {},
   computed: {
     getIcon() {
       return this.snackbarColor == "success"
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
+    ...mapGetters(["getRecoveryMail"]),
   },
   methods: {
+    goToLogin() {
+      this.$router.push("/password-recover");
+    },
     resend() {
       this.$router.push({
         name: "PasswordRecover",
@@ -97,7 +103,7 @@ export default {
       let url = this.$store.state.url;
       let body = {
         otp: this.otp,
-        email: this.email,
+        email: this.getRecoveryMail,
       };
       console.log(body);
       axios
@@ -109,14 +115,11 @@ export default {
             this.snackbar = true;
             this.snackbarColor = "success";
             this.snackbarMsg = "OTP verified";
-            //setTimeout(() => {
-            this.$router.push({
-              name: "Update Password",
-            });
-            //}, 1000);
             setTimeout(() => {
-              eventBus.$emit("EmailPassword", this.email);
-            }, 100);
+              this.$router.push({
+                name: "Update Password",
+              });
+            }, 1000);
           } else if (response.data.status == 400) {
             this.snackbar = true;
             this.snackbarColor = "red";

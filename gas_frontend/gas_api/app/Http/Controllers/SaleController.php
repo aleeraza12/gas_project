@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SaleController extends Controller
 {
@@ -63,6 +64,7 @@ class SaleController extends Controller
             $customer = Customer::find($sale->customer_id);
             $sale['customer_name'] =  $customer->name;
             $sale['customer_address'] =   $customer->address;
+            $sale['company_profile_picture']   = $name['company_profile_picture'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
@@ -71,12 +73,14 @@ class SaleController extends Controller
     {
         $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($sales as $sale) {
-            $sale['updated_by'] = Company::find($sale->company_id)->company_name; //updated_by
+            $name = Company::find($sale->company_id);
+            $sale['updated_by'] = $name->company_name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
             $sale['customer_name'] =  $customer->name;
             $sale['customer_address'] =   $customer->address;
+            $sale['company_profile_picture']   = $name['company_profile_picture'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
