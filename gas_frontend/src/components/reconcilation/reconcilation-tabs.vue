@@ -15,9 +15,9 @@
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-5 mt-2">
+          <!--<div class="mr-5 mt-2">
             <v-icon> mdi-bell-outline</v-icon>
-          </div>
+          </div>-->
         </div>
 
         <div
@@ -76,6 +76,45 @@
 
           <v-tabs-items v-model="tab">
             <v-tab-item>
+              <div>
+                <v-data-table
+                  :headers="headers"
+                  :items="getSalesTransaction"
+                  :items-per-page="5"
+                  hide-default-header
+                  height="250px"
+                  :search="search"
+                  :loading="loading"
+                >
+                  <template v-slot:[`body.prepend`]="{ headers }">
+                    <th
+                      v-for="(header, i) in headers"
+                      :key="'A' + i"
+                      class="table-head"
+                    >
+                      <div class="d-flex ml-3">
+                        {{ header.text }}
+                      </div>
+                    </th>
+                  </template>
+                  <template v-slot:item.status="{ item }">
+                    <v-chip
+                      class="ma-2"
+                      small
+                      :color="item.status == 'not_verified' ? 'red' : 'green'"
+                      label
+                      outlined
+                      >{{
+                        item.status == "not_verified"
+                          ? "Pending"
+                          : "Reconcilled"
+                      }}</v-chip
+                    >
+                  </template>
+                  <template v-slot:item.payment_mode="{ item }" class="ml-3">
+                    {{ item.payment_mode ? item.payment_mode : "---" }}
+                  </template>
+                  <!--<template v-slot:item.actions="{ item }">
               <v-data-table
                 :headers="headers"
                 :items="getSalesTransaction"
@@ -118,7 +157,8 @@
                     mdi-eye
                   </v-icon>
                 </template>-->
-              </v-data-table>
+                </v-data-table>
+              </div>
             </v-tab-item>
             <v-tab-item>
               <v-data-table
@@ -188,7 +228,7 @@ export default {
   data: () => ({
     tab: null,
     loading: true,
-    start_date: '2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     search: "",
     getPurchasedTransaction: [],
@@ -238,7 +278,7 @@ export default {
     this.$store.commit("setSelectedDateRange", "All");
   },
   methods: {
-     btnClick() {
+    btnClick() {
       document.getElementById("myBtn").click();
     },
     getTransactions(date) {

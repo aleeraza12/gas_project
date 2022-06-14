@@ -33,6 +33,7 @@ const store = {
     orders: [],
     wallets: [],
     date: "",
+    recovery_mail: "",
   },
   getters: {
     getSales: (state) => state.sales,
@@ -48,6 +49,7 @@ const store = {
     getAllStates: (state) => state.states,
     getAllDepos: (state) => state.depos,
     getAllOrders: (state) => state.orders,
+    getRecoveryMail: (state) => state.recovery_mail,
     //settngs
     getAllCustomerTypesSettings: (state) => state.customer_types_settings,
     getAllUserTypesSettings: (state) => state.user_types_settings,
@@ -92,6 +94,7 @@ const store = {
       (state.single_customer_to_update = payload),
     SET_VIEW_PURCHASE: (state, payload) =>
       (state.view_single_purchase = payload),
+    SET_RECOVERY_EMAIL: (state, payload) => (state.recovery_mail = payload),
   },
   actions: {
     //Wallet     &

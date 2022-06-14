@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="no-print">
     <v-card class="sidebar-card elevation-0">
       <v-navigation-drawer
         v-model="drawer"
@@ -155,7 +155,7 @@ export default {
         color: "black",
       },
     ],
-     permissions: JSON.parse(localStorage.getItem("user")).permissions,
+    permissions: JSON.parse(localStorage.getItem("user")).permissions,
     mini: false,
     showable_links: [],
   }),
@@ -220,5 +220,11 @@ export default {
 }
 .sidebar-item:hover {
   background-color: #fff;
+}
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
 }
 </style>

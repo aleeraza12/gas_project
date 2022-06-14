@@ -3,29 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Forgotpassword;
 use App\Models\Auth;
 use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail as FacadesMail;
+use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
     public function basic_email(Request $request)
     {
-        $data = array('code' =>  mt_rand(100000, 999999),);
-
-        FacadesMail::send(['text' => 'email.myTestMail'], $data, function ($message) use ($request) {
-            $message->to($request->email, 'Reset Password')->subject('Reset Password mail');
-            $message->from(config('app.reset_password_email'), 'GP');
-        });
-        $auth = new Auth;
-        $auth->otp = $data['code'];
-        $auth->email = $request->email;
-        $auth->expire_at = Carbon::now();
-        $auth->save();
-        return response()->json(['response' => 'Email sent successfully', 'status' => 200]);
+        $company = Company::where('company_email', $request->email)->first();
+        if ($company) {
+            $code =  mt_rand(100000, 999999);
+            $body = [
+                'email' => $request['email'],
+                'code' => $code,
+                'subject' => 'Reset Password Mail'
+            ];
+            Mail::to($request->email)->send(new Forgotpassword($body));
+            $auth = new Auth;
+            $auth->otp = $code;
+            $auth->email = $request->email;
+            $auth->expire_at = Carbon::now()->addMinutes(30);
+            $auth->save();
+            return response()->json(['response' => 'Email sent successfully', 'status' => 200]);
+        } else {
+            return response()->json(['response' => 'There is no account related to this email', 'status' => 400]);
+        }
     }
 
     public function verify_otp(Request $request)
@@ -33,7 +41,12 @@ class MailController extends Controller
         $otp = Auth::where('otp', $request->otp)->first();
         $email = Company::where('company_email', $request->email)->first();
         if ($otp && $email) {
-            return response()->json(['response' => 'OTP verified', 'status' => 200]);
+            $date2 = Carbon::create(Carbon::now());
+            $date1 = Carbon::parse($otp->expire_at);
+            if ($date1->lte($date2))
+                return response()->json(['response' => 'OTP expired', 'status' => 400]);
+            else
+                return response()->json(['response' => 'OTP verified', 'status' => 200]);
         } else {
             return response()->json(['response' => 'Wrong OTP', 'status' => 400]);
         }

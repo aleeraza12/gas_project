@@ -13,7 +13,8 @@ class Depos extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        $date = Carbon::parse($value);
-        return $date->toDayDateTimeString(); 
+
+        $date = Carbon::parse($value)->addHours(5);
+        return $date->isoFormat('dddd,Do MMMM YYYY');
     }
 }

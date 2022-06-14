@@ -13,9 +13,9 @@
         ></v-text-field>
       </div>
       <v-spacer></v-spacer>
-      <div class="mr-5 mt-2">
+      <!--<div class="mr-5 mt-2">
         <v-icon> mdi-bell-outline</v-icon>
-      </div>
+      </div>-->
     </div>
     <div class="d-flex mt-5">
       <div>

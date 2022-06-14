@@ -15,9 +15,9 @@
             ></v-text-field>
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-5 mt-2">
+          <!--<div class="mr-5 mt-2">
             <v-icon> mdi-bell-outline</v-icon>
-          </div>
+          </div>-->
         </div>
         <div class="d-flex mt-5">
           <div>
@@ -50,6 +50,8 @@
           <v-spacer></v-spacer>
           <div class="pointer" @click="myFunction()">
             View Current Depo Prices
+            <v-icon v-if="chevron">mdi-chevron-down</v-icon>
+            <v-icon v-else>mdi-chevron-up</v-icon>
           </div>
         </div>
         <div class="d-flex mt-3">
@@ -104,9 +106,8 @@
             :items="getPurchases"
             :items-per-page="5"
             class="elevation-1 mt-5"
-            hide-default-footer
             hide-default-header
-            height="400px"
+            height="255px"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -154,11 +155,12 @@ Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     loading: true,
+    chevron: true,
     depoLoading: true,
     isDepo: false,
     search: "",
     total_sales: null,
-    start_date: '2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     Depoheaders: [
       { text: "Depot Name", value: "depo_name" },
@@ -208,8 +210,10 @@ export default {
     myFunction() {
       var x = document.getElementById("myDIV");
       if (x.style.display === "none") {
+        this.chevron = false;
         x.style.display = "block";
       } else {
+        this.chevron = true;
         x.style.display = "none";
       }
     },

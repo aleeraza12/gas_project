@@ -5,6 +5,12 @@
         <div class="d-flex">
           <div class="grey-side"></div>
           <div class="login-screen">
+            <div
+              class="d-flex align-start justify-start pointer mt-5"
+              @click="goToLogin()"
+            >
+              <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+            </div>
             <div class="sign-in-content d-flex align-start justify-start">
               Update Password
             </div>
@@ -83,7 +89,8 @@
 
 <script>
 import axios from "axios";
-import { eventBus } from "../../main";
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
     valid: false,
@@ -105,19 +112,18 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
+    ...mapGetters(["getRecoveryMail"]),
   },
-  created() {
-    eventBus.$on("EmailPassword", (email) => {
-      console.log(email);
-      this.email = email;
-    });
-  },
+  created() {},
   methods: {
+    goToLogin() {
+      this.$router.push("/mail-sent");
+    },
     updatePassword() {
       this.loading = true;
       let url = this.$store.state.url;
       let body = {
-        email: this.email,
+        email: this.getRecoveryMail,
         password: this.password,
       };
       console.log(body);
