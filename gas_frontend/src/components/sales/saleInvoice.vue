@@ -146,6 +146,7 @@
               @click="printReceipt('printAble')"
               small
               dense
+              class="no-print"
               style="
                 background-color: black !important;
                 color: #fff;

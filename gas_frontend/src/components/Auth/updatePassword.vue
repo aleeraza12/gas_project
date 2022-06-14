@@ -56,6 +56,7 @@
                 <v-btn
                   block
                   :disabled="!valid"
+                  :loading="loading"
                   large
                   class="elevation-0 btn-login"
                   @click="updatePassword()"
@@ -98,7 +99,7 @@ export default {
     snackbar: false,
     snackbarColor: "",
     nameRules: [(v) => !!v || "This field is required"],
-
+    loading: false,
     show: false,
     show1: false,
     password: "",
@@ -121,32 +122,39 @@ export default {
     },
     updatePassword() {
       this.loading = true;
-      let url = this.$store.state.url;
-      let body = {
-        email: this.getRecoveryMail,
-        password: this.password,
-      };
-      console.log(body);
-      axios
-        .post(url + "update_password", body)
-        .then((response) => {
-          this.snackbar = true;
-          this.loading = false;
-          if (response.data.status == 200) {
+      if (this.password !== this.confirm_password) {
+        this.snackbar = true;
+        this.snackbarColor = "red";
+        this.snackbarMsg = "Password and confirm password didn't matched";
+        this.loading = false;
+      } else {
+        let url = this.$store.state.url;
+        let body = {
+          email: this.getRecoveryMail,
+          password: this.password,
+        };
+        console.log(body);
+        axios
+          .post(url + "update_password", body)
+          .then((response) => {
             this.snackbar = true;
-            this.snackbarColor = "success";
-            this.snackbarMsg = "Password updated successfully";
-            setTimeout(() => {
-              this.$router.push("login");
-            }, 1000);
-          }
-        })
-        .catch(() => {
-          this.snackbar = true;
-          this.snackbarColor = "red";
-          this.loading = false;
-          this.snackbarMsg = "Something went wrong";
-        });
+            this.loading = false;
+            if (response.data.status == 200) {
+              this.snackbar = true;
+              this.snackbarColor = "success";
+              this.snackbarMsg = "Password updated successfully";
+              setTimeout(() => {
+                this.$router.push("/reset-message");
+              }, 1000);
+            }
+          })
+          .catch(() => {
+            this.snackbar = true;
+            this.snackbarColor = "red";
+            this.loading = false;
+            this.snackbarMsg = "Something went wrong";
+          });
+      }
     },
   },
 };

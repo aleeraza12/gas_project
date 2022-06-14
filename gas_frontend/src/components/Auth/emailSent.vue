@@ -25,7 +25,10 @@
             >
               Didn’t receive any email? <b class="ml-2">Resend</b>
             </div>
-            <div class=" ml-12 position-relative mt-3 d-flex align-start justify-start" style="max-width: 300px">
+            <div
+              class="ml-12 position-relative mt-3 d-flex align-start justify-start"
+              style="max-width: 300px"
+            >
               <v-otp-input
                 v-model="otp"
                 :disabled="loading"
@@ -39,7 +42,11 @@
                 ></v-progress-circular>
               </v-overlay>
             </div>
-            <div class="text--caption d-flex align-start jutsiy-start ml-12 mt-2">Type or copy/paste.</div>
+            <div
+              class="text--caption d-flex align-start jutsiy-start ml-12 mt-2"
+            >
+              Type or copy/paste.
+            </div>
           </div>
         </div>
       </v-card-text>
@@ -123,7 +130,7 @@ export default {
           } else if (response.data.status == 400) {
             this.snackbar = true;
             this.snackbarColor = "red";
-            this.snackbarMsg = "Wrong OTP";
+            this.snackbarMsg = response.data.response;
           }
         })
         .catch(() => {
@@ -192,7 +199,7 @@ export default {
   font-size: 14px;
   color: black;
   margin-top: 1rem;
-  margin-left:3rem;
+  margin-left: 3rem;
 }
 .username-feild {
   width: 400px;
