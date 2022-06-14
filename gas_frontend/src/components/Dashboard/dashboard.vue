@@ -33,7 +33,7 @@
             type="list-item-avatar-three-line"
           ></v-skeleton-loader>
           <div v-else-if="!priceLoader">
-            <b style="font-size: 19px" class="ml-16" v-if="getPrice"
+            <b style="font-size: 24px" class="ml-16" v-if="getPrice"
               >N{{ getPrice.price_per_twenty_million_ton }}</b
             >
             <b style="font-size: 16px" class="ml-5" v-else>Not set</b>
@@ -41,13 +41,13 @@
           <div
             v-if="!priceLoader"
             @click="setModal()"
-            class="mt-1"
+            class="mt-3 ml-7"
             style="font-size: 13px; text-decoration: underline; cursor: pointer"
           >
             <b v-if="!priceLoader">edit</b>
           </div>
         </div>
-        <div class="mr-12" v-if="!priceLoader && getPrice">
+        <div class="mr-14" v-if="!priceLoader && getPrice">
           {{ getPrice.created_at }}
         </div>
       </div>

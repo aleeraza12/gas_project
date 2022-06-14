@@ -29,6 +29,6 @@ class Forgotpassword extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.Forgotpassword')->with('body', $this->body);
+        return $this->markdown('emails.Forgotpassword')->from(config('app.reset_password_email'), 'Reset Password GP')->with('body', $this->body);
     }
 }
