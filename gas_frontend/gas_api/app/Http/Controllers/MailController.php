@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail as FacadesMail;
+use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
@@ -32,11 +33,11 @@ class MailController extends Controller
 
             ];
 
-            FacadesMail::send(new Forgotpassword($body), $data, function ($message) use ($request) {
-                $message->to($request->email, $request->email)->subject('Reset Password Mail');
-                $message->from(config('app.reset_password_email'), 'GP');
-            });
-            //Mail::to($email)->send(new Forgotpassword($body));
+            //FacadesMail::send(['text' => 'email.myTestMail'], $data, function ($message) use ($request) {
+            //    $message->to($request->email, 'Reset Password')->subject('Reset Password Mail');
+            //    $message->from(config('app.reset_password_email'), 'GP');
+            //});
+            Mail::to($request->email)->send(new Forgotpassword($body));
             $auth = new Auth;
             $auth->otp = $data['code'];
             $auth->email = $request->email;

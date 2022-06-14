@@ -115,6 +115,44 @@
                     {{ item.payment_mode ? item.payment_mode : "---" }}
                   </template>
                   <!--<template v-slot:item.actions="{ item }">
+              <v-data-table
+                :headers="headers"
+                :items="getSalesTransaction"
+                :items-per-page="5"
+                class="elevation-1"
+                  style="border:1px solid rgb(235, 235, 234)"
+                hide-default-header
+                height="210px"
+                :search="search"
+                :loading="loading"
+              >
+                <template v-slot:[`body.prepend`]="{ headers }">
+                  <th
+                    v-for="(header, i) in headers"
+                    :key="'A' + i"
+                    class="table-head"
+                  >
+                    <div class="d-flex ml-3">
+                      {{ header.text }}
+                    </div>
+                  </th>
+                </template>
+                <template v-slot:item.status="{ item }">
+                  <v-chip
+                    class="ma-2"
+                    small
+                    :color="item.status == 'not_verified' ? 'red' : 'green'"
+                    label
+                    outlined
+                    >{{
+                      item.status == "not_verified" ? "Pending" : "Reconcilled"
+                    }}</v-chip
+                  >
+                </template>
+                <template v-slot:item.payment_mode="{ item }" class="ml-3">
+                  {{ item.payment_mode ? item.payment_mode : "---" }}
+                </template>
+                <!--<template v-slot:item.actions="{ item }">
                   <v-icon small class="mr-2" @click="ViewReceipt(item)">
                     mdi-eye
                   </v-icon>
@@ -127,9 +165,10 @@
                 :headers="headers"
                 :items="getPurchasedTransaction"
                 :items-per-page="5"
-                class="elevation-1"
+                   class="elevation-1"
+                  style="border:1px solid rgb(235, 235, 234)"
                 hide-default-header
-                height="250px"
+                height="210px"
                 :search="search"
                 :loading="loading"
               >

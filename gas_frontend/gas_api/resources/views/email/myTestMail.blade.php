@@ -1,9 +1,12 @@
-<html>
+@component('mail::message')
+# Introduction
 
-<body>
+The body of your message. {{$code}}
 
-    <h1>Hi,</h1>
-    <p>Your code to reset password is. {{$code}}</p>
-</body>
+@component('mail::button', ['url' => ''])
+Button Text
+@endcomponent
 
-</html>
+Thanks,<br>
+{{ config('app.name') }}
+@endcomponent
