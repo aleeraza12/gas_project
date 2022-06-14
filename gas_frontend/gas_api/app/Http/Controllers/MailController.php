@@ -43,11 +43,15 @@ class MailController extends Controller
         if ($otp && $email) {
             $date2 = Carbon::create(Carbon::now());
             $date1 = Carbon::parse($otp->expire_at);
-            if ($date1->lte($date2))
+            if ($date1->lte($date2)) {
+                //dd('condton true');
                 return response()->json(['response' => 'OTP expired', 'status' => 400]);
-            else
+            } else {
+                //dd('condton false');
                 return response()->json(['response' => 'OTP verified', 'status' => 200]);
+            }
         } else {
+            //dd('condton all false');
             return response()->json(['response' => 'Wrong OTP', 'status' => 400]);
         }
     }
