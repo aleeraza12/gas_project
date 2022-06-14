@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="d-flex mt-3">
-      <div><b>History</b></div>
+      <div class="mt-4"><b>History</b></div>
       <v-spacer></v-spacer>
       <div class="mr-3"><date-picker /></div>
     </div>
@@ -50,12 +50,12 @@
         :headers="headers"
         :items="getAllOrders"
         :items-per-page="5"
-        class="elevation-1"
-        height="370px"
+
         :search="search"
         :loading="tableloading"
-        hide-default-footer
-        hide-default-header
+          class="elevation-1"
+            hide-default-header
+            height="260px"
       >
         <template v-slot:[`body.prepend`]="{ headers }">
           <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">

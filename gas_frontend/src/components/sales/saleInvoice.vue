@@ -102,21 +102,21 @@
             </v-simple-table>
           </div>
           <v-divider></v-divider>
-          <div class="mt-3">
-            <div class="d-flex" style="backgorund-color: #f6f6f5">
+          <div class="mt-3" style="width:300px;float:right">
+            <div class="d-flex pa-2" style="background-color: #f6f6f5">
               <div>Total Amount</div>
               <div class="ml-5">{{ getSingleReceipt.total_amount }}</div>
             </div>
-            <div class="d-flex" style="backgorund-color: #ebebea">
+            <div class="d-flex pa-2" style="background-color: #ebebea">
               <div>Amount Paid</div>
               <div class="ml-5">{{ getSingleReceipt.total_amount }}</div>
             </div>
-            <div class="d-flex" style="backgorund-color: #f6f6f5">
+            <div class="d-flex pa-2" style="background-color: #f6f6f5">
               <div>Balance</div>
               <div class="ml-12">No</div>
             </div>
           </div>
-          <div class="d-flex align-center justify-center">
+          <div class="d-flex align-center justify-center" style="margin-top: 10rem;">
             <b>Powered By GA3QSD</b>
           </div>
           <div class="d-flex align-center justify-center mt-3">

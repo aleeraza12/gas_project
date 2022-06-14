@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="d-flex mt-3">
-          <div><b>Transactions</b></div>
+          <div class="mt-4"><b>Transactions</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
             <v-btn
@@ -71,10 +71,9 @@
             :headers="headers"
             :items="getSales"
             :items-per-page="5"
-            class="elevation-1"
-            hide-default-footer
+               class="elevation-1"
             hide-default-header
-            height="400px"
+            height="260px"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">

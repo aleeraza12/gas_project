@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="d-flex mt-3">
-          <div><b>Reconcilation</b></div>
+          <div class="mt-4"><b>Reconcilations</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
             Export Csv

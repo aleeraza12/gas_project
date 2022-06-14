@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="d-flex mt-3">
-          <div><b>History</b></div>
+          <div class="mt-4"><b>History</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
             <v-btn
@@ -81,9 +81,8 @@
             :items="getAllDepos"
             :items-per-page="5"
             class="elevation-1"
-            hide-default-footer
             hide-default-header
-            height="400px"
+            height="260px"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">

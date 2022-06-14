@@ -215,20 +215,14 @@
           </div>
           <div
             v-else
-            class="d-flex justify-center align-center pa-10"
-            style="
-              width: 24%;
-              height: 20%;
-              margin-top: 5rem;
-              margin-left: 13rem;
-            "
+            class="d-flex justify-center align-center"
           >
             <v-avatar size="136px">
               <img :src="decodedBase64" alt="John" />
             </v-avatar>
           </div>
           <div
-            class="d-flex justify-center align-center"
+          
             style="margin-top: 2rem"
           >
             <label for="file-input">

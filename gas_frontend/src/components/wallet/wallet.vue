@@ -45,7 +45,7 @@
           </div>-->
         </div>
         <div class="d-flex mt-3">
-          <div><b>Withdraw History</b></div>
+          <div class="mt-4"><b>Withdraw History</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
             <v-btn
@@ -70,9 +70,9 @@
             :items="getWallet"
             :items-per-page="5"
             class="elevation-1"
-            hide-default-footer
+    
             hide-default-header
-            height="400px"
+            height="260px"
             :search="search"
             :loading="tableloading"
           >
