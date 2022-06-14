@@ -152,7 +152,7 @@
                 <template v-slot:item.payment_mode="{ item }" class="ml-3">
                   {{ item.payment_mode ? item.payment_mode : "---" }}
                 </template>
-                <!--<template v-slot:item.actions="{ item }">
+                <template v-slot:item.actions="{ item }">
                   <v-icon small class="mr-2" @click="ViewReceipt(item)">
                     mdi-eye
                   </v-icon>
@@ -165,8 +165,8 @@
                 :headers="headers"
                 :items="getPurchasedTransaction"
                 :items-per-page="5"
-                   class="elevation-1"
-                  style="border:1px solid rgb(235, 235, 234)"
+                class="elevation-1"
+                style="border: 1px solid rgb(235, 235, 234)"
                 hide-default-header
                 height="210px"
                 :search="search"

@@ -1,6 +1,6 @@
 <template>
   <div class="no-print">
-    <v-card class="sidebar-card elevation-0">
+    <v-card class="sidebar-card elevation-0 no-print">
       <v-navigation-drawer
         v-model="drawer"
         :mini-variant.sync="mini"

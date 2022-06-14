@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="main-container d-flex align-center justify-center no-print"
-    id="printAble"
-  >
-    <v-card class="elevation-1" width="700">
+  <div class="main-container d-flex align-center justify-center no-print">
+    <v-card class="elevation-1" width="700" id="printAble">
       <v-card-text>
         <div class="sales-details-page">
           <div
@@ -190,7 +187,7 @@ export default {
       let WinPrint = window.open(
         "",
         "",
-        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+        "left=0,top=0,width=700,height=700,toolbar=0,scrollbars=0,status=0"
       );
 
       WinPrint.document.write(`<!DOCTYPE html>
@@ -231,5 +228,9 @@ export default {
   .no-print * {
     display: none !important;
   }
+}
+@page {
+  size: auto;
+  margin: 0mm;
 }
 </style>
