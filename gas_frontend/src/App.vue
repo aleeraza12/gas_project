@@ -50,6 +50,11 @@ html::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
+.v-navigation-drawer__content {
+    height: 100%;
+    overflow-y: hidden !important;
+    overflow-x: hidden;
+}
 #nav {
   padding: 30px;
 }

@@ -3,7 +3,7 @@
       <div>
         <Sidebar />
       </div>
-       <v-main>
+       <v-main >
          <v-container fluid>
        <router-view></router-view>
       </v-container>
