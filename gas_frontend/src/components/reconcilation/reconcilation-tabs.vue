@@ -81,9 +81,9 @@
                 :items="getSalesTransaction"
                 :items-per-page="5"
                 class="elevation-1"
-                hide-default-footer
+                  style="border:1px solid rgb(235, 235, 234)"
                 hide-default-header
-                height="400px"
+                height="210px"
                 :search="search"
                 :loading="loading"
               >
@@ -125,10 +125,10 @@
                 :headers="headers"
                 :items="getPurchasedTransaction"
                 :items-per-page="5"
-                class="elevation-1"
-                hide-default-footer
+                   class="elevation-1"
+                  style="border:1px solid rgb(235, 235, 234)"
                 hide-default-header
-                height="400px"
+                height="210px"
                 :search="search"
                 :loading="loading"
               >
