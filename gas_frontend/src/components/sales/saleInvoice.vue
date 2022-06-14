@@ -133,7 +133,7 @@
             </div>
           </div>
           <div
-            class="d-flex align-center justify-center"
+            class="d-flex align-center justify-center no-print"
             style="margin-top: 10rem"
           >
             <b>Powered By GA3QSD</b>
@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     printReceipt(printAble) {
-      let prtContent = document.getElementById(printAble);
+      let prtContent = document.getElementById(printAble).outerHTML;
       let stylesHtml = "";
       for (const node of [
         ...document.querySelectorAll('link[rel="stylesheet"], style'),
@@ -218,8 +218,7 @@ export default {
 };
 </script>
 <style scoped>
-.sales-details-page {
-}
+
 .fonts {
   font-size: 12px;
 }
@@ -229,8 +228,8 @@ export default {
     display: none !important;
   }
 }
-@page {
+/*@page {
   size: auto;
   margin: 0mm;
-}
+}*/
 </style>
