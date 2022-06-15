@@ -18,6 +18,7 @@
                 <img
                   height="100"
                   width="100"
+                  style="border-radius: 50%"
                   :src="
                     'data:image/jpeg;base64,' +
                     getSingleReceipt.company_profile_picture
@@ -31,9 +32,13 @@
 
             <v-spacer></v-spacer>
             <div class="mr-5">
-              <!--<div><b>LIT Engineers</b></div>-->
-              <!--<div class="fonts"><b>18,chokar town auto street 19</b></div>
-              <div class="fonts">015980000045</div>-->
+              <div>
+                <b>{{ getSingleReceipt.updated_by }}</b>
+              </div>
+              <div class="fonts">
+                <b>{{ getSingleReceipt.company_address }}</b>
+              </div>
+              <!--<div class="fonts">015980000045</div>-->
             </div>
           </div>
           <div class="mb-3"><b>Sales Recepit</b></div>
@@ -49,23 +54,28 @@
               <!--<div class="d-flex align-start justify-start fonts">
                 distributor
               </div>-->
-              <div class="d-flex align-start justify-start">
-                <b>{{ getSingleReceipt.customer_name }}</b>
-              </div>
-              <div class="d-flex align-start justify-start fonst">
-                {{ getSingleReceipt.customer_phone_number }}
+              <div class="d-flex align-start justify-start fonts">
+                <b> Customer Name:</b>
+                <b class="ml-2">{{ getSingleReceipt.customer_name }}</b>
               </div>
               <div class="d-flex align-start justify-start fonts">
-                {{ getSingleReceipt.customer_address }}
+                <b> Customer Phone#:</b>
+                <b class="ml-2">
+                  {{ getSingleReceipt.customer_phone_number }}</b
+                >
+              </div>
+              <div class="d-flex align-start justify-start fonts">
+                <b> Customer Address:</b>
+                <b class="ml-2">{{ getSingleReceipt.customer_address }}</b>
               </div>
             </div>
             <v-spacer></v-spacer>
             <div class="mr-8 mt-3">
-              <div class="fonts">Transcation Id</div>
-              <div class="fonts">
+              <div class="font-weight-bold">Transcation Id</div>
+              <div class="font-weight-bold">
                 00000{{ getSingleReceipt.transaction_id }}
               </div>
-              <div class="fonts">
+              <div class="font-weight-bold">
                 {{ getDate(getSingleReceipt.created_at) }}
               </div>
             </div>
@@ -74,14 +84,18 @@
           <div class="d-flex" style="background-color: #ebebea">
             <div class="ml-5 mt-3">
               <div class="d-flex">
-                <div class="fonts"><b>Payment Method:</b></div>
-                <div class="fonts">{{ getSingleReceipt.payment_mode }}</div>
+                <div class="font-weight-bold"><b>Payment Method:</b></div>
+                <div class="font-weight-bold ml-2">
+                  {{ getSingleReceipt.payment_mode }}
+                </div>
               </div>
             </div>
             <v-spacer></v-spacer>
             <div class="mr-8 mt-3">
-              <div class="fonts">Amount Paid</div>
-              <div class="fonts">{{ getSingleReceipt.total_amount }}</div>
+              <div class="font-weight-bold">Amount Paid</div>
+              <div class="font-weight-bold">
+                {{ getSingleReceipt.total_amount }}
+              </div>
             </div>
           </div>
           <div class="mt-3">
@@ -118,28 +132,35 @@
               </template>
             </v-simple-table>
           </div>
-          <v-divider></v-divider>
-          <div class="mt-5" style="width: 300px; float: right">
+          <v-divider class="no-print"></v-divider>
+          <div
+            class="mt-5"
+            style="width: 300px; float: right; margin-top: 20px"
+          >
             <div class="d-flex pa-2" style="background-color: #f6f6f5">
-              <div>Total Amount</div>
-              <div class="ml-5">{{ getSingleReceipt.total_amount }}</div>
+              <div class="font-weight-bold">Total Amount</div>
+              <div class="ml-5 font-weight-bold">
+                {{ getSingleReceipt.total_amount }}
+              </div>
             </div>
             <div class="d-flex pa-2" style="background-color: #ebebea">
-              <div>Amount Paid</div>
-              <div class="ml-5">{{ getSingleReceipt.total_amount }}</div>
+              <div class="font-weight-bold">Amount Paid</div>
+              <div class="ml-5 font-weight-bold">
+                {{ getSingleReceipt.total_amount }}
+              </div>
             </div>
             <div class="d-flex pa-2" style="background-color: #f6f6f5">
-              <div>Balance</div>
-              <div class="ml-12">No</div>
+              <div class="font-weight-bold">Balance</div>
+              <div class="ml-12 font-weight-bold">No</div>
             </div>
           </div>
           <div
             class="d-flex align-center justify-center no-print"
             style="margin-top: 10rem"
           >
-            <b>Powered By GA3QSD</b>
+            <b class="no-print">Powered By GA3QSD</b>
           </div>
-          <div class="d-flex align-center justify-center mt-3">
+          <div class="d-flex align-center justify-center mt-3 no-print">
             <v-btn
               @click="printReceipt('printAble')"
               small
@@ -174,21 +195,21 @@ export default {
     }
   },
   methods: {
-    printReceipt(printAble) {
-      let prtContent = document.getElementById(printAble).outerHTML;
+    printReceipt() {
+      let prtContent = document.getElementById("printAble").outerHTML;
       let stylesHtml = "";
       for (const node of [
         ...document.querySelectorAll('link[rel="stylesheet"], style'),
       ]) {
         stylesHtml += node.outerHTML;
-        console.log(stylesHtml);
+        //console.log(stylesHtml);
       }
 
       // Open the print window
       let WinPrint = window.open(
         "",
         "",
-        "left=0,top=0,width=700,height=900,toolbar=0,scrollbars=0,status=0"
+        "left=0,top=0,width=700,height=900,toolbar=1,scrollbars=1,status=1"
       );
 
       WinPrint.document.write(`<!DOCTYPE html>
@@ -202,8 +223,8 @@ export default {
     </html>`);
       setTimeout(() => {
         WinPrint.document.write(prtContent.innerHTML);
-        //WinPrint.document.close();
-        //WinPrint.focus();
+        WinPrint.document.close();
+        WinPrint.focus();
         WinPrint.print();
         WinPrint.close();
       }, 100);
@@ -226,6 +247,14 @@ export default {
   .no-print,
   .no-print * {
     display: none !important;
+  }
+}
+@media print {
+  @page {
+    margin: 0;
+  }
+  body {
+    margin: 1.6cm;
   }
 }
 /*@page {

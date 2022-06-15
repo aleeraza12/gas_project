@@ -65,6 +65,7 @@ class SaleController extends Controller
             $sale['customer_name'] =  $customer->name;
             $sale['customer_address'] =   $customer->address;
             $sale['company_profile_picture']   = $name['company_profile_picture'];
+            $sale['company_address']   = $name['address'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
@@ -81,6 +82,7 @@ class SaleController extends Controller
             $sale['customer_name'] =  $customer->name;
             $sale['customer_address'] =   $customer->address;
             $sale['company_profile_picture']   = $name['company_profile_picture'];
+            $sale['company_address']   = $name['address'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
