@@ -23,7 +23,7 @@
       </div>
       <v-spacer></v-spacer>
       <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
-        <div style="font-size: 16px; margin-right: 0.5rem">
+        <div style="font-size: 16px" class="ml-13 display-end">
           Current gas price
         </div>
 
@@ -32,8 +32,8 @@
             v-if="priceLoader"
             type="list-item-avatar-three-line"
           ></v-skeleton-loader>
-          <div v-else-if="!priceLoader">
-            <b style="font-size: 24px" class="ml-16" v-if="getPrice"
+          <div v-else-if="!priceLoader" class="ml-16">
+            <b style="font-size: 22px" v-if="getPrice"
               >N{{ getPrice.price_per_twenty_million_ton }}</b
             >
             <b style="font-size: 16px" class="ml-5" v-else>Not set</b>
@@ -41,14 +41,14 @@
           <div
             v-if="!priceLoader"
             @click="setModal()"
-            class="mt-3 ml-7"
+            class="mt-3 ml-15"
             style="font-size: 13px; text-decoration: underline; cursor: pointer"
           >
             <b v-if="!priceLoader">edit</b>
           </div>
         </div>
-        <div class="mr-14" v-if="!priceLoader && getPrice">
-          {{ getPrice.created_at }}
+        <div v-if="!priceLoader && getPrice" class="mr-2">
+          <p>{{ getPrice.created_at }}</p>
         </div>
       </div>
     </div>
@@ -98,7 +98,12 @@
                   <b>{{ getDashboardData.total_customer }}</b>
                 </div>
                 <div class="d-flex align-start justify-start">
-                  0 New Customers
+                  {{
+                    getDashboardData.new_customer == []
+                      ? 0
+                      : getDashboardData.new_customer
+                  }}
+                  New Customers
                 </div>
               </div>
               <v-spacer></v-spacer>
@@ -132,9 +137,9 @@
                 <div class="d-flex align-start justify-start">
                   <b>{{ getDashboardData.total_sales }} ₦</b>
                 </div>
-                <div class="d-flex align-start justify-start mt-7">
+                <!--<div class="d-flex align-start justify-start mt-7">
                   45 New Connections
-                </div>
+                </div>-->
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">

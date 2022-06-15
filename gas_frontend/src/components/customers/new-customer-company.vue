@@ -213,18 +213,12 @@
               style="position: relative"
             />
           </div>
-          <div
-            v-else
-            class="d-flex justify-center align-center"
-          >
+          <div v-else class="d-flex justify-center align-center">
             <v-avatar size="136px">
               <img :src="decodedBase64" alt="John" />
             </v-avatar>
           </div>
-          <div
-          
-            style="margin-top: 2rem"
-          >
+          <div style="margin-top: 2rem">
             <label for="file-input">
               <b style="text-decoration: underline" class="pointer"
                 >Change Image</b
@@ -312,6 +306,7 @@ export default {
     city: "",
     state: "",
     plant: "",
+    update: false,
     data: JSON.parse(localStorage.getItem("user")),
     plants: ["plant 1", "plant 2", "plant 3", "plant 4", "plant 5"],
     nameRules: [(v) => !!v || "This field is required"],
@@ -361,6 +356,8 @@ export default {
       this.address = this.data.address;
       this.password = "";
       this.id = this.data.id;
+      this.update = true;
+
       if (
         this.data.company_profile_picture &&
         this.data.company_profile_picture != null
@@ -381,6 +378,7 @@ export default {
         gas_plant_type: this.plant,
         address: this.address,
         password: this.password,
+        update_able: this.update,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
       };
       if (this.loggedinUser.company_email == "superadmin@gmail.com")

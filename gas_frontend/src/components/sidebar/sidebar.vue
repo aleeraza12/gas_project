@@ -19,8 +19,9 @@
           </v-list-item-avatar>
         </v-list-item>
         <v-divider></v-divider>
-        <v-list dense>
+        <v-list>
           <v-list-item
+            dense
             @click="Logout(link)"
             class="d-flex align-center pl-4 sidebar-item"
             v-for="(link, i) in showable_links"
@@ -35,7 +36,7 @@
                 class="mr-7 py-4"
                 :color="link.color"
                 v-text="link.icon"
-                size="25"
+                size="19"
               ></v-icon>
             </div>
             <v-tooltip

@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container d-flex align-center justify-center no-print">
-    <v-card class="elevation-1" width="700" id="printAble">
+  <div class="main-container d-flex align-center justify-center" id="printAble">
+    <v-card class="elevation-1" width="700">
       <v-card-text>
         <div class="sales-details-page">
           <div
@@ -16,11 +16,12 @@
                 v-if="getSingleReceipt.company_profile_picture"
               >
                 <img
+                  height="100"
+                  width="100"
                   :src="
                     'data:image/jpeg;base64,' +
                     getSingleReceipt.company_profile_picture
                   "
-                  alt="John"
                 />
               </v-avatar>
               <v-icon class="ml-10" size="80" color="#EBEBEA" v-else>
@@ -30,7 +31,7 @@
 
             <v-spacer></v-spacer>
             <div class="mr-5">
-              <div><b>LIT Engineers</b></div>
+              <!--<div><b>LIT Engineers</b></div>-->
               <!--<div class="fonts"><b>18,chokar town auto street 19</b></div>
               <div class="fonts">015980000045</div>-->
             </div>
@@ -187,7 +188,7 @@ export default {
       let WinPrint = window.open(
         "",
         "",
-        "left=0,top=0,width=700,height=700,toolbar=0,scrollbars=0,status=0"
+        "left=0,top=0,width=700,height=900,toolbar=0,scrollbars=0,status=0"
       );
 
       WinPrint.document.write(`<!DOCTYPE html>
@@ -218,7 +219,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .fonts {
   font-size: 12px;
 }

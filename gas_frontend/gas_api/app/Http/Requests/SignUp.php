@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class SignUp extends FormRequest
 {
@@ -24,7 +25,7 @@ class SignUp extends FormRequest
     public function rules()
     {
         $array['owner_name'] = 'required|string';
-        $array['company_email'] = 'required|email';
+        $array['company_email'] = 'required|unique:companies,company_email,' . $this->company_id;
         $array['company_name'] = 'required';
         $array['password'] = 'required';
         $array['company_phone_number'] = 'required';

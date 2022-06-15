@@ -65,6 +65,7 @@ class General extends Controller
         $response['total_gas_price'] = Purchase::where('company_id', $request->company_id)->sum('amount');
         $response['total_customer'] = Customer::where('company_id', $request->company_id)->count();
         $response['total_sales'] = Sale::where('company_id', $request->company_id)->sum('total_amount');
+        $response['new_customer'] = Customer::where('company_id', $request->company_id)->whereDate('created_at', date('Y-m-d'))->count();
         return response()->json(['response' => $response, 'status' => 200]);
     }
 
@@ -74,6 +75,7 @@ class General extends Controller
         $response['total_gas_price'] = Purchase::sum('amount');
         $response['total_customer'] = Customer::count();
         $response['total_sales'] = Sale::sum('total_amount');
+        $response['new_customer'] = Customer::whereDate('created_at', date('Y-m-d'))->count();
         return response()->json(['response' => $response, 'status' => 200]);
     }
 }
