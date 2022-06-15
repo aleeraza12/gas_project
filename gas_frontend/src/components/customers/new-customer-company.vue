@@ -435,7 +435,8 @@ export default {
             if (i > 0) {
               fileType = file.name.substring(i + 1);
             }
-            if (fileType == "jpg" || fileType == "png") {
+            console.log(fileType);
+            if (fileType == "jpg") {
               fileType = "jpeg";
             }
             if (fileType == "PNG") {
