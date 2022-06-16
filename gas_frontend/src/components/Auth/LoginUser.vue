@@ -4,13 +4,20 @@
       <v-card-text class="pa-0">
         <div class="d-flex">
           <div class="grey-side">
-            <div class="inner-box"></div>
-            <div class="content-welcome d-flex align-start justify-start">
-              Welcome Back!
+            <div style="position: absolute;">
+              <img src="../../assets/images/sidePic.png" width="650"/>
             </div>
-            <div class="sub-content-welcome d-flex align-start justify-start">
-              Sign in to access your dashboard
+            <div style="position:relative;margin-top:15rem" >
+              <img src="../../assets/images/side2.png" />
             </div>
+            <div style="position:relative"  class="mt-6" >
+              <span style="font-size:20px;color: #fff;"><b>Welcome</b></span>
+            </div>
+              <div class="mt-5" style="position:relative;font-size: 14px; color: #fff;">
+             <span>Sign in to access your dashboard</span>
+            </div>
+            <!-- <div class="inner-box"></div> -->
+            
           </div>
           <div class="login-screen">
             <div class="sign-in-content d-flex align-start justify-start">
@@ -58,11 +65,10 @@
                 </div>
               </div>
               <div class="forget-passowrd mt-3"></div>
-              <div class="mt-10 ml-16">
+              <div class="mt-10 mr-8">
                 <v-btn
-                  block
-                  large
-                  class="elevation-0 btn-login"
+                  small
+                  class="elevation-0 btn-login "
                   @click="login()"
                   :loading="loading"
                   dense
@@ -275,10 +281,10 @@ export default {
   cursor: pointer;
 }
 .btn-login {
-  background-color: #464646 !important;
+  background-color: #2E3995 !important;
   color: #fff;
-  min-width: 400px !important;
-  border-radius: 8px !important;
+  min-width: 200px !important;
+  border-radius: 20px !important;
   cursor: pointer;
 }
 </style>
