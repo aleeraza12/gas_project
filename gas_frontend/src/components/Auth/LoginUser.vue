@@ -16,8 +16,6 @@
               <div class="mt-5" style="position:relative;font-size: 14px; color: #fff;">
              <span>Sign in to access your dashboard</span>
             </div>
-            <!-- <div class="inner-box"></div> -->
-            
           </div>
           <div class="login-screen">
             <div class="sign-in-content d-flex align-start justify-start">

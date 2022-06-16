@@ -3,23 +3,22 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
+
           <div class="grey-side">
-            <div class="inner-box"></div>
-            <div class="content-welcome d-flex align-start justify-start">
-              Hello!
+            <div style="position: absolute;">
+              <img src="../../assets/images/sidePic.png" height="600" width="750"/>
             </div>
-            <div class="sub-content-welcome d-flex align-start justify-start">
-              Welcome to GAS360 where you are guaranteed <br />
-              access to clean cooking LPG fuel
+            <div style="position:relative;margin-top:15rem" >
+              <img src="../../assets/images/side2.png" />
+            </div>
+            <div style="position:relative"  class="mt-6" >
+              <span style="font-size:20px;color: #fff;"><b> Hello!</b></span>
+            </div>
+              <div class="mt-5" style="position:relative;font-size: 14px; color: #fff;">
+             <span>  Welcome to GAS360 where you are guaranteed <br />
+              access to clean cooking LPG fuel</span>
             </div>
           </div>
-            <div class="create-screen">
-              <div class="sign-in-content d-flex align-start justify-start">
-                Welcome
-            </div>
-            <div class="sign-in-subcontent d-flex align-start justify-start">
-              Create your account to get started
-            </div>
             <v-form v-model="valid">
               <div>
                 <v-text-field
@@ -155,7 +154,7 @@
                   >Already have an account? Login</span
                 >
               </div>
-              <div class="mt-5 ml-16">
+              <div class="mt-5" style="margin-left:10rem">
                 <v-btn
                   block
                   large
@@ -170,7 +169,7 @@
               </div>
             </v-form>
           </div>
-        </div>
+
       </v-card-text>
     </v-card>
     <v-snackbar
@@ -384,10 +383,10 @@ export default {
   border-radius: 8px;
 }
 .btn-create {
-  background-color: #464646 !important;
+  background-color: #2E3995 !important;
   color: #fff;
-  min-width: 400px !important;
-  border-radius: 8px !important;
+  min-width: 200px !important;
+  border-radius: 20px !important;
   cursor: pointer;
 }
 </style>
