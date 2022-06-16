@@ -37,7 +37,7 @@ const router = new VueRouter({
       meta: { layout: "simple", title: "Mail Sent" },
       component: require("@/views/Pages/emailSent").default,
     },
-    
+
     {
       path: "/pageNotFound",
       name: "pageNotFound",
@@ -117,12 +117,14 @@ const router = new VueRouter({
       path: "/sales",
       name: "Sales",
       beforeEnter: (to, from, next) => {
+        console.log("nsde router");
         setTimeout(() => {
           if (
             !JSON.parse(localStorage.getItem("user")).permissions.includes(
               "Sales"
             )
           ) {
+            console.log("nsde router");
             store.dispatch("checkRouteExistence");
           } else {
             next();
@@ -448,19 +450,19 @@ const router = new VueRouter({
     {
       path: "/new-customer-company",
       name: "new-customer-company",
-      // beforeEnter: (to, from, next) => {
-      //   setTimeout(() => {
-      //     if (
-      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
-      //         "Customers"
-      //       )
-      //     ) {
-      //       store.dispatch("checkRouteExistence");
-      //     } else {
-      //       next();
-      //     }
-      //   }, 10);
-      // },
+      //beforeEnter: (to, from, next) => {
+      //  setTimeout(() => {
+      //    if (
+      //      !JSON.parse(localStorage.getItem("user")).permissions.includes(
+      //        "Settings" 
+      //      )
+      //    ) {
+      //      store.dispatch("checkRouteExistence");
+      //    } else {
+      //      next();
+      //    }
+      //  }, 10);
+      //},
       meta: { layout: "app", title: "new-customer-company" },
       component: require("./components/customers/new-customer-company").default,
     },
@@ -525,18 +527,18 @@ const router = new VueRouter({
   ],
 });
 //route guard
-// router.beforeEach(async (to, from, next) => {
-//   if (to.matched.some((record) => record.meta.requireAuth)) {
-//     if (!localStorage.getItem("token")) {
-//       next({
-//         name: "Login",
-//       });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requireAuth)) {
+    if (!localStorage.getItem("token")) {
+      next({
+        name: "Login",
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

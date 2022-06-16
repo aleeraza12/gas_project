@@ -16,8 +16,8 @@
                 v-if="getSingleReceipt.company_profile_picture"
               >
                 <img
-                  height="100"
-                  width="100"
+                  height="45"
+                  width="45"
                   style="border-radius: 50%"
                   :src="
                     'data:image/jpeg;base64,' +
@@ -162,7 +162,7 @@
           </div>
           <div class="d-flex align-center justify-center mt-3 no-print">
             <v-btn
-              @click="printReceipt('printAble')"
+              @click="print"
               small
               dense
               class="no-print"
@@ -195,6 +195,11 @@ export default {
     }
   },
   methods: {
+    print() {
+      console.log("called");
+      // Pass the element id here
+      this.$htmlToPaper("printAble");
+    },
     printReceipt() {
       let prtContent = document.getElementById("printAble").outerHTML;
       let stylesHtml = "";
@@ -240,23 +245,7 @@ export default {
 };
 </script>
 <style scoped>
-.fonts {
-  font-size: 12px;
-}
-@media print {
-  .no-print,
-  .no-print * {
-    display: none !important;
-  }
-}
-@media print {
-  @page {
-    margin: 0;
-  }
-  body {
-    margin: 1.6cm;
-  }
-}
+
 /*@page {
   size: auto;
   margin: 0mm;
