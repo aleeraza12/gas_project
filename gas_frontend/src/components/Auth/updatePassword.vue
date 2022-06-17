@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <v-card>
+    <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
                 <div class="grey-side">
