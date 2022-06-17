@@ -3,7 +3,15 @@
     <v-card>
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side"></div>
+                    <div class="grey-side">
+            <div style="position: absolute;">
+              <img src="../../assets/images/sidePic.png" height="670" width="630"/>
+            </div>
+            <div style="position:relative;margin-top:15rem" >
+              <img src="../../assets/images/side2.png" />
+            </div>
+           
+          </div>
           <div class="login-screen">
             <div
               class="d-flex align-start justify-start pointer mt-5"
@@ -30,7 +38,7 @@
                   v-model="email"
                 ></v-text-field>
               </div>
-              <div class="mt-10 ml-16">
+              <div class="mt-10">
                 <v-btn
                   block
                   large
@@ -137,12 +145,12 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-  height: 100vh;
+  /* height: 100vh; */
   width: 746px;
   left: 0px;
   top: 0px;
   border-radius: 0px;
-  background-color: #ebebea;
+  /* background-color: #ebebea; */
 }
 .login-screen {
   height: 100vh;
@@ -204,11 +212,12 @@ export default {
   margin-left: 23rem;
 }
 .btn-login {
-  background-color: #464646 !important;
+  background-color: #2E3995 !important;
   color: #fff;
-  min-width: 400px !important;
-  border-radius: 8px !important;
+  min-width: 200px !important;
   cursor: pointer;
+   border-radius: 20px !important;
+  margin-left: 10rem;
 }
 .pointer {
   cursor: pointer;

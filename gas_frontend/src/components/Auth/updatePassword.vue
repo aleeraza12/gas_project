@@ -3,7 +3,15 @@
     <v-card>
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side"></div>
+                <div class="grey-side">
+            <div style="position: absolute;">
+              <img src="../../assets/images/sidePic.png" height="670" width="750"/>
+            </div>
+            <div style="position:relative;margin-top:15rem" >
+              <img src="../../assets/images/side2.png" />
+            </div>
+           
+          </div>
           <div class="login-screen">
             <div
               class="d-flex align-start justify-start pointer mt-5"
@@ -161,12 +169,12 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-  height: 100vh;
+  /* height: 100vh; */
   width: 746px;
   left: 0px;
   top: 0px;
   border-radius: 0px;
-  background-color: #ebebea;
+  /* background-color: #ebebea; */
 }
 .login-screen {
   height: 100vh;
