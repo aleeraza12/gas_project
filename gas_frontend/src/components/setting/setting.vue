@@ -70,6 +70,7 @@
               </template>
               <template v-slot:item.delete="{ item }">
                 <v-icon
+                  color="red"
                   small
                   class="mr-2"
                   @click="setCRUDItems(item, 'delete', 'Customer Type')"
@@ -115,6 +116,7 @@
               </template>
               <template v-slot:item.delete="{ item }">
                 <v-icon
+                  color="red"
                   small
                   class="mr-2"
                   @click="setCRUDItems(item, 'delete', 'Payment Mode')"
@@ -161,6 +163,7 @@
               <template v-slot:item.delete="{ item }">
                 <v-icon
                   small
+                  color="red"
                   class="mr-2"
                   @click="setCRUDItems(item, 'delete', 'User Type')"
                 >
@@ -205,6 +208,7 @@
               </template>
               <template v-slot:item.delete="{ item }">
                 <v-icon
+                  color="red"
                   small
                   class="mr-2"
                   @click="setCRUDItems(item, 'delete', 'State')"

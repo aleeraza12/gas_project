@@ -156,7 +156,6 @@ export default {
         color: "black",
       },
     ],
-    permissions: JSON.parse(localStorage.getItem("user")).permissions,
     mini: false,
     showable_links: [],
   }),
@@ -177,10 +176,13 @@ export default {
   watch: {},
   methods: {
     setPerimssions() {
+      console.log("ths functn called for permsson");
+      let permissions = JSON.parse(localStorage.getItem("user")).permissions;
+
       this.showable_links = [];
-      for (let j = 0; j < this.permissions.length; j++) {
+      for (let j = 0; j < permissions.length; j++) {
         for (let w = 0; w < this.links.length; w++) {
-          if (this.links[w].text === this.permissions[j])
+          if (this.links[w].text === permissions[j])
             this.showable_links.push(this.links[w]);
         }
       }

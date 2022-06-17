@@ -39,14 +39,14 @@ class MailController extends Controller
     public function verify_otp(Request $request)
     {
         $email = Company::where('company_email', $request->email)->first();
-        $otp = Auth::where('email', $request->email)->where('otp', $request->otp)->OrderBy('created_at')->first();
-        if ($otp && $email) {
+        $otp = Auth::where('email', $request->email)->OrderByDesc('created_at')->first();
+        if ($otp && $email && $otp->otp === $request->otp) {
             $date2 = Carbon::create(Carbon::now());
             $date1 = Carbon::parse($otp->expire_at);
             if ($date1->lte($date2))
                 return response()->json(['response' => 'OTP expired', 'status' => 400]);
             else {
-                Auth::where('otp', $request->otp)->delete();
+                Auth::where('email', $request->email)->delete();
                 return response()->json(['response' => 'OTP verified', 'status' => 200]);
             }
         } else
