@@ -6,7 +6,7 @@
 
           <div class="grey-side">
             <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="600" width="750"/>
+              <img src="../../assets/images/sidePic.png" height="670" width="750"/>
             </div>
             <div style="position:relative;margin-top:15rem" >
               <img src="../../assets/images/side2.png" />
@@ -19,7 +19,7 @@
               access to clean cooking LPG fuel</span>
             </div>
           </div>
-            <v-form v-model="valid">
+            <v-form v-model="valid" class="mt-10">
               <div>
                 <v-text-field
                   label="Owners Full Name"
@@ -310,12 +310,11 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-  height: 100vh;
+
   width: 746px;
   left: 0px;
   top: 0px;
   border-radius: 0px;
-  background-color: #ebebea;
 }
 .create-screen {
   height: 100vh;

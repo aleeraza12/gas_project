@@ -209,7 +209,6 @@ export default {
   left: 0px;
   top: 0px;
   border-radius: 0px;
-  background-color: #ebebea;
 }
 .login-screen {
   height: 100vh;
