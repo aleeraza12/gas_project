@@ -5,7 +5,7 @@
         <div class="d-flex">
                 <div class="grey-side">
             <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="670" width="750"/>
+              <img src="../../assets/images/sidePic.png" height="670" width="650"/>
             </div>
             <div style="position:relative;margin-top:15rem" >
               <img src="../../assets/images/side2.png" />
@@ -237,10 +237,11 @@ export default {
   cursor: pointer;
 }
 .btn-login {
-  background-color: #464646 !important;
+  background-color: #2E3995 !important;
   color: #fff;
-  min-width: 400px !important;
-  border-radius: 8px !important;
+  min-width: 200px !important;
   cursor: pointer;
+   border-radius: 20px !important;
+  margin-left: 7rem;
 }
 </style>
