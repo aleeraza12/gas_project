@@ -5,7 +5,7 @@
         <div class="d-flex">
           <div class="grey-side">
             <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" width="650"/>
+              <img src="../../assets/images/sidePic.png" height="670" width="650"/>
             </div>
             <div style="position:relative;margin-top:15rem" >
               <img src="../../assets/images/side2.png" />
@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div class="forget-passowrd mt-3"></div>
-              <div class="mt-10 mr-8">
+              <div class="mt-10 d-flex align-center justify-center">
                 <v-btn
                   small
                   class="elevation-0 btn-login "
@@ -204,7 +204,6 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-  height: 100vh;
   width: 746px;
   left: 0px;
   top: 0px;
@@ -283,5 +282,6 @@ export default {
   min-width: 200px !important;
   border-radius: 20px !important;
   cursor: pointer;
+  margin-right:8rem;
 }
 </style>
