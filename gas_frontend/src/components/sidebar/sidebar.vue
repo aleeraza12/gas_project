@@ -24,7 +24,7 @@
             dense
             @click="Logout(link)"
             class="d-flex align-center pl-4 sidebar-item"
-            v-for="(link, i) in showable_links"
+            v-for="(link, i) in links"
             :key="i"
             router
             @click.stop="mini = !mini"
@@ -76,84 +76,84 @@ export default {
         icon: "mdi-view-dashboard",
         route: "/dashboard",
         tabName: "Dashboard",
-        color: "black",
+        color: "#fff",
       },
       {
         text: "Orders",
         icon: "mdi-chart-line",
         route: "/orders",
         tabName: "Orders",
-        color: "black",
+            color: "#fff",
       },
       {
         text: "Companies",
         icon: "mdi-home-modern",
         route: "/companies",
         tabName: "Companies",
-        color: "black",
+           color: "#fff",
       },
       {
         text: "Sales",
         icon: "mdi-cart-outline",
         route: "/sales",
         tabName: "Sales",
-        color: "black",
+           color: "#fff",
       },
       {
         text: "Purchases",
         icon: "mdi-shopping",
         route: "/purchases",
         tabName: "Purchases",
-        color: "black",
+           color: "#fff",
       },
       {
         text: "Customers",
         icon: "mdi-account-multiple-outline",
         route: "/customers",
         tabName: "Customers",
-        color: "black",
+       color: "#fff",
       },
       {
         text: "Users",
         icon: "mdi-account-outline",
         route: "/users",
         tabName: "Users",
-        color: "black",
+            color: "#fff",
       },
       {
         text: "Wallet",
         icon: "mdi-credit-card",
         route: "/wallet",
         tabName: "Wallet",
-        color: "black",
+            color: "#fff",
       },
       {
         text: "Reconciliation",
         icon: "mdi-trackpad",
         route: "/reconcilation",
         tabName: "Reconcilation",
-        color: "black",
+           color: "#fff",
       },
       {
         text: "Settings",
         icon: "mdi-cog",
         route: "/settings",
         tabName: "Settings",
-        color: "black",
+            color: "#fff",
       },
       {
         text: "AdminSettings",
         icon: "mdi-cog",
         route: "/admin-settings",
         tabName: "AdminSettings",
-        color: "black",
+            color: "#fff",
       },
       {
         text: "Logout",
         icon: "mdi-logout",
         route: "/logout",
         tabName: "Logout",
-        color: "black",
+           color: "#fff",
       },
     ],
     mini: false,
@@ -191,7 +191,7 @@ export default {
     getColor(link, titleName, index) {
       titleName == link.tabName
         ? (this.links[index].color = "#215549")
-        : (this.links[index].color = "black");
+        : (this.links[index].color = "#fff");
     },
     Logout(rout) {
       if (rout.text == "Logout") {
@@ -213,16 +213,22 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .sidebar-card {
   height: 100vh;
   border-radius: 0px !important;
 }
 .navaigation-side {
-  background-color: #ebebea !important;
+  background-color: #2B3896 !important;
 }
-.sidebar-item:hover {
+.sidebar-item {
+  color: #fff !important;
+  font-size:14px !important;
+}
+.sidebar-item:active {
   background-color: #fff;
+  color: #2B3896 !important;
 }
 @media print {
   .no-print,
