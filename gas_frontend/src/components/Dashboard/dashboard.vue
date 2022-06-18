@@ -19,10 +19,10 @@
     </div>
     <div class="d-flex mt-2">
       <div>
-        <b> Welcome {{ loggedinUser.owner_name }},</b>
+        <!-- <b> Welcome {{ loggedinUser.owner_name }},</b> -->
       </div>
       <v-spacer></v-spacer>
-      <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
+      <div >
         <div style="font-size: 16px" class="ml-13 display-end">
           Current gas price
         </div>
@@ -55,7 +55,7 @@
 
     <v-row>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" style="background-color: #ebebea">
+        <v-card height="150" style="background-color: #E3FBFF">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -69,17 +69,8 @@
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
                 <img
-                  src="../../assets/images/dashboardicon.png"
+                  src="../../assets/images/1.png"
                   height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 9px;
-                  "
                 />
               </div>
             </div>
@@ -90,7 +81,7 @@
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" class="ml-5" style="background-color: #ebebea">
+        <v-card height="150" class="ml-5" style="background-color: #FFF4D0">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -107,19 +98,10 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-              <div class="d-flex align-end justify-end mt-6">
+             <div class="d-flex align-end justify-end mt-6">
                 <img
-                  src="../../assets/images/dashboardicon.png"
+                  src="../../assets/images/2.png"
                   height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 9px;
-                  "
                 />
               </div>
             </div>
@@ -130,7 +112,7 @@
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" class="ml-5" style="background-color: #ebebea">
+        <v-card height="150" class="ml-5" style="background-color: #EBE8FF">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -144,17 +126,8 @@
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
                 <img
-                  src="../../assets/images/dashboardicon.png"
+                  src="../../assets/images/3.png"
                   height="55"
-                  style="position: absolute"
-                />
-                <img
-                  src="../../assets/images/Chalkboard.png"
-                  style="
-                    position: relative;
-                    margin-bottom: 8px;
-                    margin-right: 9px;
-                  "
                 />
               </div>
             </div>
@@ -167,7 +140,7 @@
     </v-row>
     <div
       class="d-flex mt-3"
-      v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+     
     >
       <div><b>Orders</b></div>
       <v-spacer></v-spacer>
@@ -177,7 +150,7 @@
     </div>
     <div
       class="mt-0"
-      v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+     
     >
       <v-data-table
         :headers="headers"

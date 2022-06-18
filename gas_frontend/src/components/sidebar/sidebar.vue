@@ -7,7 +7,7 @@
         permanent
         class="navaigation-side"
       >
-        <v-list-item class="d-flex align-center justify-center ma-2">
+        <!-- <v-list-item class="d-flex align-center justify-center ma-2">
           <v-list-item-avatar>
             <v-img
               :src="'data:image/jpeg;base64,' + user.company_profile_picture"
@@ -17,7 +17,7 @@
               <v-icon dark> mdi-account-circle </v-icon>
             </v-avatar>
           </v-list-item-avatar>
-        </v-list-item>
+        </v-list-item> -->
         <v-divider></v-divider>
         <v-list>
           <v-list-item
@@ -162,13 +162,13 @@ export default {
   components: {},
   created() {},
   mounted() {
-    let requestBody = {
-      start_date: this.start_date,
-      end_date: this.end_date.concat(" 23:59:00"),
-    };
-    this.$store.dispatch("getUsersListing", requestBody);
-    this.$store.dispatch("getSalesListings", requestBody);
-    this.setPerimssions();
+    // let requestBody = {
+    //   start_date: this.start_date,
+    //   end_date: this.end_date.concat(" 23:59:00"),
+    // };
+    // this.$store.dispatch("getUsersListing", requestBody);
+    // this.$store.dispatch("getSalesListings", requestBody);
+    // this.setPerimssions();
   },
   computed: {
     ...mapGetters(["getSales", "getUsers"]),
