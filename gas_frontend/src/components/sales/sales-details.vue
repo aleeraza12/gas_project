@@ -7,8 +7,18 @@
         </div>
         <v-spacer></v-spacer>
         <div>
-          <v-btn height="35" dense color="#CFCFD0" @click="goToinvoicePage()">
-            <img height="20" width="20" src="../../assets/images/send.png" />
+          <v-btn
+            height="35"
+            min-width="25"
+            dense
+            color="#2e3995"
+            @click="goToinvoicePage()"
+          >
+            <img
+              height="20"
+              width="20"
+              src="../../assets/images/Vector (1).png"
+            />
           </v-btn>
         </div>
       </div>
@@ -353,11 +363,17 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  background-color: #464646 !important;
+  /*background-color: #464646 !important;
   color: #fff;
   min-width: 320px !important;
   border-radius: 8px !important;
+  cursor: pointer;*/
+  background-color: #2e3995 !important;
+  color: #fff;
+  min-width: 310px !important;
+  border-radius: 4px !important;
   cursor: pointer;
+  /*margin-right: 8rem;*/
 }
 .sales-details-page {
   height: 770px;

@@ -37,9 +37,15 @@ const router = new VueRouter({
       meta: { layout: "simple", title: "Mail Sent" },
       component: require("@/views/Pages/emailSent").default,
     },
+    //{
+    //  path: "/logout",
+    //  name: "Logout",
+    //  meta: { layout: "simple", title: "Logout" },
+    //  //component: require("./views/Pages/Logout.vue").default,
+    //},
 
     {
-      path: "/pageNotFound",
+      path: "*",
       name: "pageNotFound",
       meta: { layout: "simple", title: "404" },
       component: require("../src/PageNotFound").default,
@@ -297,19 +303,19 @@ const router = new VueRouter({
 
     {
       path: "/sales-details",
-      // beforeEnter: (to, from, next) => {
-      //   setTimeout(() => {
-      //     if (
-      //       !JSON.parse(localStorage.getItem("user")).permissions.includes(
-      //         "Sales"
-      //       )
-      //     ) {
-      //       store.dispatch("checkRouteExistence");
-      //     } else {
-      //       next();
-      //     }
-      //   }, 10);
-      // },
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Sales"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
       name: "sales-details",
       meta: { layout: "app", title: "sales-details" },
       component: require("./components/sales/sales-details.vue").default,
@@ -454,7 +460,7 @@ const router = new VueRouter({
       //  setTimeout(() => {
       //    if (
       //      !JSON.parse(localStorage.getItem("user")).permissions.includes(
-      //        "Settings" 
+      //        "Settings"
       //      )
       //    ) {
       //      store.dispatch("checkRouteExistence");
@@ -527,18 +533,18 @@ const router = new VueRouter({
   ],
 });
 //route guard
-// router.beforeEach(async (to, from, next) => {
-//   if (to.matched.some((record) => record.meta.requireAuth)) {
-//     if (!localStorage.getItem("token")) {
-//       next({
-//         name: "Login",
-//       });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requireAuth)) {
+    if (!localStorage.getItem("token")) {
+      next({
+        name: "Login",
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

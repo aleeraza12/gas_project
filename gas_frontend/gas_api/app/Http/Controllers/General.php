@@ -61,10 +61,15 @@ class General extends Controller
 
     public function get_dashboard_stats(Request $request)
     {
-        $response['total_gas_quantity'] = Purchase::where('company_id', $request->company_id)->sum('gas_quantity');
-        $response['total_gas_price'] = Purchase::where('company_id', $request->company_id)->sum('amount');
+        $response['total_gas_quantity_purchase'] = Purchase::where('company_id', $request->company_id)->sum('gas_quantity');
+        $response['total_gas_quantity_sale'] = Sale::where('company_id', $request->company_id)->sum('gas_quantity');
+        $response['total_gas_quantity'] = $response['total_gas_quantity_purchase']  -  $response['total_gas_quantity_sale'];
+        $response['total_gas_quantity'] <= 0 && $response['total_gas_quantity'] = 0;
+        $purchase = Purchase::where('company_id', $request->company_id)->sum('amount');
         $response['total_customer'] = Customer::where('company_id', $request->company_id)->count();
         $response['total_sales'] = Sale::where('company_id', $request->company_id)->sum('total_amount');
+        $response['total_gas_price'] =  $purchase -  $response['total_sales'];
+        $response['total_gas_price'] <= 0 && $response['total_gas_price'] = 0;
         $response['new_customer'] = Customer::where('company_id', $request->company_id)->whereDate('created_at', date('Y-m-d'))->count();
         return response()->json(['response' => $response, 'status' => 200]);
     }

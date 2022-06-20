@@ -341,7 +341,7 @@ const store = {
     getAllDepos(context, data) {
       console.log(data);
       let requestBody = {};
-      RequestService.post("depo/read", requestBody).then((response) => {
+      RequestService.post("depo/read_all", requestBody).then((response) => {
         if (response.data.status == 200) {
           context.commit("SET_DEPOS", response.data.response);
           eventBus.$emit("responseArrivedDepo");

@@ -12,19 +12,13 @@ class DepoController extends Controller
     //CRUD for Depo prices
     public function create_depo_price(Request $request)
     {
-        $depo_price = Depos::updateOrCreate(
-            [
-                'id' => $request->depo_id
-            ],
-            [
-                'depo_name' => $request->depo_name,
-                'price_per_twenty_million_ton' => $request->price_per_twenty_million_ton,
-                'location' => $request->location,
-                'company_id' =>  $request->company_id,
-
-            ]
-        );
-        return response()->json(['response' => $depo_price, 'status' => 201]);
+        $depo = new Depos;
+        $depo->depo_name = $request->depo_name;
+        $depo->price_per_twenty_million_ton = $request->price_per_twenty_million_ton;
+        $depo->location = $request->location;
+        $depo->company_id = $request->company_id;
+        $depo->save();
+        return response()->json(['response' => $depo, 'status' => 201]);
     }
 
     public function delete_depo_price(Request $request)
@@ -35,11 +29,17 @@ class DepoController extends Controller
 
     public function read_depo_price(Request $request)
     {
-        $depo_price =  Company::find($request->company_id)->depos;
+        $depo_price =   Company::find($request->company_id)->depos()->OrderByDesc('created_at')->first();
         return response()->json(['response' => $depo_price, 'status' => 200]);
     }
 
-    public function read_all_depo_prices()
+    public function read_company_depos(Request $request)
+    {
+        $depo_prices =   Company::find($request->company_id)->depos()->get()->toArray();
+        return response()->json(['response' => $depo_prices, 'status' => 200]);
+    }
+
+    public function read_all_depo_prices_admin()
     {
         $depo_prices =  Depos::all();
         return response()->json(['response' => $depo_prices, 'status' => 200]);

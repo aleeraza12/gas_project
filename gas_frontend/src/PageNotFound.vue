@@ -13,7 +13,18 @@
 
               <p>the page you are looking for not avaible!</p>
 
-              <a href="" class="link_404">Go to Home</a>
+              <v-btn
+                @click="$router.push('/dashboard')"
+                small
+                dense
+                style="
+                  background-color: #2e3995 !important;
+                  color: #fff;
+
+                  cursor: pointer;
+                "
+                >Go Back</v-btn
+              >
             </div>
           </div>
         </div>
@@ -21,6 +32,39 @@
     </div>
   </section>
 </template>
+<script>
+import axios from "axios";
+//import { mapGetters } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+  mounted() {
+    if (this.$router.history.current.path == "/logout") this.Logout();
+  },
+  methods: {
+    Logout(rout) {
+      console.log("dasdassa");
+      //if (rout.text == "Logout") {
+      this.$router.push("login");
+      let url = this.$store.state.url;
+      let requestBody = {
+        token: localStorage.getItem("token"),
+      };
+      axios.post(url + "logout", requestBody).then(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      });
+    },
+    // else if (rout.text == "Sales" && this.getSales.length == 0) {
+    //  this.$router.push("no-sale");
+    //} else if (rout.text == "Users" && this.getUsers.length == 0) {
+    //  this.$router.push("no-user");
+    //}
+  },
+};
+</script>
+
 <style>
 /*======================
     404 page

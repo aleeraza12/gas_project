@@ -25,7 +25,7 @@ class CompanySeeder extends Seeder
                 'city' =>  'TestCty',
                 'state' => 'Abia',
                 'gas_plant_type' =>  'plant 3',
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Rates',  'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
                 'address' =>  'Test address',
             ]
         );

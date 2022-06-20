@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 class CompanyController extends Controller
 {
 
@@ -26,7 +27,7 @@ class CompanyController extends Controller
                 'city' =>  $request->city,
                 'state' =>  $request->state,
                 'gas_plant_type' =>  $request->gas_plant_type,
-                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'] : ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
+                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Rates', 'Sales', 'Purchases', 'AdminSettings', 'Companies'] : ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
                 'company_profile_picture' =>  $request->attachment == "" ? null :  $this->upload_attachment($request),
                 'address' =>  $request->address,
             ]
@@ -74,5 +75,4 @@ class CompanyController extends Controller
         Storage::disk('local')->put($original_file_path, base64_decode($image));
         return $original_file_path;
     }
-
 }

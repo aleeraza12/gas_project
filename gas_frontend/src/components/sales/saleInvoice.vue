@@ -101,7 +101,7 @@
           <div class="mt-3">
             <v-simple-table>
               <template v-slot:default>
-                <thead style="background-color: #464646">
+                <thead style="background-color: #2e3995">
                   <tr>
                     <th class="text-left" style="color: #fff; font-size: 12px">
                       #
@@ -167,7 +167,7 @@
               dense
               class="no-print"
               style="
-                background-color: black !important;
+                background-color: #2e3995 !important;
                 color: #fff;
 
                 cursor: pointer;
@@ -198,7 +198,37 @@ export default {
     print() {
       console.log("called");
       // Pass the element id here
-      this.$htmlToPaper("printAble");
+      const prtHtml = document.getElementById("printAble").innerHTML;
+
+      // Get all stylesheets HTML
+      let stylesHtml = "";
+      for (const node of [
+        ...document.querySelectorAll('link[rel="stylesheet"], style'),
+      ]) {
+        stylesHtml += node.outerHTML;
+      }
+
+      // Open the print window
+      const WinPrint = window.open(
+        "",
+        "",
+        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+      );
+
+      WinPrint.document.write(`<!DOCTYPE html>
+<html>
+  <head>
+    ${stylesHtml}
+  </head>
+  <body>
+    ${prtHtml}
+  </body>
+</html>`);
+
+      WinPrint.document.close();
+      WinPrint.focus();
+      WinPrint.print();
+      WinPrint.close();
     },
     printReceipt() {
       let prtContent = document.getElementById("printAble").outerHTML;
@@ -245,9 +275,10 @@ export default {
 };
 </script>
 <style scoped>
-
-/*@page {
-  size: auto;
-  margin: 0mm;
-}*/
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+}
 </style>

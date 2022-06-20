@@ -420,11 +420,17 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  background-color: #464646 !important;
+  /*background-color: #464646 !important;
   color: #fff;
   min-width: 320px !important;
   border-radius: 8px !important;
+  cursor: pointer;*/
+  background-color: #2e3995 !important;
+  color: #fff;
+  min-width: 310px !important;
+  border-radius: 4px !important;
   cursor: pointer;
+  /*margin-right: 8rem;*/
 }
 .sales-details-page {
   /* height: 100vh; */

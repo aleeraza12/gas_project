@@ -7,24 +7,38 @@
         permanent
         class="navaigation-side"
       >
-        <!-- <v-list-item class="d-flex align-center justify-center ma-2">
-          <v-list-item-avatar>
-            <v-img
-              :src="'data:image/jpeg;base64,' + user.company_profile_picture"
+        <v-list-item class="d-flex align-center justify-center ma-2">
+          <!--<v-list-item-avatar>-->
+          <img
+            v-if="!mini"
+            src="../../assets/images/side2.png"
+            height="50"
+            width="150"
+            class="ml-1"
+          />
+          <img
+            v-else
+            src="../../assets/images/Vector (2).png"
+            height="30"
+            width="120"
+            class="ml-1"
+          />
+          <!--<v-img
+              src="../../assets/images/side2.png"
               v-if="user.company_profile_picture != null"
-            ></v-img>
-            <v-avatar color="white" v-else>
+            ></v-img>-->
+          <!--<v-avatar color="white" v-else>
               <v-icon dark> mdi-account-circle </v-icon>
-            </v-avatar>
-          </v-list-item-avatar>
-        </v-list-item> -->
+            </v-avatar>-->
+          <!--</v-list-item-avatar>-->
+        </v-list-item>
         <v-divider></v-divider>
         <v-list>
           <v-list-item
             dense
             @click="Logout(link)"
             class="d-flex align-center pl-4 sidebar-item"
-            v-for="(link, i) in links"
+            v-for="(link, i) in showable_links"
             :key="i"
             router
             @click.stop="mini = !mini"
@@ -83,77 +97,77 @@ export default {
         icon: "mdi-chart-line",
         route: "/orders",
         tabName: "Orders",
-            color: "#fff",
+        color: "#fff",
       },
       {
         text: "Companies",
         icon: "mdi-home-modern",
         route: "/companies",
         tabName: "Companies",
-           color: "#fff",
+        color: "#fff",
       },
       {
         text: "Sales",
         icon: "mdi-cart-outline",
         route: "/sales",
         tabName: "Sales",
-           color: "#fff",
+        color: "#fff",
       },
       {
         text: "Purchases",
         icon: "mdi-shopping",
         route: "/purchases",
         tabName: "Purchases",
-           color: "#fff",
+        color: "#fff",
       },
       {
         text: "Customers",
         icon: "mdi-account-multiple-outline",
         route: "/customers",
         tabName: "Customers",
-       color: "#fff",
+        color: "#fff",
       },
       {
         text: "Users",
         icon: "mdi-account-outline",
         route: "/users",
         tabName: "Users",
-            color: "#fff",
+        color: "#fff",
       },
       {
         text: "Wallet",
         icon: "mdi-credit-card",
         route: "/wallet",
         tabName: "Wallet",
-            color: "#fff",
+        color: "#fff",
       },
       {
         text: "Reconciliation",
         icon: "mdi-trackpad",
         route: "/reconcilation",
         tabName: "Reconcilation",
-           color: "#fff",
+        color: "#fff",
       },
       {
         text: "Settings",
         icon: "mdi-cog",
         route: "/settings",
         tabName: "Settings",
-            color: "#fff",
+        color: "#fff",
       },
       {
         text: "AdminSettings",
         icon: "mdi-cog",
         route: "/admin-settings",
         tabName: "AdminSettings",
-            color: "#fff",
+        color: "#fff",
       },
       {
         text: "Logout",
         icon: "mdi-logout",
         route: "/logout",
         tabName: "Logout",
-           color: "#fff",
+        color: "#fff",
       },
     ],
     mini: false,
@@ -162,13 +176,13 @@ export default {
   components: {},
   created() {},
   mounted() {
-    // let requestBody = {
-    //   start_date: this.start_date,
-    //   end_date: this.end_date.concat(" 23:59:00"),
-    // };
-    // this.$store.dispatch("getUsersListing", requestBody);
-    // this.$store.dispatch("getSalesListings", requestBody);
-    // this.setPerimssions();
+    let requestBody = {
+      start_date: this.start_date,
+      end_date: this.end_date.concat(" 23:59:00"),
+    };
+    this.$store.dispatch("getUsersListing", requestBody);
+    this.$store.dispatch("getSalesListings", requestBody);
+    this.setPerimssions();
   },
   computed: {
     ...mapGetters(["getSales", "getUsers"]),
@@ -220,20 +234,26 @@ export default {
   border-radius: 0px !important;
 }
 .navaigation-side {
-  background-color: #2B3896 !important;
+  background-color: #2b3896 !important;
 }
 .sidebar-item {
   color: #fff !important;
-  font-size:14px !important;
+  font-size: 14px !important;
 }
 .sidebar-item:active {
   background-color: #fff;
-  color: #2B3896 !important;
+  color: #2b3896 !important;
+  border-left: 1px solid #fff !important;
 }
 @media print {
   .no-print,
   .no-print * {
     display: none !important;
   }
+}
+</style>
+<style>
+.v-list-group--active {
+  border-left: 5px solid #fff important;
 }
 </style>

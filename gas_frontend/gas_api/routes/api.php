@@ -123,7 +123,8 @@ Route::middleware('token')->group(function () {
             Route::post('create', 'create_depo_price');
             Route::post('delete', 'delete_depo_price');
             Route::post('read_one', 'read_depo_price');
-            Route::post('read', 'read_all_depo_prices');
+            Route::post('read_all', 'read_company_depos');
+            Route::post('read', 'read_all_depo_prices_admin');
         });
     });
 

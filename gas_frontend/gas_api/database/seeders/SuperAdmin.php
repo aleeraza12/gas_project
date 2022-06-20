@@ -25,7 +25,7 @@ class SuperAdmin extends Seeder
                 'city' =>  'Super Admin',
                 'state' => 'Super Admin',
                 'gas_plant_type' =>  'Super Admin',
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'],
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'],
                 'address' =>  'Super Admin',
             ]
         );

@@ -19,35 +19,38 @@
     </div>
     <div class="d-flex mt-2">
       <div>
-        <!-- <b> Welcome {{ loggedinUser.owner_name }},</b> -->
+        <b> Welcome {{ loggedinUser.owner_name }},</b>
       </div>
       <v-spacer></v-spacer>
-      <div >
-        <div style="font-size: 16px" class="ml-13 display-end">
+      <div>
+        <div style="font-size: 16px" class="ml-3 display-end">
           Current gas price
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex justify-end align-end mr-7">
           <v-skeleton-loader
             v-if="priceLoader"
             type="list-item-avatar-three-line"
           ></v-skeleton-loader>
-          <div v-else-if="!priceLoader" class="ml-16">
+          <div class="d-flex" v-else-if="!priceLoader">
             <b style="font-size: 22px" v-if="getPrice"
               >N{{ getPrice.price_per_twenty_million_ton }}</b
             >
-            <b style="font-size: 16px" class="ml-5" v-else>Not set</b>
+            <b style="font-size: 16px" class="ml-10" v-else> Rate Not set</b>
           </div>
+
           <div
             v-if="!priceLoader"
             @click="setModal()"
-            class="mt-3 ml-15"
-            style="font-size: 13px; text-decoration: underline; cursor: pointer"
+            class="mt-2 ml-2"
+            style="font-size: 12px; text-decoration: underline; cursor: pointer"
           >
-            <b v-if="!priceLoader">edit</b>
+            <b v-if="!priceLoader && loggedinUser.permissions.includes('Rates')"
+              >edit</b
+            >
           </div>
         </div>
-        <div v-if="!priceLoader && getPrice" class="mr-2">
+        <div v-if="!priceLoader && getPrice" class="mr-6">
           <p>{{ getPrice.created_at }}</p>
         </div>
       </div>
@@ -55,7 +58,7 @@
 
     <v-row>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" style="background-color: #E3FBFF">
+        <v-card height="150" style="background-color: #e3fbff">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -68,10 +71,7 @@
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/1.png"
-                  height="55"
-                />
+                <img src="../../assets/images/1.png" height="55" />
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-8">
@@ -81,7 +81,7 @@
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" class="ml-5" style="background-color: #FFF4D0">
+        <v-card height="150" class="ml-5" style="background-color: #fff4d0">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -98,11 +98,8 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-             <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/2.png"
-                  height="55"
-                />
+              <div class="d-flex align-end justify-end mt-6">
+                <img src="../../assets/images/2.png" height="55" />
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-7">
@@ -112,7 +109,7 @@
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" class="ml-5" style="background-color: #EBE8FF">
+        <v-card height="150" class="ml-5" style="background-color: #ebe8ff">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -125,10 +122,7 @@
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-6">
-                <img
-                  src="../../assets/images/3.png"
-                  height="55"
-                />
+                <img src="../../assets/images/3.png" height="55" />
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-7">
@@ -138,20 +132,14 @@
         </v-card>
       </v-col>
     </v-row>
-    <div
-      class="d-flex mt-3"
-     
-    >
+    <div class="d-flex mt-3">
       <div><b>Orders</b></div>
       <v-spacer></v-spacer>
       <div class="mr-3">
         <date-picker />
       </div>
     </div>
-    <div
-      class="mt-0"
-     
-    >
+    <div class="mt-0">
       <v-data-table
         :headers="headers"
         :items="getAllOrders"

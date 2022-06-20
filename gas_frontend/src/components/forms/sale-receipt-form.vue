@@ -464,17 +464,29 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  background-color: #464646 !important;
+  /*background-color: #464646 !important;
   color: #fff;
   min-width: 230px !important;
   border-radius: 8px !important;
+  cursor: pointer;*/
+  background-color: #2e3995 !important;
+  color: #fff;
+  min-width: 300px !important;
+  border-radius: 20px !important;
   cursor: pointer;
+  /*margin-right: 8rem;*/
 }
 .btn-create-1 {
-  background-color: #464646 !important;
+  /*background-color: #464646 !important;
   color: #fff;
   min-width: 200px !important;
   border-radius: 8px !important;
+  cursor: pointer;*/
+  background-color: #2e3995 !important;
+  color: #fff;
+  min-width: 200px !important;
+  border-radius: 20px !important;
   cursor: pointer;
+  /*margin-right: 8rem;*/
 }
 </style>
