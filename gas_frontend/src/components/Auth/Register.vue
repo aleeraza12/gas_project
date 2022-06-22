@@ -3,173 +3,165 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-
           <div class="grey-side">
-            <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="670" width="750"/>
+            <div style="position: absolute">
+              <img
+                src="../../assets/images/sidePic.png"
+                height="670"
+                width="750"
+              />
             </div>
-            <div style="position:relative;margin-top:15rem" >
+            <div style="position: relative; margin-top: 15rem">
               <img src="../../assets/images/side2.png" />
             </div>
-            <div style="position:relative"  class="mt-6" >
-              <span style="font-size:20px;color: #fff;"><b> Hello!</b></span>
+            <div style="position: relative" class="mt-6">
+              <span style="font-size: 20px; color: #fff"><b> Hello!</b></span>
             </div>
-              <div class="mt-5" style="position:relative;font-size: 14px; color: #fff;">
-             <span>  Welcome to GAS360 where you are guaranteed <br />
-              access to clean cooking LPG fuel</span>
+            <div
+              class="mt-5"
+              style="position: relative; font-size: 14px; color: #fff"
+            >
+              <span>
+                Welcome to GAS360 where you are guaranteed <br />
+                access to clean cooking LPG fuel</span
+              >
             </div>
           </div>
-            <v-form v-model="valid" class="mt-10">
+          <v-form v-model="valid" class="mt-10">
+            <div>
+              <v-text-field
+                label="Owners Full Name"
+                outlined
+                dense
+                placeholder="Owners Full Name"
+                hide-details
+                :rules="nameRules"
+                class="username-feild mt-2 ml-16"
+                v-model="owners_name"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                label="Company Name"
+                outlined
+                dense
+                placeholder="Company Name"
+                :rules="nameRules"
+                hide-details
+                class="username-feild mt-2 ml-16"
+                v-model="company_name"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                label="Compnay Email Address"
+                outlined
+                dense
+                placeholder="Email Address"
+                hide-details
+                class="username-feild mt-2 ml-16"
+                v-model="email_address"
+                :rules="emailRules"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                label="Company Phone Number"
+                outlined
+                dense
+                placeholder="Phone Number"
+                :rules="nameRules"
+                hide-details
+                class="username-feild mt-2 ml-16"
+                v-model="phone_number"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                label="Address"
+                outlined
+                dense
+                :rules="nameRules"
+                placeholder="Address"
+                hide-details
+                class="username-feild mt-2 ml-16"
+                v-model="address"
+              ></v-text-field>
+            </div>
+            <div class="d-flex">
               <div>
                 <v-text-field
-                  label="Owners Full Name"
+                  label="City"
                   outlined
                   dense
-                  placeholder="Owners Full Name"
-                  hide-details
+                  placeholder="City"
                   :rules="nameRules"
-                  class="username-feild mt-2 ml-16"
-                  v-model="owners_name"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Company Name"
-                  outlined
-                  dense
-                  placeholder="Company Name"
-                  :rules="nameRules"
                   hide-details
-                  class="username-feild mt-2 ml-16"
-                  v-model="company_name"
+                  class="city-feild mt-2 ml-16"
+                  v-model="city"
                 ></v-text-field>
               </div>
-              <div>
-                <v-text-field
-                  label="Compnay Email Address"
-                  outlined
-                  dense
-                  placeholder="Email Address"
-                  hide-details
-                  class="username-feild mt-2 ml-16"
-                  v-model="email_address"
-                  :rules="emailRules"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Company Phone Number"
-                  outlined
-                  dense
-                  placeholder="Phone Number"
-                  :rules="nameRules"
-                  hide-details
-                  class="username-feild mt-2 ml-16"
-                  v-model="phone_number"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Address"
-                  outlined
-                  dense
-                  :rules="nameRules"
-                  placeholder="Address"
-                  hide-details
-                  class="username-feild mt-2 ml-16"
-                  v-model="address"
-                ></v-text-field>
-              </div>
-              <div class="d-flex">
-                <div>
-                  <v-text-field
-                    label="City"
-                    outlined
-                    dense
-                    placeholder="City"
-                    :rules="nameRules"
-                    hide-details
-                    class="city-feild mt-2 ml-16"
-                    v-model="city"
-                  ></v-text-field>
-                </div>
-                <div class="mt-2 ml-2" style="width: 240px">
-                  <v-select
-                    v-model="state"
-                    :items="getAllStates"
-                    :rules="nameRules"
-                    label="State"
-                    outlined
-                    dense
-                  ></v-select>
-                </div>
-              </div>
-              <div class="ml-16 mt-0" style="width: 400px; position: absolute">
+              <div class="mt-2 ml-2" style="width: 240px">
                 <v-select
-                  v-model="plant"
-                  :items="plants"
+                  v-model="state"
+                  :items="getAllStates"
                   :rules="nameRules"
-                  label="Select Plants"
+                  label="State"
                   outlined
                   dense
-                  small
                 ></v-select>
               </div>
-              <div>
-                <v-text-field
-                  outlined
-                  :append-icon="
-                    show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
-                  "
-                  :type="show ? 'text' : 'password'"
-                  @click:append="show = !show"
-                  label="Password"
-                  dense
-                  placeholder="Password"
-                  :rules="nameRules"
-                  hide-details
-                  class="password-feild mt-13 ml-16"
-                  v-model="password"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  outlined
-                  :append-icon="
-                    show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
-                  "
-                  :type="show ? 'text' : 'password'"
-                  @click:append="show = !show"
-                  label="Confirm Password"
-                  :rules="nameRules"
-                  dense
-                  placeholder="Confirm Password"
-                  hide-details
-                  class="password-feild mt-2 ml-16"
-                  v-model="confirm_password"
-                ></v-text-field>
-              </div>
-              <div class="mt-3 d-flex justify-start align-start">
-                <span class="forget-password" @click="$router.push('login')"
-                  >Already have an account? Login</span
-                >
-              </div>
-              <div class="mt-5" style="margin-left:10rem">
-                <v-btn
-                  block
-                  large
-                  class="elevation-0 btn-create"
-                  :loading="loading"
-                  :disabled="!valid"
-                  @click="createAccount()"
-                  dense
-                >
-                  Create Account
-                </v-btn>
-              </div>
-            </v-form>
-          </div>
-
+            </div>
+            <div>
+              <v-text-field
+                outlined
+                :append-icon="show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+                :type="show ? 'text' : 'password'"
+                @click:append="show = !show"
+                label="Password"
+                dense
+                placeholder="Password"
+                :rules="nameRules"
+                hide-details
+                class="password-feild mt-n3 ml-16"
+                v-model="password"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                outlined
+                :append-icon="show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+                :type="show ? 'text' : 'password'"
+                @click:append="show = !show"
+                label="Confirm Password"
+                :rules="nameRules"
+                dense
+                placeholder="Confirm Password"
+                hide-details
+                class="password-feild mt-2 ml-16"
+                v-model="confirm_password"
+              ></v-text-field>
+            </div>
+            <div class="mt-3 d-flex justify-start align-start">
+              <span class="forget-password" @click="$router.push('login')"
+                >Already have an account? Login</span
+              >
+            </div>
+            <div class="mt-5" style="margin-left: 10rem">
+              <v-btn
+                block
+                large
+                class="elevation-0 btn-create"
+                :loading="loading"
+                :disabled="!valid"
+                @click="createAccount()"
+                dense
+              >
+                Create Account
+              </v-btn>
+            </div>
+          </v-form>
+        </div>
       </v-card-text>
     </v-card>
     <v-snackbar
@@ -212,7 +204,7 @@ export default {
     state: "",
     plant: "",
     plants: ["plant 1", "plant 2", "plant 3", "plant 4", "plant 5"],
-    nameRules: [(v) => !!v || "This field is required"],
+    nameRules: [(v) => !!v || ""],
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+/.test(v) || "E-mail must be valid",
@@ -262,7 +254,7 @@ export default {
           company_phone_number: this.phone_number,
           city: this.city,
           state: this.state,
-          gas_plant_type: this.plant,
+          //gas_plant_type: this.plant,
           address: this.address,
           password: this.password,
         };
@@ -288,7 +280,6 @@ export default {
             }
           })
           .catch((err) => {
-
             this.snackbar = true;
             this.snackbarColor = "red";
             this.loading = false;
@@ -310,7 +301,6 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-
   width: 746px;
   left: 0px;
   top: 0px;
@@ -382,7 +372,7 @@ export default {
   border-radius: 8px;
 }
 .btn-create {
-  background-color: #2E3995 !important;
+  background-color: #2e3995 !important;
   color: #fff;
   min-width: 200px !important;
   border-radius: 20px !important;

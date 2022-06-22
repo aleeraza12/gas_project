@@ -23,14 +23,6 @@
             width="120"
             class="ml-1"
           />
-          <!--<v-img
-              src="../../assets/images/side2.png"
-              v-if="user.company_profile_picture != null"
-            ></v-img>-->
-          <!--<v-avatar color="white" v-else>
-              <v-icon dark> mdi-account-circle </v-icon>
-            </v-avatar>-->
-          <!--</v-list-item-avatar>-->
         </v-list-item>
         <v-divider></v-divider>
         <v-list>
@@ -156,6 +148,13 @@ export default {
         color: "#fff",
       },
       {
+        text: "Promos",
+        icon: "mdi-cash-multiple",
+        route: "/promos",
+        tabName: "Promo",
+        color: "#fff",
+      },
+      {
         text: "AdminSettings",
         icon: "mdi-cog",
         route: "/admin-settings",
@@ -239,6 +238,8 @@ export default {
 .sidebar-item {
   color: #fff !important;
   font-size: 14px !important;
+  max-height: 47px !important;
+  /*min-height: 30px !important;*/
 }
 .sidebar-item:active {
   background-color: #fff;

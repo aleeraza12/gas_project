@@ -26,15 +26,15 @@ class CompanyController extends Controller
                 'company_phone_number' =>  $request->company_phone_number,
                 'city' =>  $request->city,
                 'state' =>  $request->state,
-                'gas_plant_type' =>  $request->gas_plant_type,
-                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Rates', 'Sales', 'Purchases', 'AdminSettings', 'Companies'] : ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings'],
+                //'gas_plant_type' =>  $request->gas_plant_type,
+                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Rates', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos'] : ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos'],
                 'company_profile_picture' =>  $request->attachment == "" ? null :  $this->upload_attachment($request),
                 'address' =>  $request->address,
             ]
         );
         //if company is created first time than we create user
         if (!$request->company_id) {
-            $user = UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases'], 'user_type' => 'admin', 'status' => 'Active', 'company_id' => $company->id]));
+            $user = UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Promos'], 'user_type' => 'admin', 'status' => 'Active', 'company_id' => $company->id]));
             $seeder = new \Database\Seeders\OrderSeeder();
             $seeder->run($company->id, $user->id);
         }

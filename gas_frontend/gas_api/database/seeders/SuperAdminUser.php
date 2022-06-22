@@ -21,7 +21,7 @@ class SuperAdminUser extends Seeder
                 'created_by' => 'Super Admin',
                 'password' =>  Hash::make(config('app.super_admin_password')),
                 'designation' =>  'Super Admin',
-                'permissions' =>    ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'],
+                'permissions' =>    ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos'],
                 'user_type' =>  'Super Admin',
                 'status' =>  'InActive',
                 'is_company' =>  true,

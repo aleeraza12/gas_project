@@ -50,12 +50,11 @@
         :headers="headers"
         :items="getAllOrders"
         :items-per-page="5"
-
         :search="search"
         :loading="tableloading"
-          class="elevation-1"
-            hide-default-header
-            height="260px"
+        class="elevation-1"
+        hide-default-header
+        height="260px"
       >
         <template v-slot:[`body.prepend`]="{ headers }">
           <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
@@ -63,6 +62,16 @@
               {{ header.text }}
             </div>
           </th>
+        </template>
+        <template v-slot:item.status="{ item }">
+          <v-chip
+            class="ma-2"
+            small
+            :color="item.status == 'Unpaid' ? 'red' : 'green'"
+            label
+            outlined
+            >{{ item.status }}</v-chip
+          >
         </template>
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="ViewOrders(item)">
@@ -82,7 +91,7 @@ export default {
   data: () => ({
     search: "",
     tableloading: true,
-    start_date: '2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {

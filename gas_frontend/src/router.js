@@ -120,6 +120,25 @@ const router = new VueRouter({
       component: require("../src/components/Companies/Companies.vue").default,
     },
     {
+      path: "/promos",
+      name: "Promos",
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Promos"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
+      meta: { layout: "app", title: "Promos", requireAuth: true },
+      component: require("../src/components/promos/Promo.vue").default,
+    },
+    {
       path: "/sales",
       name: "Sales",
       beforeEnter: (to, from, next) => {

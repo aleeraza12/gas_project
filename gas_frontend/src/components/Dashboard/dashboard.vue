@@ -23,7 +23,7 @@
       </div>
       <v-spacer></v-spacer>
       <div>
-        <div style="font-size: 16px" class="ml-3 display-end">
+        <div style="font-size: 16px" class="mr-n5 display-end">
           Current gas price
         </div>
 
@@ -155,6 +155,16 @@
               {{ header.text }}
             </div>
           </th>
+        </template>
+        <template v-slot:item.status="{ item }">
+          <v-chip
+            class="ma-2"
+            small
+            :color="item.status == 'Unpaid' ? 'red' : 'green'"
+            label
+            outlined
+            >{{ item.status }}</v-chip
+          >
         </template>
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="ViewOrders(item)">

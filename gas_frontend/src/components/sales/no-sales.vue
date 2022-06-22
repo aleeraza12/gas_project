@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <div class="d-flex align-start justify-start mt-7">
+    <div class="d-flex align-start justify-start mt-7" @click="goToBack()">
       <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
     </div>
     <div class="d-flex align-center justify-center mt-16">
@@ -43,6 +43,9 @@ export default {
   }),
   computed: {},
   methods: {
+    goToBack() {
+      this.$router.push("/sales");
+    },
     createSales() {
       this.$router.push("/sale-receipt-form");
     },

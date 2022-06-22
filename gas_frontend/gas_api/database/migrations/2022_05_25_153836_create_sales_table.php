@@ -23,6 +23,7 @@ class CreateSalesTable extends Migration
             $table->boolean('delivered')->nullable();
             $table->dateTime('delivered_at')->nullable();
             $table->double('total_amount');
+            $table->double('discounted_amount')->nullable();
             $table->double('price');
             $table->string('discount_code')->nullable();
             $table->integer('customer_id')->unsigned();

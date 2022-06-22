@@ -123,22 +123,7 @@
                     ></v-select>
                   </div>
                 </div>
-                <div
-                  class="ml-16 mt-0"
-                  style="width: 400px; position: absolute"
-                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                >
-                  <v-select
-                    v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                    v-model="plant"
-                    :items="plants"
-                    :rules="nameRules"
-                    label="Select Plants"
-                    outlined
-                    dense
-                    small
-                  ></v-select>
-                </div>
+
                 <div>
                   <v-text-field
                     outlined
@@ -152,7 +137,7 @@
                     placeholder="Password"
                     :rules="nameRules"
                     hide-details
-                    class="password-feild mt-13 ml-16"
+                    class="password-feild ml-16"
                     v-model="password"
                   ></v-text-field>
                 </div>
@@ -352,7 +337,7 @@ export default {
       this.phone_number = this.data.company_phone_number;
       this.city = this.data.city;
       this.state = this.data.state;
-      this.plant = this.data.gas_plant_type;
+      //this.plant = this.data.gas_plant_type;
       this.address = this.data.address;
       this.password = "";
       this.id = this.data.id;
@@ -375,7 +360,7 @@ export default {
         company_phone_number: this.phone_number,
         city: this.city,
         state: this.state,
-        gas_plant_type: this.plant,
+        //gas_plant_type: this.plant,
         address: this.address,
         password: this.password,
         update_able: this.update,

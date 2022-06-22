@@ -76,7 +76,7 @@ class TransactionController extends Controller
     public static function updateSaleTransaction(Request $request)
     {
         Transaction::where('outer_id', $request->outer_id)->where('type', $request->type)->update([
-            'amount' =>  $request->amount
+            'amount' =>  $request->amount, 'company_id' => $request->company_id
         ]);
     }
 }

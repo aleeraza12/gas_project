@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Sales;
 use App\Models\Company;
 use App\Models\Customer;
+use App\Models\Promos;
 use App\Models\Sale;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -35,6 +36,13 @@ class SaleController extends Controller
                 'user_id' => $request->users_id, //loggedin user id
             ]
         );
+        if ($request->discount_code != null) {
+            $promo = Promos::where('company_id', $request->company_id)->where('promo_name', $request->discount_code)->first();
+            $discount = $promo->promo_percentage / 100 * $request->total_amount;
+            Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount - $discount]);
+        } else if ($request->discount_code == null) {
+            Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
+        }
         TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->id]));
         return response()->json(['response' => $sale, 'status' => 201]);
     }
@@ -62,6 +70,8 @@ class SaleController extends Controller
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->company_id)->first();
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
+            $promo = Promos::withTrashed()->where('company_id', $request->company_id)->where('promo_name', $sale->discount_code)->first();
+            $sale['promo_id'] =  @$promo->id;
             $sale['customer_name'] =  $customer->name;
             $sale['customer_address'] =   $customer->address;
             $sale['company_profile_picture']   = $name['company_profile_picture'];
@@ -77,6 +87,8 @@ class SaleController extends Controller
             $name = Company::find($sale->company_id);
             $sale['updated_by'] = $name->company_name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
+            $promo = Promos::withTrashed()->where('company_id', $sale->company_id)->where('promo_name', $sale->discount_code)->first();
+            $sale['promo_id'] =  @$promo->id;
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
             $sale['customer_name'] =  $customer->name;
@@ -100,8 +112,13 @@ class SaleController extends Controller
         $sale->company_id =  $request->company_id;
         $sale->payment_mode =  $request->payment_mode;
         $sale->save();
+        if ($request->discount_code != null) {
+            $promo = Promos::withTrashed()->where('company_id', $request->company_id)->where('promo_name', $request->discount_code)->first();
+            $discount = $promo->promo_percentage / 100 * $request->total_amount;
+            Sale::find($request->sale_id)->update(['discounted_amount' => $request->total_amount - $discount]);
+        }
         TransactionController::updateSaleTransaction($request->merge([
-            'amount' => $request->total_amount, 'outer_id' => $sale->id, 'type' => 'sale'
+            'amount' => $request->total_amount, 'outer_id' => $sale->id, 'company_id' => $request->company_id, 'type' => 'sale'
         ]));
         return response()->json(['response' => $sale, 'status' => 200]);
     }

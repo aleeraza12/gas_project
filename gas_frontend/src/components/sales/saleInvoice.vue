@@ -72,9 +72,9 @@
             <v-spacer></v-spacer>
             <div class="mr-8 mt-3">
               <div class="font-weight-bold">Transcation Id</div>
-              <div class="font-weight-bold">
-                00000{{ getSingleReceipt.transaction_id }}
-              </div>
+
+              00000{{ getSingleReceipt.transaction_id }}
+
               <div class="font-weight-bold">
                 {{ getDate(getSingleReceipt.created_at) }}
               </div>
@@ -92,7 +92,7 @@
             </div>
             <v-spacer></v-spacer>
             <div class="mr-8 mt-3">
-              <div class="font-weight-bold">Amount Paid</div>
+              <div class="font-weight-bold">Amount</div>
               <div class="font-weight-bold">
                 {{ getSingleReceipt.total_amount }}
               </div>
@@ -115,6 +115,9 @@
                     <th class="text-left" style="color: #fff; font-size: 12px">
                       Amount(N)
                     </th>
+                    <th class="text-left" style="color: #fff; font-size: 12px">
+                      After Discount(N)
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -126,6 +129,9 @@
                     <td class="text-left">{{ getSingleReceipt.price }}</td>
                     <td class="text-left">
                       {{ getSingleReceipt.total_amount }}
+                    </td>
+                    <td class="text-left">
+                      {{ getSingleReceipt.discounted_amount }}
                     </td>
                   </tr>
                 </tbody>
@@ -150,8 +156,14 @@
               </div>
             </div>
             <div class="d-flex pa-2" style="background-color: #f6f6f5">
-              <div class="font-weight-bold">Balance</div>
-              <div class="ml-12 font-weight-bold">No</div>
+              <div class="font-weight-bold">Promo</div>
+              <div class="ml-15 font-weight-bold">
+                {{
+                  getSingleReceipt.discount_code != null
+                    ? getSingleReceipt.discount_code
+                    : "No"
+                }}
+              </div>
             </div>
           </div>
           <div

@@ -99,7 +99,7 @@ class PurchaseController extends Controller
         $purchase->receipt_attachment_path =  $request->attachment == "" ? null :  $this->upload_attachment($request);
         $purchase->save();
         TransactionController::updateSaleTransaction($request->merge([
-            'amount' => $request->amount, 'outer_id' => $request->purchase_id, 'type' => 'purchase'
+            'amount' => $request->amount, 'outer_id' => $request->purchase_id, 'company_id' => $request->company_id, 'type' => 'purchase'
         ]));
         return response()->json(['response' => $purchase, 'status' => 200]);
     }

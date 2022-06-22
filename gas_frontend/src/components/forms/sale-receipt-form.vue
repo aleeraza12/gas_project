@@ -152,7 +152,7 @@
         >
           <v-form v-model="valid1">
             <div class="pa-2">
-              <v-text-field
+              <!--<v-text-field
                 label="Enter Discount code"
                 outlined
                 dense
@@ -161,7 +161,23 @@
                 class="username-feild mt-10"
                 v-model="discount_code"
                 :rules="nameRules"
-              ></v-text-field>
+              ></v-text-field>-->
+              <v-select
+                :items="
+                  Object.keys(promo_names).map((key) => ({
+                    text: promo_names[key].name,
+                    value: promo_names[key],
+                  }))
+                "
+                label="Enter Discount Code"
+                v-model="discount_code"
+                :rules="nameRules"
+                outlined
+                class="username-feild mt-3"
+                dense
+                small
+                hide-details
+              ></v-select>
             </div>
             <div class="mt-5">
               <v-btn
@@ -213,6 +229,7 @@ export default {
     total_amount: "",
     customer_name: "",
     customer_names: [],
+    promo_names: [],
     customer_phone_number: "",
     customer_type: "",
     discount_code: "",
@@ -230,6 +247,7 @@ export default {
     end_date: new Date().toISOString().substr(0, 10),
     emitData: "",
     company_names: [],
+    setDefaultPrice: true,
     company_name: "",
     loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
@@ -263,6 +281,7 @@ export default {
       "getAllCustomerTypes",
       "getPrice",
       "getCompanies",
+      "getPromos",
     ]),
   },
   mounted() {
@@ -273,6 +292,7 @@ export default {
     //this is bcz we want only company user for creating sale
     if (this.loggedinUser.company_email !== "superadmin@gmail.com") {
       this.$store.dispatch("getCustomersListing", requestBody);
+      this.$store.dispatch("getPromosListing", requestBody);
     }
     this.$store.dispatch("getPaymentMethods");
     this.$store.dispatch("getCustomerTypes");
@@ -296,15 +316,34 @@ export default {
         : this.price;
     },
     gas_quantity() {
-      this.total_amount = this.gas_quantity * this.price;
+      if (this.setDefaultPrice)
+        this.total_amount = this.gas_quantity * this.price;
     },
     price() {
-      this.total_amount = this.gas_quantity * this.price;
+      if (this.setDefaultPrice)
+        this.total_amount = this.gas_quantity * this.price;
     },
     company_name() {
       if (this.loggedinUser.company_email == "superadmin@gmail.com") {
         this.getCompanyCustomers(this.company_name.id);
+        this.getCompanyPromos(this.company_name.id);
       } else console.log(this.company_name);
+    },
+    getPromos() {
+      console.log("get promo watcher called", this.emitData);
+      this.promo_names = [];
+      for (let j = 0; j < this.getPromos.length; j++) {
+        let promo = {
+          name: this.getPromos[j].promo_name,
+          id: this.getPromos[j].id,
+        };
+        this.promo_names.push(promo);
+      }
+      let updateAblePromo = {
+        name: this.emitData.discount_code,
+        id: this.emitData.promo_id,
+      };
+      this.discount_code = updateAblePromo;
     },
     getCompanies() {
       this.customer_names = [];
@@ -324,6 +363,7 @@ export default {
       this.company_name = updateAblecompany;
     },
     getCustomers() {
+      console.log("efqwepruqepqppqef");
       this.customer_names = [];
       for (let j = 0; j < this.getCustomers.length; j++) {
         let customer = {
@@ -371,7 +411,38 @@ export default {
           }
         });
     },
+
+    getCompanyPromos(id) {
+      console.log("id", id);
+
+      let url = this.$store.state.url;
+      let requestBody = {
+        company_id: id,
+        user_id: this.loggedinUser.id,
+        start_date: "2022-01-01",
+        end_date: this.end_date.concat(" 23:59:00"),
+      };
+      let customAxios;
+      customAxios = axios.create({
+        headers: {
+          Token: localStorage.getItem("token"),
+        },
+      });
+      customAxios;
+      customAxios.post(url + "promo/read_all", requestBody).then((response) => {
+        console.log("response promo", response.data.response);
+        this.promo_names = [];
+        for (let j = 0; j < response.data.response.length; j++) {
+          let promo = {
+            name: response.data.response[j].promo_name,
+            id: response.data.response[j].id,
+          };
+          this.promo_names.push(promo);
+        }
+      });
+    },
     assembleData(data) {
+      this.setDefaultPrice = false;
       this.gas_quantity = data.gas_quantity;
       this.total_amount = data.total_amount;
       this.price = data.price;
@@ -389,6 +460,7 @@ export default {
       };
       if (this.loggedinUser.company_email == "superadmin@gmail.com") {
         this.$store.dispatch("getCustomersListing", requestBody);
+        this.$store.dispatch("getPromosListing", requestBody);
       }
     },
     addPromo() {
@@ -408,7 +480,7 @@ export default {
         customer_id: this.customer_name.id,
         customer_type: this.customer_type,
         customer_phone_number: this.customer_phone_number,
-        discount_code: this.discount_code,
+        discount_code: this.discount_code.name,
         payment_mode: this.payment_mode,
         status: this.status,
         sale_id: this.sale_id,
@@ -450,9 +522,6 @@ export default {
           }, 1000);
         })
         .catch(() => {
-          //this.snackbar = true;
-          //this.snackbarColor = "red";
-          //this.snacbarMessage = " Something went wrong";
           this.loading = false;
           setTimeout(() => {
             this.$router.go(-1);

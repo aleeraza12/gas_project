@@ -70,7 +70,6 @@
             :items="getWallet"
             :items-per-page="5"
             class="elevation-1"
-    
             hide-default-header
             height="260px"
             :search="search"
@@ -86,6 +85,16 @@
                   {{ header.text }}
                 </div>
               </th>
+            </template>
+            <template v-slot:item.status="{ item }">
+              <v-chip
+                class="ma-2"
+                small
+                :color="item.status == 'UnSuccessfull' ? 'red' : 'green'"
+                label
+                outlined
+                >{{ item.status }}</v-chip
+              >
             </template>
             <!--<template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
@@ -114,7 +123,7 @@ Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     search: "",
-    start_date: '2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     total_wallet_balance: null,
     tableloading: true,

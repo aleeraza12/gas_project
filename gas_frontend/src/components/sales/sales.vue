@@ -71,7 +71,7 @@
             :headers="headers"
             :items="getSales"
             :items-per-page="5"
-               class="elevation-1"
+            class="elevation-1"
             hide-default-header
             height="260px"
             :search="search"
@@ -118,7 +118,7 @@ export default {
     loading: true,
     total_sales: null,
     search: "",
-    start_date:'2022-01-01',
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     headers: [
       {
@@ -131,6 +131,7 @@ export default {
       { text: "Customer Name", value: "customer_name" },
       { text: "Gas Quantity", value: "gas_quantity" },
       { text: "Amount", value: "total_amount" },
+      { text: "After Discount", value: "discounted_amount" },
       { text: "Status", value: "status" },
       { text: "Update by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },

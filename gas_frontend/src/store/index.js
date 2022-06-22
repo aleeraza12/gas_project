@@ -32,6 +32,7 @@ const store = {
     dashboard: [],
     orders: [],
     wallets: [],
+    promos: [],
     date: "",
     recovery_mail: "",
   },
@@ -62,9 +63,11 @@ const store = {
     getDashboardData: (state) => state.dashboard,
     getWallet: (state) => state.wallets,
     getSelectedDateRange: (state) => state.date,
+    getPromos: (state) => state.promos,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
+    SET_PROMOS: (state, payload) => (state.promos = payload),
     SET_PAYMENT_MODES: (state, payload) => (state.payment_modes = payload),
     SET_CUSTOMER_TYPES: (state, payload) => (state.customer_types = payload),
     SET_USER_TYPES: (state, payload) => (state.user_types = payload),
@@ -362,6 +365,19 @@ const store = {
         }
       );
     },
+    //Promo code
+    getPromosListing(context, requestBody) {
+      //console.log(data);
+      //let requestBody = {};
+      RequestService.post("promo/read_all", requestBody).then((response) => {
+        console.log("status n store", response.data.status);
+        if (response.data.status == 200) {
+          context.commit("SET_PROMOS", response.data.response);
+          eventBus.$emit("responseArrived");
+        }
+      });
+    },
+
     checkRouteExistence() {
       let permissionsArray = JSON.parse(
         localStorage.getItem("user")

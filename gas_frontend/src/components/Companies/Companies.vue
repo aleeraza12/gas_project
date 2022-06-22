@@ -47,7 +47,19 @@
           <div><b>Transactions</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
-            Export Csv
+            <v-btn
+              @click="btnClick()"
+              depressed
+              light
+              text
+              :ripple="false"
+              height="5px"
+              x-small
+              dense
+              class="text-capitalize pa-4 mb-n1 mt-2"
+            >
+              <span class="black--text">Export </span></v-btn
+            >
           </div>
           <div class="mr-3"><date-picker /></div>
         </div>
@@ -81,7 +93,13 @@
               </v-icon>
             </template>-->
             <template v-slot:item.actions2="{ item }">
-              <v-icon small class="mr-2" @click="setModal(item)">
+              <v-icon
+                small
+                class="mr-2"
+                color="red"
+                @click="setModal(item)"
+                v-show="loggedInUser.company_email != item.company_email"
+              >
                 mdi-delete-forever
               </v-icon>
             </template>
@@ -125,6 +143,11 @@
       <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
       {{ snacbarMessage }}
     </v-snackbar>
+    <download-csv :json-data="getCompanies">
+      <v-btn style="display: none" id="myBtn">
+        <b>My custom button</b>
+      </v-btn>
+    </download-csv>
   </div>
 </template>
 
@@ -133,7 +156,9 @@ import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import RequestService from "../../RequestService";
 import datePicker from "../../views/Pages/datePicker.vue";
-
+import VueJsonToCsv from "vue-json-to-csv";
+import Vue from "vue";
+Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     loading: true,
@@ -143,6 +168,7 @@ export default {
     snacbarMessage: "",
     start_date: new Date().toISOString().substr(0, 10),
     end_date: new Date().toISOString().substr(0, 10),
+    loggedInUser: JSON.parse(localStorage.getItem("user")),
     snackbar: false,
     snackbarColor: "",
     headers: [
@@ -189,6 +215,9 @@ export default {
     this.$store.commit("setSelectedDateRange", "Today");
   },
   methods: {
+    btnClick() {
+      document.getElementById("myBtn").click();
+    },
     getCompaniesListing(date) {
       this.loading = true;
       let requestBody = {

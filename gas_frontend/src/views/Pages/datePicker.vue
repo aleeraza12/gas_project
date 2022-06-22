@@ -261,6 +261,8 @@ export default {
         ? eventBus.$emit("selectedWalletDateFilter", this.picker)
         : this.$route && this.$route.path == "/companies"
         ? eventBus.$emit("selectedCompanyDateFilter", this.picker)
+        : this.$route && this.$route.path == "/promos"
+        ? eventBus.$emit("selectedPromoDateFilter", this.picker)
         : () => {};
     },
     /* * @Description
@@ -285,6 +287,8 @@ export default {
         ? eventBus.$emit("selectedWalletDateFilter", this.picker)
         : this.$route && this.$route.path == "/companies"
         ? eventBus.$emit("selectedCompanyDateFilter", this.picker)
+        : this.$route && this.$route.path == "/promos"
+        ? eventBus.$emit("selectedPromoDateFilter", this.picker)
         : () => {};
     },
   },

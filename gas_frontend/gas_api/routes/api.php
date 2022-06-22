@@ -7,6 +7,7 @@ use App\Http\Controllers\General;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Payment;
+use App\Http\Controllers\PromosController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StatesController;
@@ -192,9 +193,17 @@ Route::middleware('token')->group(function () {
         });
     });
 
-    //Wallet route
-
+    //Promos route
+    Route::prefix('promo')->group(function () {
+        Route::controller(PromosController::class)->group(function () {
+            Route::post('create', 'create_promo');
+            Route::post('delete', 'delete_promo');
+            Route::post('read_all', 'read_promo');
+            Route::post('read', 'read_all_promos');
+        });
+    });
 });
+
 Route::controller(MailController::class)->group(function () {
     Route::post('sendbasicemail', 'basic_email');
     Route::post('verify_otp', 'verify_otp');

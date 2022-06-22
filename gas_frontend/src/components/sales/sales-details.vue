@@ -98,6 +98,9 @@
           <div class="fonts">
             Gas Quantity: {{ getSingleReceipt.gas_quantity }}
           </div>
+           <div class="fonts">
+            Promo Used: {{ getSingleReceipt.discount_code }}
+          </div>
           <div class="fonts">Updated By: {{ getSingleReceipt.updated_by }}</div>
         </div>
       </div>

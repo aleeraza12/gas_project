@@ -10,13 +10,14 @@ class Sale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'gas_quantity', 'total_amount',  'discount_code', 'customer_id', 'customer_type', 'payment_mode', 'status', 'company_id', 'price',  'customer_phone_number', 'paid', 'paid_at', 'unpaid', 'unpaid_at', 'delivered', 'delivered_at', 'user_id'
+        'gas_quantity', 'total_amount',  'discount_code', 'customer_id', 'customer_type', 'payment_mode', 'status', 'company_id', 'price',  'customer_phone_number', 'paid', 'paid_at', 'unpaid', 'unpaid_at', 'delivered', 'delivered_at', 'user_id', 'discounted_amount'
     ];
     public function getCreatedAtAttribute($value)
     {
         $date = Carbon::parse($value)->addHours(5);
         return $date->isoFormat('Do MMMM YYYY, h:mm a');
     }
+
 
     public function customer()
     {

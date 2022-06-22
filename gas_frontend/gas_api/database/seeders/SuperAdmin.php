@@ -24,8 +24,8 @@ class SuperAdmin extends Seeder
                 'company_phone_number' =>  '901201',
                 'city' =>  'Super Admin',
                 'state' => 'Super Admin',
-                'gas_plant_type' =>  'Super Admin',
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies'],
+                //'gas_plant_type' =>  'Super Admin',
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos'],
                 'address' =>  'Super Admin',
             ]
         );

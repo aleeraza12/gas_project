@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class Company extends Model
 {
     use HasFactory;
-    protected $fillable = ['owner_name', 'company_email', 'company_name', 'company_phone_number', 'address', 'city', 'state', 'gas_plant_type', 'password',   'permissions', 'company_profile_picture'];
+    protected $fillable = ['owner_name', 'company_email', 'company_name', 'company_phone_number', 'address', 'city', 'state', 'password',   'permissions', 'company_profile_picture'];
 
     public function getCompanyProfilePictureAttribute($value)
     {
@@ -74,6 +74,11 @@ class Company extends Model
 
     public function depos()
     {
-        return $this->hasOne(Depos::class);
+        return $this->hasMany(Depos::class);
+    }
+
+    public function promos()
+    {
+        return $this->hasMany(Promos::class);
     }
 }

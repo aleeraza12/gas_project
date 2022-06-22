@@ -22,7 +22,6 @@ class CreateCompaniesTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('state');
-            $table->string('gas_plant_type')->nullable();
             $table->string('password');
             $table->longText('permissions');
             $table->string('company_profile_picture')->nullable();

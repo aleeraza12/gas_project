@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Users extends FormRequest
+class PromoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,9 @@ class Users extends FormRequest
      */
     public function rules()
     {
-        $array['name'] = 'required|string';
-        $array['created_by'] = 'required';
-        $array['designation'] = 'required';
-        $array['password'] = 'required|min:3|max:20';
-        $array['permissions'] = 'required';
-        $array['user_type'] = 'required';
-        $array['status'] = 'required';
+        $array['promo_name'] = 'required|string|unique:promos,promo_name,' . $this->promo_id;
+        $array['promo_percentage'] = 'required|int|gt:0|lt:100';
+        $array['company_id'] = 'required';
         return $array;
     }
 

@@ -27,11 +27,11 @@ class SignUp extends FormRequest
         $array['owner_name'] = 'required|string';
         $array['company_email'] = 'required|unique:companies,company_email,' . $this->company_id;
         $array['company_name'] = 'required';
-        $array['password'] = 'required';
-        $array['company_phone_number'] = 'required';
+        $array['password'] = 'required|min:3|max:20';
+        $array['company_phone_number'] = 'required|min:8|max:13';
         $array['city'] = 'required';
         $array['state'] = 'required';
-        $array['gas_plant_type'] = 'required';
+        //$array['gas_plant_type'] = 'required';
         $array['permissions'] = 'sometimes|array';
         $array['address'] = 'required';
         return $array;
