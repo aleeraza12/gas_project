@@ -26,7 +26,7 @@
         </div>
         <div
           class="d-flex mt-5 pa-5"
-          style="background-color: #ebebea; border-radius: 5px"
+          style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
             <div class="d-flex align-start justify-start">
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="d-flex mt-3">
-          <div><b>Transactions</b></div>
+          <div><b>Companies</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
             <v-btn
@@ -73,7 +73,7 @@
             class="elevation-1"
             hide-default-footer
             hide-default-header
-            height="400px"
+            height="calc(100vh - 340px)"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -264,7 +264,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -274,7 +274,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

@@ -17,6 +17,11 @@ class SaleController extends Controller
 
     public function create_sale(Sales $request)
     {
+        if ($request->discount_code != null) {
+            $promo = Promos::where('company_id', $request->company_id)->where('promo_name', $request->discount_code)->first();
+            if ($promo == null)
+                return response()->json(['response' => 'Invalid discount code', 'status' => 400]);
+        }
         $sale = Sale::updateOrCreate(
             [
                 'id' => $request->sale_id
@@ -101,6 +106,11 @@ class SaleController extends Controller
 
     public function updateSale(Request $request)
     {
+        if ($request->discount_code != null) {
+            $promo = Promos::where('company_id', $request->company_id)->where('promo_name', $request->discount_code)->first();
+            if ($promo == null)
+                return response()->json(['response' => 'Invalid discount code', 'status' => 400]);
+        }
         $sale =  Sale::find($request->sale_id);
         $sale->gas_quantity = $request->gas_quantity;
         $sale->total_amount =  $request->total_amount;

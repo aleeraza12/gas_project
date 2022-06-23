@@ -4,7 +4,8 @@
       class="d-flex align-start justify-start mt-7"
       @click="goToPreviousPage()"
     >
-      <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+      <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+      <span style="color: #2e3995">Back</span>
     </div>
     <div class="d-flex align-center justify-center mt-16">
       <div style="margin-top: 6rem">
@@ -56,8 +57,8 @@ export default {
     goToPreviousPage() {
       if (this.getUsers.length == 0) {
         console.log("prevos route");
-        this.$router.back();
-      }
+        this.$router.push("/orders");
+      } else this.$router.push("/users");
     },
   },
 };
@@ -72,9 +73,10 @@ export default {
   min-width: 250px !important;
   border-radius: 8px !important;
   cursor: pointer;*/
+  min-height: 40px;
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 200px !important;
+  min-width: 250px !important;
   border-radius: 20px !important;
   cursor: pointer;
   /*margin-right: 8rem;*/

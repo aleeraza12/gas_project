@@ -26,7 +26,7 @@
         </div>
         <div
           class="d-flex mt-5 pa-5"
-          style="background-color: #ebebea; border-radius: 5px"
+          style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
             <div class="d-flex align-start justify-start">
@@ -38,7 +38,7 @@
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex align-end justify-end">
-            <v-btn small dense outlined @click="isModal = true"
+            <v-btn small dense outlined color="#2b3896" @click="isModal = true"
               >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
             >
           </div>
@@ -57,7 +57,7 @@
             :items-per-page="5"
             class="elevation-1"
             hide-default-header
-            height="260px"
+            height="calc(100vh - 400px)"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -308,11 +308,11 @@ export default {
           this.snackbar = true;
           this.snackbarColor = "success";
           this.snacbarMessage = "Your promo(s) deleted successfully";
-           let requestBody = {
-              start_date: this.start_date,
-              end_date: this.end_date.concat(" 23:59:00"),
-            };
-            this.$store.dispatch("getPromosListing", requestBody);
+          let requestBody = {
+            start_date: this.start_date,
+            end_date: this.end_date.concat(" 23:59:00"),
+          };
+          this.$store.dispatch("getPromosListing", requestBody);
         }
       });
     },
@@ -326,7 +326,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -336,7 +336,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

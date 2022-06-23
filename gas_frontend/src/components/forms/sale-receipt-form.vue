@@ -6,7 +6,8 @@
           class="d-flex align-start justify-start"
           @click="goToSalesListingPage()"
         >
-          <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+          <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+          <span style="color: #2e3995">Back</span>
         </div>
         <div class="mt-10 ml-3 d-flex align-start justify-start">
           <b>Sales Recepit Form</b>
@@ -128,7 +129,7 @@
             </div>
             <div class="">
               <v-btn
-                class="elevation-0 btn-create mt-10"
+                class="elevation-0 btn-create mt-10 text-capitalize"
                 @click="createSale()"
                 :disabled="!valid"
                 :loading="loading"
@@ -152,7 +153,7 @@
         >
           <v-form v-model="valid1">
             <div class="pa-2">
-              <!--<v-text-field
+              <v-text-field
                 label="Enter Discount code"
                 outlined
                 dense
@@ -161,8 +162,8 @@
                 class="username-feild mt-10"
                 v-model="discount_code"
                 :rules="nameRules"
-              ></v-text-field>-->
-              <v-select
+              ></v-text-field>
+              <!--<v-select
                 :items="
                   Object.keys(promo_names).map((key) => ({
                     text: promo_names[key].name,
@@ -177,7 +178,7 @@
                 dense
                 small
                 hide-details
-              ></v-select>
+              ></v-select>-->
             </div>
             <div class="mt-5">
               <v-btn
@@ -185,10 +186,10 @@
                 @click="addPromo()"
                 :disabled="!valid1"
                 :loading="loading1"
-                class="elevation-0 btn-create-1"
+                class="elevation-0 btn-create-1 text-capitalize"
                 dense
               >
-                Submit
+                Apply
               </v-btn>
             </div>
           </v-form>
@@ -281,7 +282,6 @@ export default {
       "getAllCustomerTypes",
       "getPrice",
       "getCompanies",
-      "getPromos",
     ]),
   },
   mounted() {
@@ -292,7 +292,7 @@ export default {
     //this is bcz we want only company user for creating sale
     if (this.loggedinUser.company_email !== "superadmin@gmail.com") {
       this.$store.dispatch("getCustomersListing", requestBody);
-      this.$store.dispatch("getPromosListing", requestBody);
+      //this.$store.dispatch("getPromosListing", requestBody);
     }
     this.$store.dispatch("getPaymentMethods");
     this.$store.dispatch("getCustomerTypes");
@@ -309,6 +309,15 @@ export default {
     }
   },
   watch: {
+    customer_name(value) {
+      console.log("customer name selected", value);
+      if (value.name != undefined && this.setDefaultPrice) {
+        for (let j = 0; j < this.getCustomers.length; j++) {
+          if (this.getCustomers[j].id == value.id)
+            this.customer_phone_number = this.getCustomers[j].phone_number;
+        }
+      }
+    },
     getPrice() {
       console.log("watcher called");
       this.price = this.getPrice
@@ -326,25 +335,25 @@ export default {
     company_name() {
       if (this.loggedinUser.company_email == "superadmin@gmail.com") {
         this.getCompanyCustomers(this.company_name.id);
-        this.getCompanyPromos(this.company_name.id);
+        //this.getCompanyPromos(this.company_name.id);
       } else console.log(this.company_name);
     },
-    getPromos() {
-      console.log("get promo watcher called", this.emitData);
-      this.promo_names = [];
-      for (let j = 0; j < this.getPromos.length; j++) {
-        let promo = {
-          name: this.getPromos[j].promo_name,
-          id: this.getPromos[j].id,
-        };
-        this.promo_names.push(promo);
-      }
-      let updateAblePromo = {
-        name: this.emitData.discount_code,
-        id: this.emitData.promo_id,
-      };
-      this.discount_code = updateAblePromo;
-    },
+    //getPromos() {
+    //  console.log("get promo watcher called", this.emitData);
+    //  this.promo_names = [];
+    //  for (let j = 0; j < this.getPromos.length; j++) {
+    //    let promo = {
+    //      name: this.getPromos[j].promo_name,
+    //      id: this.getPromos[j].id,
+    //    };
+    //    this.promo_names.push(promo);
+    //  }
+    //  let updateAblePromo = {
+    //    name: this.emitData.discount_code,
+    //    id: this.emitData.promo_id,
+    //  };
+    //  this.discount_code = updateAblePromo;
+    //},
     getCompanies() {
       this.customer_names = [];
       for (let j = 0; j < this.getCompanies.length; j++) {
@@ -363,18 +372,21 @@ export default {
       this.company_name = updateAblecompany;
     },
     getCustomers() {
-      console.log("efqwepruqepqppqef");
+      console.log("efqwepruqepqppqef", this.emitData);
       this.customer_names = [];
       for (let j = 0; j < this.getCustomers.length; j++) {
         let customer = {
           name: this.getCustomers[j].name,
           id: this.getCustomers[j].id,
+          //phone_number: this.getCustomers[j].phone_number,
         };
         this.customer_names.push(customer);
       }
+      //if(this.emitData)
       let updateAblecustomer = {
         name: this.emitData.customer_name,
         id: this.emitData.customer_id,
+        //phone_number: this.emitData.customer_phone_number,
       };
       this.customer_name = updateAblecustomer;
     },
@@ -460,7 +472,7 @@ export default {
       };
       if (this.loggedinUser.company_email == "superadmin@gmail.com") {
         this.$store.dispatch("getCustomersListing", requestBody);
-        this.$store.dispatch("getPromosListing", requestBody);
+        //this.$store.dispatch("getPromosListing", requestBody);
       }
     },
     addPromo() {
@@ -480,7 +492,7 @@ export default {
         customer_id: this.customer_name.id,
         customer_type: this.customer_type,
         customer_phone_number: this.customer_phone_number,
-        discount_code: this.discount_code.name,
+        discount_code: this.discount_code,
         payment_mode: this.payment_mode,
         status: this.status,
         sale_id: this.sale_id,
@@ -511,15 +523,21 @@ export default {
           console.log("status in purchase", res.data.status);
           if (res.data.status == 201) {
             this.snacbarMessage = "Your sale(s) added successfully";
+            this.snackbarColor = "success";
           } else if (res.data.status == 200) {
             this.snacbarMessage = "Your sale(s) updated successfully";
+            this.snackbarColor = "success";
+          } else if (res.data.status == 400) {
+            this.snacbarMessage = "Invalid promo";
+            this.snackbarColor = "red";
           }
           this.snackbar = true;
-          this.snackbarColor = "success";
           this.loading = false;
-          setTimeout(() => {
-            this.$router.push("/sales");
-          }, 1000);
+          if (res.data.status !== 400) {
+            setTimeout(() => {
+              this.$router.push("/sales");
+            }, 1000);
+          }
         })
         .catch(() => {
           this.loading = false;
@@ -533,29 +551,19 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 230px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
+  min-height: 35px;
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 300px !important;
+  min-width: 250px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  /*margin-right: 8rem;*/
 }
 .btn-create-1 {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 200px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
+  min-height: 35px;
   background-color: #2e3995 !important;
   color: #fff;
   min-width: 200px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  /*margin-right: 8rem;*/
 }
 </style>

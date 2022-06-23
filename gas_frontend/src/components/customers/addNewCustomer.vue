@@ -4,8 +4,8 @@
       @click="goToCustomerListings()"
       class="d-flex align-start justify-start pointer"
     >
-      <v-icon>mdi-chevron-left</v-icon>
-      <span>Back</span>
+      <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+      <span style="color: #2e3995">Back</span>
     </div>
     <div class="mt-3">
       <div class="d-flex align-start justify-start">
@@ -29,7 +29,7 @@
                 :rules="nameRules"
                 dense
                 hide-details
-                class="mt-6"
+                class="mt-2"
                 style="width: 300px"
               ></v-text-field>
             </div>
@@ -42,55 +42,51 @@
                 outlined
                 dense
                 hide-details
-                class="mt-6"
+                class="mt-2"
                 style="width: 300px"
               ></v-text-field>
             </div>
             <div>
               <v-text-field
                 v-model="email"
-                label="Enter Email Address"
-                :rules="nameRules"
-                placeholder="Enter Email Address"
+                label="Enter Email Address (optional)"
+                placeholder="Enter Email Address (optional)"
                 outlined
                 dense
                 hide-details
-                class="mt-6"
+                class="mt-2"
                 style="width: 300px"
               ></v-text-field>
             </div>
             <div>
               <v-text-field
                 v-model="address"
-                label="Enter Street"
-                :rules="nameRules"
-                placeholder="Enter Street"
+                label="Enter Street (optional)"
+                placeholder="Enter Street (optional)"
                 outlined
                 dense
                 hide-details
-                class="mt-6"
+                class="mt-2"
                 style="width: 300px"
               ></v-text-field>
             </div>
             <div class="d-flex" style="width: 300px">
               <div>
                 <v-text-field
-                  label="City"
+                  label="City (optional)"
                   outlined
-                  :rules="nameRules"
                   dense
-                  placeholder="Enter City"
+                  placeholder="Enter City (optional)"
                   hide-details
-                  class="city-feild mt-6 mr-3"
+                  class="city-feild mt-2 mr-3"
                   v-model="city"
                 ></v-text-field>
               </div>
-              <div class="mt-6">
+              <div class="mt-2">
                 <v-select
                   :items="getAllStates"
-                  :rules="nameRules"
-                  label="State"
-                  placeholder="Enter State"
+                  label="State (optional)"
+                  placeholder="Enter State (optional)"
                   outlined
                   small
                   dense
@@ -101,7 +97,7 @@
               </div>
             </div>
 
-            <div class="mt-6" style="width: 300px">
+            <div class="mt-2" style="width: 300px">
               <v-select
                 :items="getAllCustomerTypes"
                 v-model="customer_type"
@@ -115,11 +111,10 @@
               >
               </v-select>
             </div>
-            <div class="mt-6 mb-5">
+            <div class="mt-6 mb-5 ml-10">
               <v-btn
                 block
-                large
-                class="elevation-0 btn-create"
+                class="elevation-0 btn-create text-capitalize"
                 :loading="loading"
                 @click="createCustomer()"
                 :disabled="!valid"
@@ -175,7 +170,7 @@ export default {
   }),
   computed: {
     getIcon() {
-      return this.snackbarColor == "primary"
+      return this.snackbarColor == "success"
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
@@ -220,17 +215,26 @@ export default {
       this.loading = true;
       let requestBody = {
         name: this.name,
-        email: this.email,
         phone_number: this.phone_number,
-        city: this.city,
-        state: this.state,
+        //city: this.city,
+        //state: this.state,
+        //email: this.email,
         customer_type: this.customer_type,
-        address: this.address,
+        //address: this.address,
         customer_id: this.customer_id,
       };
-      if (this.company_id != null) {
+      if (this.company_id != null) requestBody.company_id = this.company_id;
+
+      if (this.email != "" && this.email !== null)
         requestBody.company_id = this.company_id;
-      }
+
+      if (this.state != "" && this.state !== null)
+        requestBody.state = this.state;
+
+      if (this.address != "" && this.address !== null)
+        requestBody.address = this.address;
+
+      if (this.city != "" && this.city != null) requestBody.city = this.city;
       console.log(requestBody);
       RequestService.post("customer/create", requestBody)
         .then((res) => {
@@ -263,17 +267,12 @@ export default {
   font-size: 12px;
 }
 .btn-create {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 300px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 300px !important;
+  min-height: 30px;
+  min-width: 200px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  /*margin-right: 8rem;*/
 }
 .pointer {
   cursor: pointer;

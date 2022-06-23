@@ -1,26 +1,35 @@
-6<template>
+6
+<template>
   <div class="main-container">
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-                   <div class="grey-side">
-            <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="680" width="650"/>
+          <div class="grey-side">
+            <div style="position: absolute">
+              <img
+                src="../../assets/images/sidePic.png"
+                height="680"
+                width="650"
+              />
             </div>
-            <div style="position:relative;margin-top:15rem" >
+            <div style="position: relative; margin-top: 15rem">
               <img src="../../assets/images/side2.png" />
             </div>
-           
           </div>
           <div class="login-screen">
             <div
               class="d-flex align-start justify-start pointer mt-5"
               @click="goToLogin()"
             >
-              <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+              <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+              <span style="color: #2e3995">Back</span>
             </div>
-            <div class="mr-16 mt-10" >
-            <img src="../../assets/images/Message Sent.png" height="200" width="200"/>
+            <div class="mr-16 mt-10">
+              <img
+                src="../../assets/images/Message Sent.png"
+                height="200"
+                width="200"
+              />
             </div>
             <div class="sign-in-content d-flex align-start justify-start">
               Recovery Email Sent
@@ -161,12 +170,10 @@ export default {
 </script>
 <style scoped>
 .grey-side {
-
   width: 746px;
   left: 0px;
   top: 0px;
   border-radius: 0px;
-
 }
 .login-screen {
   height: 100vh;

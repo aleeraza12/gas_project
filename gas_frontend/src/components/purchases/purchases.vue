@@ -26,7 +26,7 @@
         </div>
         <div
           class="d-flex mt-5 pa-5"
-          style="background-color: #ebebea; border-radius: 5px"
+          style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
             <div class="d-flex align-start justify-start">
@@ -38,7 +38,12 @@
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex align-end justify-end">
-            <v-btn small dense outlined @click="goToAddPurchase()"
+            <v-btn
+              small
+              dense
+              outlined
+              color="#2b3896"
+              @click="goToAddPurchase()"
               >Add Receipt
               <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
             >
@@ -50,8 +55,8 @@
           <v-spacer></v-spacer>
           <div class="pointer" @click="myFunction()">
             View Current Depo Prices
-            <v-icon v-if="chevron">mdi-chevron-down</v-icon>
-            <v-icon v-else>mdi-chevron-up</v-icon>
+            <v-icon v-if="chevron" color="#2e3995">mdi-chevron-down</v-icon>
+            <v-icon v-else color="#2e3995">mdi-chevron-up</v-icon>
           </div>
         </div>
         <div class="d-flex mt-3">
@@ -69,7 +74,7 @@
               dense
               class="text-capitalize pa-4 mb-n1 mt-2"
             >
-              <span class="black--text">Export </span></v-btn
+              <span style="color: #2e3995">Export </span></v-btn
             >
           </div>
           <div class="mr-3"><date-picker /></div>
@@ -107,7 +112,7 @@
             :items-per-page="5"
             class="elevation-1 mt-5"
             hide-default-header
-            height="255px"
+            height="calc(100vh - 415px)"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -270,7 +275,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -280,7 +285,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

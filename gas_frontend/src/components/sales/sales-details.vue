@@ -9,7 +9,7 @@
         <div>
           <v-btn
             height="35"
-            min-width="25"
+            min-width="20"
             dense
             color="#2e3995"
             @click="goToinvoicePage()"
@@ -98,39 +98,12 @@
           <div class="fonts">
             Gas Quantity: {{ getSingleReceipt.gas_quantity }}
           </div>
-           <div class="fonts">
+          <div class="fonts">
             Promo Used: {{ getSingleReceipt.discount_code }}
           </div>
           <div class="fonts">Updated By: {{ getSingleReceipt.updated_by }}</div>
         </div>
       </div>
-      <!--<div class="mt-5" style="text-decoration: underline">
-        <b>Status History</b>
-      </div>-->
-      <!--<div class="fonts mt-5">
-        <div class="d-flex align-start justify-start ml-3">
-          <v-radio-group v-model="Delivered" column>
-            <v-radio
-              label="Delivered"
-              color="primary"
-              value="Delivered"
-            ></v-radio>
-          </v-radio-group>
-        </div>
-        <div class="d-flex align-start justify-start ml-8">
-          23rd ,april 20222
-        </div>
-      </div>
-      <div class="fonts">
-        <div class="d-flex align-start justify-start ml-3">
-          <v-radio-group v-model="Paid" column>
-            <v-radio label="paid" color="primary" value="Paid"></v-radio>
-          </v-radio-group>
-        </div>
-        <div class="d-flex align-start justify-start ml-8">
-          23rd ,april 20222
-        </div>
-      </div>-->
       <v-container fluid>
         <v-radio-group v-model="radios" dense>
           <template v-slot:label>
@@ -156,11 +129,11 @@
       </v-container>
       <div>
         <v-btn
-          class="mt-5 btn-create"
+          class="mt-5 btn-create text-capitalize"
           @click="updateSaleStatus()"
           :loading="loading"
         >
-          save
+          Save
         </v-btn>
       </div>
       <div class="d-flex align-center justify-center">
@@ -169,8 +142,8 @@
             dense
             outlined
             small
-            class="mt-5 mb-10"
-            style="border-color: #464646; width: 150px"
+            class="mt-5 mb-10 text-capitalize"
+            style="border-color: #464646; width: 150px; border-radius: 20px"
             @click="updateSale()"
           >
             Edit
@@ -181,8 +154,8 @@
             dense
             outlined
             small
-            style="width: 150px"
-            class="mt-5 ml-2 mb-10"
+            style="width: 150px; border-radius: 20px"
+            class="mt-5 ml-2 mb-10 text-capitalize"
             color="red"
             @click="dialog = true"
           >
@@ -366,17 +339,11 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 320px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
   background-color: #2e3995 !important;
   color: #fff;
   min-width: 310px !important;
-  border-radius: 4px !important;
+  border-radius: 20px !important;
   cursor: pointer;
-  /*margin-right: 8rem;*/
 }
 .sales-details-page {
   height: 770px;

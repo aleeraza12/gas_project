@@ -24,12 +24,12 @@ class Customers extends FormRequest
     public function rules()
     {
         $array['name'] = 'required|string';
-        $array['email'] = 'required|email';
+        $array['email'] = 'sometimes|email';
         $array['phone_number'] = 'required';
         $array['customer_type'] = 'required';
-        $array['city'] = 'required';
-        $array['state'] = 'required';
-        $array['address'] = 'required';
+        $array['city'] = 'sometimes';
+        $array['state'] = 'sometimes';
+        $array['address'] = 'sometimes';
         return $array;
     }
 

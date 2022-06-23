@@ -26,7 +26,7 @@
         </div>
         <div
           class="d-flex mt-5 pa-5"
-          style="background-color: #ebebea; border-radius: 5px"
+          style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
             <div class="d-flex align-start justify-start">
@@ -59,7 +59,7 @@
               dense
               class="text-capitalize pa-4 mb-n1 mt-2"
             >
-              <span class="black--text">Export </span></v-btn
+              <span style="color: #2e3995">Export </span></v-btn
             >
           </div>
           <div class="mr-3"><date-picker /></div>
@@ -71,7 +71,7 @@
             :items-per-page="5"
             class="elevation-1"
             hide-default-header
-            height="260px"
+            height="calc(100vh - 400px)"
             :search="search"
             :loading="tableloading"
           >
@@ -191,7 +191,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -201,7 +201,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

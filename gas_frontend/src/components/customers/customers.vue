@@ -26,7 +26,7 @@
         </div>
         <div
           class="d-flex mt-5 pa-5"
-          style="background-color: #ebebea; border-radius: 5px"
+          style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
             <div class="d-flex align-start justify-start">
@@ -38,13 +38,18 @@
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex align-end justify-end">
-            <v-btn small dense outlined @click="addNewCustomer()"
+            <v-btn
+              small
+              dense
+              outlined
+              color="#2b3896"
+              @click="addNewCustomer()"
               >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
             >
           </div>
         </div>
         <div class="d-flex mt-3">
-          <div class="mt-4"><b>Transactions</b></div>
+          <div class="mt-4"><b>History</b></div>
           <v-spacer></v-spacer>
 
           <div class="mr-3"><date-picker /></div>
@@ -58,7 +63,7 @@
             :items-per-page="5"
             class="elevation-1"
             hide-default-header
-            height="260px"
+            height="calc(100vh - 400px)"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -71,6 +76,16 @@
                   {{ header.text }}
                 </div>
               </th>
+            </template>
+            <template v-slot:item.email="{ item }">
+              <div class="text--disabled">
+                {{ item.email != null ? item.email : "No email" }}
+              </div>
+            </template>
+            <template v-slot:item.address="{ item }">
+              <div class="text--disabled">
+                {{ item.address != null ? item.address : "No address" }}
+              </div>
             </template>
             <template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
@@ -233,7 +248,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -243,7 +258,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background-color: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

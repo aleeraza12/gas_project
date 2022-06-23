@@ -6,8 +6,8 @@
           @click="goToCustomerListings()"
           class="d-flex align-start justify-start pointer"
         >
-          <v-icon>mdi-chevron-left</v-icon>
-          <span>Back</span>
+          <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+          <span style="color: #2e3995">Back</span>
         </div>
         <div class="mt-3">
           <div class="d-flex align-center justify-center">
@@ -137,7 +137,7 @@
                     placeholder="Password"
                     :rules="nameRules"
                     hide-details
-                    class="password-feild ml-16"
+                    class="password-feild ml-16 mt-2"
                     v-model="password"
                   ></v-text-field>
                 </div>

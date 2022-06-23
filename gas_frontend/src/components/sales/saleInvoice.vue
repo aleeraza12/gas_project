@@ -7,7 +7,8 @@
             class="d-flex align-start justify-start no-print"
             @click="goToSales()"
           >
-            <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+            <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+            <span style="color: #2e3995">Back</span>
           </div>
           <div class="d-flex mt-3 pa-5">
             <div>
@@ -173,17 +174,7 @@
             <b class="no-print">Powered By GA3QSD</b>
           </div>
           <div class="d-flex align-center justify-center mt-3 no-print">
-            <v-btn
-              @click="print"
-              small
-              dense
-              class="no-print"
-              style="
-                background-color: #2e3995 !important;
-                color: #fff;
-
-                cursor: pointer;
-              "
+            <v-btn @click="print" small dense class="no-print btn-print"
               >Print</v-btn
             >
           </div>
@@ -287,6 +278,15 @@ export default {
 };
 </script>
 <style scoped>
+.btn-print {
+  background-color: #2e3995 !important;
+  color: #fff;
+  min-width: 150px !important;
+  border-radius: 20px !important;
+  cursor: pointer;
+}
+</style>
+<style>
 @media print {
   .no-print,
   .no-print * {

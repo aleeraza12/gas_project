@@ -35,7 +35,7 @@
                   <v-badge
                     v-if="getSelectedDateRange"
                     class="mb-6"
-                    color="black"
+                    color="#2e3995"
                     dot
                     style="margin-right: -10px"
                   ></v-badge>
@@ -60,7 +60,7 @@
               <v-spacer></v-spacer>
               <v-icon
                 size="20"
-                color="black"
+                color="#2e3995"
                 v-if="getSelectedDateRange == list.title"
               >
                 mdi-checkbox-marked</v-icon

@@ -3,21 +3,25 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-                    <div class="grey-side">
-            <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="670" width="630"/>
+          <div class="grey-side">
+            <div style="position: absolute">
+              <img
+                src="../../assets/images/sidePic.png"
+                height="670"
+                width="630"
+              />
             </div>
-            <div style="position:relative;margin-top:15rem" >
+            <div style="position: relative; margin-top: 15rem">
               <img src="../../assets/images/side2.png" />
             </div>
-           
           </div>
           <div class="login-screen">
             <div
               class="d-flex align-start justify-start pointer mt-5"
               @click="goToLogin()"
             >
-              <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+              <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+              <span style="color: #2e3995">Back</span>
             </div>
             <div class="sign-in-content d-flex align-start justify-start">
               Password Recovery
@@ -212,11 +216,11 @@ export default {
   margin-left: 23rem;
 }
 .btn-login {
-  background-color: #2E3995 !important;
+  background-color: #2e3995 !important;
   color: #fff;
   min-width: 200px !important;
   cursor: pointer;
-   border-radius: 20px !important;
+  border-radius: 20px !important;
   margin-left: 10rem;
 }
 .pointer {

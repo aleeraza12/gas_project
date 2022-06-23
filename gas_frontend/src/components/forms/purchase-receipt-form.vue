@@ -3,7 +3,8 @@
     <div class="d-flex">
       <div>
         <div class="d-flex align-start justify-start" @click="goToPurchase()">
-          <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+          <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+          <span style="color: #2e3995">Back</span>
         </div>
         <div class="mt-4 ml-3 d-flex align-start justify-start">
           <b>Purchase Recepit Form</b>
@@ -144,27 +145,22 @@
             </div>
             <div class="">
               <v-btn
-                class="elevation-0 mt-4 btn-create"
+                class="elevation-0 mt-4 btn-create text-capitalize"
                 @click="savePurchase()"
                 :disabled="!valid"
                 :loading="loading"
                 dense
               >
-                Submit
+                Save
               </v-btn>
             </div>
           </v-form>
         </div>
       </div>
-      <div>
+      <div class="myDiv">
         <div
-          style="
-            height: 300px;
-            width: 300px;
-            margin-top: 10rem;
-            cursor: pointer;
-          "
-          class="pa-10 ml-16"
+          style="height: 300px; width: 300px; margin-top: 7rem; cursor: pointer"
+          class="pa-10 ml-10"
         >
           <div v-if="decodedBase64 != ''">
             <img :src="decodedBase64" height="70" width="80" />
@@ -180,7 +176,13 @@
               class="d-none"
               @change="onFileChange"
             />
-            <div style="text-decoration: underline">
+            <div
+              style="
+                text-decoration: underline;
+                color: #2e3995;
+                cursor: pointer;
+              "
+            >
               <b>Add Image</b>
             </div>
           </label>
@@ -478,16 +480,21 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 230px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 340px !important;
+  min-height: 40px;
+  min-width: 250px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  /*margin-right: 8rem;*/
+}
+.myDiv {
+  position: absolute;
+  width: 384px;
+  height: 400px;
+  left: 470px;
+  top: 150px;
+
+  background: #f7f7fe;
+  border-radius: 12px;
 }
 </style>

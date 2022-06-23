@@ -24,7 +24,7 @@
     </div>
     <div
       class="d-flex mt-5 pa-5"
-      style="background-color: #ebebea; border-radius: 5px"
+      style="background-color: #eff0fa; border-radius: 5px"
     >
       <div>
         <div class="d-flex align-start justify-start"><b>Pending</b></div>
@@ -54,7 +54,7 @@
         :loading="tableloading"
         class="elevation-1"
         hide-default-header
-        height="260px"
+        height="calc(100vh - 400px)"
       >
         <template v-slot:[`body.prepend`]="{ headers }">
           <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
@@ -158,7 +158,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -168,7 +168,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

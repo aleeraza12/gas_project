@@ -1,17 +1,5 @@
-.fonts {
-  font-size: 12px;
-}
-@media print {
-  .no-print,
-  .no-print * {
-    display: none !important;
-  }
-}
-@media print {
-  @page {
-    margin: 0;
-  }
-  body {
-    margin: 1.6cm;
-  }
+
+
+.upper-card {
+  background: #eff0fa;
 }

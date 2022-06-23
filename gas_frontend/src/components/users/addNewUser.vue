@@ -4,7 +4,8 @@
       class="d-flex align-start justify-start pointer"
       @click="goToUserListings()"
     >
-      <v-icon>mdi-chevron-left</v-icon> <span>Back</span>
+      <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+      <span style="color: #2e3995">Back</span>
     </div>
     <div class="mt-3">
       <div class="d-flex align-start justify-start">
@@ -99,7 +100,7 @@
                 dense
                 v-model="permissions"
                 label="Dashboard"
-                color="black"
+                color="#2e3995"
                 value="Dashboard"
                 hide-details
               ></v-checkbox>
@@ -107,7 +108,7 @@
                 dense
                 v-model="permissions"
                 label="Sales"
-                color="black"
+                color="#2e3995"
                 value="Sales"
                 hide-details
               ></v-checkbox>
@@ -117,7 +118,7 @@
                 dense
                 v-model="permissions"
                 label="Orders"
-                color="black"
+                color="#2e3995"
                 value="Orders"
                 hide-details
               ></v-checkbox>
@@ -125,7 +126,7 @@
                 dense
                 v-model="permissions"
                 label="Purchases"
-                color="black"
+                color="#2e3995"
                 value="Purchases"
                 hide-details
               ></v-checkbox>
@@ -135,7 +136,7 @@
                 dense
                 v-model="permissions"
                 label="Customers"
-                color="black"
+                color="#2e3995"
                 value="Customers"
                 hide-details
               ></v-checkbox>
@@ -143,7 +144,7 @@
                 dense
                 v-model="permissions"
                 label="Users"
-                color="black"
+                color="#2e3995"
                 value="Users"
                 hide-details
               ></v-checkbox>
@@ -153,7 +154,7 @@
                 dense
                 v-model="permissions"
                 label="Wallet"
-                color="black"
+                color="#2e3995"
                 value="Wallet"
                 hide-details
               ></v-checkbox>
@@ -161,7 +162,7 @@
                 dense
                 v-model="permissions"
                 label="Reconciliation"
-                color="black"
+                color="#2e3995"
                 value="Reconciliation"
                 hide-details
               ></v-checkbox>
@@ -171,32 +172,25 @@
                 dense
                 v-model="permissions"
                 label="Rates"
-                color="black"
+                color="#2e3995"
                 value="Rates"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Promo"
+                color="#2e3995"
+                value="Promos"
                 hide-details
               ></v-checkbox>
             </v-col>
           </v-row>
-          <!--<v-radio-group v-model="permission1" row dense>
-            <v-radio label="Dashboard" value="Dashboard"></v-radio>
-            <v-radio label="Sales" value="Sales"></v-radio>
-            <v-radio label="Orders" value="Orders"></v-radio>
-            <v-radio label="Purchases" value="Purchases"></v-radio>
-          </v-radio-group>-->
         </div>
-        <!--<div class="d-flex fonts">
-          <v-radio-group v-model="permission2" row dense>
-            <v-radio label="Customers" value="Customers"></v-radio>
-            <v-radio label="Users" value="Users"></v-radio>
-            <v-radio label="Wallet" value="Wallet"></v-radio>
-            <v-radio label="Reconciliation" value="Reconciliation"></v-radio>
-          </v-radio-group>
-        </div>-->
         <div class="mt-5 mb-5 ml-16">
           <v-btn
             block
-            large
-            class="elevation-0 btn-create"
+            class="elevation-0 btn-create text-capitalize"
             :loading="loading"
             :disabled="!valid"
             @click="createUser()"
@@ -345,17 +339,12 @@ export default {
   font-size: 12px;
 }
 .btn-create {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 300px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
   background-color: #2e3995 !important;
   color: #fff;
+  min-height: 30px;
   min-width: 200px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  margin-right: 8rem;
 }
 .pointer {
   cursor: pointer;

@@ -86,9 +86,9 @@
       <div class="fonts mt-3 mb-5">
         <div class="d-flex align-start justify-start ml-3">
           <v-radio
-            label="Deleivered"
+            label="Delivered"
             color="primary"
-            value="Deleivered"
+            value="Delivered"
           ></v-radio>
         </div>
         <div class="d-flex align-start justify-start ml-8">
@@ -97,16 +97,16 @@
       </div>
 
       <div>
-        <v-btn dense small style="width: 230px" class="mt-3"> Delivered </v-btn>
+        <v-btn class="mt-3 btn-delivered text-capitalize">
+          Mark as delivered
+        </v-btn>
       </div>
       <div>
         <v-btn
-          dense
           outlined
-          small
-          style="width: 230px"
-          class="mt-3"
+          class="mt-3 btn-delete text-capitalize"
           @click="dialog = true"
+          color="red"
         >
           Delete
         </v-btn>
@@ -162,7 +162,7 @@ export default {
   }),
   components: {},
   mounted() {
-     if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
+    if (this.getSinglePurchase.length == 0) this.$router.push("/dashboard");
   },
   created() {},
   methods: {
@@ -217,5 +217,22 @@ export default {
 }
 .fonts {
   font-size: 12px;
+}
+
+.btn-delivered {
+  min-height: 35px;
+  background-color: #2e3995 !important;
+  color: #fff;
+  min-width: 220px !important;
+  border-radius: 20px !important;
+  cursor: pointer;
+}
+.btn-delete {
+  min-height: 35px;
+  /*background-color: red !important;*/
+  /*color: red;*/
+  min-width: 220px !important;
+  border-radius: 20px !important;
+  cursor: pointer;
 }
 </style>

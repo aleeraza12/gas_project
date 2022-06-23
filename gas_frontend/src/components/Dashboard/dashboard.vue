@@ -23,9 +23,7 @@
       </div>
       <v-spacer></v-spacer>
       <div>
-        <div style="font-size: 16px" class="mr-n5 display-end">
-          Current gas price
-        </div>
+        <div style="font-size: 16px" class="display-end">Current gas price</div>
 
         <div class="d-flex justify-end align-end mr-7">
           <v-skeleton-loader
@@ -40,8 +38,8 @@
           </div>
 
           <div
-            v-if="!priceLoader"
             @click="setModal()"
+            v-if="!priceLoader"
             class="mt-2 ml-2"
             style="font-size: 12px; text-decoration: underline; cursor: pointer"
           >
@@ -144,7 +142,7 @@
         :headers="headers"
         :items="getAllOrders"
         class="elevation-1"
-        height="220px"
+        height="calc(100vh - 450px)"
         :search="search"
         :loading="tableloading"
         hide-default-header
@@ -393,7 +391,7 @@ export default {
   border-radius: 0px !important;
 }
 .top-bar {
-  background-color: #ebebea;
+  background: #eff0fa;
   height: 55px;
   border-radius: 20px;
 }
@@ -403,7 +401,7 @@ export default {
   width: 500px;
 }
 .table-head {
-  background-color: #ebebea;
+  background: #eff0fa;
   font-size: 12px;
   height: 50px;
 }

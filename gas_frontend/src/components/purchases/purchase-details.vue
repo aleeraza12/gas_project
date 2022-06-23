@@ -160,11 +160,11 @@
       </v-container>
       <div>
         <v-btn
-          class="mt-5 btn-create"
+          class="mt-5 btn-create text-capitalize"
           @click="updatePurchaseStatus()"
           :loading="loading"
         >
-          save
+          Save
         </v-btn>
       </div>
       <div class="d-flex align-center justify-center">
@@ -173,9 +173,9 @@
             dense
             outlined
             small
-            class="mt-5 mb-10"
+            class="mt-5 mb-10 text-capitalize"
             @click="updatePurchase()"
-            style="border-color: #464646; width: 150px"
+            style="border-color: #464646; width: 150px; border-radius: 20px"
           >
             Edit
           </v-btn>
@@ -185,8 +185,8 @@
             dense
             outlined
             small
-            style="width: 150px"
-            class="mt-5 ml-2 mb-10"
+            style="width: 150px; border-radius: 20px"
+            class="mt-5 ml-2 mb-10 text-capitalize"
             color="red"
             @click="dialog = true"
           >
@@ -420,17 +420,12 @@ export default {
 </script>
 <style scoped>
 .btn-create {
-  /*background-color: #464646 !important;
-  color: #fff;
-  min-width: 320px !important;
-  border-radius: 8px !important;
-  cursor: pointer;*/
   background-color: #2e3995 !important;
   color: #fff;
+  min-height: 30px;
   min-width: 310px !important;
-  border-radius: 4px !important;
+  border-radius: 20px !important;
   cursor: pointer;
-  /*margin-right: 8rem;*/
 }
 .sales-details-page {
   /* height: 100vh; */

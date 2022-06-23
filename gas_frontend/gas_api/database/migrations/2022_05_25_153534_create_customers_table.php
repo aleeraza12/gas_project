@@ -16,11 +16,11 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone_number');
-            $table->longText('address');
-            $table->longText('city');
-            $table->longText('state');
+            $table->longText('address')->nullable();
+            $table->longText('city')->nullable();
+            $table->longText('state')->nullable();
             $table->string('customer_type');
             //$table->integer('customer_type_id')->unsigned();
             $table->integer('company_id')->unsigned();
@@ -40,15 +40,3 @@ class CreateCustomersTable extends Migration
         Schema::dropIfExists('customers');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
