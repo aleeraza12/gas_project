@@ -18,7 +18,7 @@
           />
           <img
             v-else
-            src="../../assets/images/Vector (2).png"
+            src="../../assets/images/mn.png"
             height="30"
             width="120"
             class="ml-1"

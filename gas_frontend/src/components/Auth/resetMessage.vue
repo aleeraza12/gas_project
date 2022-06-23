@@ -5,7 +5,7 @@
       <div class="d-flex">
            <div class="grey-side">
             <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="680" width="650"/>
+              <img src="../../assets/images/sidePic.png"  width="650"/>
             </div>
             <div style="position:relative;margin-top:15rem" >
               <img src="../../assets/images/side2.png" />

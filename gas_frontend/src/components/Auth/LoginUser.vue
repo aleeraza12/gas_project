@@ -5,7 +5,7 @@
         <div class="d-flex">
           <div class="grey-side">
             <div style="position: absolute;">
-              <img src="../../assets/images/sidePic.png" height="670" width="650"/>
+              <img src="../../assets/images/sidePic.png"  width="650"/>
             </div>
             <div style="position:relative;margin-top:15rem" >
               <img src="../../assets/images/side2.png" />
@@ -282,6 +282,6 @@ export default {
   min-width: 200px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  margin-right:8rem;
+  margin-right:10rem;
 }
 </style>

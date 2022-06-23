@@ -8,7 +8,7 @@
             <div style="position: absolute">
               <img
                 src="../../assets/images/sidePic.png"
-                height="680"
+                
                 width="650"
               />
             </div>
