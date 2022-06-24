@@ -48,7 +48,7 @@
               ></v-select>
             </div>
             <div>
-              <v-select
+              <!--<v-select
                 :items="
                   Object.keys(customer_names).map((key) => ({
                     text: customer_names[key].name,
@@ -63,7 +63,27 @@
                 dense
                 small
                 hide-details
-              ></v-select>
+              ></v-select>-->
+              <v-autocomplete
+                :items="
+                  Object.keys(customer_names).map((key) => ({
+                    text: customer_names[key].name,
+                    value: customer_names[key],
+                  }))
+                "
+                label="Search Customer Name"
+                v-model="customer_name"
+                :rules="nameRules"
+                outlined
+                class="username-feild mt-3"
+                dense
+                small
+                :search-input.sync="search"
+                cache-items
+                hide-no-data
+                hide-details
+               
+              ></v-autocomplete>
             </div>
             <div>
               <v-text-field
@@ -223,6 +243,7 @@ export default {
     valid: false,
     valid1: false,
     show: false,
+    search: null,
     show1: false,
     gas_quantity: "",
     price: "",

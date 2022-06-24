@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->double('amount');
-            $table->enum('status', ['verified', 'not_verified', 'declined'])->default('not_verified');
+            $table->enum('status', ['verified', 'not_verified', 'declined', 'reconcilled'])->default('not_verified');
             $table->string('type'); //Sales or Purchase
             $table->integer('company_id'); //Company id
             $table->integer('outer_id')->nullable(); //Sales or Purchase id

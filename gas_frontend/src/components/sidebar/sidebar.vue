@@ -154,6 +154,13 @@ export default {
         tabName: "Promo",
         color: "#fff",
       },
+       {
+        text: "Rate List",
+        icon: "mdi-cash",
+        route: "/rate_list",
+        tabName: "Rate List",
+        color: "#fff",
+      },
       {
         text: "AdminSettings",
         icon: "mdi-cog",

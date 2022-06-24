@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Depos extends Model
 {
     use HasFactory;
-    protected $fillable  = ['depo_name', 'location', 'price_per_twenty_million_ton', 'company_id'];
+    protected $fillable  = ['depo_name', 'location', 'price_per_twenty_million_ton', 'company_id','added_by_admin'];
 
-    public function getCreatedAtAttribute($value)
+    public function getUpdatedAtAttribute($value)
     {
-
         $date = Carbon::parse($value)->addHours(5);
         return $date->isoFormat('dddd,Do MMMM YYYY');
     }

@@ -13,7 +13,7 @@ class Transaction extends Model
     protected $fillable = [
         'amount', 'gas_quantity', 'type', 'outer_id', 'company_id'
     ];
-    public function getCreatedAtAttribute($value)
+    public function getUpdatedAtAttribute($value)
     {
         $date = Carbon::parse($value)->addHours(5);
         return $date->isoFormat('Do MMMM YYYY, h:mm a');

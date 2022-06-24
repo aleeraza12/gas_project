@@ -33,6 +33,7 @@ const store = {
     orders: [],
     wallets: [],
     promos: [],
+    rates: [],
     date: "",
     recovery_mail: "",
   },
@@ -64,6 +65,7 @@ const store = {
     getWallet: (state) => state.wallets,
     getSelectedDateRange: (state) => state.date,
     getPromos: (state) => state.promos,
+    getRates: (state) => state.rates,
   },
   mutations: {
     SET_SALES: (state, payload) => (state.sales = payload),
@@ -78,6 +80,7 @@ const store = {
     SET_DASHBOARD: (state, payload) => (state.dashboard = payload),
     SET_ORDERS: (state, payload) => (state.orders = payload),
     SET_WALLETS: (state, payload) => (state.wallets = payload),
+    SET_RATES: (state, payload) => (state.rates = payload),
     //Settngs
     SET_PAYMENT_MODES_SETTINGS: (state, payload) =>
       (state.payment_modes_settings = payload),
@@ -376,6 +379,17 @@ const store = {
           eventBus.$emit("responseArrived");
         }
       });
+    },
+
+    getRateListing(context, requestBody) {
+      RequestService.post("depo/read_rate_list", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            context.commit("SET_RATES", response.data.response);
+            eventBus.$emit("responseArrived");
+          }
+        }
+      );
     },
 
     checkRouteExistence() {

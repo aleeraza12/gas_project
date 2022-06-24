@@ -139,6 +139,25 @@ const router = new VueRouter({
       component: require("../src/components/promos/Promo.vue").default,
     },
     {
+      path: "/rate_list",
+      name: "Rate List",
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Rate List"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
+      meta: { layout: "app", title: "Rate List", requireAuth: true },
+      component: require("../src/components/Rate List/rates.vue").default,
+    },
+    {
       path: "/sales",
       name: "Sales",
       beforeEnter: (to, from, next) => {

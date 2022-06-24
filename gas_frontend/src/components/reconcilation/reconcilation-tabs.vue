@@ -107,7 +107,9 @@
                       outlined
                       >{{
                         item.status == "not_verified"
-                          ? "Pending"
+                          ? "Not Paid"
+                          : item.status == "verified"
+                          ? "Paid"
                           : "Reconcilled"
                       }}</v-chip
                     >
@@ -115,52 +117,21 @@
                   <template v-slot:item.payment_mode="{ item }" class="ml-3">
                     {{ item.payment_mode ? item.payment_mode : "---" }}
                   </template>
-                  <!--<template v-slot:item.actions="{ item }">
-              <v-data-table
-                :headers="headers"
-                :items="getSalesTransaction"
-                :items-per-page="5"
-                class="elevation-1"
-                  style="border:1px solid rgb(235, 235, 234)"
-                hide-default-header
-                height="210px"
-                :search="search"
-                :loading="loading"
-              >
-                <template v-slot:[`body.prepend`]="{ headers }">
-                  <th
-                    v-for="(header, i) in headers"
-                    :key="'A' + i"
-                    class="table-head"
-                  >
-                    <div class="d-flex ml-3">
-                      {{ header.text }}
-                    </div>
-                  </th>
-                </template>
-                <template v-slot:item.status="{ item }">
-                  <v-chip
-                    class="ma-2"
-                    small
-                    :color="item.status == 'not_verified' ? 'red' : 'green'"
-                    label
-                    outlined
-                    >{{
-                      item.status == "not_verified" ? "Pending" : "Reconcilled"
-                    }}</v-chip
-                  >
-                </template>
-                <template v-slot:item.payment_mode="{ item }" class="ml-3">
-                  {{ item.payment_mode ? item.payment_mode : "---" }}
-                </template>
-                <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="ViewReceipt(item)">
-                    mdi-eye
-                  </v-icon>
-                </template>-->
+                  <template v-slot:item.actions="{ item }">
+                    <v-icon
+                      :disabled="item.status == 'reconcilled'"
+                      small
+                      class="mr-2"
+                      @click="editItem(item)"
+                      color="success"
+                    >
+                      mdi-check-circle
+                    </v-icon>
+                  </template>
                 </v-data-table>
               </div>
             </v-tab-item>
+            <!-- Purchases -->
             <v-tab-item>
               <v-data-table
                 :headers="headers"
@@ -192,7 +163,11 @@
                     label
                     outlined
                     >{{
-                      item.status == "not_verified" ? "Pending" : "Reconcilled"
+                      item.status == "not_verified"
+                        ? "Not Paid"
+                        : item.status == "verified"
+                        ? "Paid"
+                        : "Reconcilled"
                     }}</v-chip
                   >
                 </template>
@@ -200,8 +175,14 @@
                   {{ item.payment_mode ? item.payment_mode : "---" }}
                 </template>
                 <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="ViewReceipt(item)">
-                    mdi-eye
+                  <v-icon
+                    :disabled="item.status == 'reconcilled'"
+                    small
+                    class="mr-2"
+                    @click="editItem(item)"
+                    color="success"
+                  >
+                    mdi-check-circle
                   </v-icon>
                 </template>
               </v-data-table>
@@ -215,6 +196,52 @@
         <b>My custom button</b>
       </v-btn>
     </download-csv>
+
+    <!-- Dialog -->
+    <v-dialog v-model="dialog" persistent max-width="650">
+      <v-card>
+        <v-card-title class="text-h7">
+          Are you sure to update this transaction status to Reconcilled?
+        </v-card-title>
+        <!--<v-card-text>By deleting, All of its data will be lost.</v-card-text>-->
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color=" black"
+            small
+            text
+            @click="dialog = false"
+            class="text--capitalize"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            color="success darken-1"
+            small
+            text
+            @click="updateStatus()"
+            class="text--capitalize"
+          >
+            Update
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      :value="true"
+      absolute
+      class="mt-5"
+      :color="snackbarColor"
+      shaped
+      :right="true"
+      :top="true"
+      text
+    >
+      <v-icon class="pr-3" :color="snackbarColor">{{ getIcon }} </v-icon>
+      {{ snacbarMessage }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -223,12 +250,18 @@ import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import datePicker from "../../views/Pages/datePicker.vue";
 import VueJsonToCsv from "vue-json-to-csv";
+import RequestService from "../../RequestService";
 import Vue from "vue";
 Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     tab: null,
     loading: true,
+    dialog: false,
+    snacbarMessage: "",
+    snackbar: false,
+    snackbarColor: "",
+    updateAble: "",
     start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     search: "",
@@ -239,7 +272,7 @@ export default {
         text: "Date",
         align: "start",
         sortable: false,
-        value: "created_at",
+        value: "updated_at",
       },
       { text: "Transaction Id", value: "id" },
       { text: "Customer Name", value: "customer_name" },
@@ -248,11 +281,18 @@ export default {
       { text: "Status", value: "status" },
       { text: "Updated by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
-      //{ text: "View Receipt", value: "actions", sortable: false },
+      { text: "Action", value: "actions", sortable: false },
     ],
   }),
   computed: {
     ...mapGetters(["getAllTransactions"]),
+    ...mapGetters(["getRates"]),
+
+    getIcon() {
+      return this.snackbarColor == "success"
+        ? "mdi-checkbox-marked-circle"
+        : "mdi-close-circle";
+    },
   },
   components: {
     datePicker,
@@ -279,6 +319,29 @@ export default {
     this.$store.commit("setSelectedDateRange", "All");
   },
   methods: {
+    editItem(item) {
+      this.updateAble = item;
+      this.dialog = true;
+    },
+    updateStatus() {
+      this.dialog = false;
+      let requestBody = {
+        outer_id: this.updateAble.outer_id,
+        type: this.updateAble.type,
+        status: "reconcilled",
+      };
+      RequestService.post("transaction/update_status", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            this.loading = true;
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "Transaction status updated successfully";
+            this.getTransactions([this.start_date, this.end_date]);
+          }
+        }
+      );
+    },
     btnClick() {
       document.getElementById("myBtn").click();
     },

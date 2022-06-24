@@ -214,35 +214,6 @@ export default {
       this.slectedRange = "custom_range";
       this.dateRangeText = this.start_date + " - " + this.end_date;
       this.$store.commit("setSelectedDateRange", this.dateRangeText);
-      //  this.$route && this.$route.path == "/AdminDashboard"
-      //    ? eventBus.$emit("selectedDashboardCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/Tasks"
-      //    ? eventBus.$emit("selectedTasksCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/Products"
-      //    ? eventBus.$emit("selectedActivePostersCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/ActivePosters"
-      //    ? eventBus.$emit("selectedActivePostersCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/Merchants"
-      //    ? eventBus.$emit("selectedMerchantsCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path.includes("Inventory")
-      //    ? eventBus.$emit("selectedInventoryCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/MarketMessage"
-      //    ? eventBus.$emit("selectedMessagesCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/Taskers"
-      //    ? eventBus.$emit("selectedTaskerCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/transactions"
-      //    ? eventBus.$emit("selectedTaskerCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/Latency"
-      //    ? eventBus.$emit("selectedLatencyCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path == "/Posters"
-      //    ? eventBus.$emit("selectedPosterCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path.includes("Taskers")
-      //    ? eventBus.$emit("selectedTaskerDetailCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path.includes("Posters")
-      //    ? eventBus.$emit("selectedPosterDetailCustomDateFilter", this.picker)
-      //    : this.$route && this.$route.path.includes("Merchants")
-      //    ? eventBus.$emit("selectedMerchantsCustomDateFilter", this.picker)
-      //    : () => {};
       this.$route && this.$route.path == "/dashboard"
         ? eventBus.$emit("selectedDashboardDateFilter", this.picker)
         : this.$route && this.$route.path == "/orders"
@@ -263,6 +234,8 @@ export default {
         ? eventBus.$emit("selectedCompanyDateFilter", this.picker)
         : this.$route && this.$route.path == "/promos"
         ? eventBus.$emit("selectedPromoDateFilter", this.picker)
+        : this.$route && this.$route.path == "/rate_list"
+        ? eventBus.$emit("selectedRateListDateFilter", this.picker)
         : () => {};
     },
     /* * @Description
@@ -289,6 +262,8 @@ export default {
         ? eventBus.$emit("selectedCompanyDateFilter", this.picker)
         : this.$route && this.$route.path == "/promos"
         ? eventBus.$emit("selectedPromoDateFilter", this.picker)
+        : this.$route && this.$route.path == "/rate_list"
+        ? eventBus.$emit("selectedRateListDateFilter", this.picker)
         : () => {};
     },
   },

@@ -29,7 +29,7 @@ class TransactionController extends Controller
 
     public function readTransactions(Request $request)
     {
-        $transactions = Transaction::where('company_id', $request->company_id)->whereBetween('created_at', array($request->start_date, $request->end_date))->where('status', 'verified')->get();
+        $transactions = Transaction::where('company_id', $request->company_id)->whereBetween('created_at', array($request->start_date, $request->end_date))->whereIn('status', ['verified', 'reconcilled'])->get();
         foreach ($transactions as $transaction) {
             if ($transaction->type == 'sale') {
                 $data = Sale::find($transaction->outer_id);
@@ -78,5 +78,13 @@ class TransactionController extends Controller
         Transaction::where('outer_id', $request->outer_id)->where('type', $request->type)->update([
             'amount' =>  $request->amount, 'company_id' => $request->company_id
         ]);
+    }
+
+    public function updateTransactionStatus(Request $request)
+    {
+        Transaction::where('outer_id', $request->outer_id)->where('company_id', $request->company_id)->where('type', $request->type)->update([
+            'status' => $request->status
+        ]);
+        return response()->json(['response' => "Status updated successfully", 'status' => 200]);
     }
 }

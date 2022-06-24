@@ -178,7 +178,7 @@
         </div>
       </v-col>
       <v-col md="6" lg="6" xl="6">
-        <div class="pa-5" style="background-color: #f9f9f8; height: 100vh">
+        <div class="pa-5" style="background-color: #EFF0FA; height: 100vh">
           <div class="d-flex justify-start align-start mt-5">
             <b>Company Profile</b>
           </div>

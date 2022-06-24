@@ -24,7 +24,7 @@ class CompanySeeder extends Seeder
                 'company_phone_number' =>  '31241425',
                 'city' =>  'TestCty',
                 'state' => 'Abia',
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Rates',  'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos'],
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Rates',  'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos', 'Rate List'],
                 'address' =>  'Test address',
             ]
         );

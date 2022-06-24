@@ -16,6 +16,19 @@ class DepoController extends Controller
         $depo->depo_name = $request->depo_name;
         $depo->price_per_twenty_million_ton = $request->price_per_twenty_million_ton;
         $depo->location = $request->location;
+        $depo->added_by_admin = (bool)$request->added_by_admin;
+        $depo->company_id = $request->company_id;
+        $depo->save();
+        return response()->json(['response' => $depo, 'status' => 201]);
+    }
+
+    public function update_depo_price(Request $request)
+    {
+        $depo = Depos::find($request->depo_id);
+        $depo->depo_name = $request->depo_name;
+        $depo->price_per_twenty_million_ton = $request->price_per_twenty_million_ton;
+        $depo->location = $request->location;
+        $depo->added_by_admin = (bool)$request->added_by_admin;
         $depo->company_id = $request->company_id;
         $depo->save();
         return response()->json(['response' => $depo, 'status' => 201]);
@@ -23,6 +36,8 @@ class DepoController extends Controller
 
     public function delete_depo_price(Request $request)
     {
+        if (!$request->added_by_admin)
+            return response()->json(['response' => "Unauthenticated action", 'status' => 400]);
         Depos::find($request->depo_id)->delete();
         return response()->json(['response' => "Depo price deleted successfully", 'status' => 200]);
     }
@@ -35,13 +50,18 @@ class DepoController extends Controller
 
     public function read_company_depos(Request $request)
     {
-        $depo_prices =   Company::find($request->company_id)->depos()->get()->toArray();
+        $depo_prices =   Company::find($request->company_id)->depos()->where('added_by_admin', false)->get()->toArray();
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
 
     public function read_all_depo_prices_admin()
     {
-        $depo_prices =  Depos::all();
+        $depo_prices =  Depos::where('added_by_admin', false)->get()->toArray();
+        return response()->json(['response' => $depo_prices, 'status' => 200]);
+    }
+    public function read_rate_list(Request $request)
+    {
+        $depo_prices =  Depos::where('added_by_admin', true)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
 }

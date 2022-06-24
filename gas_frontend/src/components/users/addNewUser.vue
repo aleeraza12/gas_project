@@ -185,6 +185,16 @@
                 hide-details
               ></v-checkbox>
             </v-col>
+            <v-col cols="9" sm="2" md="2">
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Rate List"
+                color="#2e3995"
+                value="Rate List"
+                hide-details
+              ></v-checkbox>
+            </v-col>
           </v-row>
         </div>
         <div class="mt-5 mb-5 ml-16">

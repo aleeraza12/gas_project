@@ -78,12 +78,12 @@
               </th>
             </template>
             <template v-slot:item.email="{ item }">
-              <div class="text--disabled">
+              <div :class="item.email == null ? 'text--disabled' : ''">
                 {{ item.email != null ? item.email : "No email" }}
               </div>
             </template>
             <template v-slot:item.address="{ item }">
-              <div class="text--disabled">
+              <div :class="item.address == null ? 'text--disabled' : ''">
                 {{ item.address != null ? item.address : "No address" }}
               </div>
             </template>

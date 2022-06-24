@@ -49,7 +49,7 @@
           </div>
         </div>
         <div v-if="!priceLoader && getPrice" class="mr-6">
-          <p>{{ getPrice.created_at }}</p>
+          <p>{{ getPrice.updated_at }}</p>
         </div>
       </div>
     </div>
@@ -183,7 +183,7 @@
               solo
               label="Enter Depo Name"
               hide-details="auto"
-              clearable
+              readonly
               class="ma-3"
               :rules="nameRules"
             ></v-text-field>
@@ -192,7 +192,7 @@
               v-model="location"
               solo
               label="Enter Depo Location"
-              clearable
+              readonly
               :rules="nameRules"
               class="ma-3"
             ></v-text-field>
@@ -297,6 +297,8 @@ export default {
     this.$store.dispatch("getCurrentPrice");
     this.$store.dispatch("getDashboardStats");
     this.$store.commit("setSelectedDateRange", "Today");
+    this.depo_name = this.loggedinUser.company_name;
+    this.location = this.loggedinUser.address;
   },
   computed: {
     getIcon() {
@@ -349,12 +351,9 @@ export default {
         location: this.location,
         price_per_twenty_million_ton: this.price,
         depo_id: this.depo_id,
+        added_by_admin: false,
       };
-      let apiName = "";
-      this.purchase_id == null
-        ? (apiName = "depo/create")
-        : (apiName = "depo/update");
-      RequestService.post(apiName, requestBody)
+      RequestService.post("depo/create", requestBody)
         .then((res) => {
           if (res.data.status == 201 && !this.depo_id)
             this.snacbarMessage = "Your price(s) added successfully";

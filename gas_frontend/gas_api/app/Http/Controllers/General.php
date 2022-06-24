@@ -38,6 +38,9 @@ class General extends Controller
                     $response = Token::create($request, $is_user->company_id);
                     $message['token'] = $response[0];
                     $message['user'] = $is_user;
+                    $company = Company::find($is_user->company_id);
+                    $message['user']->company_name = $company->company_name;
+                    $message['user']->address = $company->address;
                     $status = 200;
                 } else {
                     $message = "Credentials didn't matched";

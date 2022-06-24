@@ -1,9 +1,11 @@
 <template>
   <div class="main-container">
-    <div class="sales-details-page">
+    <div class="sales-details-page" id="printAble">
       <div class="d-flex">
         <div>
-          <v-icon class="ml-3 mt-3" @click="goToOrders()"> mdi-close</v-icon>
+          <v-icon class="ml-3 mt-3 no-print" @click="goToOrders()">
+            mdi-close</v-icon
+          >
         </div>
       </div>
       <div class="mt-6"><b>Orders Details</b></div>
@@ -97,14 +99,17 @@
       </div>
 
       <div>
-        <v-btn class="mt-3 btn-delivered text-capitalize">
-          Mark as delivered
+        <v-btn
+          class="mt-3 btn-delivered text-capitalize no-print"
+          @click="print"
+        >
+          Print
         </v-btn>
       </div>
       <div>
         <v-btn
           outlined
-          class="mt-3 btn-delete text-capitalize"
+          class="mt-3 btn-delete text-capitalize no-print"
           @click="dialog = true"
           color="red"
         >
@@ -166,6 +171,75 @@ export default {
   },
   created() {},
   methods: {
+    print() {
+      console.log("called");
+      // Pass the element id here
+      const prtHtml = document.getElementById("printAble").innerHTML;
+
+      // Get all stylesheets HTML
+      let stylesHtml = "";
+      for (const node of [
+        ...document.querySelectorAll('link[rel="stylesheet"], style'),
+      ]) {
+        stylesHtml += node.outerHTML;
+      }
+
+      // Open the print window
+      const WinPrint = window.open(
+        "",
+        "",
+        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+      );
+
+      WinPrint.document.write(`<!DOCTYPE html>
+<html>
+  <head>
+    ${stylesHtml}
+  </head>
+  <body>
+    ${prtHtml}
+  </body>
+</html>`);
+
+      WinPrint.document.close();
+      WinPrint.focus();
+      WinPrint.print();
+      WinPrint.close();
+    },
+    printReceipt() {
+      let prtContent = document.getElementById("printAble").outerHTML;
+      let stylesHtml = "";
+      for (const node of [
+        ...document.querySelectorAll('link[rel="stylesheet"], style'),
+      ]) {
+        stylesHtml += node.outerHTML;
+        //console.log(stylesHtml);
+      }
+
+      // Open the print window
+      let WinPrint = window.open(
+        "",
+        "",
+        "left=0,top=0,width=700,height=900,toolbar=1,scrollbars=1,status=1"
+      );
+
+      WinPrint.document.write(`<!DOCTYPE html>
+    <html>
+    <head>
+    ${stylesHtml}
+    </head>
+    <body>
+    ${prtContent}
+    </body>
+    </html>`);
+      setTimeout(() => {
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+      }, 100);
+    },
     goToOrders() {
       this.$router.push("Orders");
     },
@@ -234,5 +308,14 @@ export default {
   min-width: 220px !important;
   border-radius: 20px !important;
   cursor: pointer;
+}
+</style>
+
+<style>
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
 }
 </style>

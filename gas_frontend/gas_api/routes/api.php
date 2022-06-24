@@ -122,10 +122,12 @@ Route::middleware('token')->group(function () {
     Route::prefix('depo')->group(function () {
         Route::controller(DepoController::class)->group(function () {
             Route::post('create', 'create_depo_price');
+            Route::post('update', 'update_depo_price');
             Route::post('delete', 'delete_depo_price');
             Route::post('read_one', 'read_depo_price');
             Route::post('read_all', 'read_company_depos');
             Route::post('read', 'read_all_depo_prices_admin');
+            Route::post('read_rate_list', 'read_rate_list');
         });
     });
 
@@ -180,6 +182,7 @@ Route::middleware('token')->group(function () {
     Route::prefix('transaction')->group(function () {
         Route::controller(TransactionController::class)->group(function () {
             Route::post('read', 'read');
+            Route::post('update_status', 'updateTransactionStatus');
             Route::post('read_all', 'readTransactions');
         });
     });

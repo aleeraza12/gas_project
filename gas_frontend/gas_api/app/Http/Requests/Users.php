@@ -23,7 +23,7 @@ class Users extends FormRequest
      */
     public function rules()
     {
-        $array['name'] = 'required|string';
+        $array['name'] = 'required|string|unique:users,name,' . $this->users_id;
         $array['created_by'] = 'required';
         $array['designation'] = 'required';
         $array['password'] = 'required|min:3|max:20';

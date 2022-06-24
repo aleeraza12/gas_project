@@ -171,6 +171,7 @@ export default {
       { text: "Depot Name", value: "depo_name" },
       { text: "Location", value: "location" },
       { text: "Price(per 20MT)", value: "price_per_twenty_million_ton" },
+      { text: "Update At", value: "updated_at" },
     ],
     headers: [
       {
