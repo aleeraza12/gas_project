@@ -15,7 +15,7 @@ class Transaction extends Model
     ];
     public function getUpdatedAtAttribute($value)
     {
-        $date = Carbon::parse($value)->addHours(5);
+        $date = Carbon::parse($value)->addHours(1);
         return $date->isoFormat('Do MMMM YYYY, h:mm a');
     }
 }

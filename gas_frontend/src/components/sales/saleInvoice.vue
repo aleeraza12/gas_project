@@ -285,6 +285,12 @@ export default {
   border-radius: 20px !important;
   cursor: pointer;
 }
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+}
 </style>
 <style>
 @media print {

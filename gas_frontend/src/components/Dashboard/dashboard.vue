@@ -22,7 +22,7 @@
         <b> Welcome {{ loggedinUser.owner_name }},</b>
       </div>
       <v-spacer></v-spacer>
-      <div>
+      <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
         <div style="font-size: 16px" class="display-end">Current gas price</div>
 
         <div class="d-flex justify-end align-end mr-7">
@@ -36,20 +36,27 @@
             >
             <b style="font-size: 16px" class="ml-10" v-else> Rate Not set</b>
           </div>
-
-          <div
-            @click="setModal()"
-            v-if="!priceLoader"
-            class="mt-2 ml-2"
-            style="font-size: 12px; text-decoration: underline; cursor: pointer"
-          >
-            <b v-if="!priceLoader && loggedinUser.permissions.includes('Rates')"
-              >edit</b
+          <div style="cursor: pointer" @click="setModal()">
+            <div
+              v-if="!priceLoader"
+              class="mt-2 ml-2"
+              style="
+                font-size: 12px;
+                text-decoration: underline;
+                cursor: pointer;
+              "
             >
+              <b
+                v-if="
+                  !priceLoader && loggedinUser.permissions.includes('Rates')
+                "
+                >edit</b
+              >
+            </div>
           </div>
         </div>
         <div v-if="!priceLoader && getPrice" class="mr-6">
-          <p>{{ getPrice.updated_at }}</p>
+          <p style="font-size: 14px">{{ getPrice.updated_at }}</p>
         </div>
       </div>
     </div>
@@ -178,7 +185,7 @@
         </v-card-title>
         <v-form v-model="valid">
           <v-card-text>
-            <v-text-field
+            <!--<v-text-field
               v-model="depo_name"
               solo
               label="Enter Depo Name"
@@ -195,7 +202,7 @@
               readonly
               :rules="nameRules"
               class="ma-3"
-            ></v-text-field>
+            ></v-text-field>-->
             <v-text-field
               class="ma-3"
               hide-details="auto"

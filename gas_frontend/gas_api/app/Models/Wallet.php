@@ -12,7 +12,7 @@ class Wallet extends Model
     protected $fillable = ['transaction_id', 'account_name', 'account_number', 'amount', 'status', 'authorized_by'];
     public function getCreatedAtAttribute($value)
     {
-        $date = Carbon::parse($value);
+        $date = Carbon::parse($value)->addHours(1);
         return $date->toDayDateTimeString();
     }
 }

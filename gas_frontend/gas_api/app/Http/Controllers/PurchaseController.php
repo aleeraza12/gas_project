@@ -32,7 +32,7 @@ class PurchaseController extends Controller
                 'company_id' => $request->company_id, //company id
                 'user_id' => $request->users_id, //loggedin user id
                 'unpaid' => true,
-                'unpaid_at' => Carbon::now()->addHours(5),
+                'unpaid_at' => Carbon::now()->addHours(1),
                 'receipt_attachment_path' =>  $request->attachment == "" ? null :  $this->upload_attachment($request)
             ]
         );
@@ -133,7 +133,7 @@ class PurchaseController extends Controller
         $receipt_attachment_path = null;
         if ($request->attachment != "")
             $receipt_attachment_path =  $this->upload_attachment($request);
-        $purchase->update([$key => true, $value => Carbon::now()->addHours(5), 'receipt_attachment_path' => $receipt_attachment_path]);
+        $purchase->update([$key => true, $value => Carbon::now()->addHours(1), 'receipt_attachment_path' => $receipt_attachment_path]);
         if ($key == 'paid') TransactionController::updateTransaction($request->merge([
             'outer_id' => $request->purchase_id, 'type' => 'purchase'
         ]));

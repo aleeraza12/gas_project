@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,13 @@ class Customer extends Model
         'address',
         'company_id'
     ];
+
+
+    public function getUpdatedAtAttribute($value)
+    {
+        //$date = Carbon::parse($value)->addHours(1);
+        return Carbon::parse($value)->addHours(1);;
+    }
     public function customer_type()
     {
         return $this->hasOne(CustomerType::class);

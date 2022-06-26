@@ -37,7 +37,7 @@ class SaleController extends Controller
                 'company_id' =>  $request->company_id,
                 'payment_mode' =>  $request->payment_mode,
                 'unpaid' => true,
-                'unpaid_at' => Carbon::now()->addHours(5),
+                'unpaid_at' => Carbon::now()->addHours(1),
                 'user_id' => $request->users_id, //loggedin user id
             ]
         );
@@ -159,7 +159,7 @@ class SaleController extends Controller
             $value = 'paid_at';
         }
 
-        $sale->update([$key => true, $value => Carbon::now()->addHours(5)]);
+        $sale->update([$key => true, $value => Carbon::now()->addHours(1)]);
         if ($key == 'paid') TransactionController::updateTransaction($request->merge([
             'outer_id' => $request->sale_id, 'type' => 'sale'
         ]));
