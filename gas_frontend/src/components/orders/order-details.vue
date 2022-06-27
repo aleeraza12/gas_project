@@ -172,7 +172,6 @@ export default {
   created() {},
   methods: {
     print() {
-      console.log("called");
       // Pass the element id here
       const prtHtml = document.getElementById("printAble").innerHTML;
 
@@ -213,7 +212,6 @@ export default {
         ...document.querySelectorAll('link[rel="stylesheet"], style'),
       ]) {
         stylesHtml += node.outerHTML;
-        //console.log(stylesHtml);
       }
 
       // Open the print window
@@ -245,12 +243,10 @@ export default {
     },
     getDate(item) {
       let date = item.split(" ");
-      console.log(date);
       return date[0] + " " + date[1] + " " + date[2];
     },
     getTme(item) {
       let date = item.split(" ");
-      console.log(date[1]);
       return date[3] + date[4];
       //return moment(time, "HH:mm:ss").format("hh:mm a");
     },
@@ -261,7 +257,6 @@ export default {
       };
       RequestService.post("order/delete", requestBody).then((response) => {
         if (response.data.status == 200) {
-          console.log("order deleted");
           this.snackbar = true;
           this.snackbarColor = "success";
           this.snacbarMessage = "Your order deleted successfully";

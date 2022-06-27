@@ -478,7 +478,6 @@ export default {
       this.$router.push("/new-customer-company");
     },
     setCRUDItems(item, operation_type, operation_text) {
-      console.log(item);
       if (operation_type == "edit") {
         if (operation_text == "Customer Type") {
           this.customer_type = item.customer_type;

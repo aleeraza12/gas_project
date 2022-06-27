@@ -235,10 +235,8 @@ export default {
         requestBody.address = this.address;
 
       if (this.city != "" && this.city != null) requestBody.city = this.city;
-      console.log(requestBody);
       RequestService.post("customer/create", requestBody)
         .then((res) => {
-          console.log("status in customer", res.data.status);
           if (res.data.status == 201) {
             this.snackbar = true;
             this.snackbarColor = "success";

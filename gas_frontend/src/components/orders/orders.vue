@@ -126,7 +126,6 @@ export default {
       this.tableloading = false;
     });
     eventBus.$on("selectedOrdersDateFilter", (value) => {
-      console.log(value, "value");
       this.getOrderListing(value);
     });
   },
@@ -141,7 +140,6 @@ export default {
         start_date: date[0],
         end_date: date[1].concat(" 23:59:00"),
       };
-      console.log("before dispatching", requestBody);
       this.$store.dispatch("getOrderListing", requestBody);
     },
     ViewOrders(item) {

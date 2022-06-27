@@ -179,7 +179,6 @@ export default {
       this.loading = false;
     });
     eventBus.$on("selectedCustomersDateFilter", (value) => {
-      console.log(value, "value");
       this.getCustomersListing(value);
     });
   },
@@ -205,14 +204,12 @@ export default {
         start_date: date[0],
         end_date: date[1].concat(" 23:59:00"),
       };
-      console.log("before dispatching", requestBody);
       this.$store.dispatch("getCustomersListing", requestBody);
     },
     addNewCustomer() {
       this.$router.push("/new-customer");
     },
     editItem(item) {
-      console.log(item);
       this.$router.push("/new-customer");
       setTimeout(() => {
         eventBus.$emit("updateCustomer", item);

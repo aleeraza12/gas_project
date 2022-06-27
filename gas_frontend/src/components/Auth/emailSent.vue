@@ -124,14 +124,12 @@ export default {
       });
     },
     onFinish() {
-      console.log(this.email);
       this.loading = true;
       let url = this.$store.state.url;
       let body = {
         otp: this.otp,
         email: this.getRecoveryMail,
       };
-      console.log(body);
       axios
         .post(url + "verify_otp", body)
         .then((response) => {

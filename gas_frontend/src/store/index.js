@@ -129,7 +129,6 @@ const store = {
 
     // gettng all users for a company      6
     getUsersListing(context, data) {
-      console.log("data for user", data);
       let requestBody = {};
       RequestService.post("user/read_all", requestBody, data).then(
         (response) => {
@@ -185,7 +184,7 @@ const store = {
 
     //Get Transaction       2
     getAllTransactions(context, data) {
-      console.log("sdasdasddasdasd", data);
+      console.log("", data);
       let requestBody = {};
       context.commit("SET_TRANSATIONS", "");
       RequestService.post("transaction/read_all", requestBody, data).then(
@@ -360,7 +359,6 @@ const store = {
       let requestBody = {};
       RequestService.post("dashboard/read_all", requestBody).then(
         (response) => {
-          console.log(response.data.status);
           if (response.data.status == 200) {
             context.commit("SET_DASHBOARD", response.data.response);
             eventBus.$emit("responseArrived");
@@ -370,10 +368,7 @@ const store = {
     },
     //Promo code
     getPromosListing(context, requestBody) {
-      //console.log(data);
-      //let requestBody = {};
       RequestService.post("promo/read_all", requestBody).then((response) => {
-        console.log("status n store", response.data.status);
         if (response.data.status == 200) {
           context.commit("SET_PROMOS", response.data.response);
           eventBus.$emit("responseArrived");

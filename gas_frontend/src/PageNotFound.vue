@@ -43,9 +43,7 @@ export default {
     if (this.$router.history.current.path == "/logout") this.Logout();
   },
   methods: {
-    Logout(rout) {
-      console.log("dasdassa");
-      //if (rout.text == "Logout") {
+    Logout() {
       this.$router.push("login");
       let url = this.$store.state.url;
       let requestBody = {
@@ -56,11 +54,6 @@ export default {
         localStorage.removeItem("user");
       });
     },
-    // else if (rout.text == "Sales" && this.getSales.length == 0) {
-    //  this.$router.push("no-sale");
-    //} else if (rout.text == "Users" && this.getUsers.length == 0) {
-    //  this.$router.push("no-user");
-    //}
   },
 };
 </script>

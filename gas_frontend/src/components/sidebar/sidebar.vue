@@ -7,7 +7,7 @@
         permanent
         class="navaigation-side"
       >
-        <v-list-item class="d-flex align-center justify-center ma-2">
+        <v-list-item class="d-flex align-center justify-center ma-2 ml-0 pl-0">
           <!--<v-list-item-avatar>-->
           <img
             v-if="!mini"
@@ -21,7 +21,7 @@
             src="../../assets/images/mn.png"
             height="30"
             width="120"
-            class="ml-1"
+            class="ml-6"
           />
         </v-list-item>
         <v-divider></v-divider>
@@ -30,6 +30,7 @@
             dense
             @click="Logout(link)"
             class="d-flex align-center pl-4 sidebar-item"
+            :class="titleName == link.tabName ? 'selected-route' : ''"
             v-for="(link, i) in showable_links"
             :key="i"
             router
@@ -40,7 +41,7 @@
             <div :id="link.icon">
               <v-icon
                 class="mr-7 py-4"
-                :color="link.color"
+                :color="titleName == link.tabName ? '#2b3896' : link.color"
                 v-text="link.icon"
                 size="19"
               ></v-icon>
@@ -137,7 +138,7 @@ export default {
         text: "Reconciliation",
         icon: "mdi-trackpad",
         route: "/reconcilation",
-        tabName: "Reconcilation",
+        tabName: "Reconciliation",
         color: "#fff",
       },
       {
@@ -151,10 +152,10 @@ export default {
         text: "Promos",
         icon: "mdi-cash-multiple",
         route: "/promos",
-        tabName: "Promo",
+        tabName: "Promos",
         color: "#fff",
       },
-       {
+      {
         text: "Rate List",
         icon: "mdi-cash",
         route: "/rate_list",
@@ -182,6 +183,7 @@ export default {
   components: {},
   created() {},
   mounted() {
+    this.titleName = this.$route.name;
     let requestBody = {
       start_date: this.start_date,
       end_date: this.end_date.concat(" 23:59:00"),
@@ -196,7 +198,6 @@ export default {
   watch: {},
   methods: {
     setPerimssions() {
-      console.log("ths functn called for permsson");
       let permissions = JSON.parse(localStorage.getItem("user")).permissions;
 
       this.showable_links = [];
@@ -208,12 +209,8 @@ export default {
       }
       this.showable_links.push(this.links[this.links.length - 1]);
     },
-    getColor(link, titleName, index) {
-      titleName == link.tabName
-        ? (this.links[index].color = "#215549")
-        : (this.links[index].color = "#fff");
-    },
     Logout(rout) {
+      this.titleName = rout.text;
       if (rout.text == "Logout") {
         this.$router.push("login");
         let url = this.$store.state.url;
@@ -258,6 +255,16 @@ export default {
   .no-print * {
     display: none !important;
   }
+}
+.selected-route {
+  border: 1px solid white;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-left: 10px solid #2b3896;
+  border-bottom: 1px solid #2b3896;
+  border-top: 1px solid #2b3896;
+  background-color: white;
+  color: #2b3896 !important;
 }
 </style>
 <style>

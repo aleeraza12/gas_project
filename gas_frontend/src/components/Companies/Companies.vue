@@ -195,7 +195,6 @@ export default {
       this.loading = false;
     });
     eventBus.$on("selectedCompanyDateFilter", (value) => {
-      console.log(value, "value");
       this.getCompaniesListing(value);
     });
   },
@@ -224,11 +223,9 @@ export default {
         start_date: date[0],
         end_date: date[1].concat(" 23:59:00"),
       };
-      console.log("before dispatching", requestBody);
       this.$store.dispatch("getCompaniesListing", requestBody);
     },
     editItem(item) {
-      console.log(item);
       //  this.$router.push("/new-customer");
       setTimeout(() => {
         eventBus.$emit("updategetCompanies", item);

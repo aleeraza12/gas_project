@@ -265,11 +265,9 @@ export default {
   },
   created() {
     eventBus.$on("updateUser", (data) => {
-      console.log("emt receved", data);
       this.assembleData(data);
     });
     eventBus.$on("validationFailed", (err) => {
-      console.log("emt receved");
       this.snackbar = true;
       this.snackbarColor = "red";
       let errorArray = [];
@@ -316,12 +314,9 @@ export default {
       if (this.company_id != null) {
         requestBody.company_id = this.company_id;
       }
-      console.log(requestBody);
       RequestService.post("user/create", requestBody)
         .then((res) => {
-          console.log("status in user", res.data.status);
           if (res.data.status == 201) {
-            console.log("this is inside");
             this.snackbar = true;
             this.snackbarColor = "success";
             this.snacbarMessage = "New user(s) added successfully";

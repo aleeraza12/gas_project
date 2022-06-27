@@ -298,7 +298,6 @@ export default {
       this.amount = this.gas_quantity * this.unit_price;
     },
     getPrice() {
-      console.log("watcher called");
       this.unit_price = this.getPrice
         ? this.getPrice.price_per_twenty_million_ton
         : this.unit_price;
@@ -306,14 +305,12 @@ export default {
     getCompanies() {
       this.customer_names = [];
       for (let j = 0; j < this.getCompanies.length; j++) {
-        console.log(this.getCompanies[j].company_name);
         let company = {
           name: this.getCompanies[j].company_name,
           id: this.getCompanies[j].id,
         };
         this.purchased_company_names.push(company);
       }
-      console.log(this.emitData, "emtdata");
       let updateAblecompany = {
         name: this.emitData.created_company_name,
         id: this.emitData.company_id,
@@ -351,11 +348,9 @@ export default {
       else this.decodedBase64 = "";
       this.purchase_id = data.id;
       this.date = this.formatDate(data.date);
-      console.log("purchase d", this.purchase_id);
     },
     formatDate(item) {
       let date = item.split(" ");
-      console.log(date);
       return date[0];
     },
     goToPurchase() {
@@ -394,11 +389,6 @@ export default {
               fileType = "jpeg";
             }
             that.decodedBase64 = fileBase64;
-            //that.decodedBase64 = fileBase64.replace(
-            //  "data:image/" + fileType + ";base64,",
-            //  ""
-            //);
-            console.log("requsetbody", that.decodedBase64);
             event.target.value = null;
           },
           false

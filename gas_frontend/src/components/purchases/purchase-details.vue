@@ -253,11 +253,7 @@ export default {
     dialog: false,
     image: "",
   }),
-  watch: {
-    getSinglePurchase() {
-      console.log("data", this.getSingleReceipt);
-    },
-  },
+  watch: {},
   computed: {
     ...mapGetters(["getSinglePurchase"]),
     getIcon() {
@@ -268,7 +264,6 @@ export default {
   },
   mounted() {
     this.getRadioStatus();
-    console.log("nsde mounted", this.getSinglePurchase);
     if (this.getSinglePurchase.length == 0) this.$router.push("/purchases");
 
     if (this.getSinglePurchase.base64 && this.getSinglePurchase.base64 != "")
@@ -302,7 +297,6 @@ export default {
         this.radios = "delivered";
     },
     updatePurchaseStatus() {
-      console.log(this.radios);
       let requestBody = {
         purchase_id: this.getSinglePurchase.id,
         status: this.radios,
@@ -314,7 +308,6 @@ export default {
       RequestService.post("purchase/update_purchase_status", requestBody).then(
         (response) => {
           if (response.data.status == 200) {
-            console.log("purchase status updated");
             this.loading = true;
             this.snackbar = true;
             this.snackbarColor = "success";
@@ -346,7 +339,6 @@ export default {
       };
       RequestService.post("purchase/delete", requestBody).then((response) => {
         if (response.data.status == 200) {
-          console.log("purchase deleted");
           this.loading = true;
           this.snackbar = true;
           this.snackbarColor = "success";
@@ -359,17 +351,14 @@ export default {
     },
     getDate(item) {
       let date = item.split(" ");
-      console.log(date);
       return date[0];
     },
     getTme(item) {
       let date = item.split(" ");
-      console.log(date[1]);
       let time = date[1];
       return moment(time, "HH:mm:ss").format("hh:mm a");
     },
     onFileChange() {
-      console.log("nsde f");
       let file_size = document.querySelector("input[type=file]").files[0].size;
       this.validFileSize = true;
       let fileBase64;
@@ -402,7 +391,6 @@ export default {
               "data:image/" + fileType + ";base64,",
               ""
             );
-            console.log("requsetbody", that.decodedBase64);
             event.target.value = null;
           },
           false

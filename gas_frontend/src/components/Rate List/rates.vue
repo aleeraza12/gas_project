@@ -76,7 +76,7 @@
             :items-per-page="5"
             class="elevation-1"
             hide-default-header
-            height="260px"
+            height="calc(100vh - 400px)"
             :search="search"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -262,7 +262,6 @@ export default {
       this.loading = false;
     });
     eventBus.$on("selectedRateListDateFilter", (value) => {
-      console.log(value, "value");
       this.loading = true;
       this.getRateListing(value);
     });

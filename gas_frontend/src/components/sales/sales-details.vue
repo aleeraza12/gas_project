@@ -219,12 +219,6 @@ export default {
     snackbarColor: "",
   }),
   watch: {
-    getSingleReceipt() {
-      console.log("data", this.getSingleReceipt);
-    },
-    radios() {
-      console.log(this.radios);
-    },
   },
   computed: {
     ...mapGetters(["getSingleReceipt"]),
@@ -271,7 +265,6 @@ export default {
         this.radios = "delivered";
     },
     updateSaleStatus() {
-      console.log(this.radios);
       let requestBody = {
         sale_id: this.getSingleReceipt.id,
         status: this.radios,
@@ -279,7 +272,6 @@ export default {
       RequestService.post("sale/update_sale_status", requestBody).then(
         (response) => {
           if (response.data.status == 200) {
-            console.log("sale status updated");
             this.loading = true;
             this.snackbar = true;
             this.snackbarColor = "success";
@@ -306,7 +298,6 @@ export default {
       };
       RequestService.post("sale/delete", requestBody).then((response) => {
         if (response.data.status == 200) {
-          console.log("sale deleted");
           this.loading = true;
           this.snackbar = true;
           this.snackbarColor = "success";

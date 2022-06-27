@@ -161,14 +161,12 @@ const router = new VueRouter({
       path: "/sales",
       name: "Sales",
       beforeEnter: (to, from, next) => {
-        console.log("nsde router");
         setTimeout(() => {
           if (
             !JSON.parse(localStorage.getItem("user")).permissions.includes(
               "Sales"
             )
           ) {
-            console.log("nsde router");
             store.dispatch("checkRouteExistence");
           } else {
             next();

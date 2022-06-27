@@ -225,7 +225,6 @@ export default {
       this.loading = false;
     });
     eventBus.$on("selectedPromoDateFilter", (value) => {
-      console.log(value, "value");
       this.getPromosListing(value);
     });
   },
@@ -240,7 +239,6 @@ export default {
         start_date: date[0],
         end_date: date[1].concat(" 23:59:00"),
       };
-      console.log("before dispatching", requestBody);
       this.$store.dispatch("getPromosListing", requestBody);
     },
     addNewPromo() {
@@ -253,7 +251,6 @@ export default {
       if (this.company_id != null) requestBody.company_id = this.company_id;
       RequestService.post("promo/create", requestBody)
         .then((response) => {
-          console.log(response.data);
           if (response.data.status == 201 || response.data.status == 200) {
             this.loading = true;
             this.snackbar = true;

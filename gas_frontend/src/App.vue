@@ -7,6 +7,7 @@
 </template>
 <script>
 const default_layout = "app";
+import { eventBus } from "@/main";
 export default {
   components: {
     "simple-layout": () => import("@/components/Layouts/simpleLayout"),
@@ -17,7 +18,12 @@ export default {
       return (this.$route.meta.layout || default_layout) + "-layout";
     },
   },
+  updated() {
+    //if internet is not connected
+    if (navigator.onLine === false) eventBus.$emit("snackbarMsg");
+  },
   created() {},
+  methods: {},
   watch: {
     $route: {
       handler: (to) => {
@@ -42,9 +48,9 @@ export default {
 }
 
 .v-navigation-drawer__content {
-    height: 100%;
-    overflow-y: hidden !important;
-    overflow-x: hidden;
+  height: 100%;
+  overflow-y: hidden !important;
+  overflow-x: hidden;
 }
 #nav {
   padding: 30px;

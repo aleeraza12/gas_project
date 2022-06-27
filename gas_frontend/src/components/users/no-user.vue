@@ -56,7 +56,6 @@ export default {
     },
     goToPreviousPage() {
       if (this.getUsers.length == 0) {
-        console.log("prevos route");
         this.$router.push("/orders");
       } else this.$router.push("/users");
     },

@@ -315,12 +315,13 @@ export default {
     },
     ...mapGetters(["getPrice", "getDashboardData", "getAllOrders"]),
   },
-  watch: {
-    getDashboardData() {
-      console.log(this.getDashboardData);
-    },
-  },
+  watch: {},
   created() {
+    eventBus.$on("snackbarMsg", () => {
+      this.snacbarMessage = "No internet connection";
+      this.snackbar = true;
+      this.snackbarColor = "red";
+    });
     eventBus.$on("priceResponseArrived", () => {
       this.priceLoader = false;
     });
@@ -328,7 +329,6 @@ export default {
       this.tableloading = false;
     });
     eventBus.$on("selectedDashboardDateFilter", (value) => {
-      console.log(value, "value");
       this.getOrderListing(value);
     });
   },
@@ -339,7 +339,6 @@ export default {
         start_date: date[0],
         end_date: date[1].concat(" 23:59:00"),
       };
-      console.log("before dispatching", requestBody);
       this.$store.dispatch("getOrderListing", requestBody);
     },
     setModal() {

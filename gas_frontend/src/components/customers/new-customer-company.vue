@@ -368,7 +368,6 @@ export default {
       };
       if (this.loggedinUser.company_email == "superadmin@gmail.com")
         requestBody.permissions = this.loggedinUser.permissions;
-      console.log(requestBody);
       RequestService.post("company/create", requestBody)
         .then((res) => {
           if (res.data.status == 201) {
@@ -420,7 +419,6 @@ export default {
             if (i > 0) {
               fileType = file.name.substring(i + 1);
             }
-            console.log(fileType);
             if (fileType == "jpg") {
               fileType = "jpeg";
             }

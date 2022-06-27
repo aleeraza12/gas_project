@@ -82,7 +82,6 @@
                 cache-items
                 hide-no-data
                 hide-details
-               
               ></v-autocomplete>
             </div>
             <div>
@@ -331,7 +330,6 @@ export default {
   },
   watch: {
     customer_name(value) {
-      console.log("customer name selected", value);
       if (value.name != undefined && this.setDefaultPrice) {
         for (let j = 0; j < this.getCustomers.length; j++) {
           if (this.getCustomers[j].id == value.id)
@@ -340,7 +338,6 @@ export default {
       }
     },
     getPrice() {
-      console.log("watcher called");
       this.price = this.getPrice
         ? this.getPrice.price_per_twenty_million_ton
         : this.price;
@@ -356,8 +353,7 @@ export default {
     company_name() {
       if (this.loggedinUser.company_email == "superadmin@gmail.com") {
         this.getCompanyCustomers(this.company_name.id);
-        //this.getCompanyPromos(this.company_name.id);
-      } else console.log(this.company_name);
+      }
     },
     //getPromos() {
     //  console.log("get promo watcher called", this.emitData);
@@ -378,14 +374,12 @@ export default {
     getCompanies() {
       this.customer_names = [];
       for (let j = 0; j < this.getCompanies.length; j++) {
-        console.log(this.getCompanies[j].company_name);
         let company = {
           name: this.getCompanies[j].company_name,
           id: this.getCompanies[j].id,
         };
         this.company_names.push(company);
       }
-      console.log(this.emitData, "emtdata");
       let updateAblecompany = {
         name: this.emitData.updated_by,
         id: this.emitData.company_id,
@@ -393,7 +387,6 @@ export default {
       this.company_name = updateAblecompany;
     },
     getCustomers() {
-      console.log("efqwepruqepqppqef", this.emitData);
       this.customer_names = [];
       for (let j = 0; j < this.getCustomers.length; j++) {
         let customer = {
@@ -414,8 +407,6 @@ export default {
   },
   methods: {
     getCompanyCustomers(id) {
-      console.log("id", id);
-
       let url = this.$store.state.url;
       let requestBody = {
         company_id: id,
@@ -433,7 +424,6 @@ export default {
       customAxios
         .post(url + "customer/read_all", requestBody)
         .then((response) => {
-          console.log("response customer", response.data.response);
           this.customer_names = [];
           for (let j = 0; j < response.data.response.length; j++) {
             let customer = {
@@ -446,8 +436,6 @@ export default {
     },
 
     getCompanyPromos(id) {
-      console.log("id", id);
-
       let url = this.$store.state.url;
       let requestBody = {
         company_id: id,
@@ -463,7 +451,6 @@ export default {
       });
       customAxios;
       customAxios.post(url + "promo/read_all", requestBody).then((response) => {
-        console.log("response promo", response.data.response);
         this.promo_names = [];
         for (let j = 0; j < response.data.response.length; j++) {
           let promo = {
@@ -534,14 +521,12 @@ export default {
       ) {
         requestBody.company_id = this.company_name.id;
       }
-      console.log(requestBody);
       let apiName = "";
       this.sale_id == null
         ? (apiName = "sale/create")
         : (apiName = "sale/update");
       RequestService.post(apiName, requestBody)
         .then((res) => {
-          console.log("status in purchase", res.data.status);
           if (res.data.status == 201) {
             this.snacbarMessage = "Your sale(s) added successfully";
             this.snackbarColor = "success";

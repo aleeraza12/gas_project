@@ -6269,6 +6269,11 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+ping.js@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ping.js/-/ping.js-0.3.0.tgz#3e90615159785114fa1bc550f69136a593c49315"
+  integrity sha512-qisFwio7j0cwYbOcRL4BlTdxKALcpGPTkpl8ichGASgkrVqfI3sZfQDsP8wETR5rfutXZJLjlJ117aLkRnk2mA==
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
@@ -8217,6 +8222,13 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+v-offline@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/v-offline/-/v-offline-2.3.0.tgz#388cc3e0c320f88e9de74e3523ff9ac3158db920"
+  integrity sha512-T04BSt36tcaZTHt4xrcwF93ZEUwbyOOGSbF1OehmVWL1vTJTb+chH9cPc/L5ZuM99BI64dH6A5lD5JQB8bvRsQ==
+  dependencies:
+    ping.js "^0.3.0"
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"

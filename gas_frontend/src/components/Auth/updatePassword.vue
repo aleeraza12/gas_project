@@ -145,7 +145,6 @@ export default {
           email: this.getRecoveryMail,
           password: this.password,
         };
-        console.log(body);
         axios
           .post(url + "update_password", body)
           .then((response) => {
