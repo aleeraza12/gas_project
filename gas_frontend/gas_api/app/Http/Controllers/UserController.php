@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\Users;
 use App\Http\Requests\UserTypeRequest;
 use App\Models\Company;
@@ -65,6 +66,24 @@ class UserController extends Controller
             ]
         );
         return response()->json(['response' => $user, 'status' => 201]);
+    }
+
+    public function update_user(UpdateUserRequest $request)
+    {
+        $user = User::find($request->users_id);
+        if ($user) {
+            $user->name = $request->name;
+            $user->created_by = $request->created_by;
+            $user->password = $request->password == '' ? $user->password : Hash::make($request->password);
+            $user->designation =  $request->designation;
+            $user->permissions =  $request->permissions;
+            $user->user_type =  $request->user_type;
+            $user->status =  $request->status;
+            $user->company_id =  $request->company_id;
+            $user->is_company = false;
+            $user->save();
+        }
+        return response()->json(['response' => $user, 'status' => 200]);
     }
 
     public static function create_company_user(Request $request)

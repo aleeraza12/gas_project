@@ -44,7 +44,7 @@
           <v-text-field
             v-model="password"
             label="Enter Password"
-            :rules="nameRules"
+            :rules="userText == 'Update' ? '' : nameRules"
             outlined
             dense
             hide-details
@@ -288,7 +288,7 @@ export default {
       this.name = data.name;
       this.created_by = data.created_by;
       this.user_type = data.user_type;
-      //this.password = data.password;
+      this.password = "";
       this.designation = data.designation;
       this.status = data.status;
       this.permissions = data.permissions;
@@ -314,17 +314,25 @@ export default {
       if (this.company_id != null) {
         requestBody.company_id = this.company_id;
       }
-      RequestService.post("user/create", requestBody)
+      let apiName = "";
+      this.userText === "Update"
+        ? (apiName = "user/update")
+        : (apiName = "user/create");
+      RequestService.post(apiName, requestBody)
         .then((res) => {
           if (res.data.status == 201) {
             this.snackbar = true;
             this.snackbarColor = "success";
             this.snacbarMessage = "New user(s) added successfully";
-            this.loading = false;
-            setTimeout(() => {
-              this.$router.push("/users");
-            }, 1000);
+          } else if (res.data.status == 200) {
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "User updated successfully";
           }
+          this.loading = false;
+          setTimeout(() => {
+            this.$router.push("/users");
+          }, 1000);
         })
         .catch(() => {
           //this.snackbar = true;

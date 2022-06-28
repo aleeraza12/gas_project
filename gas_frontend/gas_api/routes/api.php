@@ -80,7 +80,8 @@ Route::middleware('token')->group(function () {
     //User CRUD routes
     Route::prefix('user')->group(function () {
         Route::controller(UserController::class)->group(function () {
-            Route::post('create', 'create_user')->withoutMiddleware('token');
+            Route::post('create', 'create_user');
+            Route::post('update', 'update_user');
             Route::post('delete', 'delete_user');
             Route::post('read_specific_user', 'read_user');
             Route::post('read', 'read');

@@ -209,70 +209,46 @@ export default {
   methods: {
     print() {
       // Pass the element id here
-      const prtHtml = document.getElementById("printAble").innerHTML;
+      //      const prtHtml = document.getElementById("printAble").innerHTML;
 
-      // Get all stylesheets HTML
-      let stylesHtml = "";
-      for (const node of [
-        ...document.querySelectorAll('link[rel="stylesheet"], style'),
-      ]) {
-        stylesHtml += node.outerHTML;
+      //      // Get all stylesheets HTML
+      //      let stylesHtml = "";
+      //      for (const node of [
+      //        ...document.querySelectorAll('link[rel="stylesheet"], style'),
+      //      ]) {
+      //        stylesHtml += node.outerHTML;
+      //      }
+
+      //      // Open the print window
+      //      const WinPrint = window.open(
+      //        "",
+      //        "",
+      //        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+      //      );
+
+      //      WinPrint.document.write(`<!DOCTYPE html>
+      //<html>
+      //  <head>
+      //    ${stylesHtml}
+      //  </head>
+      //  <body>
+      //    ${prtHtml}
+      //  </body>
+      //</html>`);
+
+      //window.document.close();
+      //window.focus();
+      //window.print();
+
+      ////document.execCommand("print", false, null);
+
+      //window.close();
+      try {
+        // Print for chrome browser
+        window.print();
+      } catch {
+        document.execCommand("print", false, null);
       }
-
-      // Open the print window
-      const WinPrint = window.open(
-        "",
-        "",
-        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
-      );
-
-      WinPrint.document.write(`<!DOCTYPE html>
-<html>
-  <head>
-    ${stylesHtml}
-  </head>
-  <body>
-    ${prtHtml}
-  </body>
-</html>`);
-
-      WinPrint.document.close();
-      WinPrint.focus();
-      WinPrint.print();
-      WinPrint.close();
-    },
-    printReceipt() {
-      let prtContent = document.getElementById("printAble").outerHTML;
-      let stylesHtml = "";
-      for (const node of [
-        ...document.querySelectorAll('link[rel="stylesheet"], style'),
-      ]) {
-        stylesHtml += node.outerHTML;
-      }
-
-      // Open the print window
-      let WinPrint = window.open(
-        "",
-        "",
-        "left=0,top=0,width=700,height=900,toolbar=1,scrollbars=1,status=1"
-      );
-
-      WinPrint.document.write(`<!DOCTYPE html>
-    <html>
-    <head>
-    ${stylesHtml}
-    </head>
-    <body>
-    ${prtContent}
-    </body>
-    </html>`);
-      setTimeout(() => {
-        WinPrint.document.write(prtContent.innerHTML);
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
-      }, 100);
     },
     goToSales() {
       this.$router.push("/sales");
