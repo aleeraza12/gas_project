@@ -119,6 +119,32 @@
                 ></v-text-field>
               </div>
             </div>
+            <div class="d-flex">
+              <div>
+                <v-text-field
+                  label="Logistics Cost"
+                  outlined
+                  dense
+                  placeholder="Enter Logistics Cost"
+                  hide-details
+                  class="city-feild mt-4 mr-3"
+                  v-model="logistics_cost"
+                  :rules="nameRules"
+                ></v-text-field>
+              </div>
+              <div>
+                <v-text-field
+                  label="Admin Cost"
+                  outlined
+                  dense
+                  placeholder="Enter Admin Cost"
+                  hide-details
+                  class="city-feild mt-4"
+                  v-model="admin_cost"
+                  :rules="nameRules"
+                ></v-text-field>
+              </div>
+            </div>
             <div>
               <v-text-field
                 label="Driver Name"
@@ -238,6 +264,8 @@ export default {
     recepient_name: "",
     company_phone_number: "",
     amount: "",
+    logistics_cost: "",
+    admin_cost: "",
     unit_price: "",
     receipt_number: "",
     purchased_company_names: [],
@@ -416,6 +444,8 @@ export default {
         driver_name: this.driver_name,
         gas_quantity: this.gas_quantity,
         amount: this.amount,
+        logistics_cost: this.logistics_cost,
+        admin_cost: this.admin_cost,
         unit_price: this.unit_price,
         recepient_name: this.recepient_name,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),

@@ -29,6 +29,8 @@ class CreatePurchasesTable extends Migration
             $table->string('driver_name');
             $table->string('gas_quantity');
             $table->double('amount');
+            $table->double('logistics_cost');
+            $table->double('admin_cost');
             $table->double('unit_price');
             $table->integer('company_id')->unsigned();
             $table->integer('user_id')->unsigned();
