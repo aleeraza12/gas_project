@@ -27,6 +27,8 @@ class PurchaseController extends Controller
                 'driver_name' =>  $request->driver_name,
                 'gas_quantity' =>  $request->gas_quantity,
                 'amount' =>  $request->amount,
+                'logistics_cost' => $request->logistics_cost,
+                'admin_cost' => $request->admin_cost,
                 'unit_price' =>  $request->unit_price,
                 'recepient_name' =>  $request->recepient_name,
                 'company_id' => $request->company_id, //company id
@@ -92,6 +94,8 @@ class PurchaseController extends Controller
         $purchase->driver_name =  $request->driver_name;
         $purchase->gas_quantity =  $request->gas_quantity;
         $purchase->amount =  $request->amount;
+        $purchase->logistics_cost = $request->logistics_cost;
+        $purchase->admin_cost = $request->admin_cost;
         $purchase->unit_price =  $request->unit_price;
         $purchase->recepient_name =  $request->recepient_name;
         $purchase->company_id = $request->company_id;
