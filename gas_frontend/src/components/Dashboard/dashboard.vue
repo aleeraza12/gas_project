@@ -262,7 +262,7 @@ export default {
     loading: false,
     valid: false,
     priceLoader: true,
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     isModal: false,
     price: "",
@@ -303,7 +303,7 @@ export default {
     this.getOrderListing([this.start_date, this.end_date]);
     this.$store.dispatch("getCurrentPrice");
     this.$store.dispatch("getDashboardStats");
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
     this.depo_name = this.loggedinUser.company_name;
     this.location = this.loggedinUser.address;
   },
