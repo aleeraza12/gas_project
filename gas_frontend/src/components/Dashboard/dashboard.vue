@@ -21,15 +21,6 @@
       <div>
         <b> Welcome {{ loggedinUser.owner_name }},</b>
       </div>
-      
-      <!-- <vue-horizontal-list-autoscroll :items="[]" :options="options2">
-        <template v-slot:default="{ item }">
-          <div class="item">
-            <h5>{{ item.title }}</h5>
-            <p>{{ item.content }}</p>
-          </div>
-        </template>
-      </vue-horizontal-list-autoscroll> -->
 
       <v-spacer></v-spacer>
       <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
@@ -295,7 +286,6 @@
 import RequestService from "../../RequestService";
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-// import VueHorizontalListAutoscroll from "@/vue-horizontal-list-autoscroll.vue";
 import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
