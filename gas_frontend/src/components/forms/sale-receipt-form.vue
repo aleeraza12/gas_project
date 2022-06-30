@@ -29,7 +29,7 @@
                 hide-details
               ></v-select>
             </div>
-            <div v-if="loggedinUser.company_email == 'superadmin@gmail.com'">
+            <div v-if="loggedinUser.is_super_admin">
               <v-select
                 :items="
                   Object.keys(company_names).map((key) => ({
@@ -310,7 +310,7 @@ export default {
       end_date: this.end_date.concat(" 23:59:00"),
     };
     //this is bcz we want only company user for creating sale
-    if (this.loggedinUser.company_email !== "superadmin@gmail.com") {
+    if (!this.loggedinUser.is_super_admin) {
       this.$store.dispatch("getCustomersListing", requestBody);
       //this.$store.dispatch("getPromosListing", requestBody);
     }
@@ -320,7 +320,7 @@ export default {
       if (!this.updateable) this.$store.dispatch("getCurrentPrice");
     }, 1000);
     //if super admn wants to create sale than we get companes to assign a sale to specific company
-    if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+    if (this.loggedinUser.is_super_admin) {
       let requestBody = {
         start_date: this.start_date,
         end_date: this.end_date.concat(" 23:59:00"),
@@ -351,7 +351,7 @@ export default {
         this.total_amount = this.gas_quantity * this.price;
     },
     company_name() {
-      if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+      if (this.loggedinUser.is_super_admin) {
         this.getCompanyCustomers(this.company_name.id);
       }
     },
@@ -478,7 +478,7 @@ export default {
         start_date: this.start_date,
         end_date: this.end_date.concat(" 23:59:00"),
       };
-      if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+      if (this.loggedinUser.is_super_admin) {
         this.$store.dispatch("getCustomersListing", requestBody);
         //this.$store.dispatch("getPromosListing", requestBody);
       }
@@ -509,16 +509,10 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
-      if (
-        this.company_id != null &&
-        this.loggedinUser.company_email !== "superadmin@gmail.com"
-      ) {
+      if (this.company_id != null && this.loggedinUser.is_super_admin) {
         requestBody.company_id = this.company_id;
       }
-      if (
-        this.company_name !== "" &&
-        this.loggedinUser.company_email == "superadmin@gmail.com"
-      ) {
+      if (this.company_name !== "" && this.loggedinUser.is_super_admin) {
         requestBody.company_id = this.company_name.id;
       }
       let apiName = "";

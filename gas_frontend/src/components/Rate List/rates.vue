@@ -39,7 +39,7 @@
           <v-spacer></v-spacer>
           <div
             class="d-flex align-end justify-end"
-            v-if="loggedinUser.company_email == 'superadmin@gmail.com'"
+            v-if="loggedinUser.is_super_admin"
           >
             <v-btn small dense outlined color="#2b3896" @click="addRateModal()"
               >Add New Rate
@@ -251,7 +251,7 @@ export default {
     },
   },
   created() {
-    if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+    if (this.loggedinUser.is_super_admin) {
       let editable = { text: "Edit", value: "actions1", sortable: false };
       let deleteAble = { text: "Delete", value: "actions2", sortable: false };
 

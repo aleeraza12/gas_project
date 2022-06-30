@@ -72,7 +72,7 @@
     </div>
     <v-dialog ref="dateModal" v-model="dateModal" persistent width="290px">
       <v-date-picker
-        color="black"
+        color="#2e3995"
         v-model="picker"
         no-title
         scrollable
@@ -82,11 +82,11 @@
         :max="new Date().toISOString().substr(0, 10)"
       >
         <v-spacer></v-spacer>
-        <v-btn color="black" outlined @click="dateModal = false" x-small>
+        <v-btn color="#2e3995" outlined @click="dateModal = false" x-small>
           Cancel
         </v-btn>
         <v-btn
-          color="black"
+          color="#2e3995"
           dark
           x-small
           @click="

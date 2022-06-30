@@ -91,6 +91,7 @@ const store = {
     SET_STATES_SETTINGS: (state, payload) => (state.states_settings = payload),
     setSelectedDateRange: (state, payload) => (state.date = payload),
 
+    EMPTY_CUSTOMERS: (state) => (state.customers = ""),
     SET_CUSTOMERS: (state, payload) => (state.customers = payload),
     SET_PURCHASES: (state, payload) => (state.purchases = payload),
     SET_USERS: (state, payload) => (state.users = payload),
@@ -121,6 +122,7 @@ const store = {
         (response) => {
           if (response.data.status == 200) {
             eventBus.$emit("responseArrived");
+            context.commit("EMPTY_CUSTOMERS", response.data.response);
             context.commit("SET_CUSTOMERS", response.data.response);
           }
         }

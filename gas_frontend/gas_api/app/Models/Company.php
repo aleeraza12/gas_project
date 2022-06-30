@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class Company extends Model
 {
     use HasFactory;
-    protected $fillable = ['owner_name', 'company_email', 'company_name', 'company_phone_number', 'address', 'city', 'state', 'password',   'permissions', 'company_profile_picture'];
+    protected $fillable = ['owner_name', 'company_email', 'company_name', 'company_phone_number', 'address', 'city', 'state', 'password',   'permissions', 'company_profile_picture', 'is_super_admin'];
 
     public function getCompanyProfilePictureAttribute($value)
     {

@@ -23,6 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->string('city');
             $table->string('state');
             $table->string('password');
+            $table->boolean('is_super_admin');
             $table->longText('permissions');
             $table->string('company_profile_picture')->nullable();
             $table->timestamps();

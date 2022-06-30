@@ -27,7 +27,7 @@
                 :rules="nameRules"
               ></v-text-field>
             </div>
-            <div v-if="loggedinUser.company_email == 'superadmin@gmail.com'">
+            <div v-if="loggedinUser.is_super_admin">
               <v-select
                 :items="
                   Object.keys(purchased_company_names).map((key) => ({
@@ -348,7 +348,7 @@ export default {
   },
 
   mounted() {
-    if (this.loggedinUser.company_email == "superadmin@gmail.com") {
+    if (this.loggedinUser.is_super_admin) {
       let requestBody = {
         start_date: this.start_date,
         end_date: this.end_date.concat(" 23:59:00"),
@@ -455,15 +455,12 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
-      if (
-        this.company_id != null &&
-        this.loggedinUser.company_email !== "superadmin@gmail.com"
-      ) {
+      if (this.company_id != null && !this.loggedinUser.is_super_admin) {
         requestBody.company_id = this.company_id;
       }
       if (
         this.purchased_company_name !== "" &&
-        this.loggedinUser.company_email == "superadmin@gmail.com"
+        !this.loggedinUser.is_super_admin
       ) {
         requestBody.company_id = this.purchased_company_name.id;
       }

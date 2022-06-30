@@ -31,9 +31,7 @@
                     v-model="owners_name"
                   ></v-text-field>
                 </div>
-                <div
-                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                >
+                <div v-if="!loggedinUser.is_super_admin">
                   <v-text-field
                     label="Company Name"
                     outlined
@@ -58,9 +56,7 @@
                     readonly
                   ></v-text-field>
                 </div>
-                <div
-                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                >
+                <div v-if="!loggedinUser.is_super_admin">
                   <v-text-field
                     label="Company Phone Number"
                     outlined
@@ -72,9 +68,7 @@
                     v-model="phone_number"
                   ></v-text-field>
                 </div>
-                <div
-                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                >
+                <div v-if="!loggedinUser.is_super_admin">
                   <v-text-field
                     label="Address"
                     outlined
@@ -87,13 +81,8 @@
                   ></v-text-field>
                 </div>
 
-                <div
-                  class="d-flex"
-                  v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                >
-                  <div
-                    v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
-                  >
+                <div class="d-flex" v-if="!loggedinUser.is_super_admin">
+                  <div v-if="!loggedinUser.is_super_admin">
                     <v-text-field
                       label="City"
                       outlined
@@ -108,12 +97,10 @@
                   <div
                     class="mt-2 ml-2"
                     style="width: 240px"
-                    v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+                    v-if="!loggedinUser.is_super_admin"
                   >
                     <v-select
-                      v-if="
-                        loggedinUser.company_email !== 'superadmin@gmail.com'
-                      "
+                      v-if="!loggedinUser.is_super_admin"
                       v-model="state"
                       :items="getAllStates"
                       :rules="nameRules"
@@ -178,7 +165,7 @@
         </div>
       </v-col>
       <v-col md="6" lg="6" xl="6">
-        <div class="pa-5" style="background-color: #EFF0FA; height: 100vh">
+        <div class="pa-5" style="background-color: #eff0fa; height: 100vh">
           <div class="d-flex justify-start align-start mt-5">
             <b>Company Profile</b>
           </div>
@@ -218,7 +205,7 @@
           </div>
           <div
             class="d-flex justify-start align-start mt-5 ml-2"
-            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+            v-if="!loggedinUser.is_super_admin"
           >
             <div>Owner's Name :</div>
             <div class="ml-5">
@@ -227,7 +214,7 @@
           </div>
           <div
             class="d-flex justify-start align-start mt-2 ml-2"
-            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+            v-if="!loggedinUser.is_super_admin"
           >
             <div>Company's Name :</div>
             <div class="ml-5">
@@ -236,7 +223,7 @@
           </div>
           <div
             class="d-flex justify-start align-start mt-4 ml-2"
-            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+            v-if="!loggedinUser.is_super_admin"
           >
             <div>Phone Number :</div>
             <div class="ml-5">
@@ -245,7 +232,7 @@
           </div>
           <div
             class="d-flex justify-start align-start mt-2 ml-2"
-            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+            v-if="!loggedinUser.is_super_admin"
           >
             <div>Email Address :</div>
             <div class="ml-5">
@@ -254,7 +241,7 @@
           </div>
           <div
             class="d-flex justify-start align-start mt-2 ml-2"
-            v-if="loggedinUser.company_email !== 'superadmin@gmail.com'"
+            v-if="!loggedinUser.is_super_admin"
           >
             <div>Address :</div>
             <div class="ml-16">
@@ -366,7 +353,7 @@ export default {
         update_able: this.update,
         attachment: this.decodedBase64.replace("data:image/jpeg;base64,", ""),
       };
-      if (this.loggedinUser.company_email == "superadmin@gmail.com")
+      if (this.loggedinUser.is_super_admin)
         requestBody.permissions = this.loggedinUser.permissions;
       RequestService.post("company/create", requestBody)
         .then((res) => {

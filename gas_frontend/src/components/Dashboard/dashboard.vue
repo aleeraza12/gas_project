@@ -22,7 +22,7 @@
         <b> Welcome {{ loggedinUser.owner_name }},</b>
       </div>
       <v-spacer></v-spacer>
-      <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
+      <div v-if="!loggedinUser.is_super_admin">
         <div style="font-size: 16px" class="display-end">Current gas price</div>
 
         <div class="d-flex justify-end align-end mr-7">
