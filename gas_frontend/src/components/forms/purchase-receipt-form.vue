@@ -325,11 +325,11 @@ export default {
     unit_price() {
       this.amount = this.gas_quantity * this.unit_price;
     },
-    getPrice() {
-      this.unit_price = this.getPrice
-        ? this.getPrice.price_per_twenty_million_ton
-        : this.unit_price;
-    },
+    // getPrice() {
+    //   this.unit_price = this.getPrice
+    //     ? this.getPrice.price_per_twenty_million_ton
+    //     : this.unit_price;
+    // },
     getCompanies() {
       this.customer_names = [];
       for (let j = 0; j < this.getCompanies.length; j++) {
@@ -368,6 +368,8 @@ export default {
       this.driver_name = data.driver_name;
       this.gas_quantity = data.gas_quantity;
       this.amount = data.amount;
+      this.logistics_cost =  data.logistics_cost;
+      this.admin_cost = data.admin_cost;
       this.unit_price = data.unit_price;
       this.recepient_name = data.recepient_name;
       this.company_id = data.company_id;

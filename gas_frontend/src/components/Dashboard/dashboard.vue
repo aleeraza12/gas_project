@@ -21,25 +21,24 @@
       <div>
         <b> Welcome {{ loggedinUser.owner_name }},</b>
       </div>
+      
+      <!-- <vue-horizontal-list-autoscroll :items="[]" :options="options2">
+        <template v-slot:default="{ item }">
+          <div class="item">
+            <h5>{{ item.title }}</h5>
+            <p>{{ item.content }}</p>
+          </div>
+        </template>
+      </vue-horizontal-list-autoscroll> -->
+
       <v-spacer></v-spacer>
       <div v-if="loggedinUser.company_email !== 'superadmin@gmail.com'">
-        <div style="font-size: 16px" class="display-end">Current gas price</div>
-
-        <div class="d-flex justify-end align-end mr-7">
-          <v-skeleton-loader
-            v-if="priceLoader"
-            type="list-item-avatar-three-line"
-          ></v-skeleton-loader>
-          <div class="d-flex" v-else-if="!priceLoader">
-            <b style="font-size: 22px" v-if="getPrice"
-              >N{{ getPrice.price_per_twenty_million_ton }}</b
-            >
-            <b style="font-size: 16px" class="ml-10" v-else> Rate Not set</b>
-          </div>
+        <div class="row display-end mr-7 mt-2">
+          <div style="font-size: 16px" class="text-amount-color">Current gas price</div>
           <div style="cursor: pointer" @click="setModal()">
             <div
               v-if="!priceLoader"
-              class="mt-2 ml-2"
+              class="mt-1 ml-1"
               style="
                 font-size: 12px;
                 text-decoration: underline;
@@ -50,8 +49,39 @@
                 v-if="
                   !priceLoader && loggedinUser.permissions.includes('Rates')
                 "
+                class="text-amount-color"
                 >edit</b
               >
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="d-flex justify-end align-end mr-7">
+          <div class="row">
+             <v-skeleton-loader
+            v-if="priceLoader"
+            type="list-item-avatar-three-line"
+            ></v-skeleton-loader>
+            <div class="col" v-else-if="!priceLoader">
+              <b style="font-size: 22px" class="text-amount-color" v-if="getPrice.household_user"
+                >N{{ getPrice.household_user.price_per_twenty_million_ton }}</b
+              >
+              <b style="font-size: 22px" class="text-amount-color ml-10" v-else>N0</b>
+              <h5>Household User</h5>
+            </div>
+            <div class="col">
+              <b style="font-size: 22px" class="text-amount-color" v-if="getPrice.retailor"
+                >N{{ getPrice.retailor.price_per_twenty_million_ton }}</b
+              >
+              <b style="font-size: 22px" class="text-amount-color ml-10" v-else>N0</b>
+              <h5>Retailor</h5>
+            </div>
+            <div class="col">
+              <b style="font-size: 22px" class="text-amount-color" v-if="getPrice.distributor"
+                >N{{ getPrice.distributor.price_per_twenty_million_ton }}</b
+              >
+              <b style="font-size: 22px" class="text-amount-color ml-10" v-else>N0</b>
+              <h5>Distributor</h5>
             </div>
           </div>
         </div>
@@ -203,6 +233,17 @@
               :rules="nameRules"
               class="ma-3"
             ></v-text-field>-->
+            <v-select
+                class="ma-3"
+                :items="['Distributor','Retailer','Household User']"
+                v-model="customer_type"
+                label="Customer Type"
+                :rules="nameRules"
+                outlined
+                dense
+                small
+                hide-details
+              ></v-select>
             <v-text-field
               class="ma-3"
               hide-details="auto"
@@ -211,8 +252,8 @@
               solo
               label="Enter price"
               clearable
-            ></v-text-field
-          ></v-card-text>
+            ></v-text-field>
+          </v-card-text>
         </v-form>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -254,6 +295,7 @@
 import RequestService from "../../RequestService";
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
+// import VueHorizontalListAutoscroll from "@/vue-horizontal-list-autoscroll.vue";
 import datePicker from "../../views/Pages/datePicker.vue";
 export default {
   data: () => ({
@@ -262,10 +304,14 @@ export default {
     loading: false,
     valid: false,
     priceLoader: true,
+    customer_type: "",
     start_date: new Date().toISOString().substr(0, 10),
     end_date: new Date().toISOString().substr(0, 10),
     isModal: false,
     price: "",
+    price_distributor: "",
+    price_retailor: "",
+    price_household_user: "",
     depo_id: null,
     location: "",
     depo_name: "",
@@ -294,9 +340,35 @@ export default {
       { text: "Payment Mode", value: "payment_mode" },
       { text: "View Details", value: "actions", sortable: false },
     ],
+    options2: {
+        responsive: [
+          { end: 576, size: 1 },
+          { start: 576, end: 768, size: 2 },
+          { start: 768, end: 992, size: 3 },
+          { size: 4 },
+        ],
+        autoscroll: {
+          enabled: true,
+          interval: 5000, // in milliseconds
+          repeat: true, // used to tell if after reaching the end of the list should the list return to beginning again
+        },
+        list: {
+          // 1200 because @media (min-width: 1200px) and therefore I want to switch to windowed mode
+          windowed: 1200,
+          // Because: #app {padding: 80px 24px;}
+          padding: 24,
+        },
+        items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => {
+          return {
+            title: `Auto scroll ${i}`,
+            content: `Auto scroll, 5s/5000ms.`,
+          };
+        }),
+    },
   }),
   components: {
     datePicker,
+    // VueHorizontalListAutoscroll
   },
 
   mounted() {
@@ -313,7 +385,7 @@ export default {
         ? "mdi-checkbox-marked-circle"
         : "mdi-close-circle";
     },
-    ...mapGetters(["getPrice", "getDashboardData", "getAllOrders"]),
+    ...mapGetters(["getAllCustomerTypes","getPrice", "getDashboardData", "getAllOrders"]),
   },
   watch: {},
   created() {
@@ -342,12 +414,14 @@ export default {
       this.$store.dispatch("getOrderListing", requestBody);
     },
     setModal() {
-      if (this.getPrice) {
-        this.depo_name = this.getPrice.depo_name;
-        this.location = this.getPrice.location;
-        this.price = this.getPrice.price_per_twenty_million_ton;
-        this.depo_id = this.getPrice.id;
-      }
+      // if (this.getPrice) {
+      //   this.depo_name = this.getPrice.depo_name;
+      //   this.location = this.getPrice.location;
+      //   this.price_distributor = this.getPrice.distributor.price_per_twenty_million_ton;
+      //   this.price_retailor = this.getPrice.distributor.price_per_twenty_million_ton;
+      //   this.price_household_user = this.getPrice.household_user.price_per_twenty_million_ton;
+      //   this.depo_id = this.getPrice.id;
+      // }
       this.isModal = true;
     },
     setGasPrice() {
@@ -357,6 +431,7 @@ export default {
         location: this.location,
         price_per_twenty_million_ton: this.price,
         depo_id: this.depo_id,
+        customer_type: this.customer_type,
         added_by_admin: false,
       };
       RequestService.post("depo/create", requestBody)
@@ -390,6 +465,11 @@ export default {
 };
 </script>
 <style scoped>
+
+.text-amount-color{
+  color: rgb(60, 57, 149)
+}
+
 .dashboard-card {
   height: 600px;
 

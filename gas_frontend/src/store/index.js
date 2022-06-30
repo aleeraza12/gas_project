@@ -231,7 +231,7 @@ const store = {
       console.log(data);
       let requestBody = {};
       RequestService.post("customer_type/read_all", requestBody).then(
-        (response) => {
+        (response) => { 
           if (response.data.status == 200) {
             let customer_types = [];
             for (let j = 0; j < response.data.response.length; j++) {

@@ -25,6 +25,11 @@ class CustomerTypeSeeder extends Seeder
                 'customer_type' => 'Retailer',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'customer_type' => 'Household User',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]
         ]);
     }

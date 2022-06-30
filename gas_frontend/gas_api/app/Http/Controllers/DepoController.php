@@ -18,19 +18,21 @@ class DepoController extends Controller
         $depo->location = $request->location;
         $depo->added_by_admin = (bool)$request->added_by_admin;
         $depo->company_id = $request->company_id;
+        $depo->customer_type = $request->customer_type;
         $depo->save();
         return response()->json(['response' => $depo, 'status' => 201]);
     }
 
     public function update_depo_price(Request $request)
     {
-        $depo = Depos::find($request->depo_id);
-        $depo->depo_name = $request->depo_name;
-        $depo->price_per_twenty_million_ton = $request->price_per_twenty_million_ton;
-        $depo->location = $request->location;
-        $depo->added_by_admin = (bool)$request->added_by_admin;
-        $depo->company_id = $request->company_id;
-        $depo->save();
+        Depos::where('customer_type',$request->customer_type)->update([
+            'depo_name' => $request->depo_name,
+            'price_per_twenty_million_ton' => $request->price_per_twenty_million_ton,
+            'location' => $request->location,
+            'depo->added_by_admin' => (bool)$request->added_by_admin,
+            'depo->company_id' => $request->company_id
+        ]);
+        $depo = Depos::where('customer_type',$request->customer_type)->first();
         return response()->json(['response' => $depo, 'status' => 201]);
     }
 
@@ -44,8 +46,14 @@ class DepoController extends Controller
 
     public function read_depo_price(Request $request)
     {
-        $depo_price =   Company::find($request->company_id)->depos()->OrderByDesc('created_at')->first();
-        return response()->json(['response' => $depo_price, 'status' => 200]);
+        $depo_price_distributor = Company::find($request->company_id)->depos()->where('customer_type','Distributor')->OrderByDesc('created_at')->first();
+        $depo_price_retailor = Company::find($request->company_id)->depos()->where('customer_type','Retailer')->OrderByDesc('created_at')->first();
+        $depo_price_household_user = Company::find($request->company_id)->depos()->where('customer_type','Household User')->OrderByDesc('created_at')->first();
+        return response()->json(['response' => [
+            'distributor' => $depo_price_distributor,
+            'retailor' => $depo_price_retailor,
+            'household_user' => $depo_price_household_user,
+        ], 'status' => 200]);
     }
 
     public function read_company_depos(Request $request)

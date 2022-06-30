@@ -17,7 +17,7 @@
             <img
               height="20"
               width="20"
-              src="../../assets/images/Vector (1).png"
+              src="../../assets/images/printer.svg"
             />
           </v-btn>
         </div>
@@ -71,7 +71,7 @@
         <div class="mr-8 mt-5">
           <div class="fonts">Transcation Id</div>
           <div class="fonts font-weight-bold">
-            00000000{{ getSingleReceipt.transaction_id }}
+            {{ getSingleReceipt.transaction_id }}
           </div>
         </div>
       </div>
@@ -81,27 +81,32 @@
       <div class="d-flex">
         <div class="ml-5 mt-5">
           <div class="d-flex">
-            <div class="fonts"><b>Unit Gas Price:</b></div>
-            <div class="fonts">{{ getSingleReceipt.price }}</div>
+            <div class="fonts"><b>Unit Gas Price: &nbsp;</b></div>
+            <div class="fonts">N{{ getSingleReceipt.price }}</div>
           </div>
           <div class="d-flex">
-            <div class="fonts"><b>Total Amount:</b></div>
-            <div class="fonts">{{ getSingleReceipt.total_amount }}</div>
+            <div class="fonts"><b>Total Amount: &nbsp;</b></div>
+            <div class="fonts">N{{ getSingleReceipt.total_amount }}</div>
           </div>
           <div class="d-flex">
-            <div class="fonts"><b>Payment Mode:</b></div>
+            <div class="fonts"><b>Payment Mode: &nbsp;</b></div>
             <div class="fonts">{{ getSingleReceipt.payment_mode }}</div>
+          </div>
+          <br>
+          <div class="d-flex">
+            <div class="fonts"><b>Balance: &nbsp;</b></div>
+            <div class="fonts">N{{ getSingleReceipt.balance }}</div>
           </div>
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-5">
           <div class="fonts">
-            Gas Quantity: {{ getSingleReceipt.gas_quantity }}
+            Gas Quantity:&nbsp;{{ getSingleReceipt.gas_quantity }}
           </div>
           <div class="fonts">
-            Promo Used: {{ getSingleReceipt.discount_code }}
+            Promo Used:&nbsp;{{ getSingleReceipt.discount_code }}
           </div>
-          <div class="fonts">Updated By: {{ getSingleReceipt.updated_by }}</div>
+          <div class="fonts">Updated By:&nbsp;{{ getSingleReceipt.updated_by }}</div>
         </div>
       </div>
       <v-container fluid>

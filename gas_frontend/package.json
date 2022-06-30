@@ -14,6 +14,7 @@
     "print-js": "^1.6.0",
     "v-offline": "^2.3.0",
     "vue": "^2.6.11",
+    "vue-horizontal-list-autoscroll": "^1.1.14",
     "vue-html-to-paper": "^1.4.4",
     "vue-json-to-csv": "^1.1.8",
     "vue-plugin-event-bus": "^0.0.5",

@@ -153,6 +153,12 @@
                 {{ getSingleReceipt.total_amount }}
               </div>
             </div>
+            <div class="d-flex pa-2" style="background-color: #ebebea">
+              <div class="font-weight-bold">Balance</div>
+              <div class="ml-5 font-weight-bold">
+                {{ getSingleReceipt.balance }}
+              </div>
+            </div>
             <div class="d-flex pa-2" style="background-color: #f6f6f5">
               <div class="font-weight-bold">Promo</div>
               <div class="ml-15 font-weight-bold">
@@ -164,6 +170,7 @@
               </div>
             </div>
           </div>
+          <br><br>
           <div
             class="d-flex align-center justify-center no-print"
             style="margin-top: 10rem"

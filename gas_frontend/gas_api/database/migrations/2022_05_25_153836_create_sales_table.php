@@ -25,6 +25,8 @@ class CreateSalesTable extends Migration
             $table->double('total_amount');
             $table->double('discounted_amount')->nullable();
             $table->double('price');
+            $table->double("amount_being_paid")->default(0);
+            $table->double("balance")->default(0);
             $table->string('discount_code')->nullable();
             $table->integer('customer_id')->unsigned();
             //$table->string('customer_name');

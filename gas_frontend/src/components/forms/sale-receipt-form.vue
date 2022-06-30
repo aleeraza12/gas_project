@@ -13,7 +13,7 @@
           <b>Sales Recepit Form</b>
         </div>
         <div class="mt-2 ml-3 d-flex align-start justify-start">
-          Enter the following details to cretae Recepit
+          Enter the following details to create Recepit
         </div>
         <div style="width: 400px" class="pa-8 mt-10">
           <v-form v-model="valid">
@@ -22,6 +22,7 @@
                 :items="getAllCustomerTypes"
                 v-model="customer_type"
                 label="Customer Type"
+                v-on:change="getPriceForCustomer"
                 :rules="nameRules"
                 outlined
                 dense
@@ -146,6 +147,32 @@
                 hide-details
               ></v-select>
             </div>
+            <div class="d-flex" v-if="payment_mode == 'Credit' || payment_mode == 'credit'">
+              <div>
+                <v-text-field
+                  label="Amount Paid"
+                  :rules="(payment_mode == 'Credit' || payment_mode == 'credit') ? [] : nameRules"
+                  outlined
+                  dense
+                  placeholder="Enter amount being paid"
+                  hide-details
+                  class="city-feild mt-5 mr-3"
+                  v-model="amount_being_paid"
+                ></v-text-field>
+              </div>
+              <div>
+                <v-text-field
+                  label="Balance"
+                  outlined
+                  :rules="(payment_mode == 'Credit' || payment_mode == 'credit') ? [] : nameRules"
+                  dense
+                  placeholder="Enter balance"
+                  hide-details
+                  class="city-feild mt-5"
+                  v-model="balance"
+                ></v-text-field>
+              </div>
+            </div>
             <div class="">
               <v-btn
                 class="elevation-0 btn-create mt-10 text-capitalize"
@@ -245,6 +272,8 @@ export default {
     search: null,
     show1: false,
     gas_quantity: "",
+    amount_being_paid: 0,
+    balance: 0,
     price: "",
     nameRules: [(v) => !!v || "This field is required"],
     total_amount: "",
@@ -338,9 +367,12 @@ export default {
       }
     },
     getPrice() {
-      this.price = this.getPrice
-        ? this.getPrice.price_per_twenty_million_ton
-        : this.price;
+        //   this.price = this.getPrice
+        // ? this.getPrice.distributor.price_per_twenty_million_ton
+        // : this.price;
+    },
+    payment_mode(){
+
     },
     gas_quantity() {
       if (this.setDefaultPrice)
@@ -406,6 +438,23 @@ export default {
     },
   },
   methods: {
+    getPriceForCustomer(type){
+      console.log(type);
+      this.price = "";
+      if(type === "Distributor"){
+          this.price = this.getPrice.distributor
+          ? this.getPrice.distributor.price_per_twenty_million_ton
+          : this.price;
+      }else if(type === "Retailor"){
+          this.price = this.getPrice.retailor
+          ? this.getPrice.retailor.price_per_twenty_million_ton
+          : this.price;
+      }else if(type === "Household User"){
+          this.price = this.getPrice.household_user
+          ? this.getPrice.household_user.price_per_twenty_million_ton
+          : this.price;
+      }
+    },
     getCompanyCustomers(id) {
       let url = this.$store.state.url;
       let requestBody = {
@@ -472,6 +521,8 @@ export default {
       this.customer_phone_number = data.customer_phone_number;
       this.discount_code = data.discount_code;
       this.payment_mode = data.payment_mode;
+      this.amount_being_paid = data.amount_being_paid;
+      this.balance = data.balance;
       this.sale_id = data.id;
       this.company_id = data.company_id;
       let requestBody = {
@@ -502,6 +553,8 @@ export default {
         customer_phone_number: this.customer_phone_number,
         discount_code: this.discount_code,
         payment_mode: this.payment_mode,
+        amount_being_paid: this.amount_being_paid,
+        balance: this.balance,
         status: this.status,
         sale_id: this.sale_id,
         users_id:
