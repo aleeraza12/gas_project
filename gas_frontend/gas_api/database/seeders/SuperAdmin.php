@@ -21,7 +21,7 @@ class SuperAdmin extends Seeder
                 'company_email' =>  config('app.super_admin_email'),
                 'company_name' =>  'Super Admin',
                 'password' => Hash::make(config('app.super_admin_password')),
-                'company_phone_number' =>  '901201',
+                'company_phone_number' =>  '901201111',
                 'city' =>  'Super Admin',
                 'state' => 'Super Admin',
                 'is_super_admin' => true,

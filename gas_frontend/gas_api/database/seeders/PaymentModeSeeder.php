@@ -25,6 +25,11 @@ class PaymentModeSeeder extends Seeder
                 'payment_mode' => 'Prepaid',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'payment_mode' => 'Credit',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]
         ]);
     }

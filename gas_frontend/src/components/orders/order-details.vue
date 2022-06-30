@@ -43,9 +43,9 @@
           <div class="d-flex align-start justify-start">
             <b>{{ getSinglePurchase.customer_name }}</b>
           </div>
-          <div class="d-flex align-start justify-start fonst">04566000433</div>
+          <!--<div class="d-flex align-start justify-start fonst">04566000433</div>-->
           <div class="d-flex align-start justify-start fonts">
-            office no abc , nowrelad activty sometec howdy
+            {{ getSinglePurchase.company_address }}
           </div>
         </div>
         <v-spacer></v-spacer>
@@ -97,11 +97,11 @@
           {{ getSinglePurchase.updated_at }}
         </div>
       </div>
-
+      {{ getSinglePurchase }}
       <div>
         <v-btn
           class="mt-3 btn-delivered text-capitalize no-print"
-          @click="print"
+          @click="print()"
         >
           Print
         </v-btn>
@@ -172,72 +172,14 @@ export default {
   created() {},
   methods: {
     print() {
-      // Pass the element id here
-      const prtHtml = document.getElementById("printAble").innerHTML;
-
-      // Get all stylesheets HTML
-      let stylesHtml = "";
-      for (const node of [
-        ...document.querySelectorAll('link[rel="stylesheet"], style'),
-      ]) {
-        stylesHtml += node.outerHTML;
+      try {
+        // Print for chrome browser
+        window.print();
+      } catch {
+        document.execCommand("print", false, null);
       }
-
-      // Open the print window
-      const WinPrint = window.open(
-        "",
-        "",
-        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
-      );
-
-      WinPrint.document.write(`<!DOCTYPE html>
-<html>
-  <head>
-    ${stylesHtml}
-  </head>
-  <body>
-    ${prtHtml}
-  </body>
-</html>`);
-
-      WinPrint.document.close();
-      WinPrint.focus();
-      WinPrint.print();
-      WinPrint.close();
     },
-    printReceipt() {
-      let prtContent = document.getElementById("printAble").outerHTML;
-      let stylesHtml = "";
-      for (const node of [
-        ...document.querySelectorAll('link[rel="stylesheet"], style'),
-      ]) {
-        stylesHtml += node.outerHTML;
-      }
 
-      // Open the print window
-      let WinPrint = window.open(
-        "",
-        "",
-        "left=0,top=0,width=700,height=900,toolbar=1,scrollbars=1,status=1"
-      );
-
-      WinPrint.document.write(`<!DOCTYPE html>
-    <html>
-    <head>
-    ${stylesHtml}
-    </head>
-    <body>
-    ${prtContent}
-    </body>
-    </html>`);
-      setTimeout(() => {
-        WinPrint.document.write(prtContent.innerHTML);
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
-      }, 100);
-    },
     goToOrders() {
       this.$router.push("Orders");
     },

@@ -84,8 +84,8 @@
         </div>
         <v-spacer></v-spacer>
         <div class="mr-8 mt-5">
-          <div class="fonts">Transcation Id</div>
-          <div class="fonts">{{getSinglePurchase.receipt_number}}</div>
+          <div class="fonts">Transaction Id</div>
+          <div class="fonts">{{ getSinglePurchase.receipt_number }}</div>
         </div>
       </div>
       <div class="mt-5 ml-5 d-flex align-start justify-start">
@@ -109,32 +109,37 @@
         <v-spacer></v-spacer>
         <div class="mr-8 mt-3">
           <div class="row">
-              <div class="fonts">Gas Quanity:&nbsp;</div>
-              <div class="fonts_">{{getSinglePurchase.gas_quantity}}</div>
+            <div class="fonts">Gas Quanity:&nbsp;</div>
+            <div class="fonts_">{{ getSinglePurchase.gas_quantity }}</div>
           </div>
           <div class="row">
-              <div class="fonts">Logistics:&nbsp;</div>
-              <div class="fonts_">{{getSinglePurchase.logistics_cost}}</div>
+            <div class="fonts">Logistics:&nbsp;</div>
+            <div class="fonts_">{{ getSinglePurchase.logistics_cost }}</div>
           </div>
           <div class="row">
-              <div class="fonts">Total Amount:&nbsp;</div>
-              <div class="fonts_">{{parseInt(getSinglePurchase.amount) + parseInt(getSinglePurchase.logistics_cost) + parseInt(getSinglePurchase.gas_quantity)}}</div>
+            <div class="fonts">Total Amount:&nbsp;</div>
+            <div class="fonts_">
+              {{
+                parseInt(getSinglePurchase.amount) +
+                parseInt(getSinglePurchase.logistics_cost) +
+                parseInt(getSinglePurchase.gas_quantity)
+              }}
+            </div>
           </div>
         </div>
       </div>
 
       <div class="mt-5 ml-5 d-flex align-start justify-start">
-          <div class="fonts">Driver's Name:&nbsp;</div>
-          <div class="fonts_">N{{ getSinglePurchase.driver_name }}</div>
+        <div class="fonts">Driver's Name:&nbsp;</div>
+        <div class="fonts_">N{{ getSinglePurchase.driver_name }}</div>
 
-          <v-spacer></v-spacer>
-          <div class="mr-8 mt-3">
-            <div class="row">
-                <div class="fonts">Recepient By:&nbsp;</div>
-                <div class="fonts_">{{getSinglePurchase.recepient_name}}</div>
-            </div>
+        <v-spacer></v-spacer>
+        <div class="mr-8 mt-3">
+          <div class="row">
+            <div class="fonts">Recepient By:&nbsp;</div>
+            <div class="fonts_">{{ getSinglePurchase.recepient_name }}</div>
           </div>
-
+        </div>
       </div>
 
       <!--<div class="mt-5" style="text-decoration: underline">

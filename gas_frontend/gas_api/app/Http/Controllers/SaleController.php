@@ -36,6 +36,8 @@ class SaleController extends Controller
                 'discount_code' => $request->discount_code,
                 'company_id' =>  $request->company_id,
                 'payment_mode' =>  $request->payment_mode,
+                'amount_being_paid' => $request->amount_being_paid,
+                'balance' => $request->balance,
                 'unpaid' => true,
                 'unpaid_at' => Carbon::now()->addHours(1),
                 'user_id' => $request->users_id, //loggedin user id
@@ -119,6 +121,8 @@ class SaleController extends Controller
         $sale->customer_phone_number =  $request->customer_phone_number;
         $sale->customer_type =  $request->customer_type;
         $sale->discount_code = $request->discount_code;
+        $sale->amount_being_paid = $request->amount_being_paid;
+        $sale->balance = $request->balance;
         $sale->company_id =  $request->company_id;
         $sale->payment_mode =  $request->payment_mode;
         $sale->save();

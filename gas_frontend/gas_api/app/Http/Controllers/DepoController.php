@@ -18,6 +18,7 @@ class DepoController extends Controller
         $depo->location = $request->location;
         $depo->added_by_admin = (bool)$request->added_by_admin;
         $depo->company_id = $request->company_id;
+        $depo->customer_type = $request->customer_type;
         $depo->save();
         return response()->json(['response' => $depo, 'status' => 201]);
     }
@@ -31,7 +32,7 @@ class DepoController extends Controller
         $depo->added_by_admin = (bool)$request->added_by_admin;
         $depo->company_id = $request->company_id;
         $depo->save();
-        return response()->json(['response' => $depo, 'status' => 201]);
+        return response()->json(['response' => $depo, 'status' => 200]);
     }
 
     public function delete_depo_price(Request $request)
@@ -44,8 +45,14 @@ class DepoController extends Controller
 
     public function read_depo_price(Request $request)
     {
-        $depo_price =   Company::find($request->company_id)->depos()->OrderByDesc('created_at')->first();
-        return response()->json(['response' => $depo_price, 'status' => 200]);
+        $depo_price_distributor = Company::find($request->company_id)->depos()->where('customer_type', 'Distributor')->OrderByDesc('created_at')->first();
+        $depo_price_retailor = Company::find($request->company_id)->depos()->where('customer_type', 'Retailer')->OrderByDesc('created_at')->first();
+        $depo_price_household_user = Company::find($request->company_id)->depos()->where('customer_type', 'Household User')->OrderByDesc('created_at')->first();
+        return response()->json(['response' => [
+            'distributor' => $depo_price_distributor,
+            'retailor' => $depo_price_retailor,
+            'household_user' => $depo_price_household_user,
+        ], 'status' => 200]);
     }
 
     public function read_company_depos(Request $request)

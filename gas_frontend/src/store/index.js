@@ -106,7 +106,6 @@ const store = {
   actions: {
     //Wallet     &
     getAllWallets(context, data) {
-      console.log(data);
       let requestBody = {};
       RequestService.post("wallet/read", requestBody, data).then((response) => {
         if (response.data.status == 200) {
@@ -144,7 +143,6 @@ const store = {
 
     // gettng all orders of a company     5
     getSalesListings(context, data) {
-      console.log(data);
       let requestBody = {};
       RequestService.post("sale/read_all", requestBody, data).then(
         (response) => {
@@ -158,7 +156,6 @@ const store = {
 
     // gettng all orders of a company     4
     getCompaniesListing(context, data) {
-      console.log(data);
       let requestBody = {};
       RequestService.post("company/read_all", requestBody, data).then(
         (response) => {
@@ -172,7 +169,6 @@ const store = {
 
     // gettng all purchases of a company      3
     getPurchaseListing(context, data) {
-      console.log(data);
       let requestBody = {};
       RequestService.post("purchase/read_all", requestBody, data).then(
         (response) => {
@@ -186,7 +182,6 @@ const store = {
 
     //Get Transaction       2
     getAllTransactions(context, data) {
-      console.log("", data);
       let requestBody = {};
       context.commit("SET_TRANSATIONS", "");
       RequestService.post("transaction/read_all", requestBody, data).then(
@@ -201,7 +196,6 @@ const store = {
 
     //Orders      1
     getOrderListing(context, data) {
-      console.log(data);
       let requestBody = {};
       RequestService.post("order/read_all", requestBody, data).then(
         (response) => {

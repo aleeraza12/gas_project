@@ -39,11 +39,12 @@ class OrderController extends Controller
 
     public function read_order(Request $request)
     {
-        $orders =  Company::find($request->company_id)->order()->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $orders =  Company::find($request->company_id)->order()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         $company = Company::find($request->company_id);
         foreach ($orders as $order) {
             $order['company_name'] = $company->company_name;
             $order['updated_by'] = $company->company_name;
+            $order['company_address'] = $company->address;
         }
         return response()->json(['response' => $orders, 'status' => 200]);
     }

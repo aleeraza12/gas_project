@@ -13,7 +13,7 @@
           <b>Sales Recepit Form</b>
         </div>
         <div class="mt-2 ml-3 d-flex align-start justify-start">
-          Enter the following details to cretae Recepit
+          Enter the following details to create Recepit
         </div>
         <div style="width: 400px" class="pa-8 mt-10">
           <v-form v-model="valid">
@@ -22,6 +22,7 @@
                 :items="getAllCustomerTypes"
                 v-model="customer_type"
                 label="Customer Type"
+                v-on:change="getPriceForCustomer"
                 :rules="nameRules"
                 outlined
                 dense
@@ -37,7 +38,7 @@
                     value: company_names[key],
                   }))
                 "
-                label="Select one company for purchase"
+                label="Select one company for sale"
                 v-model="company_name"
                 :rules="nameRules"
                 outlined
@@ -48,22 +49,6 @@
               ></v-select>
             </div>
             <div>
-              <!--<v-select
-                :items="
-                  Object.keys(customer_names).map((key) => ({
-                    text: customer_names[key].name,
-                    value: customer_names[key],
-                  }))
-                "
-                label="Customer Name"
-                v-model="customer_name"
-                :rules="nameRules"
-                outlined
-                class="username-feild mt-3"
-                dense
-                small
-                hide-details
-              ></v-select>-->
               <v-autocomplete
                 :items="
                   Object.keys(customer_names).map((key) => ({
@@ -79,8 +64,6 @@
                 dense
                 small
                 :search-input.sync="search"
-                cache-items
-                hide-no-data
                 hide-details
               ></v-autocomplete>
             </div>
@@ -145,6 +128,43 @@
                 small
                 hide-details
               ></v-select>
+            </div>
+            <div
+              class="d-flex"
+              v-if="payment_mode == 'Credit' || payment_mode == 'credit'"
+            >
+              <div>
+                <v-text-field
+                  label="Amount Paid"
+                  :rules="
+                    payment_mode == 'Credit' || payment_mode == 'credit'
+                      ? []
+                      : nameRules
+                  "
+                  outlined
+                  dense
+                  placeholder="Enter amount being paid"
+                  hide-details
+                  class="city-feild mt-5 mr-3"
+                  v-model="amount_being_paid"
+                ></v-text-field>
+              </div>
+              <div>
+                <v-text-field
+                  label="Balance"
+                  outlined
+                  :rules="
+                    payment_mode == 'Credit' || payment_mode == 'credit'
+                      ? []
+                      : nameRules
+                  "
+                  dense
+                  placeholder="Enter balance"
+                  hide-details
+                  class="city-feild mt-5"
+                  v-model="balance"
+                ></v-text-field>
+              </div>
             </div>
             <div class="">
               <v-btn
@@ -238,40 +258,46 @@ import { eventBus } from "@/main";
 import axios from "axios";
 import RequestService from "../../RequestService";
 export default {
-  data: () => ({
-    valid: false,
-    valid1: false,
-    show: false,
-    search: null,
-    show1: false,
-    gas_quantity: "",
-    price: "",
-    nameRules: [(v) => !!v || "This field is required"],
-    total_amount: "",
-    customer_name: "",
-    customer_names: [],
-    promo_names: [],
-    customer_phone_number: "",
-    customer_type: "",
-    discount_code: "",
-    payment_mode: "",
-    snacbarMessage: "",
-    snackbar: false,
-    snackbarColor: "",
-    loading: false,
-    loading1: false,
-    status: "unpaid",
-    sale_id: null,
-    updateable: false,
-    company_id: null,
-    start_date: "2022-01-01",
-    end_date: new Date().toISOString().substr(0, 10),
-    emitData: "",
-    company_names: [],
-    setDefaultPrice: true,
-    company_name: "",
-    loggedinUser: JSON.parse(localStorage.getItem("user")),
-  }),
+  data() {
+    return {
+      valid: false,
+      valid1: false,
+      show: false,
+      search: null,
+      show1: false,
+      gas_quantity: "",
+      amount_being_paid: 0,
+      balance: 0,
+      price: "",
+      nameRules: [(v) => !!v || "This field is required"],
+      total_amount: "",
+      customer_name: "",
+      customer_names: [],
+      promo_names: [],
+      customer_phone_number: "",
+      customer_type: "",
+      discount_code: "",
+      payment_mode: "",
+      snacbarMessage: "",
+      snackbar: false,
+      snackbarColor: "",
+      loading: false,
+      loading1: false,
+      status: "unpaid",
+      sale_id: null,
+      updateable: false,
+      company_id: null,
+      start_date: "2022-01-01",
+      end_date: new Date().toISOString().substr(0, 10),
+      emitData: "",
+      company_names: [],
+      setDefaultPrice: true,
+      company_name: "",
+      loggedinUser: JSON.parse(localStorage.getItem("user")),
+      previous_customer_id: "",
+      previous_customer_number: "",
+    };
+  },
   components: {},
   created() {
     eventBus.$on("updateSale", (data) => {
@@ -312,7 +338,6 @@ export default {
     //this is bcz we want only company user for creating sale
     if (!this.loggedinUser.is_super_admin) {
       this.$store.dispatch("getCustomersListing", requestBody);
-      //this.$store.dispatch("getPromosListing", requestBody);
     }
     this.$store.dispatch("getPaymentMethods");
     this.$store.dispatch("getCustomerTypes");
@@ -330,17 +355,15 @@ export default {
   },
   watch: {
     customer_name(value) {
-      if (value.name != undefined && this.setDefaultPrice) {
+      if (value.name != undefined) {
         for (let j = 0; j < this.getCustomers.length; j++) {
-          if (this.getCustomers[j].id == value.id)
-            this.customer_phone_number = this.getCustomers[j].phone_number;
+          if (this.getCustomers[j].id == value.id) {
+            if (this.getCustomers[j].id == this.previous_customer_id)
+              this.customer_phone_number = this.previous_customer_number;
+            else this.customer_phone_number = this.getCustomers[j].phone_number;
+          }
         }
       }
-    },
-    getPrice() {
-      this.price = this.getPrice
-        ? this.getPrice.price_per_twenty_million_ton
-        : this.price;
     },
     gas_quantity() {
       if (this.setDefaultPrice)
@@ -350,27 +373,13 @@ export default {
       if (this.setDefaultPrice)
         this.total_amount = this.gas_quantity * this.price;
     },
-    company_name() {
-      if (this.loggedinUser.is_super_admin) {
-        this.getCompanyCustomers(this.company_name.id);
+    company_name(val) {
+      if (val.name != undefined) {
+        if (this.loggedinUser.is_super_admin) {
+          this.getCompanyCustomers(this.company_name.id);
+        }
       }
     },
-    //getPromos() {
-    //  console.log("get promo watcher called", this.emitData);
-    //  this.promo_names = [];
-    //  for (let j = 0; j < this.getPromos.length; j++) {
-    //    let promo = {
-    //      name: this.getPromos[j].promo_name,
-    //      id: this.getPromos[j].id,
-    //    };
-    //    this.promo_names.push(promo);
-    //  }
-    //  let updateAblePromo = {
-    //    name: this.emitData.discount_code,
-    //    id: this.emitData.promo_id,
-    //  };
-    //  this.discount_code = updateAblePromo;
-    //},
     getCompanies() {
       this.customer_names = [];
       for (let j = 0; j < this.getCompanies.length; j++) {
@@ -392,20 +401,33 @@ export default {
         let customer = {
           name: this.getCustomers[j].name,
           id: this.getCustomers[j].id,
-          //phone_number: this.getCustomers[j].phone_number,
         };
         this.customer_names.push(customer);
       }
-      //if(this.emitData)
       let updateAblecustomer = {
         name: this.emitData.customer_name,
         id: this.emitData.customer_id,
-        //phone_number: this.emitData.customer_phone_number,
       };
       this.customer_name = updateAblecustomer;
     },
   },
   methods: {
+    getPriceForCustomer(type) {
+      this.price = "";
+      if (type === "Distributor") {
+        this.price = this.getPrice.distributor
+          ? this.getPrice.distributor.price_per_twenty_million_ton
+          : this.price;
+      } else if (type === "Retailor") {
+        this.price = this.getPrice.retailor
+          ? this.getPrice.retailor.price_per_twenty_million_ton
+          : this.price;
+      } else if (type === "Household User") {
+        this.price = this.getPrice.household_user
+          ? this.getPrice.household_user.price_per_twenty_million_ton
+          : this.price;
+      }
+    },
     getCompanyCustomers(id) {
       let url = this.$store.state.url;
       let requestBody = {
@@ -420,46 +442,11 @@ export default {
           Token: localStorage.getItem("token"),
         },
       });
-      customAxios;
       customAxios
         .post(url + "customer/read_all", requestBody)
         .then((response) => {
-          this.customer_names = [];
-          for (let j = 0; j < response.data.response.length; j++) {
-            let customer = {
-              name: response.data.response[j].name,
-              id: response.data.response[j].id,
-            };
-            this.customer_names.push(customer);
-          }
+          this.$store.commit("SET_CUSTOMERS", response.data.response);
         });
-    },
-
-    getCompanyPromos(id) {
-      let url = this.$store.state.url;
-      let requestBody = {
-        company_id: id,
-        user_id: this.loggedinUser.id,
-        start_date: "2022-01-01",
-        end_date: this.end_date.concat(" 23:59:00"),
-      };
-      let customAxios;
-      customAxios = axios.create({
-        headers: {
-          Token: localStorage.getItem("token"),
-        },
-      });
-      customAxios;
-      customAxios.post(url + "promo/read_all", requestBody).then((response) => {
-        this.promo_names = [];
-        for (let j = 0; j < response.data.response.length; j++) {
-          let promo = {
-            name: response.data.response[j].promo_name,
-            id: response.data.response[j].id,
-          };
-          this.promo_names.push(promo);
-        }
-      });
     },
     assembleData(data) {
       this.setDefaultPrice = false;
@@ -470,18 +457,14 @@ export default {
       this.state = data.state;
       this.customer_type = data.customer_type;
       this.customer_phone_number = data.customer_phone_number;
+      this.previous_customer_id = data.customer_id;
+      this.previous_customer_number = data.customer_phone_number;
       this.discount_code = data.discount_code;
       this.payment_mode = data.payment_mode;
+      this.amount_being_paid = data.amount_being_paid;
+      this.balance = data.balance;
       this.sale_id = data.id;
       this.company_id = data.company_id;
-      let requestBody = {
-        start_date: this.start_date,
-        end_date: this.end_date.concat(" 23:59:00"),
-      };
-      if (this.loggedinUser.is_super_admin) {
-        this.$store.dispatch("getCustomersListing", requestBody);
-        //this.$store.dispatch("getPromosListing", requestBody);
-      }
     },
     addPromo() {
       this.snackbar = true;
@@ -502,6 +485,8 @@ export default {
         customer_phone_number: this.customer_phone_number,
         discount_code: this.discount_code,
         payment_mode: this.payment_mode,
+        amount_being_paid: this.amount_being_paid,
+        balance: this.balance,
         status: this.status,
         sale_id: this.sale_id,
         users_id:
@@ -509,7 +494,7 @@ export default {
             ? this.loggedinUser.user_id
             : this.loggedinUser.id,
       };
-      if (this.company_id != null && this.loggedinUser.is_super_admin) {
+      if (this.company_id != null && !this.loggedinUser.is_super_admin) {
         requestBody.company_id = this.company_id;
       }
       if (this.company_name !== "" && this.loggedinUser.is_super_admin) {

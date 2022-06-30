@@ -14,6 +14,7 @@ class CompanyController extends Controller
 
     public function create_company(SignUp $request)
     {
+        $super_adm_company = Company::where('is_super_admin', true)->first();
         $company = Company::updateOrCreate(
             [
                 'id' => $request->company_id
@@ -26,8 +27,8 @@ class CompanyController extends Controller
                 'company_phone_number' =>  $request->company_phone_number,
                 'city' =>  $request->city,
                 'state' =>  $request->state,
-                'is_super_admin' =>  false,
-                'permissions' =>  $request->company_email ==  config('app.super_admin_email') ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Rates', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos', 'Rate List'] : ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos', 'Rate List'],
+                'is_super_admin' =>   $request->company_email ==  $super_adm_company->company_email ? true : false,
+                'permissions' =>  $request->company_email == $super_adm_company->company_email  ? ['Dashboard', 'Orders', 'Users', 'Customers', 'Reconciliation', 'Wallet', 'Rates', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos', 'Rate List'] : ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos', 'Rate List'],
                 'company_profile_picture' =>  $request->attachment == "" ? null :  $this->upload_attachment($request),
                 'address' =>  $request->address,
             ]
