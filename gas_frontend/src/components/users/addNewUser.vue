@@ -21,7 +21,7 @@
             label="Created By"
             :rules="nameRules"
             outlined
-            disabled
+            readonly
             dense
             hide-details
             class="mt-3"

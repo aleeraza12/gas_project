@@ -4,7 +4,7 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side">
+          <div class="grey-side"  v-show="!$vuetify.breakpoint.smAndDown">
             <div style="position: absolute">
               <img
                 src="../../assets/images/sidePic.png"

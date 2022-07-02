@@ -3,13 +3,9 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side">
+          <div class="grey-side" v-show="!$vuetify.breakpoint.smAndDown">
             <div style="position: absolute">
-              <img
-                src="../../assets/images/sidePic.png"
-                
-                width="750"
-              />
+              <img src="../../assets/images/sidePic.png" width="750" />
             </div>
             <div style="position: relative; margin-top: 15rem">
               <img src="../../assets/images/side2.png" />
@@ -36,7 +32,8 @@
                 placeholder="Owners Full Name"
                 hide-details
                 :rules="nameRules"
-                class="username-feild mt-2 ml-16"
+                class="username-feild mt-2"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2 pr-2' : 'ml-16'"
                 v-model="owners_name"
               ></v-text-field>
             </div>
@@ -48,7 +45,8 @@
                 placeholder="Company Name"
                 :rules="nameRules"
                 hide-details
-                class="username-feild mt-2 ml-16"
+                class="username-feild mt-2"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2  pr-2' : 'ml-16'"
                 v-model="company_name"
               ></v-text-field>
             </div>
@@ -59,7 +57,8 @@
                 dense
                 placeholder="Email Address"
                 hide-details
-                class="username-feild mt-2 ml-16"
+                class="username-feild mt-2"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2  pr-2' : 'ml-16'"
                 v-model="email_address"
                 :rules="emailRules"
               ></v-text-field>
@@ -72,7 +71,8 @@
                 placeholder="Phone Number"
                 :rules="nameRules"
                 hide-details
-                class="username-feild mt-2 ml-16"
+                class="username-feild mt-2"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2  pr-2' : 'ml-16'"
                 v-model="phone_number"
               ></v-text-field>
             </div>
@@ -84,7 +84,8 @@
                 :rules="nameRules"
                 placeholder="Address"
                 hide-details
-                class="username-feild mt-2 ml-16"
+                class="username-feild mt-2"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2  pr-2' : 'ml-16'"
                 v-model="address"
               ></v-text-field>
             </div>
@@ -97,7 +98,8 @@
                   placeholder="City"
                   :rules="nameRules"
                   hide-details
-                  class="city-feild mt-2 ml-16"
+                  class="city-feild mt-2"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-16'"
                   v-model="city"
                 ></v-text-field>
               </div>
@@ -108,6 +110,7 @@
                   :rules="nameRules"
                   label="State"
                   outlined
+                  :class="$vuetify.breakpoint.smAndDown ? ' pr-2' : ''"
                   dense
                 ></v-select>
               </div>
@@ -123,7 +126,8 @@
                 placeholder="Password"
                 :rules="nameRules"
                 hide-details
-                class="password-feild mt-n3 ml-16"
+                class="password-feild mt-n3"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2  pr-2' : 'ml-16'"
                 v-model="password"
               ></v-text-field>
             </div>
@@ -138,7 +142,8 @@
                 dense
                 placeholder="Confirm Password"
                 hide-details
-                class="password-feild mt-2 ml-16"
+                class="password-feild mt-2"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2  pr-2' : 'ml-16'"
                 v-model="confirm_password"
               ></v-text-field>
             </div>
@@ -156,6 +161,7 @@
                 :disabled="!valid"
                 @click="createAccount()"
                 dense
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-n12' : ''"
               >
                 Create Account
               </v-btn>

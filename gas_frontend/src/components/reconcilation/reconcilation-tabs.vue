@@ -86,6 +86,7 @@
                   height="calc(100vh - 400px)"
                   :search="search"
                   :loading="loading"
+                  :mobile-breakpoint="0"
                 >
                   <template v-slot:[`body.prepend`]="{ headers }">
                     <th
@@ -143,6 +144,7 @@
                 height="calc(100vh - 400px)"
                 :search="search"
                 :loading="loading"
+                :mobile-breakpoint="0"
               >
                 <template v-slot:[`body.prepend`]="{ headers }">
                   <th
@@ -375,7 +377,7 @@ export default {
 .searchbar {
   border-radius: 10px;
   background-color: white !important;
-  width: 500px;
+  width: 100% !important;
 }
 .table-head {
   background-color: #eff0fa;

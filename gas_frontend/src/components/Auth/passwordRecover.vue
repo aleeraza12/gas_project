@@ -3,13 +3,9 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side">
+          <div class="grey-side" v-show="!$vuetify.breakpoint.smAndDown">
             <div style="position: absolute">
-              <img
-                src="../../assets/images/sidePic.png"
-              
-                width="630"
-              />
+              <img src="../../assets/images/sidePic.png" width="630" />
             </div>
             <div style="position: relative; margin-top: 15rem">
               <img src="../../assets/images/side2.png" />
@@ -26,7 +22,10 @@
             <div class="sign-in-content d-flex align-start justify-start">
               Password Recovery
             </div>
-            <div class="sign-in-subcontent d-flex align-start justify-start">
+            <div
+              class="sign-in-subcontent d-flex align-start justify-start"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : ''"
+            >
               Please enter the email adress linked to your account
             </div>
             <v-form v-model="valid">
@@ -38,7 +37,8 @@
                   :rules="nameRules"
                   placeholder="Email Address"
                   hide-details
-                  class="username-feild mt-6 ml-16"
+                  class="username-feild mt-6"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : 'ml-16'"
                   v-model="email"
                 ></v-text-field>
               </div>
@@ -50,6 +50,7 @@
                   :disabled="!valid || loading"
                   class="elevation-0 btn-login"
                   @click="sendMail(), (loader = 'loading2')"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-15' : ''"
                   dense
                 >
                   Confirm
@@ -200,7 +201,7 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 400px;
+  width: 60%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }

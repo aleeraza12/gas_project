@@ -3,7 +3,7 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side">
+          <div class="grey-side" v-show="!$vuetify.breakpoint.smAndDown">
             <div style="position: absolute">
               <img src="../../assets/images/sidePic.png" width="650" />
             </div>
@@ -21,10 +21,16 @@
             </div>
           </div>
           <div class="login-screen">
-            <div class="sign-in-content d-flex align-start justify-start">
+            <div
+              class="sign-in-content d-flex align-start justify-start"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : ''"
+            >
               Sign In
             </div>
-            <div class="sign-in-subcontent d-flex align-start justify-start">
+            <div
+              class="sign-in-subcontent d-flex align-start justify-start"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : ''"
+            >
               Enter your username and password
             </div>
             <v-form v-model="valid">
@@ -36,7 +42,8 @@
                   placeholder="email/Username"
                   hide-details
                   :rules="emailRules"
-                  class="username-feild mt-6 ml-16"
+                  class="username-feild mt-6"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : 'ml-16'"
                   v-model="email"
                 ></v-text-field>
               </div>
@@ -53,15 +60,24 @@
                   dense
                   placeholder="Password"
                   hide-details
-                  class="password-feild mt-3 ml-16"
+                  class="password-feild mt-3"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : 'ml-16'"
                   v-model="password"
                 ></v-text-field>
               </div>
               <div class="d-flex mt-3">
-                <div class="regster" @click="$router.push('signup')">
+                <div
+                  class="regster"
+                  @click="$router.push('signup')"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-7' : ''"
+                >
                   Register
                 </div>
-                <div @click="forgetPassword()" class="forget-passowrd">
+                <div
+                  @click="forgetPassword()"
+                  class="forget-passowrd"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-15' : ''"
+                >
                   Forgot Password?
                 </div>
               </div>
@@ -73,6 +89,7 @@
                   @click="login()"
                   :loading="loading"
                   dense
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-8' : ''"
                 >
                   Sign In
                 </v-btn>
@@ -254,12 +271,12 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 400px;
+  width: 60vh;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
 .password-feild {
-  width: 400px;
+  width: 60vh;
   border-color: #d6d6d6;
   border-radius: 8px;
 }

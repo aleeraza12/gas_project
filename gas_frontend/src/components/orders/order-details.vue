@@ -97,7 +97,6 @@
           {{ getSinglePurchase.updated_at }}
         </div>
       </div>
-      {{ getSinglePurchase }}
       <div>
         <v-btn
           class="mt-3 btn-delivered text-capitalize no-print"

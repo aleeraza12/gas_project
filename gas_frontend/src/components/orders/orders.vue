@@ -8,7 +8,7 @@
           dense
           prepend-inner-icon="mdi-magnify"
           hide-details
-          class="searchbar"
+          class="searchbar shrink"
           v-model="search"
         ></v-text-field>
       </div>
@@ -55,6 +55,7 @@
         class="elevation-1"
         hide-default-header
         height="calc(100vh - 400px)"
+        :mobile-breakpoint="0"
       >
         <template v-slot:[`body.prepend`]="{ headers }">
           <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
@@ -114,11 +115,6 @@ export default {
     datePicker,
   },
   computed: {
-    //getIcon() {
-    //  return this.snackbarColor == "primary"
-    //    ? "mdi-checkbox-marked-circle"
-    //    : "mdi-close-circle";
-    //},
     ...mapGetters(["getAllOrders"]),
   },
   created() {
@@ -159,11 +155,12 @@ export default {
   background: #eff0fa;
   height: 55px;
   border-radius: 20px;
+  width: 100%;
 }
 .searchbar {
   border-radius: 10px;
   background-color: white !important;
-  width: 500px;
+  width: 100% !important;
 }
 .table-head {
   background: #eff0fa;

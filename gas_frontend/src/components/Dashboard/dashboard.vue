@@ -113,7 +113,7 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-              <div class="d-flex align-end justify-end mt-6">
+              <div class="d-flex align-end justify-end mt-0">
                 <img src="../../assets/images/1.png" height="55" />
               </div>
             </div>
@@ -124,7 +124,7 @@
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" class="ml-5" style="background-color: #fff4d0">
+        <v-card height="150" class="ml-0" style="background-color: #fff4d0">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -141,7 +141,7 @@
                 </div>
               </div>
               <v-spacer></v-spacer>
-              <div class="d-flex align-end justify-end mt-6">
+              <div class="d-flex align-end justify-end mt-0">
                 <img src="../../assets/images/2.png" height="55" />
               </div>
             </div>
@@ -152,7 +152,7 @@
         </v-card>
       </v-col>
       <v-col md="4" lg="4" xl="4" sm="12">
-        <v-card height="150" class="ml-5" style="background-color: #ebe8ff">
+        <v-card height="150" class="ml-0" style="background-color: #ebe8ff">
           <v-card-text>
             <div class="d-flex">
               <div>
@@ -164,7 +164,7 @@
                 </div>-->
               </div>
               <v-spacer></v-spacer>
-              <div class="d-flex align-end justify-end mt-6">
+              <div class="d-flex align-end justify-end mt-0">
                 <img src="../../assets/images/3.png" height="55" />
               </div>
             </div>
@@ -223,32 +223,14 @@
         </v-card-title>
         <v-form v-model="valid">
           <v-card-text>
-            <!--<v-text-field
-              v-model="depo_name"
-              solo
-              label="Enter Depo Name"
-              hide-details="auto"
-              readonly
-              class="ma-3"
-              :rules="nameRules"
-            ></v-text-field>
-            <v-text-field
-              hide-details="auto"
-              v-model="location"
-              solo
-              label="Enter Depo Location"
-              readonly
-              :rules="nameRules"
-              class="ma-3"
-            ></v-text-field>-->
             <v-select
               class="ma-3"
               :items="['Distributor', 'Retailer', 'Household User']"
               v-model="customer_type"
               label="Customer Type"
               :rules="nameRules"
-              outlined
               dense
+              solo
               small
               hide-details
             ></v-select>
@@ -312,7 +294,7 @@ export default {
     valid: false,
     priceLoader: true,
     customer_type: "",
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     isModal: false,
     price: "",
@@ -382,7 +364,7 @@ export default {
     this.getOrderListing([this.start_date, this.end_date]);
     this.$store.dispatch("getCurrentPrice");
     this.$store.dispatch("getDashboardStats");
-    this.$store.commit("setSelectedDateRange", "Today");
+    this.$store.commit("setSelectedDateRange", "All");
     this.depo_name = this.loggedinUser.company_name;
     this.location = this.loggedinUser.address;
   },

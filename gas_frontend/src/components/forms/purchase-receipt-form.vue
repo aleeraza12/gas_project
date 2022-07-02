@@ -1,219 +1,233 @@
 <template>
   <div class="main-container">
     <div class="d-flex">
-      <div>
-        <div class="d-flex align-start justify-start" @click="goToPurchase()">
-          <v-icon color="#2e3995">mdi-chevron-left</v-icon>
-          <span style="color: #2e3995">Back</span>
-        </div>
-        <div class="mt-4 ml-3 d-flex align-start justify-start">
-          <b>Purchase Recepit Form</b>
-        </div>
-        <div class="mt-2 ml-3 d-flex align-start justify-start">
-          Enter the following details to Purchase Recepit
-        </div>
-        <div style="width: 400px" class="pa-8">
-          <v-form v-model="valid">
-            <div>
-              <v-text-field
-                label="Date"
-                outlined
-                dense
-                @click="modal = true"
-                placeholder="Enter Date"
-                hide-details
-                class="username-feild"
-                v-model="date"
-                :rules="nameRules"
-              ></v-text-field>
-            </div>
-            <div v-if="loggedinUser.is_super_admin">
-              <v-select
-                :items="
-                  Object.keys(purchased_company_names).map((key) => ({
-                    text: purchased_company_names[key].name,
-                    value: purchased_company_names[key],
-                  }))
-                "
-                label="Select one company for purchase"
-                v-model="purchased_company_name"
-                :rules="nameRules"
-                outlined
-                class="username-feild mt-3"
-                dense
-                small
-                hide-details
-              ></v-select>
-            </div>
-            <div>
-              <v-text-field
-                label="Receipt Number"
-                outlined
-                :rules="nameRules"
-                dense
-                placeholder="Enter Receipt Number"
-                hide-details
-                class="username-feild mt-4"
-                v-model="receipt_number"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                label="Company Name"
-                outlined
-                dense
-                placeholder="Enter Company Name"
-                hide-details
-                class="username-feild mt-4"
-                v-model="company_name"
-                :rules="nameRules"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                label="Phone Number"
-                outlined
-                dense
-                placeholder="Enter Company Phone Number"
-                hide-details
-                class="username-feild mt-4"
-                v-model="company_phone_number"
-                :rules="nameRules"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                label="Price"
-                outlined
-                dense
-                placeholder="Enter Price"
-                hide-details
-                class="username-feild mt-4"
-                v-model="unit_price"
-                :rules="nameRules"
-              ></v-text-field>
-            </div>
-            <div class="d-flex">
-              <div>
-                <v-text-field
-                  label="Quantity"
-                  outlined
-                  dense
-                  placeholder="Enter Gas Quantity"
-                  hide-details
-                  class="city-feild mt-4 mr-3"
-                  v-model="gas_quantity"
-                  :rules="nameRules"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Amount"
-                  outlined
-                  dense
-                  placeholder="Enter Amount"
-                  hide-details
-                  class="city-feild mt-4"
-                  v-model="amount"
-                  :rules="nameRules"
-                ></v-text-field>
-              </div>
-            </div>
-            <div class="d-flex">
-              <div>
-                <v-text-field
-                  label="Logistics Cost"
-                  outlined
-                  dense
-                  placeholder="Enter Logistics Cost"
-                  hide-details
-                  class="city-feild mt-4 mr-3"
-                  v-model="logistics_cost"
-                  :rules="nameRules"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Admin Cost"
-                  outlined
-                  dense
-                  placeholder="Enter Admin Cost"
-                  hide-details
-                  class="city-feild mt-4"
-                  v-model="admin_cost"
-                  :rules="nameRules"
-                ></v-text-field>
-              </div>
-            </div>
-            <div>
-              <v-text-field
-                label="Driver Name"
-                outlined
-                dense
-                placeholder="Enter Driver Name"
-                hide-details
-                class="username-feild mt-4"
-                v-model="driver_name"
-                :rules="nameRules"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                label="Recepient Name"
-                outlined
-                dense
-                placeholder="Enter Recepient Name"
-                hide-details
-                class="username-feild mt-4"
-                v-model="recepient_name"
-                :rules="nameRules"
-              ></v-text-field>
-            </div>
-            <div class="">
-              <v-btn
-                class="elevation-0 mt-4 btn-create text-capitalize"
-                @click="savePurchase()"
-                :disabled="!valid"
-                :loading="loading"
-                dense
-              >
-                Save
-              </v-btn>
-            </div>
-          </v-form>
-        </div>
-      </div>
-      <div class="myDiv">
-        <div
-          style="height: 300px; width: 300px; margin-top: 7rem; cursor: pointer"
-          class="pa-10 ml-10"
-        >
-          <div v-if="decodedBase64 != ''">
-            <img :src="decodedBase64" height="70" width="80" />
-            <v-icon @click="decodedBase64 = ''" class="ml-3" size="30"
-              >mdi-delete-sweep</v-icon
+      <v-row>
+        <v-col md="12" lg="12" sm="12">
+          <div>
+            <div
+              class="d-flex align-start justify-start"
+              @click="goToPurchase()"
             >
+              <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+              <span style="color: #2e3995">Back</span>
+            </div>
+            <div class="mt-4 ml-3 d-flex align-start justify-start">
+              <b>Purchase Recepit Form</b>
+            </div>
+            <div class="mt-2 ml-3 d-flex align-start justify-start">
+              Enter the following details to Purchase Recepit
+            </div>
+            <div style="width: 400px" class="pa-8">
+              <v-form v-model="valid">
+                <div>
+                  <v-text-field
+                    label="Date"
+                    outlined
+                    dense
+                    @click="modal = true"
+                    placeholder="Enter Date"
+                    hide-details
+                    class="username-feild"
+                    v-model="date"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div v-if="loggedinUser.is_super_admin">
+                  <v-select
+                    :items="
+                      Object.keys(purchased_company_names).map((key) => ({
+                        text: purchased_company_names[key].name,
+                        value: purchased_company_names[key],
+                      }))
+                    "
+                    label="Select one company for purchase"
+                    v-model="purchased_company_name"
+                    :rules="nameRules"
+                    outlined
+                    class="username-feild mt-3"
+                    dense
+                    small
+                    hide-details
+                  ></v-select>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Receipt Number"
+                    outlined
+                    :rules="nameRules"
+                    dense
+                    placeholder="Enter Receipt Number"
+                    hide-details
+                    class="username-feild mt-4"
+                    v-model="receipt_number"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Company Name"
+                    outlined
+                    dense
+                    placeholder="Enter Company Name"
+                    hide-details
+                    class="username-feild mt-4"
+                    v-model="company_name"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Phone Number"
+                    outlined
+                    dense
+                    placeholder="Enter Company Phone Number"
+                    hide-details
+                    class="username-feild mt-4"
+                    v-model="company_phone_number"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Price"
+                    outlined
+                    dense
+                    placeholder="Enter Price"
+                    hide-details
+                    class="username-feild mt-4"
+                    v-model="unit_price"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div class="d-flex">
+                  <div>
+                    <v-text-field
+                      label="Quantity"
+                      outlined
+                      dense
+                      placeholder="Enter Gas Quantity"
+                      hide-details
+                      class="city-feild mt-4 mr-3"
+                      v-model="gas_quantity"
+                      :rules="nameRules"
+                    ></v-text-field>
+                  </div>
+                  <div>
+                    <v-text-field
+                      label="Amount"
+                      outlined
+                      dense
+                      placeholder="Enter Amount"
+                      hide-details
+                      class="city-feild mt-4"
+                      v-model="amount"
+                      :rules="nameRules"
+                    ></v-text-field>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <div>
+                    <v-text-field
+                      label="Logistics Cost"
+                      outlined
+                      dense
+                      placeholder="Enter Logistics Cost"
+                      hide-details
+                      class="city-feild mt-4 mr-3"
+                      v-model="logistics_cost"
+                      :rules="nameRules"
+                    ></v-text-field>
+                  </div>
+                  <div>
+                    <v-text-field
+                      label="Admin Cost"
+                      outlined
+                      dense
+                      placeholder="Enter Admin Cost"
+                      hide-details
+                      class="city-feild mt-4"
+                      v-model="admin_cost"
+                      :rules="nameRules"
+                    ></v-text-field>
+                  </div>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Driver Name"
+                    outlined
+                    dense
+                    placeholder="Enter Driver Name"
+                    hide-details
+                    class="username-feild mt-4"
+                    v-model="driver_name"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Recepient Name"
+                    outlined
+                    dense
+                    placeholder="Enter Recepient Name"
+                    hide-details
+                    class="username-feild mt-4"
+                    v-model="recepient_name"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div class="">
+                  <v-btn
+                    class="elevation-0 mt-4 btn-create text-capitalize"
+                    @click="savePurchase()"
+                    :disabled="!valid"
+                    :loading="loading"
+                    dense
+                  >
+                    Save
+                  </v-btn>
+                </div>
+              </v-form>
+            </div>
           </div>
-          <label for="file-input" v-else>
-            <img height="100" src="../../assets/images/imageicon.png" />
-            <input
-              id="file-input"
-              type="file"
-              class="d-none"
-              @change="onFileChange"
-            />
+        </v-col>
+        <v-col md="6" lg="6" sm="12">
+          <div class="myDiv">
             <div
               style="
-                text-decoration: underline;
-                color: #2e3995;
+                height: 300px;
+                width: 300px;
+                margin-top: 7rem;
                 cursor: pointer;
               "
+              class="pa-10 ml-10"
             >
-              <b>Add Image</b>
+              <div v-if="decodedBase64 != ''">
+                <img :src="decodedBase64" height="70" width="80" />
+                <v-icon @click="decodedBase64 = ''" class="ml-3" size="30"
+                  >mdi-delete-sweep</v-icon
+                >
+              </div>
+              <label for="file-input" v-else>
+                <img height="100" src="../../assets/images/imageicon.png" />
+                <input
+                  id="file-input"
+                  type="file"
+                  class="d-none"
+                  @change="onFileChange"
+                />
+                <div
+                  style="
+                    text-decoration: underline;
+                    color: #2e3995;
+                    cursor: pointer;
+                  "
+                >
+                  <b>Add Image</b>
+                </div>
+              </label>
             </div>
-          </label>
-        </div>
-      </div>
+          </div>
+        </v-col>
+      </v-row>
     </div>
     <v-dialog
       ref="dialog"

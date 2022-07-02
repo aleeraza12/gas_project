@@ -1,90 +1,87 @@
 <template>
   <div class="main-container">
-    <v-card class="dashboard-card pa-0 elevation-0">
-      <v-card-text>
-        <div class="d-flex top-bar pt-2">
-          <div class="ml-2">
-            <v-text-field
-              placeholder="search..."
-              outlined
-              dense
-              prepend-inner-icon="mdi-magnify"
-              hide-details
-              class="searchbar"
-              v-model="search"
-            ></v-text-field>
-          </div>
-          <v-spacer></v-spacer>
-          <!--<div class="mr-5 mt-2">
+    <!--<v-card class="dashboard-card pa-0 elevation-0">-->
+    <!--<v-card-text>-->
+    <div class="d-flex top-bar pt-2">
+      <div class="ml-2">
+        <v-text-field
+          placeholder="search..."
+          outlined
+          dense
+          prepend-inner-icon="mdi-magnify"
+          hide-details
+          class="searchbar"
+          v-model="search"
+        ></v-text-field>
+      </div>
+      <v-spacer></v-spacer>
+      <!--<div class="mr-5 mt-2">
             <v-icon> mdi-bell-outline</v-icon>
           </div>-->
+    </div>
+    <div class="d-flex mt-5">
+      <div>
+        <b> Users</b>
+      </div>
+    </div>
+    <div
+      class="d-flex mt-5 pa-5"
+      style="background-color: #eff0fa; border-radius: 5px"
+    >
+      <div>
+        <div class="d-flex align-start justify-start">
+          <b>Total Users</b>
         </div>
-        <div class="d-flex mt-5">
-          <div>
-            <b> Users</b>
-          </div>
+        <div class="d-flex align-start justify-start">
+          {{ getUsers.length }}
         </div>
-        <div
-          class="d-flex mt-5 pa-5"
-          style="background-color: #eff0fa; border-radius: 5px"
+      </div>
+      <v-spacer></v-spacer>
+      <div class="d-flex align-end justify-end">
+        <v-btn small dense outlined color="#2b3896" @click="addNewUser()"
+          >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
         >
-          <div>
-            <div class="d-flex align-start justify-start">
-              <b>Total Users</b>
+      </div>
+    </div>
+    <div class="d-flex mt-3">
+      <div class="mt-4"><b>History</b></div>
+      <v-spacer></v-spacer>
+      <div class="mr-3"><date-picker /></div>
+    </div>
+    <div class="mt-3">
+      <v-data-table
+        :loading="loading"
+        loading-text="Loading... Please wait"
+        :headers="headers"
+        :items="getUsers"
+        :items-per-page="5"
+        class="elevation-1"
+        hide-default-header
+        height="calc(100vh - 400px)"
+        :search="search"
+        :mobile-breakpoint="0"
+      >
+        <template v-slot:[`body.prepend`]="{ headers }">
+          <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
+            <div class="d-flex ml-3">
+              {{ header.text }}
             </div>
-            <div class="d-flex align-start justify-start">
-              {{ getUsers.length }}
-            </div>
-          </div>
-          <v-spacer></v-spacer>
-          <div class="d-flex align-end justify-end">
-            <v-btn small dense outlined color="#2b3896" @click="addNewUser()"
-              >Add New <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-            >
-          </div>
-        </div>
-        <div class="d-flex mt-3">
-          <div class="mt-4"><b>History</b></div>
-          <v-spacer></v-spacer>
-          <div class="mr-3"><date-picker /></div>
-        </div>
-        <div class="mt-3">
-          <v-data-table
-            :loading="loading"
-            loading-text="Loading... Please wait"
-            :headers="headers"
-            :items="getUsers"
-            :items-per-page="5"
-            class="elevation-1"
-            hide-default-header
-            height="calc(100vh - 400px)"
-            :search="search"
-          >
-            <template v-slot:[`body.prepend`]="{ headers }">
-              <th
-                v-for="(header, i) in headers"
-                :key="'A' + i"
-                class="table-head"
-              >
-                <div class="d-flex ml-3">
-                  {{ header.text }}
-                </div>
-              </th>
-            </template>
-            <template v-slot:item.actions1="{ item }">
-              <v-icon small class="mr-2" @click="editItem(item)">
-                mdi-pencil
-              </v-icon>
-            </template>
-            <template v-slot:item.actions2="{ item }">
-              <v-icon small class="mr-2" @click="setModal(item)" color="red">
-                mdi-delete-empty
-              </v-icon>
-            </template>
-          </v-data-table>
-        </div>
-      </v-card-text>
-    </v-card>
+          </th>
+        </template>
+        <template v-slot:item.actions1="{ item }">
+          <v-icon small class="mr-2" @click="editItem(item)">
+            mdi-pencil
+          </v-icon>
+        </template>
+        <template v-slot:item.actions2="{ item }">
+          <v-icon small class="mr-2" @click="setModal(item)" color="red">
+            mdi-delete-empty
+          </v-icon>
+        </template>
+      </v-data-table>
+    </div>
+    <!--</v-card-text>
+    </v-card>-->
     <v-dialog v-model="dialog" persistent max-width="390">
       <v-card>
         <v-card-title class="text-h7">
@@ -224,18 +221,18 @@ export default {
 <style scoped>
 .dashboard-card {
   height: 600px;
-
   border-radius: 0px !important;
 }
 .top-bar {
   background: #eff0fa;
   height: 55px;
   border-radius: 20px;
+  width: 100%;
 }
 .searchbar {
   border-radius: 10px;
   background-color: white !important;
-  width: 500px;
+  width: 100% !important;
 }
 .table-head {
   background: #eff0fa;

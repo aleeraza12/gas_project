@@ -1,240 +1,232 @@
 <template>
   <div class="main-container">
     <div class="d-flex">
-      <div>
-        <div
-          class="d-flex align-start justify-start"
-          @click="goToSalesListingPage()"
-        >
-          <v-icon color="#2e3995">mdi-chevron-left</v-icon>
-          <span style="color: #2e3995">Back</span>
-        </div>
-        <div class="mt-10 ml-3 d-flex align-start justify-start">
-          <b>Sales Recepit Form</b>
-        </div>
-        <div class="mt-2 ml-3 d-flex align-start justify-start">
-          Enter the following details to create Recepit
-        </div>
-        <div style="width: 400px" class="pa-8 mt-10">
-          <v-form v-model="valid">
-            <div>
-              <v-select
-                :items="getAllCustomerTypes"
-                v-model="customer_type"
-                label="Customer Type"
-                v-on:change="getPriceForCustomer"
-                :rules="nameRules"
-                outlined
-                dense
-                small
-                hide-details
-              ></v-select>
-            </div>
-            <div v-if="loggedinUser.is_super_admin">
-              <v-select
-                :items="
-                  Object.keys(company_names).map((key) => ({
-                    text: company_names[key].name,
-                    value: company_names[key],
-                  }))
-                "
-                label="Select one company for sale"
-                v-model="company_name"
-                :rules="nameRules"
-                outlined
-                class="username-feild mt-3"
-                dense
-                small
-                hide-details
-              ></v-select>
-            </div>
-            <div>
-              <v-autocomplete
-                :items="
-                  Object.keys(customer_names).map((key) => ({
-                    text: customer_names[key].name,
-                    value: customer_names[key],
-                  }))
-                "
-                label="Search Customer Name"
-                v-model="customer_name"
-                :rules="nameRules"
-                outlined
-                class="username-feild mt-3"
-                dense
-                small
-                :search-input.sync="search"
-                hide-details
-              ></v-autocomplete>
-            </div>
-            <div>
-              <v-text-field
-                label="Phone Number"
-                outlined
-                dense
-                placeholder="Enter Phone Number"
-                hide-details
-                class="username-feild mt-5"
-                :rules="nameRules"
-                v-model="customer_phone_number"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                label="Enter Price"
-                :rules="nameRules"
-                outlined
-                dense
-                placeholder="Enter Price"
-                hide-details
-                class="username-feild mt-5"
-                v-model="price"
-              ></v-text-field>
-            </div>
-            <div class="d-flex">
-              <div>
-                <v-text-field
-                  label="Gas Quantity"
-                  :rules="nameRules"
-                  outlined
-                  dense
-                  placeholder="Enter Gas Quantity"
-                  hide-details
-                  class="city-feild mt-5 mr-3"
-                  v-model="gas_quantity"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Total Amount"
-                  outlined
-                  :rules="nameRules"
-                  dense
-                  placeholder="Enter Amount"
-                  hide-details
-                  class="city-feild mt-5"
-                  v-model="total_amount"
-                ></v-text-field>
-              </div>
-            </div>
-            <div class="mt-5">
-              <v-select
-                v-model="payment_mode"
-                :items="getAllPaymentModes"
-                label="Payment Methods"
-                :rules="nameRules"
-                outlined
-                dense
-                small
-                hide-details
-              ></v-select>
-            </div>
+      <v-row>
+        <v-col md="6" lg="6" sm="12">
+          <div>
             <div
-              class="d-flex"
-              v-if="payment_mode == 'Credit' || payment_mode == 'credit'"
+              class="d-flex align-start justify-start"
+              @click="goToSalesListingPage()"
             >
-              <div>
-                <v-text-field
-                  label="Amount Paid"
-                  :rules="
-                    payment_mode == 'Credit' || payment_mode == 'credit'
-                      ? []
-                      : nameRules
-                  "
-                  outlined
-                  dense
-                  placeholder="Enter amount being paid"
-                  hide-details
-                  class="city-feild mt-5 mr-3"
-                  v-model="amount_being_paid"
-                ></v-text-field>
-              </div>
-              <div>
-                <v-text-field
-                  label="Balance"
-                  outlined
-                  :rules="
-                    payment_mode == 'Credit' || payment_mode == 'credit'
-                      ? []
-                      : nameRules
-                  "
-                  dense
-                  placeholder="Enter balance"
-                  hide-details
-                  class="city-feild mt-5"
-                  v-model="balance"
-                ></v-text-field>
-              </div>
+              <v-icon color="#2e3995">mdi-chevron-left</v-icon>
+              <span style="color: #2e3995">Back</span>
             </div>
-            <div class="">
-              <v-btn
-                class="elevation-0 btn-create mt-10 text-capitalize"
-                @click="createSale()"
-                :disabled="!valid"
-                :loading="loading"
-                dense
-              >
-                Submit
-              </v-btn>
+            <div class="mt-10 ml-3 d-flex align-start justify-start">
+              <b>Sales Recepit Form</b>
             </div>
-          </v-form>
-        </div>
-      </div>
-      <div>
-        <div
-          style="
-            height: 250px;
-            width: 300px;
-            background-color: #ebebea;
-            margin-top: 13rem;
-          "
-          class="pa-10 ml-16"
-        >
-          <v-form v-model="valid1">
-            <div class="pa-2">
-              <v-text-field
-                label="Enter Discount code"
-                outlined
-                dense
-                placeholder="Enter Discount Code"
-                hide-details
-                class="username-feild mt-10"
-                v-model="discount_code"
-                :rules="nameRules"
-              ></v-text-field>
-              <!--<v-select
-                :items="
-                  Object.keys(promo_names).map((key) => ({
-                    text: promo_names[key].name,
-                    value: promo_names[key],
-                  }))
-                "
-                label="Enter Discount Code"
-                v-model="discount_code"
-                :rules="nameRules"
-                outlined
-                class="username-feild mt-3"
-                dense
-                small
-                hide-details
-              ></v-select>-->
+            <div class="mt-2 ml-3 d-flex align-start justify-start">
+              Enter the following details to create Recepit
             </div>
-            <div class="mt-5">
-              <v-btn
-                small
-                @click="addPromo()"
-                :disabled="!valid1"
-                :loading="loading1"
-                class="elevation-0 btn-create-1 text-capitalize"
-                dense
-              >
-                Apply
-              </v-btn>
+            <div style="width: 400px" class="pa-8 mt-10">
+              <v-form v-model="valid">
+                <div>
+                  <v-select
+                    :items="getAllCustomerTypes"
+                    v-model="customer_type"
+                    label="Customer Type"
+                    v-on:change="getPriceForCustomer"
+                    :rules="nameRules"
+                    outlined
+                    dense
+                    small
+                    hide-details
+                  ></v-select>
+                </div>
+                <div v-if="loggedinUser.is_super_admin">
+                  <v-select
+                    :items="
+                      Object.keys(company_names).map((key) => ({
+                        text: company_names[key].name,
+                        value: company_names[key],
+                      }))
+                    "
+                    label="Select one company for sale"
+                    v-model="company_name"
+                    :rules="nameRules"
+                    outlined
+                    class="username-feild mt-3"
+                    dense
+                    small
+                    hide-details
+                  ></v-select>
+                </div>
+                <div>
+                  <v-autocomplete
+                    :items="
+                      Object.keys(customer_names).map((key) => ({
+                        text: customer_names[key].name,
+                        value: customer_names[key],
+                      }))
+                    "
+                    label="Search Customer Name"
+                    v-model="customer_name"
+                    :rules="nameRules"
+                    outlined
+                    class="username-feild mt-3"
+                    dense
+                    small
+                    :search-input.sync="search"
+                    hide-details
+                  ></v-autocomplete>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Phone Number"
+                    outlined
+                    dense
+                    placeholder="Enter Phone Number"
+                    hide-details
+                    class="username-feild mt-5"
+                    :rules="nameRules"
+                    v-model="customer_phone_number"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-text-field
+                    label="Enter Price"
+                    :rules="nameRules"
+                    outlined
+                    dense
+                    placeholder="Enter Price"
+                    hide-details
+                    class="username-feild mt-5"
+                    v-model="price"
+                  ></v-text-field>
+                </div>
+                <div class="d-flex">
+                  <div>
+                    <v-text-field
+                      label="Gas Quantity"
+                      :rules="nameRules"
+                      outlined
+                      dense
+                      placeholder="Enter Gas Quantity"
+                      hide-details
+                      class="city-feild mt-5 mr-3"
+                      v-model="gas_quantity"
+                    ></v-text-field>
+                  </div>
+                  <div>
+                    <v-text-field
+                      label="Total Amount"
+                      outlined
+                      :rules="nameRules"
+                      dense
+                      placeholder="Enter Amount"
+                      hide-details
+                      class="city-feild mt-5"
+                      v-model="total_amount"
+                    ></v-text-field>
+                  </div>
+                </div>
+                <div class="mt-5">
+                  <v-select
+                    v-model="payment_mode"
+                    :items="getAllPaymentModes"
+                    label="Payment Methods"
+                    :rules="nameRules"
+                    outlined
+                    dense
+                    small
+                    hide-details
+                  ></v-select>
+                </div>
+                <div
+                  class="d-flex"
+                  v-if="payment_mode == 'Credit' || payment_mode == 'credit'"
+                >
+                  <div>
+                    <v-text-field
+                      label="Amount Paid"
+                      :rules="
+                        payment_mode == 'Credit' || payment_mode == 'credit'
+                          ? []
+                          : nameRules
+                      "
+                      outlined
+                      dense
+                      placeholder="Enter amount being paid"
+                      hide-details
+                      class="city-feild mt-5 mr-3"
+                      v-model="amount_being_paid"
+                    ></v-text-field>
+                  </div>
+                  <div>
+                    <v-text-field
+                      label="Balance"
+                      outlined
+                      :rules="
+                        payment_mode == 'Credit' || payment_mode == 'credit'
+                          ? []
+                          : nameRules
+                      "
+                      dense
+                      placeholder="Enter balance"
+                      hide-details
+                      class="city-feild mt-5"
+                      v-model="balance"
+                    ></v-text-field>
+                  </div>
+                </div>
+                <div class="">
+                  <v-btn
+                    class="elevation-0 btn-create mt-10 text-capitalize"
+                    @click="createSale()"
+                    :disabled="!valid"
+                    :loading="loading"
+                    dense
+                  >
+                    Submit
+                  </v-btn>
+                </div>
+              </v-form>
             </div>
-          </v-form>
-        </div>
-      </div>
+          </div>
+        </v-col>
+        <v-col md="6" lg="6" sm="12">
+          <div>
+            <div
+              style="
+                height: 250px;
+                width: 300px;
+                background-color: #ebebea;
+                margin-top: 13rem;
+              "
+              class="pa-10 ml-16"
+              :class="$vuetify.breakpoint.smAndDown ? 'mt-1' : ''"
+            >
+              <v-form v-model="valid1">
+                <div class="pa-2">
+                  <v-text-field
+                    label="Enter Discount code"
+                    outlined
+                    dense
+                    placeholder="Enter Discount Code"
+                    hide-details
+                    class="username-feild mt-10"
+                    v-model="discount_code"
+                    :rules="nameRules"
+                  ></v-text-field>
+                </div>
+                <div class="mt-5">
+                  <v-btn
+                    small
+                    @click="addPromo()"
+                    :disabled="!valid1"
+                    :loading="loading1"
+                    class="elevation-0 btn-create-1 text-capitalize"
+                    dense
+                  >
+                    Apply
+                  </v-btn>
+                </div>
+              </v-form>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
     </div>
+
     <v-snackbar
       v-model="snackbar"
       :timeout="2000"

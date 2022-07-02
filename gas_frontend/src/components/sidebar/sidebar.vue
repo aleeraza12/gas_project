@@ -1,6 +1,26 @@
 <template>
-  <div class="no-print">
-    <v-card class="sidebar-card elevation-0 no-print">
+  <div>
+    <v-card v-if="$vuetify.breakpoint.smAndDown">
+      <v-app v-show="$vuetify.breakpoint.smAndDown">
+        <v-app-bar
+          app
+          clipped-left
+          class="app-bar-color"
+          height="50"
+          v-show="$vuetify.breakpoint.smAndDown"
+        >
+          <v-app-bar-nav-icon
+            @click.stop="drawer = !drawer"
+            v-show="$vuetify.breakpoint.smAndDown"
+            color="#2b3896"
+          ></v-app-bar-nav-icon>
+        </v-app-bar>
+      </v-app>
+    </v-card>
+    <v-card
+      class="sidebar-card elevation-0"
+      v-show="!$vuetify.breakpoint.smAndDown"
+    >
       <v-navigation-drawer
         v-model="drawer"
         :mini-variant.sync="mini"
@@ -64,6 +84,58 @@
         </v-list>
       </v-navigation-drawer>
     </v-card>
+
+    <!-- for Moble -->
+    <v-navigation-drawer
+      class="d-md-none d-block h navaigation-side tests"
+      v-model="drawer"
+      app
+      absolute
+      temporary
+    >
+      <v-list-item
+        class="d-flex align-center justify-center ma-2 ml-0 pl-0 test"
+      >
+        <v-list-item-avatar size="40">
+          <img src="../../assets/images/mn.png" class="ml-1"
+        /></v-list-item-avatar>
+      </v-list-item>
+      <v-list dense nav>
+        <v-list-item
+          dense
+          @click="Logout(link)"
+          class="d-flex align-center pl-4 sidebar-item"
+          :class="titleName == link.tabName ? 'selected-route' : ''"
+          v-for="(link, i) in showable_links"
+          :key="i"
+          router
+          @click.stop="mini = !mini"
+          :to="link.route"
+        >
+          <div :id="link.icon">
+            <v-icon
+              class="mr-7 py-4"
+              :color="titleName == link.tabName ? '#2b3896' : link.color"
+              v-text="link.icon"
+              size="19"
+            ></v-icon>
+          </div>
+          <v-tooltip
+            content-class="arrow-left"
+            nudge-right="1"
+            right
+            color="#ffe7b8"
+          >
+            <span class="black--text"> {{ link.text }} </span>
+          </v-tooltip>
+          <div>
+            <span class="text-capitalize body-2 font-weight-bold">
+              {{ link.text }}
+            </span>
+          </div>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 <script>
@@ -77,6 +149,8 @@ export default {
     user: JSON.parse(localStorage.getItem("user")),
     start_date: "2021-01-01",
     end_date: new Date().toISOString().substr(0, 10),
+    group: null,
+
     links: [
       {
         text: "Dashboard",
@@ -232,6 +306,9 @@ export default {
 </script>
 
 <style scoped>
+.h {
+  height: 200vh !important;
+}
 .sidebar-card {
   height: 100vh;
   border-radius: 0px !important;
@@ -250,12 +327,6 @@ export default {
   color: #2b3896 !important;
   border-left: 1px solid #fff !important;
 }
-@media print {
-  .no-print,
-  .no-print * {
-    display: none !important;
-  }
-}
 .selected-route {
   border: 1px solid white;
   border-top-left-radius: 30px;
@@ -266,9 +337,16 @@ export default {
   background-color: white;
   color: #2b3896 !important;
 }
+.app-bar-color {
+  color: #2b3896 !important;
+}
 </style>
 <style>
 .v-list-group--active {
   border-left: 5px solid #fff important;
+}
+.v-overlay.v-overlay--absolute.v-overlay--active.theme--dark {
+  opacity: 0 !important;
+  background-color: none !important;
 }
 </style>

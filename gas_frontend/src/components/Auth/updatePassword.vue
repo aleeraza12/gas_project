@@ -3,13 +3,9 @@
     <v-card class="elevation-0">
       <v-card-text class="pa-0">
         <div class="d-flex">
-          <div class="grey-side">
+          <div class="grey-side" v-show="!$vuetify.breakpoint.smAndDown">
             <div style="position: absolute">
-              <img
-                src="../../assets/images/sidePic.png"
-                
-                width="650"
-              />
+              <img src="../../assets/images/sidePic.png" width="650" />
             </div>
             <div style="position: relative; margin-top: 15rem">
               <img src="../../assets/images/side2.png" />
@@ -26,7 +22,10 @@
             <div class="sign-in-content d-flex align-start justify-start">
               Update Password
             </div>
-            <div class="sign-in-subcontent d-flex align-start justify-start">
+            <div
+              class="sign-in-subcontent d-flex align-start justify-start"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : ''"
+            >
               Create a new password for your account
             </div>
             <v-form v-model="valid">
@@ -64,14 +63,17 @@
                   :rules="nameRules"
                 ></v-text-field>
               </div>
-              <div class="mt-10 ml-16">
+              <div
+                class="mt-10"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-n10' : 'ml-16'"
+              >
                 <v-btn
                   block
                   :disabled="!valid"
                   :loading="loading"
-                  large
                   class="elevation-0 btn-login"
                   @click="updatePassword()"
+                  :class="$vuetify.breakpoint.smAndDown ? 'small' : 'large'"
                   dense
                 >
                   Reset Password
@@ -223,12 +225,12 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 400px;
+  width: 60%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
 .password-feild {
-  width: 400px;
+  width: 60%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
