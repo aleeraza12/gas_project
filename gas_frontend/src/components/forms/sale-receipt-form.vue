@@ -69,6 +69,12 @@
                     hide-details
                   ></v-autocomplete>
                 </div>
+                <div class="d-flex align-end justify-end mt-2">
+                  <v-btn small dense outlined @click="setModal()"
+                    >Add Customer
+                    <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
+                  >
+                </div>
                 <div>
                   <v-text-field
                     label="Phone Number"
@@ -226,6 +232,123 @@
       </v-row>
     </div>
 
+    <v-dialog v-model="isModal" persistent max-width="390">
+      <v-card>
+        <v-card-title class="text-h5 text-center align-center display-center">
+          Add Customer
+        </v-card-title>
+        <v-form v-model="valid2" class="mt-6 ml-5">
+            <div>
+              <v-text-field
+                v-model="name"
+                label="Enter Name"
+                placeholder="Enter Name"
+                outlined
+                :rules="nameRules"
+                dense
+                hide-details
+                class="mt-2"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                v-model="phone_number"
+                :rules="nameRules"
+                label="Enter Phone Number"
+                placeholder="Enter Phone Number"
+                outlined
+                dense
+                hide-details
+                class="mt-2"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                v-model="email"
+                label="Enter Email Address (optional)"
+                placeholder="Enter Email Address (optional)"
+                outlined
+                dense
+                hide-details
+                class="mt-2"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div>
+              <v-text-field
+                v-model="address"
+                label="Enter Street (optional)"
+                placeholder="Enter Street (optional)"
+                outlined
+                dense
+                hide-details
+                class="mt-2"
+                style="width: 300px"
+              ></v-text-field>
+            </div>
+            <div style="width: 300px">
+              <div>
+                <v-text-field
+                  label="City (optional)"
+                  outlined
+                  dense
+                  placeholder="Enter City (optional)"
+                  hide-details
+                  class="city-feild mt-2"
+                  v-model="city"
+                ></v-text-field>
+              </div>
+              <div class="mt-2">
+                <v-select
+                  :items="getAllStates"
+                  label="State (optional)"
+                  placeholder="Enter State (optional)"
+                  outlined
+                  small
+                  dense
+                  v-model="state"
+                  hide-details
+                >
+                </v-select>
+              </div>
+            </div>
+
+            <div class="mt-2" style="width: 300px">
+              <v-select
+                :items="getAllCustomerTypes"
+                v-model="customer_type"
+                label="Customer Type"
+                :rules="nameRules"
+                placeholder="Select One"
+                outlined
+                hide-details
+                small
+                dense
+              >
+              </v-select>
+            </div>
+          </v-form>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="black" small text @click="isModal = false">
+            Cancel
+          </v-btn>
+          <v-btn
+            small
+            color="green darken-1"
+            text
+            @click="createCustomer()"
+            :disabled="!valid2"
+            :loading="loading2"
+          >
+            Add
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-snackbar
       v-model="snackbar"
       :timeout="2000"
@@ -253,6 +376,7 @@ export default {
     return {
       valid: false,
       valid1: false,
+      valid2: false,
       show: false,
       search: null,
       show1: false,
@@ -265,6 +389,7 @@ export default {
       customer_name: "",
       customer_names: [],
       promo_names: [],
+      isModal: false,
       customer_phone_number: "",
       customer_type: "",
       discount_code: "",
@@ -274,6 +399,7 @@ export default {
       snackbarColor: "",
       loading: false,
       loading1: false,
+      loading2: false,
       status: "unpaid",
       sale_id: null,
       updateable: false,
@@ -403,6 +529,57 @@ export default {
     },
   },
   methods: {
+     createCustomer() {
+      this.loading2 = true;
+      let requestBody = {
+        name: this.name,
+        phone_number: this.phone_number,
+        //city: this.city,
+        //state: this.state,
+        //email: this.email,
+        customer_type: this.customer_type,
+        //address: this.address,
+        customer_id: this.customer_id,
+      };
+      if (this.company_id != null) requestBody.company_id = this.company_id;
+
+      if (this.email != "" && this.email !== null)
+        requestBody.company_id = this.company_id;
+
+      if (this.state != "" && this.state !== null)
+        requestBody.state = this.state;
+
+      if (this.address != "" && this.address !== null)
+        requestBody.address = this.address;
+
+      if (this.city != "" && this.city != null) requestBody.city = this.city;
+      RequestService.post("customer/create", requestBody)
+        .then((res) => {
+          if (res.data.status == 201) {
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "Your customer(s) added successfully";
+            this.loading2 = false;
+            this.isModal = false;
+
+            this.$router.go(this.$router.currentRoute);
+          }
+        })
+        .catch(() => {
+          //this.snackbar = true;
+          //this.snackbarColor = "red";
+          //this.snacbarMessage = " Something went wrong";
+          this.loading2 = false;
+          setTimeout(() => {
+            this.$router.go(-1);
+          }, 1000);
+        });
+    },
+
+    setModal() {
+      this.isModal = true;
+    },
+
     getPriceForCustomer(type) {
       this.price = "";
       if (type === "Distributor") {

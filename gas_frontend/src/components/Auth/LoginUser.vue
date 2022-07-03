@@ -36,10 +36,10 @@
             <v-form v-model="valid">
               <div>
                 <v-text-field
-                  label="email/Username"
+                  label="Email"
                   outlined
                   dense
-                  placeholder="email/Username"
+                  placeholder="Email"
                   hide-details
                   :rules="emailRules"
                   class="username-feild mt-6"
