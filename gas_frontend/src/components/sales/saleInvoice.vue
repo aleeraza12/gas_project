@@ -42,13 +42,17 @@
           <div class="mb-3"><b>Sales Recepit</b></div>
           <v-divider></v-divider>
           <div
-            class="d-flex align-start justify-start ma-5"
+            class="d-flex align-start justify-start"
+            :class="$vuetify.breakpoint.smAndDown ? 'ma-2' : 'ma-5'"
             style="font-size: 16px; font-weight: 600"
           >
             Customer Details
           </div>
           <div class="d-flex">
-            <div class="ml-5 mt-3">
+            <div
+              class="mt-3"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : 'ml-5'"
+            >
               <!--<div class="d-flex align-start justify-start fonts">
                 distributor
               </div>-->
@@ -56,19 +60,30 @@
                 <b> Customer Name:</b>
                 <b class="ml-2">{{ getSingleReceipt.customer_name }}</b>
               </div>
-              <div class="d-flex align-start justify-start fonts">
-                <b> Customer Phone#:</b>
+              <div
+                class="d-flex align-start justify-start fonts"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-n0' : ''"
+              >
+                <b :class="$vuetify.breakpoint.smAndDown ? '' : ''">
+                  Customer Phone#:</b
+                >
                 <b class="ml-2">
                   {{ getSingleReceipt.customer_phone_number }}</b
                 >
               </div>
-              <div class="d-flex align-start justify-start fonts">
+              <div
+                class="d-flex align-start justify-start fonts"
+                :class="$vuetify.breakpoint.smAndDown ? 'mr-15' : ''"
+              >
                 <b> Customer Address:</b>
                 <b class="ml-2">{{ getSingleReceipt.customer_address }}</b>
               </div>
             </div>
             <v-spacer></v-spacer>
-            <div class="mr-8 mt-3">
+            <div
+              class="mt-3"
+              :class="$vuetify.breakpoint.smAndDown ? 'mr-1' : 'mr-8'"
+            >
               <div class="font-weight-bold">Transaction Id</div>
 
               00000{{ getSingleReceipt.transaction_id }}
@@ -170,7 +185,7 @@
               </div>
             </div>
           </div>
-          <br><br>
+          <br /><br />
           <div
             class="d-flex align-center justify-center no-print"
             style="margin-top: 10rem"

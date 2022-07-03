@@ -35,7 +35,7 @@
     </div>
     <div>
       <v-row class="ma-5">
-        <v-col cols="3" sm="12" md="3">
+        <v-col lg="3" sm="12" md="3">
           <div class="mt-3">
             <v-data-table
               :loading="loading1"
@@ -47,6 +47,7 @@
               hide-default-footer
               hide-default-header
               height="300px"
+              :mobile-breakpoint="0"
             >
               <template v-slot:[`body.prepend`]="{ headers }">
                 <th
@@ -81,7 +82,7 @@
             </v-data-table>
           </div>
         </v-col>
-        <v-col cols="3" sm="12" md="3">
+        <v-col lg="3" sm="12" md="3">
           <div class="mt-3">
             <v-data-table
               :loading="loading2"
@@ -93,6 +94,7 @@
               hide-default-footer
               hide-default-header
               height="300px"
+              :mobile-breakpoint="0"
             >
               <template v-slot:[`body.prepend`]="{ headers }">
                 <th
@@ -127,7 +129,7 @@
             </v-data-table>
           </div>
         </v-col>
-        <v-col cols="3" sm="12" md="3">
+        <v-col lg="3" sm="12" md="3">
           <div class="mt-3">
             <v-data-table
               :loading="loading3"
@@ -139,6 +141,7 @@
               hide-default-footer
               hide-default-header
               height="300px"
+              :mobile-breakpoint="0"
             >
               <template v-slot:[`body.prepend`]="{ headers }">
                 <th
@@ -173,7 +176,7 @@
             </v-data-table>
           </div>
         </v-col>
-        <v-col cols="3" sm="12" md="3">
+        <v-col lg="3" sm="12" md="3">
           <div class="mt-3">
             <v-data-table
               :loading="loading4"
@@ -185,6 +188,7 @@
               hide-default-footer
               hide-default-header
               height="300px"
+              :mobile-breakpoint="0"
             >
               <template v-slot:[`body.prepend`]="{ headers }">
                 <th

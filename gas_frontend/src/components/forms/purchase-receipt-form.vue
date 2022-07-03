@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="d-flex">
       <v-row>
-        <v-col md="12" lg="12" sm="12">
+        <v-col cols="12" md="12" lg="12" sm="12">
           <div>
             <div
               class="d-flex align-start justify-start"
@@ -19,6 +19,34 @@
             </div>
             <div style="width: 400px" class="pa-8">
               <v-form v-model="valid">
+                <!-- For moble pcture upload-->
+                <div v-if="$vuetify.breakpoint.smAndDown">
+                  <div v-if="decodedBase64 != ''">
+                    <img :src="decodedBase64" height="70" width="80" />
+                    <v-icon @click="decodedBase64 = ''" class="ml-3" size="30"
+                      >mdi-delete-sweep</v-icon
+                    >
+                  </div>
+                  <label for="file-input" v-else>
+                    <img height="100" src="../../assets/images/imageicon.png" />
+                    <input
+                      id="file-input"
+                      type="file"
+                      class="d-none"
+                      @change="onFileChange"
+                    />
+                    <div
+                      style="
+                        text-decoration: underline;
+                        color: #2e3995;
+                        cursor: pointer;
+                      "
+                    >
+                      <b>Add Image</b>
+                    </div>
+                  </label>
+                </div>
+                <!-- Upto here -->
                 <div>
                   <v-text-field
                     label="Date"
@@ -189,8 +217,8 @@
             </div>
           </div>
         </v-col>
-        <v-col md="6" lg="6" sm="12">
-          <div class="myDiv">
+        <v-col md="12" lg="12" sm="12">
+          <div class="myDiv" v-if="!$vuetify.breakpoint.smAndDown">
             <div
               style="
                 height: 300px;

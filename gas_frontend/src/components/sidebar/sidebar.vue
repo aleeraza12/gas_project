@@ -10,7 +10,7 @@
           v-show="$vuetify.breakpoint.smAndDown"
         >
           <v-app-bar-nav-icon
-            @click.stop="drawer = !drawer"
+            @click.stop="mblDrawer = !mblDrawer"
             v-show="$vuetify.breakpoint.smAndDown"
             color="#2b3896"
           ></v-app-bar-nav-icon>
@@ -88,7 +88,7 @@
     <!-- for Moble -->
     <v-navigation-drawer
       class="d-md-none d-block h navaigation-side tests"
-      v-model="drawer"
+      v-model="mblDrawer"
       app
       absolute
       temporary
@@ -96,44 +96,49 @@
       <v-list-item
         class="d-flex align-center justify-center ma-2 ml-0 pl-0 test"
       >
-        <v-list-item-avatar size="40">
-          <img src="../../assets/images/mn.png" class="ml-1"
-        /></v-list-item-avatar>
+        <img
+          src="../../assets/images/side2.png"
+          height="40"
+          width="120"
+          class="ml-1"
+        />
       </v-list-item>
       <v-list dense nav>
-        <v-list-item
-          dense
-          @click="Logout(link)"
-          class="d-flex align-center pl-4 sidebar-item"
-          :class="titleName == link.tabName ? 'selected-route' : ''"
-          v-for="(link, i) in showable_links"
-          :key="i"
-          router
-          @click.stop="mini = !mini"
-          :to="link.route"
-        >
-          <div :id="link.icon">
-            <v-icon
-              class="mr-7 py-4"
-              :color="titleName == link.tabName ? '#2b3896' : link.color"
-              v-text="link.icon"
-              size="19"
-            ></v-icon>
-          </div>
-          <v-tooltip
-            content-class="arrow-left"
-            nudge-right="1"
-            right
-            color="#ffe7b8"
+        <v-list-item-group v-model="group">
+          <v-list-item
+            dense
+            @click="Logout(link)"
+            class="d-flex align-center pl-4 sidebar-item"
+            :class="titleName == link.tabName ? 'selected-route' : ''"
+            v-for="(link, i) in showable_links"
+            :key="i"
+            router
+            @click.stop="mini = !mini"
+            :to="link.route"
           >
-            <span class="black--text"> {{ link.text }} </span>
-          </v-tooltip>
-          <div>
-            <span class="text-capitalize body-2 font-weight-bold">
-              {{ link.text }}
-            </span>
-          </div>
-        </v-list-item>
+            <div :id="link.icon">
+              <v-icon
+                class="mr-7 py-4"
+                :color="titleName == link.tabName ? '#2b3896' : link.color"
+                v-text="link.icon"
+                size="19"
+              ></v-icon>
+            </div>
+            <v-tooltip
+              content-class="arrow-left"
+              nudge-right="1"
+              right
+              color="#ffe7b8"
+            >
+              <span class="black--text"> {{ link.text }} </span>
+            </v-tooltip>
+            <div>
+              <span class="text-capitalize body-2 font-weight-bold">
+                {{ link.text }}
+              </span>
+            </div>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -143,117 +148,119 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 
 export default {
-  data: () => ({
-    drawer: true,
-    titleName: "",
-    user: JSON.parse(localStorage.getItem("user")),
-    start_date: "2021-01-01",
-    end_date: new Date().toISOString().substr(0, 10),
-    group: null,
-
-    links: [
-      {
-        text: "Dashboard",
-        icon: "mdi-view-dashboard",
-        route: "/dashboard",
-        tabName: "Dashboard",
-        color: "#fff",
-      },
-      {
-        text: "Orders",
-        icon: "mdi-chart-line",
-        route: "/orders",
-        tabName: "Orders",
-        color: "#fff",
-      },
-      {
-        text: "Companies",
-        icon: "mdi-home-modern",
-        route: "/companies",
-        tabName: "Companies",
-        color: "#fff",
-      },
-      {
-        text: "Sales",
-        icon: "mdi-cart-outline",
-        route: "/sales",
-        tabName: "Sales",
-        color: "#fff",
-      },
-      {
-        text: "Purchases",
-        icon: "mdi-shopping",
-        route: "/purchases",
-        tabName: "Purchases",
-        color: "#fff",
-      },
-      {
-        text: "Customers",
-        icon: "mdi-account-multiple-outline",
-        route: "/customers",
-        tabName: "Customers",
-        color: "#fff",
-      },
-      {
-        text: "Users",
-        icon: "mdi-account-outline",
-        route: "/users",
-        tabName: "Users",
-        color: "#fff",
-      },
-      {
-        text: "Wallet",
-        icon: "mdi-credit-card",
-        route: "/wallet",
-        tabName: "Wallet",
-        color: "#fff",
-      },
-      {
-        text: "Reconciliation",
-        icon: "mdi-trackpad",
-        route: "/reconcilation",
-        tabName: "Reconciliation",
-        color: "#fff",
-      },
-      {
-        text: "Settings",
-        icon: "mdi-cog",
-        route: "/settings",
-        tabName: "Settings",
-        color: "#fff",
-      },
-      {
-        text: "Promos",
-        icon: "mdi-cash-multiple",
-        route: "/promos",
-        tabName: "Promos",
-        color: "#fff",
-      },
-      {
-        text: "Rate List",
-        icon: "mdi-cash",
-        route: "/rate_list",
-        tabName: "Rate List",
-        color: "#fff",
-      },
-      {
-        text: "AdminSettings",
-        icon: "mdi-cog",
-        route: "/admin-settings",
-        tabName: "AdminSettings",
-        color: "#fff",
-      },
-      {
-        text: "Logout",
-        icon: "mdi-logout",
-        route: "/logout",
-        tabName: "Logout",
-        color: "#fff",
-      },
-    ],
-    mini: false,
-    showable_links: [],
-  }),
+  data() {
+    return {
+      drawer: true,
+      mblDrawer: false,
+      titleName: "",
+      user: JSON.parse(localStorage.getItem("user")),
+      start_date: "2021-01-01",
+      end_date: new Date().toISOString().substr(0, 10),
+      group: null,
+      links: [
+        {
+          text: "Dashboard",
+          icon: "mdi-view-dashboard",
+          route: "/dashboard",
+          tabName: "Dashboard",
+          color: "#fff",
+        },
+        {
+          text: "Orders",
+          icon: "mdi-chart-line",
+          route: "/orders",
+          tabName: "Orders",
+          color: "#fff",
+        },
+        {
+          text: "Companies",
+          icon: "mdi-home-modern",
+          route: "/companies",
+          tabName: "Companies",
+          color: "#fff",
+        },
+        {
+          text: "Sales",
+          icon: "mdi-cart-outline",
+          route: "/sales",
+          tabName: "Sales",
+          color: "#fff",
+        },
+        {
+          text: "Purchases",
+          icon: "mdi-shopping",
+          route: "/purchases",
+          tabName: "Purchases",
+          color: "#fff",
+        },
+        {
+          text: "Customers",
+          icon: "mdi-account-multiple-outline",
+          route: "/customers",
+          tabName: "Customers",
+          color: "#fff",
+        },
+        {
+          text: "Users",
+          icon: "mdi-account-outline",
+          route: "/users",
+          tabName: "Users",
+          color: "#fff",
+        },
+        {
+          text: "Wallet",
+          icon: "mdi-credit-card",
+          route: "/wallet",
+          tabName: "Wallet",
+          color: "#fff",
+        },
+        {
+          text: "Reconciliation",
+          icon: "mdi-trackpad",
+          route: "/reconcilation",
+          tabName: "Reconciliation",
+          color: "#fff",
+        },
+        {
+          text: "Settings",
+          icon: "mdi-cog",
+          route: "/settings",
+          tabName: "Settings",
+          color: "#fff",
+        },
+        {
+          text: "Promos",
+          icon: "mdi-cash-multiple",
+          route: "/promos",
+          tabName: "Promos",
+          color: "#fff",
+        },
+        {
+          text: "Rate List",
+          icon: "mdi-cash",
+          route: "/rate_list",
+          tabName: "Rate List",
+          color: "#fff",
+        },
+        {
+          text: "AdminSettings",
+          icon: "mdi-cog",
+          route: "/admin-settings",
+          tabName: "AdminSettings",
+          color: "#fff",
+        },
+        {
+          text: "Logout",
+          icon: "mdi-logout",
+          route: "/logout",
+          tabName: "Logout",
+          color: "#fff",
+        },
+      ],
+      mini: true,
+      showable_links: [],
+    };
+  },
   components: {},
   created() {},
   mounted() {
@@ -269,7 +276,11 @@ export default {
   computed: {
     ...mapGetters(["getSales", "getUsers"]),
   },
-  watch: {},
+  watch: {
+    group() {
+      this.mblDrawer = false;
+    },
+  },
   methods: {
     setPerimssions() {
       let permissions = JSON.parse(localStorage.getItem("user")).permissions;

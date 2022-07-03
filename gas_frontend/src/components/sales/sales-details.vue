@@ -1,6 +1,10 @@
 <template>
   <div class="main-container">
-    <div class="sales-details-page pa-6">
+    <div
+      class="sales-details-page pa-6"
+      :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : ''"
+      :style="$vuetify.breakpoint.smAndDown ? 'width: 85%' : ''"
+    >
       <div class="d-flex">
         <div @click="goToSales()">
           <v-icon class="ml-3 mt-5"> mdi-close</v-icon>
@@ -23,7 +27,7 @@
       </div>
       <v-divider></v-divider>
       <div class="d-flex mt-5">
-        <div class="ml-10">
+        <div :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : 'ml-10'">
           <v-chip
             dense
             label
@@ -35,7 +39,10 @@
           </v-chip>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-10 fonts">
+        <div
+          class="fonts"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-1' : 'mr-10'"
+        >
           <div>
             <b>{{ getDate(getSingleReceipt.created_at) }}</b>
           </div>
@@ -43,13 +50,17 @@
         </div>
       </div>
       <div
-        class="d-flex align-start justify-start ml-5 mt-10"
+        class="d-flex align-start justify-start mt-10"
+        :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : 'ml-5'"
         style="font-size: 16px; font-weight: 600"
       >
         Customer Info
       </div>
-      <div class="d-flex">
-        <div class="ml-5 mt-5">
+      <div
+        class="d-flex"
+        :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : 'ml-5'"
+      >
+        <div class="mt-5">
           <div class="d-flex align-start justify-start fonts">
             {{ getSingleReceipt.customer_type }}
           </div>
@@ -64,18 +75,27 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-5">
+        <div
+          class="mt-5"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-1' : 'mr-8'"
+        >
           <div class="fonts">Transaction Id</div>
           <div class="fonts font-weight-bold">
             {{ getSingleReceipt.transaction_id }}
           </div>
         </div>
       </div>
-      <div class="mt-5 ml-5 d-flex justify-start align-start">
+      <div
+        class="mt-5 d-flex justify-start align-start"
+        :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : 'ml-5'"
+      >
         <b>Sales Info</b>
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-5">
+        <div
+          class="mt-5"
+          :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : 'ml-5'"
+        >
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price: &nbsp;</b></div>
             <div class="fonts">N{{ getSingleReceipt.price }}</div>
@@ -95,7 +115,10 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-5">
+        <div
+          class="mt-5"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-1' : 'mr-8'"
+        >
           <div class="fonts">
             Gas Quantity:&nbsp;{{ getSingleReceipt.gas_quantity }}
           </div>
@@ -145,8 +168,11 @@
             dense
             outlined
             small
+            :style="
+              $vuetify.breakpoint.smAndDown ? 'width: 70px' : 'width: 150px'
+            "
             class="mt-5 mb-10 text-capitalize"
-            style="border-color: #464646; width: 150px; border-radius: 20px"
+            style="border-color: #464646; border-radius: 20px"
             @click="updateSale()"
           >
             Edit
@@ -157,7 +183,10 @@
             dense
             outlined
             small
-            style="width: 150px; border-radius: 20px"
+            :style="
+              $vuetify.breakpoint.smAndDown ? 'width: 70px' : 'width: 150px'
+            "
+            style="border-radius: 20px"
             class="mt-5 ml-2 mb-10 text-capitalize"
             color="red"
             @click="dialog = true"
@@ -334,13 +363,13 @@ export default {
 .btn-create {
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 310px !important;
+  min-width: 70% !important;
   border-radius: 20px !important;
   cursor: pointer;
 }
 .sales-details-page {
   height: 770px;
-  width: 600px;
+  width: 45%;
   background-color: #ebebea;
   margin-left: 12rem;
 }

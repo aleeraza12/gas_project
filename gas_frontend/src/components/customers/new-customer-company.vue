@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <v-row>
-      <v-col md="6" lg="6" xl="6">
+      <v-col md="6" lg="6" xl="6" sm="12">
         <div
           @click="goToCustomerListings()"
           class="d-flex align-start justify-start pointer"
@@ -12,6 +12,43 @@
         <div class="mt-3">
           <div class="d-flex align-center justify-center">
             <b>Update Company Data</b>
+          </div>
+          <!-- for moble phone -->
+          <div v-if="$vuetify.breakpoint.smAndDown">
+            <div
+              v-if="decodedBase64 == ''"
+              class="d-flex justify-center align-center"
+              style="margin-top: 3rem; margin-left: 4rem"
+            >
+              <img
+                src="../../assets/images/circle.png"
+                height="150"
+                style="position: absolute"
+              />
+              <img
+                src="../../assets/images/imageicon.png"
+                height="100"
+                style="position: relative"
+              />
+            </div>
+            <div v-else class="d-flex justify-center align-center">
+              <v-avatar size="136px">
+                <img :src="decodedBase64" alt="John" />
+              </v-avatar>
+            </div>
+            <div style="margin-top: 1rem">
+              <label for="file-input">
+                <b style="text-decoration: underline" class="pointer"
+                  >Change Image</b
+                >
+                <input
+                  id="file-input"
+                  type="file"
+                  class="d-none"
+                  @change="onFileChange"
+                />
+              </label>
+            </div>
           </div>
           <div class="d-flex align-start justify-start fonts mt-1">
             <div class="mt-6">
@@ -27,7 +64,10 @@
                     placeholder="Owners Full Name"
                     hide-details
                     :rules="nameRules"
-                    class="username-feild mt-2 ml-16"
+                    class="username-feild mt-2"
+                    :class="
+                      $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                    "
                     v-model="owners_name"
                   ></v-text-field>
                 </div>
@@ -39,7 +79,10 @@
                     placeholder="Company Name"
                     :rules="nameRules"
                     hide-details
-                    class="username-feild mt-2 ml-16"
+                    class="username-feild mt-2"
+                    :class="
+                      $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                    "
                     v-model="company_name"
                   ></v-text-field>
                 </div>
@@ -51,7 +94,10 @@
                     placeholder="You can not change your email address"
                     label="You can not change your email address"
                     hide-details="auto"
-                    class="username-feild mt-2 ml-16"
+                    class="username-feild mt-2"
+                    :class="
+                      $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                    "
                     v-model="email_address"
                     readonly
                   ></v-text-field>
@@ -64,7 +110,10 @@
                     placeholder="Phone Number"
                     :rules="nameRules"
                     hide-details
-                    class="username-feild mt-2 ml-16"
+                    class="username-feild mt-2"
+                    :class="
+                      $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                    "
                     v-model="phone_number"
                   ></v-text-field>
                 </div>
@@ -76,7 +125,10 @@
                     :rules="nameRules"
                     placeholder="Address"
                     hide-details
-                    class="username-feild mt-2 ml-16"
+                    class="username-feild mt-2"
+                    :class="
+                      $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                    "
                     v-model="address"
                   ></v-text-field>
                 </div>
@@ -90,7 +142,10 @@
                       placeholder="City"
                       :rules="nameRules"
                       hide-details
-                      class="city-feild mt-2 ml-16"
+                      class="city-feild mt-2"
+                      :class="
+                        $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                      "
                       v-model="city"
                     ></v-text-field>
                   </div>
@@ -105,6 +160,7 @@
                       :items="getAllStates"
                       :rules="nameRules"
                       label="State"
+                      class="username-feild"
                       outlined
                       dense
                     ></v-select>
@@ -124,11 +180,17 @@
                     placeholder="Password"
                     :rules="nameRules"
                     hide-details
-                    class="password-feild ml-16 mt-2"
+                    class="password-feild mt-2"
+                    :class="
+                      $vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'
+                    "
                     v-model="password"
                   ></v-text-field>
                 </div>
-                <div class="mt-5 ml-16">
+                <div
+                  class="mt-5"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'"
+                >
                   <v-btn
                     block
                     large
@@ -136,6 +198,7 @@
                     :loading="loading"
                     :disabled="!valid"
                     @click="updateCompany()"
+                    :class="$vuetify.breakpoint.smAndDown ? 'small' : 'large'"
                     dense
                   >
                     Update Account
@@ -164,7 +227,7 @@
           </div>
         </div>
       </v-col>
-      <v-col md="6" lg="6" xl="6">
+      <v-col md="6" lg="6" xl="6" v-if="!$vuetify.breakpoint.smAndDown">
         <div class="pa-5" style="background-color: #eff0fa; height: 100vh">
           <div class="d-flex justify-start align-start mt-5">
             <b>Company Profile</b>
@@ -502,7 +565,7 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 400px;
+  width: 85%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
@@ -512,7 +575,7 @@ export default {
   border-radius: 8px;
 }
 .password-feild {
-  width: 400px;
+  width: 85%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }

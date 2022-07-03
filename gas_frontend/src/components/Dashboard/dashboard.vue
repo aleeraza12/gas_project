@@ -24,7 +24,10 @@
 
       <v-spacer></v-spacer>
       <div v-if="!loggedinUser.is_super_admin">
-        <div class="row display-end mr-7 mt-2">
+        <div
+          class="row display-end mt-2"
+          :class="$vuetify.breakpoint.smAndDown ? 'ml-9' : 'mr-7'"
+        >
           <div style="font-size: 16px" class="text-amount-color">
             Current gas price
           </div>
@@ -49,7 +52,10 @@
           </div>
         </div>
         <br />
-        <div class="d-flex justify-end align-end mr-7">
+        <div
+          class="d-flex justify-end align-end"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-n3' : 'mr-8'"
+        >
           <div class="row">
             <v-skeleton-loader
               v-if="priceLoader"
@@ -57,36 +63,72 @@
             ></v-skeleton-loader>
             <div class="col" v-else-if="!priceLoader">
               <b
-                style="font-size: 22px"
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'font-size: 12px'
+                    : 'font-size: 22px'
+                "
                 class="text-amount-color"
                 v-if="getPrice.household_user"
                 >N{{ getPrice.household_user.price_per_twenty_million_ton }}</b
               >
-              <b style="font-size: 22px" class="text-amount-color ml-10" v-else
+              <b
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'font-size: 12px'
+                    : 'font-size: 22px'
+                "
+                class="text-amount-color"
+                v-else
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-10'"
                 >N0</b
               >
               <h5>Household User</h5>
             </div>
             <div class="col">
               <b
-                style="font-size: 22px"
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'font-size: 12px'
+                    : 'font-size: 22px'
+                "
                 class="text-amount-color"
                 v-if="getPrice.retailor"
                 >N{{ getPrice.retailor.price_per_twenty_million_ton }}</b
               >
-              <b style="font-size: 22px" class="text-amount-color ml-10" v-else
+              <b
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'font-size: 12px'
+                    : 'font-size: 22px'
+                "
+                class="text-amount-color"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-10'"
+                v-else
                 >N0</b
               >
               <h5>Retailor</h5>
             </div>
             <div class="col">
               <b
-                style="font-size: 22px"
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'font-size: 12px'
+                    : 'font-size: 22px'
+                "
                 class="text-amount-color"
                 v-if="getPrice.distributor"
                 >N{{ getPrice.distributor.price_per_twenty_million_ton }}</b
               >
-              <b style="font-size: 22px" class="text-amount-color ml-10" v-else
+              <b
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'font-size: 12px'
+                    : 'font-size: 22px'
+                "
+                class="text-amount-color"
+                v-else
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-10'"
                 >N0</b
               >
               <h5>Distributor</h5>
@@ -191,6 +233,7 @@
         :search="search"
         :loading="tableloading"
         hide-default-header
+        :mobile-breakpoint="0"
       >
         <template v-slot:[`body.prepend`]="{ headers }">
           <th v-for="(header, i) in headers" :key="'A' + i" class="table-head">
@@ -476,7 +519,7 @@ export default {
 .searchbar {
   border-radius: 10px;
   background-color: white !important;
-  width: 500px;
+  width: 100%;
 }
 .table-head {
   background: #eff0fa;

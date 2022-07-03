@@ -193,7 +193,6 @@
                 margin-top: 13rem;
               "
               class="pa-10 ml-16"
-              :class="$vuetify.breakpoint.smAndDown ? 'mt-1' : ''"
             >
               <v-form v-model="valid1">
                 <div class="pa-2">

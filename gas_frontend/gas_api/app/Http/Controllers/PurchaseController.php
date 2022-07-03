@@ -78,7 +78,9 @@ class PurchaseController extends Controller
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
             $transaction = Transaction::where('type', 'purchase')->where('outer_id', $request->company_id)->first();
             $purchase['transaction_id'] =  @$transaction->id;
-            $purchase['created_company_name'] = Company::find($purchase->company_id)->company_name;
+            $company = Company::find($purchase->company_id);
+            $purchase['created_company_name'] = $company->company_name;
+            $purchase['company_address'] = $company->address;
         }
         return response()->json(['response' => $purchases, 'status' => 200]);
     }

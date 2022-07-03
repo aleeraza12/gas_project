@@ -1,6 +1,10 @@
 <template>
   <div class="main-container">
-    <div class="sales-details-page mb-5">
+    <div
+      class="sales-details-page mb-5"
+      :class="$vuetify.breakpoint.smAndDown ? 'ml-1' : ''"
+      :style="$vuetify.breakpoint.smAndDown ? 'width: 85%' : ''"
+    >
       <div class="d-flex">
         <div @click="goToPurchases()">
           <v-icon class="ml-3 mt-5"> mdi-close</v-icon>
@@ -17,7 +21,12 @@
             (getSinglePurchase.receipt_attachment_path === null &&
               decodedBase64 === '')
           "
-          style="height: 150px; width: 150px; background-color: #c4c4c4"
+          :style="
+            $vuetify.breakpoint.smAndDown
+              ? 'height: 100px; width: 100px'
+              : 'height: 150px; width: 150px'
+          "
+          style="background-color: #c4c4c4"
         ></div>
         <img
           v-else
@@ -45,7 +54,7 @@
       </div>
 
       <div class="d-flex mt-5">
-        <div class="ml-10">
+        <div :class="$vuetify.breakpoint.smAndDown ? 'ml-3' : 'ml-10'">
           <v-chip
             dense
             label
@@ -57,21 +66,28 @@
           </v-chip>
         </div>
         <v-spacer></v-spacer>
-        <!-- <div class="mr-10 fonts">
+        <div
+          class="fonts"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-3' : 'mr-8'"
+        >
           <div>
             <b>{{ getDate(getSinglePurchase.date) }}</b>
           </div>
           <div>{{ getTme(getSinglePurchase.date) }}</div>
-        </div> -->
+        </div>
       </div>
       <div
-        class="d-flex align-start justify-start ml-5 mt-10"
+        class="d-flex align-start justify-start mt-10"
         style="font-size: 16px; font-weight: 600"
+        :class="$vuetify.breakpoint.smAndDown ? 'ml-3' : 'ml-5'"
       >
         Company Info
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-5">
+        <div
+          class="mt-5"
+          :class="$vuetify.breakpoint.smAndDown ? 'ml-3' : 'ml-5'"
+        >
           <div class="d-flex align-start justify-start">
             <b>{{ getSinglePurchase.company_name }}</b>
           </div>
@@ -79,20 +95,29 @@
             {{ getSinglePurchase.company_phone_number }}
           </div>
           <div class="d-flex align-start justify-start fonts">
-            office no abc , nowrelad activty sometec howdy
+            {{ getSinglePurchase.company_address }}
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-5">
+        <div
+          class="mt-5"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-3' : 'mr-8'"
+        >
           <div class="fonts">Transaction Id</div>
           <div class="fonts">{{ getSinglePurchase.receipt_number }}</div>
         </div>
       </div>
-      <div class="mt-5 ml-5 d-flex align-start justify-start">
+      <div
+        class="mt-5 d-flex align-start justify-start"
+        :class="$vuetify.breakpoint.smAndDown ? 'ml-3' : 'ml-5'"
+      >
         <b>Purchase Info</b>
       </div>
       <div class="d-flex">
-        <div class="ml-5 mt-5">
+        <div
+          class="mt-5"
+          :class="$vuetify.breakpoint.smAndDown ? 'ml-3' : 'ml-5'"
+        >
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price:&nbsp;</b></div>
             <div class="fonts">N{{ getSinglePurchase.unit_price }}</div>
@@ -107,7 +132,10 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-3">
+        <div
+          class="mt-7"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-4' : 'mr-8'"
+        >
           <div class="row">
             <div class="fonts">Gas Quanity:&nbsp;</div>
             <div class="fonts_">{{ getSinglePurchase.gas_quantity }}</div>
@@ -129,12 +157,18 @@
         </div>
       </div>
 
-      <div class="mt-5 ml-5 d-flex align-start justify-start">
+      <div
+        class="mt-5 d-flex align-start justify-start"
+        :class="$vuetify.breakpoint.smAndDown ? 'ml-3' : 'ml-5'"
+      >
         <div class="fonts">Driver's Name:&nbsp;</div>
         <div class="fonts_">N{{ getSinglePurchase.driver_name }}</div>
 
         <v-spacer></v-spacer>
-        <div class="mr-8 mt-3">
+        <div
+          class="mt-3"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-4' : 'mr-8'"
+        >
           <div class="row">
             <div class="fonts">Recepient By:&nbsp;</div>
             <div class="fonts_">{{ getSinglePurchase.recepient_name }}</div>
@@ -205,7 +239,10 @@
             small
             class="mt-5 mb-10 text-capitalize"
             @click="updatePurchase()"
-            style="border-color: #464646; width: 150px; border-radius: 20px"
+            :style="
+              $vuetify.breakpoint.smAndDown ? 'width: 70px' : 'width: 150px'
+            "
+            style="border-color: #464646; border-radius: 20px"
           >
             Edit
           </v-btn>
@@ -215,7 +252,10 @@
             dense
             outlined
             small
-            style="width: 150px; border-radius: 20px"
+            style="border-radius: 20px"
+            :style="
+              $vuetify.breakpoint.smAndDown ? 'width: 70px' : 'width: 150px'
+            "
             class="mt-5 ml-2 mb-10 text-capitalize"
             color="red"
             @click="dialog = true"
@@ -441,13 +481,14 @@ export default {
   background-color: #2e3995 !important;
   color: #fff;
   min-height: 30px;
-  min-width: 310px !important;
+  min-width: 55% !important;
   border-radius: 20px !important;
   cursor: pointer;
 }
 .sales-details-page {
   /* height: 100vh; */
-  width: 600px;
+
+  width: 45%;
   background-color: #ebebea;
   margin-left: 12rem;
 }
