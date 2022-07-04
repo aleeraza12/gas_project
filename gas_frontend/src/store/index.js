@@ -8,7 +8,8 @@ Vue.use(Vuex);
 
 const store = {
   state: {
-    url: "https://gas.api.reverbsoft.com/api/",
+    //url: "https://gas.api.reverbsoft.com/api/",
+    url: "http://127.0.0.1:8000/api/",
     sales: [],
     customers: [],
     purchases: [],
@@ -34,6 +35,7 @@ const store = {
     wallets: [],
     promos: [],
     rates: [],
+    scroll_able_prices: [],
     date: "",
     recovery_mail: "",
   },
@@ -52,6 +54,7 @@ const store = {
     getAllDepos: (state) => state.depos,
     getAllOrders: (state) => state.orders,
     getRecoveryMail: (state) => state.recovery_mail,
+    getScrollablePrice: (state) => state.scroll_able_prices,
     //settngs
     getAllCustomerTypesSettings: (state) => state.customer_types_settings,
     getAllUserTypesSettings: (state) => state.user_types_settings,
@@ -102,6 +105,7 @@ const store = {
     SET_VIEW_PURCHASE: (state, payload) =>
       (state.view_single_purchase = payload),
     SET_RECOVERY_EMAIL: (state, payload) => (state.recovery_mail = payload),
+    SET_PRICE_SCROLL: (state, payload) => (state.scroll_able_prices = payload),
   },
   actions: {
     //Wallet     &
@@ -334,6 +338,17 @@ const store = {
         if (response.data.status == 200) {
           context.commit("SET_PRICE", response.data.response);
           eventBus.$emit("priceResponseArrived");
+        }
+      });
+    },
+
+    //Gas price
+    getDepoForScroll(context, data) {
+      console.log(data);
+      let requestBody = {};
+      RequestService.post("depo/read", requestBody).then((response) => {
+        if (response.data.status == 200) {
+          context.commit("SET_PRICE_SCROLL", response.data.response);
         }
       });
     },

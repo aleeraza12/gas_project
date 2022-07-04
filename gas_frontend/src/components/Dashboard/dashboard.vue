@@ -142,16 +142,22 @@
     </div>
 
     <div>
-      <vue-horizontal-list :items="getRates" :options="options2">
-        <template v-slot:default="{getRate}">
+      <vue-horizontal-list :items="getScrollablePrice" :options="options">
+        <template v-slot:default="{ item }">
           <div>
-            <div class="Banner background-image ptb-48 p-32 border-4">
-              <div class="flex-center">
-                <div class="flex-column-align-center white text-center">
-                  <h1>{{getRate}}</h1>
-                  <p>Why the text above is important</p>
-                </div>
-              </div>
+            <div
+              class="item"
+              style="
+                height: 20px;
+                background-color: #f9b224;
+                margin-bottom: 2px;
+                margin-top: -2px;
+              "
+            >
+              <h5 style="margin-top: -14px">
+                {{ item.depo_name }}, {{ item.location }}
+              </h5>
+              <p>{{ item.price_per_twenty_million_ton }}</p>
             </div>
           </div>
         </template>
@@ -367,7 +373,7 @@ export default {
     location: "",
     depo_name: "",
     search: "",
-    items: [0,1,2,3,4,5,6,7,8,9],
+    items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
@@ -392,56 +398,21 @@ export default {
       { text: "Payment Mode", value: "payment_mode" },
       { text: "View Details", value: "actions", sortable: false },
     ],
-    options2 : {
-  getRates: {
-  },
-  list: {
-    // css class for the parent of item
-    class: "",
-    // maximum width of the list it can extend to before switching to windowed mode, basically think of the bootstrap container max-width
-    // windowed is used to toggle between full-screen mode and container mode
-    windowed: 1200,
-    // padding of the list, if container < windowed what is the left-right padding of the list
-    // during full-screen mode the padding will added to left & right to centralise the item
-    padding: 24,
-  },
-  responsive: [
-    // responsive breakpoints to calculate how many items to show in the list at each width interval
-    // it will always fall back to these:
-    { end: 576, size: 1 },
-    { start: 576, end: 768, size: 2 },
-    { start: 768, end: 992, size: 3 },
-    { start: 992, end: 1200, size: 4 },
-    { start: 1200, size: 5 },
-  ],
-  navigation: {
-    // when to show navigation
-    // start: 992,
-    // color: "#000",
-  },
-  position: {
-    // Start from '1' on mounted.
-    start: 1,
-  },
-  autoplay: {
-    // enable/disable playing slideshow
-    play: true,
-    // the delay duration between slides in milliseconds
-    speed: 1800,
-    // if setup, the slideshow will be in the loop.
-    repeat: true,
-  },
-}
+    options: {
+      autoplay: { play: true, repeat: true, speed: 3000 },
+    },
   }),
   components: {
     datePicker,
-    VueHorizontalList
+    VueHorizontalList,
   },
 
   mounted() {
     this.getOrderListing([this.start_date, this.end_date]);
     this.$store.dispatch("getCurrentPrice");
     this.$store.dispatch("getDashboardStats");
+    this.$store.dispatch("getDashboardStats");
+    this.$store.dispatch("getDepoForScroll");
     this.$store.commit("setSelectedDateRange", "All");
     this.depo_name = this.loggedinUser.company_name;
     this.location = this.loggedinUser.address;
@@ -457,7 +428,7 @@ export default {
       "getPrice",
       "getDashboardData",
       "getAllOrders",
-      "getRates"
+      "getScrollablePrice",
     ]),
   },
   watch: {},
@@ -519,6 +490,7 @@ export default {
           this.loading = false;
           this.isModal = false;
           this.$store.dispatch("getCurrentPrice");
+          this.$store.dispatch("getDepoForScroll");
         })
         .catch((err) => {
           if (err.response) {
