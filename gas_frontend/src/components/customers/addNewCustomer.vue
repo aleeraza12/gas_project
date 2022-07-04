@@ -8,10 +8,10 @@
       <span style="color: #2e3995">Back</span>
     </div>
     <div class="mt-3">
-      <div class="d-flex align-start justify-start">
+      <div class="d-flex align-start justify-start ml-3">
         <b>{{ customerText }} Customer</b>
       </div>
-      <div class="d-flex align-start justify-start fonts mt-1">
+      <div class="d-flex align-start justify-start fonts mt-1 ml-3">
         <div class="mt-6">
           <div class="d-flex align-start justify-start">
             <b>New Customer</b>

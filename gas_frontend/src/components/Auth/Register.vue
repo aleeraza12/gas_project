@@ -23,8 +23,34 @@
               >
             </div>
           </div>
-          <v-form v-model="valid" class="mt-10">
-            <div>
+
+          <v-form v-model="valid">
+            <div
+              style="position: absolute"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img
+                src="../../assets/images/sidePic.png"
+                width="400px"
+                max-width="400px"
+                min-width="400px"
+                style="max-height: 30vh"
+              />
+            </div>
+            <div
+              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img src="../../assets/images/side2.png" />
+            </div>
+            <div
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'"
+              :style="
+                $vuetify.breakpoint.smAndDown
+                  ? 'margin-top:40%'
+                  : 'margin-top:4rem'
+              "
+            >
               <v-text-field
                 label="Owners Full Name"
                 outlined
@@ -37,7 +63,7 @@
                 v-model="owners_name"
               ></v-text-field>
             </div>
-            <div>
+            <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
                 label="Company Name"
                 outlined
@@ -50,7 +76,7 @@
                 v-model="company_name"
               ></v-text-field>
             </div>
-            <div>
+            <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
                 label="Compnay Email Address"
                 outlined
@@ -63,7 +89,7 @@
                 :rules="emailRules"
               ></v-text-field>
             </div>
-            <div>
+            <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
                 label="Company Phone Number"
                 outlined
@@ -76,7 +102,7 @@
                 v-model="phone_number"
               ></v-text-field>
             </div>
-            <div>
+            <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
                 label="Address"
                 outlined
@@ -89,7 +115,10 @@
                 v-model="address"
               ></v-text-field>
             </div>
-            <div class="d-flex">
+            <div
+              class="d-flex"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'"
+            >
               <div>
                 <v-text-field
                   label="City"
@@ -103,7 +132,7 @@
                   v-model="city"
                 ></v-text-field>
               </div>
-              <div class="mt-2 ml-2" style="width: 240px">
+              <div class="mt-2 ml-2" style="width: 50%">
                 <v-select
                   v-model="state"
                   :items="getAllStates"
@@ -115,7 +144,7 @@
                 ></v-select>
               </div>
             </div>
-            <div>
+            <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
                 outlined
                 :append-icon="show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
@@ -131,7 +160,7 @@
                 v-model="password"
               ></v-text-field>
             </div>
-            <div>
+            <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
                 outlined
                 :append-icon="show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
@@ -161,7 +190,7 @@
                 :disabled="!valid"
                 @click="createAccount()"
                 dense
-                :class="$vuetify.breakpoint.smAndDown ? 'ml-n12' : ''"
+                :class="$vuetify.breakpoint.smAndDown ? 'ml-n16' : ''"
               >
                 Create Account
               </v-btn>
@@ -363,7 +392,7 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 400px;
+  width: 85%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
@@ -373,7 +402,7 @@ export default {
   border-radius: 8px;
 }
 .password-feild {
-  width: 400px;
+  width: 85%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }

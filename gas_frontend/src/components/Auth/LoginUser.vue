@@ -20,16 +20,44 @@
               <span>Sign in to access your dashboard</span>
             </div>
           </div>
-          <div class="login-screen">
+
+          <!-- For laptop -->
+          <div
+            class="login-screen"
+            :class="$vuetify.breakpoint.smAndDown ? 'ml-0' : ''"
+          >
+            <div
+              style="position: absolute"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img
+                src="../../assets/images/sidePic.png"
+                width="400px"
+                max-width="400px"
+                min-width="400px"
+                style="max-height: 30vh"
+              />
+            </div>
+            <div
+              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img src="../../assets/images/side2.png" />
+            </div>
             <div
               class="sign-in-content d-flex align-start justify-start"
-              :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : ''"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : ''"
+              :style="
+                $vuetify.breakpoint.smAndDown
+                  ? 'margin-top: 10rem'
+                  : ' margin-top: 6rem'
+              "
             >
               Sign In
             </div>
             <div
               class="sign-in-subcontent d-flex align-start justify-start"
-              :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : ''"
+              :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : ''"
             >
               Enter your username and password
             </div>
@@ -43,7 +71,10 @@
                   hide-details
                   :rules="emailRules"
                   class="username-feild mt-6"
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : 'ml-16'"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : 'ml-16'"
+                  :style="
+                    $vuetify.breakpoint.smAndDown ? 'width:85%' : 'width:60%'
+                  "
                   v-model="email"
                 ></v-text-field>
               </div>
@@ -61,7 +92,10 @@
                   placeholder="Password"
                   hide-details
                   class="password-feild mt-3"
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-5' : 'ml-16'"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : 'ml-16'"
+                  :style="
+                    $vuetify.breakpoint.smAndDown ? 'width:85%' : 'width:60%'
+                  "
                   v-model="password"
                 ></v-text-field>
               </div>
@@ -69,27 +103,36 @@
                 <div
                   class="regster"
                   @click="$router.push('signup')"
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-7' : ''"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-15' : ''"
                 >
                   Register
                 </div>
                 <div
                   @click="forgetPassword()"
                   class="forget-passowrd"
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-15' : ''"
+                  :style="
+                    $vuetify.breakpoint.smAndDown
+                      ? ' margin-left: 10rem;'
+                      : ' margin-left: 16rem;'
+                  "
                 >
                   Forgot Password?
                 </div>
               </div>
               <div class="forget-passowrd mt-3"></div>
-              <div class="mt-10 d-flex align-center justify-center">
+              <div class="mt-10 d-flex align-start justify-start">
                 <v-btn
                   small
                   class="elevation-0 btn-login"
                   @click="login()"
                   :loading="loading"
                   dense
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-8' : ''"
+                  :style="
+                    $vuetify.breakpoint.smAndDown
+                      ? 'margin-left: 8rem'
+                      : 'margin-left: 8rem'
+                  "
+                  :class="$vuetify.breakpoint.smAndDown ? 'x-small' : 'small'"
                 >
                   Sign In
                 </v-btn>
@@ -260,7 +303,6 @@ export default {
   font-weight: 600;
   font-size: 18px;
   color: black;
-  margin-top: 6rem;
   margin-left: 4.5rem;
 }
 .sign-in-subcontent {
@@ -271,12 +313,10 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 60vh;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
 .password-feild {
-  width: 60vh;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
@@ -284,7 +324,6 @@ export default {
   font-size: 12px;
   color: black;
   font-weight: 500;
-  margin-left: 16rem;
   cursor: pointer;
 }
 .regster {
@@ -297,9 +336,8 @@ export default {
 .btn-login {
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 200px !important;
+  min-width: 30% !important;
   border-radius: 20px !important;
   cursor: pointer;
-  margin-right: 10rem;
 }
 </style>

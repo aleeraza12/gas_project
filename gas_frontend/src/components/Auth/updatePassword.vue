@@ -19,7 +19,28 @@
               <v-icon color="#2e3995">mdi-chevron-left</v-icon>
               <span style="color: #2e3995">Back</span>
             </div>
-            <div class="sign-in-content d-flex align-start justify-start">
+            <div
+              style="position: absolute"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img
+                src="../../assets/images/sidePic.png"
+                width="400px"
+                max-width="400px"
+                min-width="400px"
+                style="max-height: 30vh"
+              />
+            </div>
+            <div
+              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img src="../../assets/images/side2.png" />
+            </div>
+            <div
+              class="sign-in-content d-flex align-start justify-start"
+              :style="$vuetify.breakpoint.smAndDown ? ' margin-top: 9rem' : ''"
+            >
               Update Password
             </div>
             <div
@@ -41,7 +62,11 @@
                   dense
                   placeholder="Password"
                   hide-details
-                  class="password-feild mt-3 ml-16"
+                  class="password-feild mt-3"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : 'ml-16'"
+                  :style="
+                    $vuetify.breakpoint.smAndDown ? 'width:80%' : 'width:50%'
+                  "
                   v-model="password"
                   :rules="nameRules"
                 ></v-text-field>
@@ -58,8 +83,12 @@
                   dense
                   placeholder="Confirm Password"
                   hide-details
-                  class="password-feild mt-3 ml-16"
+                  class="password-feild mt-3"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : 'ml-16'"
                   v-model="confirm_password"
+                  :style="
+                    $vuetify.breakpoint.smAndDown ? 'width:80%' : 'width:50%'
+                  "
                   :rules="nameRules"
                 ></v-text-field>
               </div>
@@ -230,7 +259,6 @@ export default {
   border-radius: 8px;
 }
 .password-feild {
-  width: 60%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }

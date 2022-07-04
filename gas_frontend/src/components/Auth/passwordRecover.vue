@@ -19,6 +19,24 @@
               <v-icon color="#2e3995">mdi-chevron-left</v-icon>
               <span style="color: #2e3995">Back</span>
             </div>
+            <div
+              style="position: absolute"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img
+                src="../../assets/images/sidePic.png"
+                width="400px"
+                max-width="400px"
+                min-width="400px"
+                style="max-height: 30vh"
+              />
+            </div>
+            <div
+              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              v-show="$vuetify.breakpoint.smAndDown"
+            >
+              <img src="../../assets/images/side2.png" />
+            </div>
             <div class="sign-in-content d-flex align-start justify-start">
               Password Recovery
             </div>
@@ -39,6 +57,9 @@
                   hide-details
                   class="username-feild mt-6"
                   :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : 'ml-16'"
+                  :style="
+                    $vuetify.breakpoint.smAndDown ? 'width:80%' : 'width:60%'
+                  "
                   v-model="email"
                 ></v-text-field>
               </div>
@@ -50,7 +71,11 @@
                   :disabled="!valid || loading"
                   class="elevation-0 btn-login"
                   @click="sendMail(), (loader = 'loading2')"
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-15' : ''"
+                  :style="
+                    $vuetify.breakpoint.smAndDown
+                      ? 'margin-left:8rem'
+                      : 'margin-left:10rem'
+                  "
                   dense
                 >
                   Confirm
@@ -201,7 +226,6 @@ export default {
   margin-left: 4.5rem;
 }
 .username-feild {
-  width: 60%;
   border-color: #d6d6d6;
   border-radius: 8px;
 }
@@ -219,7 +243,7 @@ export default {
 .btn-login {
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 200px !important;
+  min-width: 30% !important;
   cursor: pointer;
   border-radius: 20px !important;
   margin-left: 10rem;

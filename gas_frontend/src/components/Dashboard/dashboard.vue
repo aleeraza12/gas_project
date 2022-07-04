@@ -54,7 +54,7 @@
         <br />
         <div
           class="d-flex justify-end align-end"
-          :class="$vuetify.breakpoint.smAndDown ? 'mr-n3' : 'mr-8'"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-n4' : 'mr-8'"
         >
           <div class="row">
             <v-skeleton-loader
