@@ -7,7 +7,9 @@
             <div style="position: absolute">
               <img src="../../assets/images/sidePic.png" width="630" />
             </div>
-            <div style="position: relative; margin-top: 15rem;margin-right: 5rem;">
+            <div
+              style="position: relative; margin-top: 15rem; margin-right: 5rem"
+            >
               <img src="../../assets/images/side2.png" />
             </div>
           </div>
@@ -25,24 +27,31 @@
             >
               <img
                 src="../../assets/images/sidePic.png"
-                width="400px"
-                max-width="400px"
-                min-width="400px"
-                style="max-height: 30vh"
+                width="212%"
+                max-width="212%"
+                min-width="212%"
+                style="max-height: 35vh; max-width: 212%"
               />
             </div>
             <div
-              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              style="position: relative; margin-top: 20%; margin-left: 5%"
               v-show="$vuetify.breakpoint.smAndDown"
             >
               <img src="../../assets/images/side2.png" />
             </div>
-            <div class="sign-in-content d-flex align-start justify-start">
+            <div
+              class="sign-in-content d-flex align-start justify-start"
+              :style="
+                $vuetify.breakpoint.smAndDown
+                  ? 'margin-left: 8%;margin-top: 40%'
+                  : ''
+              "
+            >
               Password Recovery
             </div>
             <div
               class="sign-in-subcontent d-flex align-start justify-start"
-              :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : ''"
+              :style="$vuetify.breakpoint.smAndDown ? 'margin-left: 8%' : ''"
             >
               Please enter the email adress linked to your account
             </div>

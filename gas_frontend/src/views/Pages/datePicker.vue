@@ -191,7 +191,7 @@ export default {
         this.dateRangeText = "All";
         this.slectedRange = Date_data;
         this.$store.commit("setSelectedDateRange", this.dateRangeText);
-        this.picker = ["2021-01-01", moment().format("YYYY-MM-DD")];
+        this.picker = ["2022-01-01", moment().format("YYYY-MM-DD")];
         this.callselectedDateEmit();
       } else if (Date_data == "custom_range") {
         this.selectedRange = Date_data;

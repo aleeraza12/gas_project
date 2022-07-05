@@ -7,15 +7,30 @@
             <div style="position: absolute">
               <img src="../../assets/images/sidePic.png" width="750" />
             </div>
-            <div style="position: relative; margin-top: 15rem;margin-right: 5rem;">
+            <div
+              style="position: relative; margin-top: 15rem; margin-right: 5rem"
+            >
               <img src="../../assets/images/side2.png" />
             </div>
             <div style="position: relative" class="mt-10">
-              <span style="font-size: 35px; color: #fff;font-weight: 600;margin-right: 3rem;"><b> Hello!</b></span>
+              <span
+                style="
+                  font-size: 35px;
+                  color: #fff;
+                  font-weight: 600;
+                  margin-right: 3rem;
+                "
+                ><b> Hello!</b></span
+              >
             </div>
-             <div
+            <div
               class="mt-5"
-              style="position: relative; font-size: 24px; color: #fff;margin-right: 3rem;"
+              style="
+                position: relative;
+                font-size: 24px;
+                color: #fff;
+                margin-right: 3rem;
+              "
             >
               <span>
                 Welcome to GAS360 where you are guaranteed <br /><br />
@@ -31,14 +46,14 @@
             >
               <img
                 src="../../assets/images/sidePic.png"
-                width="400px"
-                max-width="400px"
-                min-width="400px"
-                style="max-height: 30vh"
+                width="212%"
+                max-width="212%"
+                min-width="212%"
+                style="max-height: 35vh; max-width: 212%"
               />
             </div>
             <div
-              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              style="position: relative; margin-top: 20%; margin-left: 5%"
               v-show="$vuetify.breakpoint.smAndDown"
             >
               <img src="../../assets/images/side2.png" />
@@ -140,6 +155,7 @@
                   label="State"
                   outlined
                   :class="$vuetify.breakpoint.smAndDown ? ' pr-2' : ''"
+                  :style="$vuetify.breakpoint.smAndDown ? ' width:84%' : ''"
                   dense
                 ></v-select>
               </div>
@@ -181,7 +197,7 @@
                 >Already have an account? Login</span
               >
             </div>
-            <div class="mt-5" style="margin-left: 10rem">
+            <div class="mt-5" style="margin-left: 2rem">
               <v-btn
                 block
                 large
@@ -190,7 +206,7 @@
                 :disabled="!valid"
                 @click="createAccount()"
                 dense
-                :class="$vuetify.breakpoint.smAndDown ? 'ml-n16' : ''"
+                :style="$vuetify.breakpoint.smAndDown ? 'margin-left:2rem' : ''"
               >
                 Create Account
               </v-btn>

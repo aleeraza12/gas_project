@@ -7,16 +7,30 @@
             <div style="position: absolute">
               <img src="../../assets/images/sidePic.png" width="650" />
             </div>
-            <div style="position: relative; margin-top: 15rem;margin-right: 5rem;">
+            <div
+              style="position: relative; margin-top: 15rem; margin-right: 5rem"
+            >
               <img src="../../assets/images/side2.png" />
             </div>
-            <div style="position: relative;" class="mt-10">
-              <span style="font-size: 35px; color: #fff;
-              margin-right: 3rem;font-weight: 600;">Welcome Back!</span>
+            <div style="position: relative" class="mt-10">
+              <span
+                style="
+                  font-size: 35px;
+                  color: #fff;
+                  margin-right: 3rem;
+                  font-weight: 600;
+                "
+                >Welcome Back!</span
+              >
             </div>
             <div
               class="mt-5"
-              style="position: relative; font-size: 24px; color: #fff;margin-right: 3rem;"
+              style="
+                position: relative;
+                font-size: 24px;
+                color: #fff;
+                margin-right: 3rem;
+              "
             >
               <span>Sign in to access your dashboard</span>
             </div>
@@ -33,24 +47,24 @@
             >
               <img
                 src="../../assets/images/sidePic.png"
-                width="400px"
-                max-width="400px"
-                min-width="400px"
-                style="max-height: 30vh"
+                width="212%"
+                max-width="212%"
+                min-width="212%"
+                style="max-height: 35vh; max-width: 212%"
               />
             </div>
             <div
-              style="position: relative; margin-top: 3rem; margin-right: 3rem"
+              style="position: relative; margin-top: 20%; margin-left: 5%"
               v-show="$vuetify.breakpoint.smAndDown"
             >
-              <img src="../../assets/images/side2.png"/>
+              <img src="../../assets/images/side2.png" />
             </div>
             <div
               class="sign-in-content d-flex align-start justify-start"
               :class="$vuetify.breakpoint.smAndDown ? 'ml-10' : ''"
               :style="
                 $vuetify.breakpoint.smAndDown
-                  ? 'margin-top: 10rem'
+                  ? 'margin-top: 35%'
                   : ' margin-top: 6rem'
               "
             >
@@ -130,7 +144,7 @@
                   dense
                   :style="
                     $vuetify.breakpoint.smAndDown
-                      ? 'margin-left: 10rem'
+                      ? 'margin-left: 40%'
                       : 'margin-left: 10rem'
                   "
                   :class="$vuetify.breakpoint.smAndDown ? 'x-small' : 'small'"
@@ -340,5 +354,10 @@ export default {
   min-width: 30% !important;
   border-radius: 20px !important;
   cursor: pointer;
+}
+@media (min-width: 2000px) and (max-width: 3000px) {
+  .card-width {
+    min-width: 400px !important;
+  }
 }
 </style>

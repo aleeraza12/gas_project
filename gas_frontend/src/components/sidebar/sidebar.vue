@@ -154,7 +154,7 @@ export default {
       mblDrawer: false,
       titleName: "",
       user: JSON.parse(localStorage.getItem("user")),
-      start_date: "2021-01-01",
+      start_date: "2022-01-01",
       end_date: new Date().toISOString().substr(0, 10),
       group: null,
       links: [

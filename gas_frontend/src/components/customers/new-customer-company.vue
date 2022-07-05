@@ -18,7 +18,8 @@
             <div
               v-if="decodedBase64 == ''"
               class="d-flex justify-center align-center"
-              style="margin-top: 3rem; margin-left: 4rem"
+              style="margin-top: 3rem"
+              :style="$vuetify.breakpoint.smAndDown ? 'margin-left: 0rem;' : ''"
             >
               <img
                 src="../../assets/images/circle.png"
@@ -36,7 +37,7 @@
                 <img :src="decodedBase64" alt="John" />
               </v-avatar>
             </div>
-            <div style="margin-top: 1rem">
+            <div style="margin-top: 2rem">
               <label for="file-input">
                 <b style="text-decoration: underline" class="pointer"
                   >Change Image</b
@@ -189,7 +190,7 @@
                 </div>
                 <div
                   class="mt-5"
-                  :class="$vuetify.breakpoint.smAndDown ? 'ml-1 pr-1' : 'ml-16'"
+                  :class="$vuetify.breakpoint.smAndDown ? 'ml-0 pr-0' : 'ml-8'"
                 >
                   <v-btn
                     block
@@ -198,7 +199,10 @@
                     :loading="loading"
                     :disabled="!valid"
                     @click="updateCompany()"
-                    :class="$vuetify.breakpoint.smAndDown ? 'small' : 'large'"
+                    :class="$vuetify.breakpoint.smAndDown ? 'x-small' : 'large'"
+                    :style="
+                      $vuetify.breakpoint.smAndDown ? 'max-width:30px' : ''
+                    "
                     dense
                   >
                     Update Account
@@ -496,13 +500,7 @@ export default {
 .fonts {
   font-size: 12px;
 }
-.btn-create {
-  background-color: #464646 !important;
-  color: #fff;
-  min-width: 300px !important;
-  border-radius: 8px !important;
-  cursor: pointer;
-}
+
 .pointer {
   cursor: pointer;
 }
@@ -590,6 +588,6 @@ export default {
   min-width: 300px !important;
   border-radius: 20px !important;
   cursor: pointer;
-  margin-left: 3rem;
+  margin-left: 2rem;
 }
 </style>
