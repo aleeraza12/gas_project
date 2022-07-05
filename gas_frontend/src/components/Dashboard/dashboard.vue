@@ -51,10 +51,10 @@
             </div>
           </div>
         </div>
-        <br />
+        <br/>
         <div
           class="d-flex justify-end align-end"
-          :class="$vuetify.breakpoint.smAndDown ? 'mr-n4' : 'mr-8'"
+          :class="$vuetify.breakpoint.smAndDown ? 'mr-n4  px-5' : 'mr-8  px-5'"
         >
           <div class="row">
             <v-skeleton-loader
@@ -141,14 +141,14 @@
       </div>
     </div>
 
-    <div>
+    <div style="background-color: #f9b224;">
       <vue-horizontal-list :items="getScrollablePrice" :options="options">
         <template v-slot:default="{ item }">
           <div>
             <div
               class="item"
               style="
-                height: 20px;
+                height: 5px;
                 background-color: #f9b224;
                 margin-bottom: 2px;
                 margin-top: -2px;
@@ -164,18 +164,18 @@
       </vue-horizontal-list>
     </div>
 
-    <v-row>
+    <v-row class="mt-5">
       <v-col md="4" lg="4" xl="4" sm="12">
         <v-card height="150" style="background-color: #e3fbff">
           <v-card-text>
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <b>{{ getDashboardData.total_gas_quantity }} Kg</b>
+                  <p class="boldness-600">{{ getDashboardData.total_gas_quantity }} Kg</p>
                 </div>
-                <div class="d-flex align-start justify-start">
+                <!-- <div class="d-flex align-start justify-start">
                   ₦ {{ getDashboardData.total_gas_price }}
-                </div>
+                </div> -->
               </div>
               <v-spacer></v-spacer>
               <div class="d-flex align-end justify-end mt-0">
@@ -183,7 +183,7 @@
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-8">
-              <b>Total Available Gas</b>
+              <p class="boldness-500">Total Available Gas</p>
             </div>
           </v-card-text>
         </v-card>
@@ -194,9 +194,9 @@
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <b>{{ getDashboardData.total_customer }}</b>
+                  <p class="boldness-600">{{ getDashboardData.total_customer }}</p>
                 </div>
-                <div class="d-flex align-start justify-start">
+                <div class="d-flex align-start justify-start boldness-500-sm">
                   {{
                     getDashboardData.new_customer == []
                       ? 0
@@ -211,18 +211,18 @@
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-7">
-              <b>Total Customers</b>
+              <p class="boldness-500">Total Customers</p>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col md="4" lg="4" xl="4" sm="12">
+      <v-col md="3" lg="3" xl="3" sm="12">
         <v-card height="150" class="ml-0" style="background-color: #ebe8ff">
           <v-card-text>
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <b>{{ getDashboardData.total_sales }} ₦</b>
+                  <p class="boldness-600">{{ getDashboardData.total_sales }} ₦</p>
                 </div>
                 <!--<div class="d-flex align-start justify-start mt-7">
                   45 New Connections
@@ -234,7 +234,7 @@
               </div>
             </div>
             <div class="d-flex align-start justify-start mt-7">
-              <b>Total Sales</b>
+              <p class="boldness-500">Total Sales</p>
             </div>
           </v-card-text>
         </v-card>
@@ -247,7 +247,7 @@
         <date-picker />
       </div>
     </div>
-    <div class="mt-0">
+    <div class="mt-0 mr-10">
       <v-data-table
         :headers="headers"
         :items="getAllOrders"
@@ -351,7 +351,7 @@
 import RequestService from "../../RequestService";
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-import datePicker from "../../views/Pages/datePicker.vue";
+import datePicker from "../../views/Pages/datePickerDashboard.vue";
 import VueHorizontalList from "vue-horizontal-list";
 
 export default {
@@ -534,8 +534,29 @@ export default {
   font-size: 12px;
   height: 50px;
 }
+
+.boldness-600 {
+  font-style: normal;
+  font-weight: 600;
+  color: #303030;
+  font-size: 20px;
+}
+.boldness-500 {
+  font-style: normal;
+  font-weight: 500;
+  color: #303030;
+  font-size: 15px;
+}
+
+.boldness-500-sm {
+  font-style: normal;
+  font-weight: 500;
+  color: #303030;
+  font-size: 12px;
+}
+
 .item {
-  padding: 24px;
+  padding: 2px;
   border-radius: 3px;
   background: #f5f5f5;
 }

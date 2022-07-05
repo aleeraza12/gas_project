@@ -68,7 +68,11 @@ class DepoController extends Controller
     }
     public function read_rate_list(Request $request)
     {
-        $depo_prices =  Depos::where('added_by_admin', true)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        if($request->start_date || $request->end_date){
+            $depo_prices =  Depos::where('added_by_admin', true)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        }else{
+            $depo_prices = Depos::where('added_by_admin', true)->get();
+        }
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
 }

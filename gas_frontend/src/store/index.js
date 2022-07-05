@@ -346,8 +346,9 @@ const store = {
     getDepoForScroll(context, data) {
       console.log(data);
       let requestBody = {};
-      RequestService.post("depo/read", requestBody).then((response) => {
+      RequestService.post("depo/read_rate_list", requestBody).then((response) => {
         if (response.data.status == 200) {
+          console.log("Scroll" + response.data.response);
           context.commit("SET_PRICE_SCROLL", response.data.response);
         }
       });

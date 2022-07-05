@@ -7,18 +7,18 @@
             <div style="position: absolute">
               <img src="../../assets/images/sidePic.png" width="750" />
             </div>
-            <div style="position: relative; margin-top: 15rem">
+            <div style="position: relative; margin-top: 15rem;margin-right: 5rem;">
               <img src="../../assets/images/side2.png" />
             </div>
-            <div style="position: relative" class="mt-6">
-              <span style="font-size: 20px; color: #fff"><b> Hello!</b></span>
+            <div style="position: relative" class="mt-10">
+              <span style="font-size: 35px; color: #fff;font-weight: 600;margin-right: 3rem;"><b> Hello!</b></span>
             </div>
-            <div
+             <div
               class="mt-5"
-              style="position: relative; font-size: 14px; color: #fff"
+              style="position: relative; font-size: 24px; color: #fff;margin-right: 3rem;"
             >
               <span>
-                Welcome to GAS360 where you are guaranteed <br />
+                Welcome to GAS360 where you are guaranteed <br /><br />
                 access to clean cooking LPG fuel</span
               >
             </div>
