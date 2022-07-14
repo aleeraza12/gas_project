@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <v-app-bar color="#2b3896" dense dark>
-        <v-toolbar-title class="">Settings</v-toolbar-title>
+      <v-app-bar color="#2b3896" dense dark class="mr-13">
+        <v-toolbar-title>Settings</v-toolbar-title>
 
         <v-spacer></v-spacer>
         <v-btn icon @click="goToChangeSettings()">
@@ -34,9 +34,9 @@
       </v-app-bar>
     </div>
     <div>
-      <v-row class="ma-5">
+      <v-row class="ma-2">
         <v-col lg="3" sm="12" md="3">
-          <div class="mt-3">
+          <div class="mt-3 ml-n5">
             <v-data-table
               :loading="loading1"
               loading-text="Loading... Please wait"
@@ -82,7 +82,7 @@
           </div>
         </v-col>
         <v-col lg="3" sm="12" md="3">
-          <div class="mt-3">
+          <div class="mt-3 ml-n5">
             <v-data-table
               :loading="loading2"
               loading-text="Loading... Please wait"
@@ -92,6 +92,7 @@
               class="elevation-1"
               hide-default-header
               height="300px"
+              width="220px"
               :mobile-breakpoint="0"
             >
               <template v-slot:[`body.prepend`]="{ headers }">
@@ -128,7 +129,7 @@
           </div>
         </v-col>
         <v-col lg="3" sm="12" md="3">
-          <div class="mt-3">
+          <div class="mt-3 ml-n5">
             <v-data-table
               :loading="loading3"
               loading-text="Loading... Please wait"
@@ -174,7 +175,7 @@
           </div>
         </v-col>
         <v-col lg="3" sm="12" md="3">
-          <div class="mt-3">
+          <div class="mt-3 ml-n5">
             <v-data-table
               :loading="loading4"
               loading-text="Loading... Please wait"
@@ -631,5 +632,9 @@ export default {
 }
 .cursor {
   cursor: pointer;
+}
+.v-data-table {
+  line-height: 1.5;
+  max-width: 91%;
 }
 </style>
