@@ -21,7 +21,7 @@
         </div>
         <div class="d-flex mt-5">
           <div>
-            <b> Wallet</b>
+            <b> Depos</b>
           </div>
         </div>
         <div
@@ -33,22 +33,15 @@
               class="d-flex align-start justify-start"
               style="color: #2b3896"
             >
-              <b>Available Balance</b>
+              <b>Total</b>
             </div>
             <div class="d-flex align-start justify-start total-amount">
-              {{ Number(total_wallet_balance).toLocaleString() }} ₦
+              {{ getAllDepos.length }}
             </div>
           </div>
-          <v-spacer></v-spacer>
-          <!--<div class="d-flex align-end justify-end">
-            <v-btn small dense outlined
-              >Withdraw
-              <v-icon small dense class="ml-2">mdi-plus</v-icon></v-btn
-            >
-          </div>-->
         </div>
         <div class="d-flex mt-3">
-          <div class="mt-4"><b>Withdraw History</b></div>
+          <div class="mt-4"><b>History</b></div>
           <v-spacer></v-spacer>
           <div class="mr-3" style="border-bottom: 1px solid grey">
             <v-btn
@@ -65,18 +58,18 @@
               <span style="color: #2e3995">Export </span></v-btn
             >
           </div>
-          <div class="mr-3"><date-picker /></div>
         </div>
         <div class="mt-3">
           <v-data-table
-            :headers="headers"
-            :items="getWallet"
+            :loading="loading"
+            loading-text="Loading... Please wait"
+            :headers="Depoheaders"
+            :items="getAllDepos"
             :items-per-page="5"
             class="elevation-1"
             hide-default-header
-            height="calc(100vh - 400px)"
+            height="260px"
             :search="search"
-            :loading="tableloading"
             :mobile-breakpoint="0"
           >
             <template v-slot:[`body.prepend`]="{ headers }">
@@ -90,26 +83,11 @@
                 </div>
               </th>
             </template>
-            <template v-slot:item.status="{ item }">
-              <v-chip
-                class="ma-2"
-                small
-                :color="item.status == 'UnSuccessfull' ? 'red' : 'green'"
-                label
-                outlined
-                >{{ item.status }}</v-chip
-              >
-            </template>
-            <!--<template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="editItem(item)">
-                mdi-eye
-              </v-icon>
-            </template>-->
           </v-data-table>
         </div>
-      </v-card-text>
-    </v-card>
-    <download-csv :json-data="getWallet">
+      </v-card-text></v-card
+    >
+    <download-csv :json-data="getAllDepos">
       <v-btn style="display: none" id="myBtn">
         <b>My custom button</b>
       </v-btn>
@@ -120,72 +98,44 @@
 <script>
 import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
-import datePicker from "../../views/Pages/datePicker.vue";
+import moment from "moment";
 import VueJsonToCsv from "vue-json-to-csv";
 import Vue from "vue";
 Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
+    loading: true,
+    isDepo: false,
     search: "",
-    start_date: "2022-01-01",
-    end_date: new Date().toISOString().substr(0, 10),
-    total_wallet_balance: null,
-    tableloading: true,
-    headers: [
-      {
-        text: "Date",
-        align: "start",
-        sortable: false,
-        value: "created_at",
-      },
-      { text: "Transaction_id", value: "transaction_id" },
-      { text: "Account Name", value: "account_name" },
-      { text: "Account Number", value: "account_number" },
-      { text: "Amount", value: "amount" },
-      { text: "Status", value: "status" },
-      { text: "Authorized By", value: "authorized_by" },
+    Depoheaders: [
+      { text: "Depot Name", value: "depo_name" },
+      { text: "Location", value: "location" },
+      { text: "Price(per 20MT)", value: "price_per_twenty_million_ton" },
+      { text: "Update At", value: "updated_at" },
     ],
   }),
+
   computed: {
-    ...mapGetters(["getWallet"]),
-  },
-  components: {
-    datePicker,
+    ...mapGetters(["getAllDepos"]),
   },
   created() {
-    eventBus.$on("responseArrived", () => {
-      this.tableloading = false;
+    eventBus.$on("responseArrivedDepo", () => {
+      console.log("asfsdsdfas");
+      this.loading = false;
     });
-    eventBus.$on("selectedWalletDateFilter", (value) => {
-      this.getWalletListing(value);
-    });
-  },
-  watch: {
-    getWallet() {
-      this.total_wallet_balance = 0;
-      if (this.getWallet.length > 0) {
-        this.total_wallet_balance = 0;
-        for (let i in this.getWallet)
-          this.total_wallet_balance += this.getWallet[i].amount;
-      } else this.total_wallet_balance = 0;
-    },
   },
   methods: {
     btnClick() {
       document.getElementById("myBtn").click();
     },
-    getWalletListing(date) {
-      this.tableloading = true;
-      let requestBody = {
-        start_date: date[0],
-        end_date: date[1].concat(" 23:59:00"),
-      };
-      this.$store.dispatch("getAllWallets", requestBody);
+    getDate(date) {
+      return moment(date.date).format("Do MMMM YYYY, h:mm a");
     },
   },
+  watch: {},
   mounted() {
-    this.getWalletListing([this.start_date, this.end_date]);
-    this.$store.commit("setSelectedDateRange", "All");
+    console.log("sdsda");
+    this.$store.dispatch("getAllDepos");
   },
 };
 </script>
@@ -216,5 +166,8 @@ export default {
   background-color: #eff0fa;
   font-size: 12px;
   height: 50px;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

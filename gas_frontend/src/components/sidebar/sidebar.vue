@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="$vuetify.breakpoint.smAndDown">
+    <v-card v-if="$vuetify.breakpoint.smAndDown" class="no-print">
       <v-app v-show="$vuetify.breakpoint.smAndDown">
         <v-app-bar
           app
@@ -18,7 +18,7 @@
       </v-app>
     </v-card>
     <v-card
-      class="sidebar-card elevation-0"
+      class="sidebar-card elevation-0 no-print"
       v-show="!$vuetify.breakpoint.smAndDown"
     >
       <v-navigation-drawer
@@ -229,6 +229,13 @@ export default {
           color: "#fff",
         },
         {
+          text: "Depos",
+          icon: "mdi-clock",
+          route: "/depos",
+          tabName: "Depos",
+          color: "#fff",
+        },
+        {
           text: "Promos",
           icon: "mdi-cash-multiple",
           route: "/promos",
@@ -317,6 +324,12 @@ export default {
 </script>
 
 <style scoped>
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+}
 .h {
   height: 200vh !important;
 }
@@ -330,7 +343,7 @@ export default {
 .sidebar-item {
   color: #fff !important;
   font-size: 14px !important;
-  max-height: 47px !important;
+  max-height: 44px !important;
   /*min-height: 30px !important;*/
 }
 .sidebar-item:active {
@@ -353,6 +366,12 @@ export default {
 }
 </style>
 <style>
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+}
 .v-list-group--active {
   border-left: 5px solid #fff important;
 }

@@ -120,15 +120,21 @@
         >
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price:&nbsp;</b></div>
-            <div class="fonts">N{{ getSinglePurchase.unit_price }}</div>
+            <div class="fonts">
+              ₦ {{ Number(getSinglePurchase.unit_price).toLocaleString() }}
+            </div>
           </div>
           <div class="d-flex">
             <div class="fonts"><b>Total Amount:&nbsp;</b></div>
-            <div class="fonts">N{{ getSinglePurchase.amount }}</div>
+            <div class="fonts">
+              ₦ {{ Number(getSinglePurchase.amount).toLocaleString() }}
+            </div>
           </div>
           <div class="d-flex">
             <div class="fonts"><b>Admin Cost:&nbsp;</b></div>
-            <div class="fonts">N{{ getSinglePurchase.admin_cost }}</div>
+            <div class="fonts">
+              ₦ {{ Number(getSinglePurchase.admin_cost).toLocaleString() }}
+            </div>
           </div>
         </div>
         <v-spacer></v-spacer>
@@ -138,19 +144,24 @@
         >
           <div class="row">
             <div class="fonts">Gas Quanity:&nbsp;</div>
-            <div class="fonts_">{{ getSinglePurchase.gas_quantity }}</div>
+            <div class="fonts_">{{ getSinglePurchase.gas_quantity }} kg</div>
           </div>
           <div class="row">
             <div class="fonts">Logistics:&nbsp;</div>
-            <div class="fonts_">{{ getSinglePurchase.logistics_cost }}</div>
+            <div class="fonts_">
+              ₦ {{ Number(getSinglePurchase.logistics_cost).toLocaleString() }}
+            </div>
           </div>
           <div class="row">
             <div class="fonts">Total Amount:&nbsp;</div>
             <div class="fonts_">
+              ₦
               {{
-                parseInt(getSinglePurchase.amount) +
-                parseInt(getSinglePurchase.logistics_cost) +
-                parseInt(getSinglePurchase.gas_quantity)
+                Number(
+                  parseInt(getSinglePurchase.amount) +
+                    parseInt(getSinglePurchase.logistics_cost) +
+                    parseInt(getSinglePurchase.gas_quantity)
+                ).toLocaleString()
               }}
             </div>
           </div>
@@ -170,7 +181,7 @@
           :class="$vuetify.breakpoint.smAndDown ? 'mr-4' : 'mr-8'"
         >
           <div class="row">
-            <div class="fonts">Recepient By:&nbsp;</div>
+            <div class="fonts">Recepient Name:&nbsp;</div>
             <div class="fonts_">{{ getSinglePurchase.recepient_name }}</div>
           </div>
         </div>
@@ -231,7 +242,10 @@
           Save
         </v-btn>
       </div>
-      <div class="d-flex align-center justify-center">
+      <div
+        class="d-flex align-center justify-center"
+        v-if="loggedinUser.user_type === 'Admin'"
+      >
         <div>
           <v-btn
             dense
@@ -322,6 +336,7 @@ export default {
     deleteable: "",
     dialog: false,
     image: "",
+    loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
   watch: {},
   computed: {

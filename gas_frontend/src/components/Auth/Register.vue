@@ -206,7 +206,11 @@
                 :disabled="!valid"
                 @click="createAccount()"
                 dense
-                :style="$vuetify.breakpoint.smAndDown ? 'margin-left:2rem' : ''"
+                :style="
+                  $vuetify.breakpoint.smAndDown
+                    ? 'margin-left:2rem'
+                    : 'margin-left:8rem'
+                "
               >
                 Create Account
               </v-btn>

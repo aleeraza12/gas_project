@@ -180,26 +180,24 @@
                 </div>
                 <div>
                   <v-text-field
-                    label="Driver Name"
+                    label="Driver Name (optional)"
                     outlined
                     dense
                     placeholder="Enter Driver Name"
                     hide-details
                     class="username-feild mt-4"
                     v-model="driver_name"
-                    :rules="nameRules"
                   ></v-text-field>
                 </div>
                 <div>
                   <v-text-field
-                    label="Recepient Name"
+                    label="Recepient Name (optional)"
                     outlined
                     dense
                     placeholder="Enter Recepient Name"
                     hide-details
                     class="username-feild mt-4"
                     v-model="recepient_name"
-                    :rules="nameRules"
                   ></v-text-field>
                 </div>
                 <div class="">

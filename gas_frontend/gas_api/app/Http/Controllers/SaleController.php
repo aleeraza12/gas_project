@@ -52,6 +52,7 @@ class SaleController extends Controller
             Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
         }
         TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->id]));
+        $sale = $this->read_sale($request, $sale);
         return response()->json(['response' => $sale, 'status' => 201]);
     }
 
@@ -63,10 +64,22 @@ class SaleController extends Controller
     }
 
 
-    public function read_sale(Request $request)
+    public function read_sale($request, $sale)
     {
-        $sale =  Sale::find($request->sale_id);
-        return response()->json(['response' => $sale, 'status' => 200]);
+        $sale =  Sale::find($sale->id)->first();
+        $name = Company::find($request->company_id);
+        $sale['updated_by'] = User::find($request->users_id)->name; //updated_by
+        $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->company_id)->first();
+        $sale['transaction_id'] =  @$transaction->id;
+        $customer = Customer::find($sale->customer_id);
+        $promo = Promos::withTrashed()->where('company_id', $request->company_id)->where('promo_name', $sale->discount_code)->first();
+        $sale['promo_id'] =  @$promo->id;
+        $sale['customer_name'] =  $customer->name;
+        $sale['customer_address'] =   $customer->address;
+        $sale['company_profile_picture']   = $name['company_profile_picture'];
+        $sale['company_address']   = $name['address'];
+        $sale['company_name']   = $name['company_name'];
+        return $sale;
     }
     //for companes
     public function read_all_sale(Request $request)
@@ -133,6 +146,8 @@ class SaleController extends Controller
             $promo = Promos::withTrashed()->where('company_id', $request->company_id)->where('promo_name', $request->discount_code)->first();
             $discount = $promo->promo_percentage / 100 * $request->total_amount;
             Sale::find($request->sale_id)->update(['discounted_amount' => $request->total_amount - $discount]);
+        } else if ($request->discount_code == null) {
+            Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
         }
         TransactionController::updateSaleTransaction($request->merge([
             'amount' => $request->total_amount, 'outer_id' => $sale->id, 'company_id' => $request->company_id, 'type' => 'sale'

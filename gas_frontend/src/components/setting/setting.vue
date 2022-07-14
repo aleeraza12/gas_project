@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-app-bar color="grey" dense dark>
+      <v-app-bar color="#2b3896" dense dark>
         <v-toolbar-title class="">Settings</v-toolbar-title>
 
         <v-spacer></v-spacer>

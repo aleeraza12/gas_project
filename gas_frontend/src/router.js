@@ -548,6 +548,25 @@ const router = new VueRouter({
         .default,
     },
     {
+      path: "/depos",
+      name: "Depos",
+      beforeEnter: (to, from, next) => {
+        setTimeout(() => {
+          if (
+            !JSON.parse(localStorage.getItem("user")).permissions.includes(
+              "Depos"
+            )
+          ) {
+            store.dispatch("checkRouteExistence");
+          } else {
+            next();
+          }
+        }, 10);
+      },
+      meta: { layout: "app", title: "Depos", requireAuth: true },
+      component: require("../src/components/Depos/depos.vue").default,
+    },
+    {
       path: "/admin-settings",
       name: "AdminSettings",
       beforeEnter: (to, from, next) => {

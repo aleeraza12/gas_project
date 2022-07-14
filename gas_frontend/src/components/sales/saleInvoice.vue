@@ -190,7 +190,7 @@
             class="d-flex align-center justify-center no-print"
             style="margin-top: 10rem"
           >
-            <b class="no-print">Powered By GA3QSD</b>
+            <b class="no-print">Powered By GAS360</b>
           </div>
           <div class="d-flex align-center justify-center mt-3 no-print">
             <v-btn

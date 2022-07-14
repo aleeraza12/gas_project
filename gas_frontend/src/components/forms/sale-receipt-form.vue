@@ -238,98 +238,98 @@
           Add Customer
         </v-card-title>
         <v-form v-model="valid2" class="mt-6 ml-5">
+          <div>
+            <v-text-field
+              v-model="name"
+              label="Enter Name"
+              placeholder="Enter Name"
+              outlined
+              :rules="nameRules"
+              dense
+              hide-details
+              class="mt-2"
+              style="width: 300px"
+            ></v-text-field>
+          </div>
+          <div>
+            <v-text-field
+              v-model="phone_number"
+              :rules="nameRules"
+              label="Enter Phone Number"
+              placeholder="Enter Phone Number"
+              outlined
+              dense
+              hide-details
+              class="mt-2"
+              style="width: 300px"
+            ></v-text-field>
+          </div>
+          <div>
+            <v-text-field
+              v-model="email"
+              label="Enter Email Address (optional)"
+              placeholder="Enter Email Address (optional)"
+              outlined
+              dense
+              hide-details
+              class="mt-2"
+              style="width: 300px"
+            ></v-text-field>
+          </div>
+          <div>
+            <v-text-field
+              v-model="address"
+              label="Enter Street (optional)"
+              placeholder="Enter Street (optional)"
+              outlined
+              dense
+              hide-details
+              class="mt-2"
+              style="width: 300px"
+            ></v-text-field>
+          </div>
+          <div style="width: 300px">
             <div>
               <v-text-field
-                v-model="name"
-                label="Enter Name"
-                placeholder="Enter Name"
-                outlined
-                :rules="nameRules"
-                dense
-                hide-details
-                class="mt-2"
-                style="width: 300px"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                v-model="phone_number"
-                :rules="nameRules"
-                label="Enter Phone Number"
-                placeholder="Enter Phone Number"
+                label="City (optional)"
                 outlined
                 dense
+                placeholder="Enter City (optional)"
                 hide-details
-                class="mt-2"
-                style="width: 300px"
+                class="city-feild mt-2"
+                v-model="city"
               ></v-text-field>
             </div>
-            <div>
-              <v-text-field
-                v-model="email"
-                label="Enter Email Address (optional)"
-                placeholder="Enter Email Address (optional)"
-                outlined
-                dense
-                hide-details
-                class="mt-2"
-                style="width: 300px"
-              ></v-text-field>
-            </div>
-            <div>
-              <v-text-field
-                v-model="address"
-                label="Enter Street (optional)"
-                placeholder="Enter Street (optional)"
-                outlined
-                dense
-                hide-details
-                class="mt-2"
-                style="width: 300px"
-              ></v-text-field>
-            </div>
-            <div style="width: 300px">
-              <div>
-                <v-text-field
-                  label="City (optional)"
-                  outlined
-                  dense
-                  placeholder="Enter City (optional)"
-                  hide-details
-                  class="city-feild mt-2"
-                  v-model="city"
-                ></v-text-field>
-              </div>
-              <div class="mt-2">
-                <v-select
-                  :items="getAllStates"
-                  label="State (optional)"
-                  placeholder="Enter State (optional)"
-                  outlined
-                  small
-                  dense
-                  v-model="state"
-                  hide-details
-                >
-                </v-select>
-              </div>
-            </div>
-
-            <div class="mt-2" style="width: 300px">
+            <div class="mt-2">
               <v-select
-                :items="getAllCustomerTypes"
-                v-model="customer_type"
-                label="Customer Type"
-                :rules="nameRules"
-                placeholder="Select One"
+                :items="getAllStates"
+                label="State (optional)"
+                placeholder="Enter State (optional)"
                 outlined
-                hide-details
                 small
                 dense
+                v-model="state"
+                hide-details
               >
               </v-select>
             </div>
-          </v-form>
+          </div>
+
+          <div class="mt-2" style="width: 300px">
+            <v-select
+              :items="getAllCustomerTypes"
+              v-model="customer_type"
+              label="Customer Type"
+              :rules="nameRules"
+              placeholder="Select One"
+              outlined
+              hide-details
+              small
+              dense
+            >
+            </v-select>
+          </div>
+        </v-form>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="black" small text @click="isModal = false">
@@ -507,7 +507,7 @@ export default {
         this.company_names.push(company);
       }
       let updateAblecompany = {
-        name: this.emitData.updated_by,
+        name: this.emitData.company_name,
         id: this.emitData.company_id,
       };
       this.company_name = updateAblecompany;
@@ -529,7 +529,7 @@ export default {
     },
   },
   methods: {
-     createCustomer() {
+    createCustomer() {
       this.loading2 = true;
       let requestBody = {
         name: this.name,
@@ -586,7 +586,7 @@ export default {
         this.price = this.getPrice.distributor
           ? this.getPrice.distributor.price_per_twenty_million_ton
           : this.price;
-      } else if (type === "Retailor") {
+      } else if (type === "Retailer") {
         this.price = this.getPrice.retailor
           ? this.getPrice.retailor.price_per_twenty_million_ton
           : this.price;
@@ -677,6 +677,10 @@ export default {
           if (res.data.status == 201) {
             this.snacbarMessage = "Your sale(s) added successfully";
             this.snackbarColor = "success";
+            this.$store.commit("SET_VIEW_RECEIPT", res.data.response);
+            setTimeout(() => {
+              this.$router.push("/sale-invoice");
+            }, 1000);
           } else if (res.data.status == 200) {
             this.snacbarMessage = "Your sale(s) updated successfully";
             this.snackbarColor = "success";
@@ -686,7 +690,7 @@ export default {
           }
           this.snackbar = true;
           this.loading = false;
-          if (res.data.status !== 400) {
+          if (res.data.status == 200 || res.data.status == 400) {
             setTimeout(() => {
               this.$router.push("/sales");
             }, 1000);

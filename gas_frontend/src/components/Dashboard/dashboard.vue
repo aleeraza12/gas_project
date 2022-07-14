@@ -26,7 +26,7 @@
       <div v-if="!loggedinUser.is_super_admin">
         <div
           class="row display-end mt-2"
-          :class="$vuetify.breakpoint.smAndDown ? 'ml-9' : 'mr-7'"
+          :class="$vuetify.breakpoint.smAndDown ? 'ml-9' : 'ml-4'"
         >
           <div style="font-size: 16px" class="text-amount-color">
             Current gas price
@@ -51,17 +51,27 @@
             </div>
           </div>
         </div>
-        <br/>
+        <br />
         <div
           class="d-flex justify-end align-end"
           :class="$vuetify.breakpoint.smAndDown ? 'mr-n4  px-5' : 'mr-8  px-5'"
         >
           <div class="row">
             <v-skeleton-loader
+              class="mb-5"
               v-if="priceLoader"
-              type="list-item-avatar-three-line"
+              type="list-item-avatar"
             ></v-skeleton-loader>
-            <div class="col" v-else-if="!priceLoader">
+            <v-skeleton-loader
+              v-if="priceLoader"
+              type="list-item-avatar"
+            ></v-skeleton-loader>
+            <v-skeleton-loader
+              v-if="priceLoader"
+              type="list-item-avatar"
+            ></v-skeleton-loader>
+
+            <div class="col" v-if="!priceLoader">
               <b
                 :style="
                   $vuetify.breakpoint.smAndDown
@@ -85,7 +95,7 @@
               >
               <h5>Household User</h5>
             </div>
-            <div class="col">
+            <div class="col" v-if="!priceLoader">
               <b
                 :style="
                   $vuetify.breakpoint.smAndDown
@@ -109,7 +119,7 @@
               >
               <h5>Retailor</h5>
             </div>
-            <div class="col">
+            <div class="col" v-if="!priceLoader">
               <b
                 :style="
                   $vuetify.breakpoint.smAndDown
@@ -141,7 +151,7 @@
       </div>
     </div>
 
-    <div style="background-color: #f9b224;">
+    <div style="background-color: #f9b224">
       <vue-horizontal-list :items="getScrollablePrice" :options="options">
         <template v-slot:default="{ item }">
           <div>
@@ -171,7 +181,9 @@
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <p class="boldness-600">{{ getDashboardData.total_gas_quantity }} Kg</p>
+                  <p class="boldness-600">
+                    {{ getDashboardData.total_gas_quantity }} Kg
+                  </p>
                 </div>
                 <!-- <div class="d-flex align-start justify-start">
                   ₦ {{ getDashboardData.total_gas_price }}
@@ -194,7 +206,9 @@
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <p class="boldness-600">{{ getDashboardData.total_customer }}</p>
+                  <p class="boldness-600">
+                    {{ getDashboardData.total_customer }}
+                  </p>
                 </div>
                 <div class="d-flex align-start justify-start boldness-500-sm">
                   {{
@@ -222,7 +236,10 @@
             <div class="d-flex">
               <div>
                 <div class="d-flex align-start justify-start">
-                  <p class="boldness-600">{{ getDashboardData.total_sales }} ₦</p>
+                  <p class="boldness-600">
+                    {{ Number(getDashboardData.total_sales).toLocaleString() }}
+                    ₦
+                  </p>
                 </div>
                 <!--<div class="d-flex align-start justify-start mt-7">
                   45 New Connections

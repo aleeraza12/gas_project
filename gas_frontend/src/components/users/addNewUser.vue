@@ -194,6 +194,14 @@
                 value="Rate List"
                 hide-details
               ></v-checkbox>
+              <v-checkbox
+                dense
+                v-model="permissions"
+                label="Depos"
+                color="#2e3995"
+                value="Depos"
+                hide-details
+              ></v-checkbox>
             </v-col>
           </v-row>
         </div>

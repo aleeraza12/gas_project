@@ -29,11 +29,14 @@
           style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
-            <div class="d-flex align-start justify-start">
+            <div
+              class="d-flex align-start justify-start"
+              style="color: #2b3896"
+            >
               <b>Total Sales</b>
             </div>
-            <div class="d-flex align-start justify-start">
-              {{ total_sales }} ₦
+            <div class="d-flex align-start justify-start total-amount">
+              {{ Number(total_sales).toLocaleString() }} ₦
             </div>
           </div>
           <v-spacer></v-spacer>
@@ -88,6 +91,18 @@
                 </div>
               </th>
             </template>
+            <template v-slot:item.transaction_id="{ item }">
+              000{{ item.transaction_id }}
+            </template>
+            <template v-slot:item.gas_quantity="{ item }">
+              {{ item.gas_quantity }} kg
+            </template>
+            <template v-slot:item.total_amount="{ item }">
+              {{ Number(item.total_amount).toLocaleString() }} ₦
+            </template>
+            <template v-slot:item.discounted_amount="{ item }">
+              {{ Number(item.discounted_amount).toLocaleString() }} ₦
+            </template>
             <template v-slot:item.status="{ item }">
               {{ getStatus(item) }}
             </template>
@@ -134,7 +149,7 @@ export default {
       { text: "Amount", value: "total_amount" },
       { text: "After Discount", value: "discounted_amount" },
       { text: "Status", value: "status" },
-      { text: "Update by", value: "updated_by" },
+      { text: "Updated by", value: "updated_by" },
       { text: "Payment Mode", value: "payment_mode" },
       { text: "View Receipt", value: "actions", sortable: false },
     ],
@@ -194,6 +209,13 @@ export default {
 };
 </script>
 <style scoped>
+.total-amount {
+  color: #2b3896;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+}
 .dashboard-card {
   height: 600px;
 

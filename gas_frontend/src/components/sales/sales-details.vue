@@ -81,7 +81,7 @@
         >
           <div class="fonts">Transaction Id</div>
           <div class="fonts font-weight-bold">
-            {{ getSingleReceipt.transaction_id }}
+            000{{ getSingleReceipt.transaction_id }}
           </div>
         </div>
       </div>
@@ -98,11 +98,15 @@
         >
           <div class="d-flex">
             <div class="fonts"><b>Unit Gas Price: &nbsp;</b></div>
-            <div class="fonts">N{{ getSingleReceipt.price }}</div>
+            <div class="fonts">
+              ₦ {{ Number(getSingleReceipt.price).toLocaleString() }}
+            </div>
           </div>
           <div class="d-flex">
             <div class="fonts"><b>Total Amount: &nbsp;</b></div>
-            <div class="fonts">N{{ getSingleReceipt.total_amount }}</div>
+            <div class="fonts">
+              ₦ {{ Number(getSingleReceipt.total_amount).toLocaleString() }}
+            </div>
           </div>
           <div class="d-flex">
             <div class="fonts"><b>Payment Mode: &nbsp;</b></div>
@@ -111,7 +115,7 @@
           <br />
           <div class="d-flex">
             <div class="fonts"><b>Balance: &nbsp;</b></div>
-            <div class="fonts">N{{ getSingleReceipt.balance }}</div>
+            <div class="fonts">₦ {{ getSingleReceipt.balance }}</div>
           </div>
         </div>
         <v-spacer></v-spacer>
@@ -120,7 +124,7 @@
           :class="$vuetify.breakpoint.smAndDown ? 'mr-1' : 'mr-8'"
         >
           <div class="fonts">
-            Gas Quantity:&nbsp;{{ getSingleReceipt.gas_quantity }}
+            Gas Quantity:&nbsp;{{ getSingleReceipt.gas_quantity }} kg
           </div>
           <div class="fonts">
             Promo Used:&nbsp;{{ getSingleReceipt.discount_code }}
@@ -162,7 +166,10 @@
           Save
         </v-btn>
       </div>
-      <div class="d-flex align-center justify-center">
+      <div
+        class="d-flex align-center justify-center"
+        v-if="loggedinUser.user_type === 'Admin'"
+      >
         <div>
           <v-btn
             dense
@@ -249,6 +256,7 @@ export default {
     snacbarMessage: "",
     snackbar: false,
     snackbarColor: "",
+    loggedinUser: JSON.parse(localStorage.getItem("user")),
   }),
   watch: {},
   computed: {
@@ -363,12 +371,12 @@ export default {
 .btn-create {
   background-color: #2e3995 !important;
   color: #fff;
-  min-width: 70% !important;
+  min-width: 60% !important;
   border-radius: 20px !important;
   cursor: pointer;
 }
 .sales-details-page {
-  height: 770px;
+  height: 800px;
   width: 45%;
   background-color: #ebebea;
   margin-left: 12rem;

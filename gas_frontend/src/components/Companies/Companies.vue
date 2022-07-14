@@ -29,10 +29,13 @@
           style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
-            <div class="d-flex align-start justify-start">
+            <div
+              class="d-flex align-start justify-start"
+              style="color: #2b3896"
+            >
               <b>Total Companies</b>
             </div>
-            <div class="d-flex align-start justify-start">
+            <div class="d-flex align-start justify-start total-amount">
               {{ getCompanies.length }}
             </div>
           </div>
@@ -256,6 +259,13 @@ export default {
 };
 </script>
 <style scoped>
+.total-amount {
+  color: #2b3896;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+}
 .dashboard-card {
   height: 600px;
 

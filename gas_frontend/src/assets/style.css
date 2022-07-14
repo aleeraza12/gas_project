@@ -3,3 +3,11 @@
 .upper-card {
   background: #eff0fa;
 }
+
+.total-amount {
+  color: #2b3896;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+}

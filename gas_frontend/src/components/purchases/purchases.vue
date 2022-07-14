@@ -29,11 +29,14 @@
           style="background-color: #eff0fa; border-radius: 5px"
         >
           <div>
-            <div class="d-flex align-start justify-start">
+            <div
+              class="d-flex align-start justify-start"
+              style="color: #2b3896"
+            >
               <b>Available Balance</b>
             </div>
-            <div class="d-flex align-start justify-start">
-              {{ total_sales }} ₦
+            <div class="d-flex align-start justify-start total-amount">
+              {{ Number(total_sales).toLocaleString() }} ₦
             </div>
           </div>
           <v-spacer></v-spacer>
@@ -85,7 +88,7 @@
             :loading="loading"
             loading-text="Loading... Please wait"
             :headers="Depoheaders"
-            :items="getAllDepos"
+            :items="getScrollablePrice"
             :items-per-page="5"
             class="elevation-1"
             hide-default-header
@@ -130,6 +133,25 @@
             </template>
             <template v-slot:item.date="{ item }">
               {{ getDate(item) }}
+            </template>
+            <template v-slot:item.gas_quantity="{ item }">
+              {{ item.gas_quantity }} kg
+            </template>
+            <template v-slot:item.amount="{ item }">
+              {{ Number(item.amount).toLocaleString() }} ₦
+            </template>
+            <template v-slot:item.unit_price="{ item }">
+              {{ Number(item.unit_price).toLocaleString() }} ₦
+            </template>
+            <template v-slot:item.driver_name="{ item }">
+              <div :class="item.driver_name == null ? 'text--disabled' : ''">
+                {{ item.driver_name != null ? item.driver_name : "---" }}
+              </div>
+            </template>
+            <template v-slot:item.recepient_name="{ item }">
+              <div :class="item.recepient_name == null ? 'text--disabled' : ''">
+                {{ item.recepient_name != null ? item.recepient_name : "---" }}
+              </div>
             </template>
             <template v-slot:item.status="{ item }">
               {{ getStatus(item) }}
@@ -197,7 +219,7 @@ export default {
     datePicker,
   },
   computed: {
-    ...mapGetters(["getPurchases", "getAllDepos"]),
+    ...mapGetters(["getPurchases", "getScrollablePrice"]),
   },
   created() {
     eventBus.$on("responseArrived", () => {
@@ -232,9 +254,7 @@ export default {
       };
       this.$store.dispatch("getPurchaseListing", requestBody);
     },
-    goToDepos() {
-      this.$router.push("/depot");
-    },
+   
     getStatus(item) {
       if (item.paid === null && item.delivered === null) return "Unpaid";
       else if (item.paid !== null && item.delivered === null) return "Paid";
@@ -253,6 +273,9 @@ export default {
     },
   },
   watch: {
+    getScrollablePrice() {
+      console.log("getScrollablePrice", this.getScrollablePrice);
+    },
     getPurchases() {
       if (this.getPurchases.length > 0) {
         this.total_sales = 0;
@@ -265,11 +288,18 @@ export default {
     document.getElementById("myDIV").style.display = "none";
     this.getPurchasesListing([this.start_date, this.end_date]);
     this.$store.commit("setSelectedDateRange", "All");
-    this.$store.dispatch("getAllDepos");
+    this.$store.dispatch("getDepoForScroll");
   },
 };
 </script>
 <style scoped>
+.total-amount {
+  color: #2b3896;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+}
 .dashboard-card {
   height: 600px;
 
