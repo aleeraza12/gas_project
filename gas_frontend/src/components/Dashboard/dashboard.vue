@@ -164,10 +164,10 @@
                 margin-top: -2px;
               "
             >
-              <h5 style="margin-top: -14px">
+              <h5 style="margin-top: -14px;color: white;">
                 {{ item.depo_name }}, {{ item.location }}
               </h5>
-              <p>{{ item.price_per_twenty_million_ton }}</p>
+              <p style="color:white;">{{ Number(item.price_per_twenty_million_ton).toLocaleString() }}</p>
             </div>
           </div>
         </template>
