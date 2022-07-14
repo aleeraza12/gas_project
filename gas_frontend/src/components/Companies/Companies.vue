@@ -273,7 +273,7 @@ export default {
             this.loading = true;
             this.snackbar = true;
             this.snackbarColor = "success";
-            this.snacbarMessage = "Your company(s) status updated successfully";
+            this.snacbarMessage = "Company(s) status updated successfully";
             this.getCompaniesListing([this.start_date, this.end_date]);
           }
         }
