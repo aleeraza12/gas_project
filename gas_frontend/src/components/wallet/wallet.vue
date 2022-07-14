@@ -36,7 +36,7 @@
               <b>Available Balance</b>
             </div>
             <div class="d-flex align-start justify-start total-amount">
-              {{ Number(total_wallet_balance).toLocaleString() }} ₦
+              ₦ {{ Number(total_wallet_balance).toLocaleString() }}
             </div>
           </div>
           <v-spacer></v-spacer>
@@ -163,11 +163,9 @@ export default {
   watch: {
     getWallet() {
       this.total_wallet_balance = 0;
-      if (this.getWallet.length > 0) {
-        this.total_wallet_balance = 0;
-        for (let i in this.getWallet)
-          this.total_wallet_balance += this.getWallet[i].amount;
-      } else this.total_wallet_balance = 0;
+      for (let i in this.getWallet)
+        this.total_wallet_balance =
+          this.total_wallet_balance + this.getWallet[i].amount;
     },
   },
   methods: {

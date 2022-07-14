@@ -17,11 +17,11 @@ class General extends Controller
     {
         $is_admin = Company::where('company_email', $request->email)->first();
 
-        if ($is_admin->is_super_admin == "0") {
-            $is_admin->is_super_admin = false;
-        } else {
-            $is_admin->is_super_admin = true;
-        }
+        //if ($is_admin->is_super_admin == "0") {
+        //    $is_admin->is_super_admin = false;
+        //} else {
+        //    $is_admin->is_super_admin = true;
+        //}
 
         $is_user = User::where('name', $request->email)->first();
         $status = 400;

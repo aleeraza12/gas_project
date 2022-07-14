@@ -42,9 +42,8 @@
               loading-text="Loading... Please wait"
               :headers="headersCustomerTypes"
               :items="getAllCustomerTypesSettings"
-              :items-per-page="10"
+              :items-per-page="5"
               class="elevation-1"
-              hide-default-footer
               hide-default-header
               height="300px"
               :mobile-breakpoint="0"
@@ -91,7 +90,6 @@
               :items="getAllPaymentModesSettings"
               :items-per-page="5"
               class="elevation-1"
-              hide-default-footer
               hide-default-header
               height="300px"
               :mobile-breakpoint="0"
@@ -138,7 +136,6 @@
               :items="getAllUserTypesSettings"
               :items-per-page="5"
               class="elevation-1"
-              hide-default-footer
               hide-default-header
               height="300px"
               :mobile-breakpoint="0"
@@ -185,7 +182,6 @@
               :items="getAllStatesSettings"
               :items-per-page="5"
               class="elevation-1"
-              hide-default-footer
               hide-default-header
               height="300px"
               :mobile-breakpoint="0"

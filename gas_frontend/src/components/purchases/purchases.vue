@@ -36,7 +36,7 @@
               <b>Available Balance</b>
             </div>
             <div class="d-flex align-start justify-start total-amount">
-              {{ Number(total_sales).toLocaleString() }} ₦
+              ₦ {{ Number(total_sales).toLocaleString() }}
             </div>
           </div>
           <v-spacer></v-spacer>
@@ -138,10 +138,10 @@
               {{ item.gas_quantity }} kg
             </template>
             <template v-slot:item.amount="{ item }">
-              {{ Number(item.amount).toLocaleString() }} ₦
+              ₦ {{ Number(item.amount).toLocaleString() }}
             </template>
             <template v-slot:item.unit_price="{ item }">
-              {{ Number(item.unit_price).toLocaleString() }} ₦
+              ₦ {{ Number(item.unit_price).toLocaleString() }}
             </template>
             <template v-slot:item.driver_name="{ item }">
               <div :class="item.driver_name == null ? 'text--disabled' : ''">
@@ -254,7 +254,7 @@ export default {
       };
       this.$store.dispatch("getPurchaseListing", requestBody);
     },
-   
+
     getStatus(item) {
       if (item.paid === null && item.delivered === null) return "Unpaid";
       else if (item.paid !== null && item.delivered === null) return "Paid";

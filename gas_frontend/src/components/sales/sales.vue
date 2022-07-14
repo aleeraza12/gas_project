@@ -36,7 +36,7 @@
               <b>Total Sales</b>
             </div>
             <div class="d-flex align-start justify-start total-amount">
-              {{ Number(total_sales).toLocaleString() }} ₦
+              ₦ {{ Number(total_sales).toLocaleString() }}
             </div>
           </div>
           <v-spacer></v-spacer>
@@ -98,10 +98,10 @@
               {{ item.gas_quantity }} kg
             </template>
             <template v-slot:item.total_amount="{ item }">
-              {{ Number(item.total_amount).toLocaleString() }} ₦
+              ₦ {{ Number(item.total_amount).toLocaleString() }}
             </template>
             <template v-slot:item.discounted_amount="{ item }">
-              {{ Number(item.discounted_amount).toLocaleString() }} ₦
+              ₦ {{ Number(item.discounted_amount).toLocaleString() }}
             </template>
             <template v-slot:item.status="{ item }">
               {{ getStatus(item) }}

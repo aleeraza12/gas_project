@@ -26,7 +26,7 @@ class CreatePurchasesTable extends Migration
             $table->dateTime('delivered_at')->nullable();
             $table->string('company_name');
             $table->string('company_phone_number');
-            $table->string('driver_name')->nullable();;
+            $table->string('driver_name')->nullable();
             $table->string('gas_quantity');
             $table->double('amount');
             $table->double('logistics_cost');
