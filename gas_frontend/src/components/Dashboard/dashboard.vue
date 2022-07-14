@@ -151,7 +151,7 @@
       </div>
     </div>
 
-    <div style="background-color: #f9b224">
+    <div style="background-color: #2c3b90">
       <vue-horizontal-list :items="getScrollablePrice" :options="options">
         <template v-slot:default="{ item }">
           <div>
@@ -159,7 +159,7 @@
               class="item"
               style="
                 height: 5px;
-                background-color: #f9b224;
+                background-color: #2c3b90;
                 margin-bottom: 2px;
                 margin-top: -2px;
               "
