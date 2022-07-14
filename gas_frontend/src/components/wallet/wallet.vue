@@ -90,6 +90,9 @@
                 </div>
               </th>
             </template>
+            <template v-slot:item.amount="{ item }">
+              ₦ {{ Number(item.amount).toLocaleString() }}
+            </template>
             <template v-slot:item.status="{ item }">
               <v-chip
                 class="ma-2"

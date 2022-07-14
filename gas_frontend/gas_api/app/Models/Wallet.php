@@ -15,4 +15,8 @@ class Wallet extends Model
         $date = Carbon::parse($value)->addHours(1);
         return $date->toDayDateTimeString();
     }
+    public function getAmountAttribute($value)
+    {
+        return intval($value);
+    }
 }
