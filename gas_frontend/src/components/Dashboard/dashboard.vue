@@ -151,7 +151,7 @@
       </div>
     </div>
 
-    <div style="background-color: #f9b224">
+    <div style="background-color: #2c3b90">
       <vue-horizontal-list :items="getScrollablePrice" :options="options">
         <template v-slot:default="{ item }">
           <div>
@@ -159,15 +159,15 @@
               class="item"
               style="
                 height: 5px;
-                background-color: #f9b224;
+                background-color: #2c3b90;
                 margin-bottom: 2px;
                 margin-top: -2px;
               "
             >
-              <h5 style="margin-top: -14px">
+              <h5 style="margin-top: -14px;color: white;">
                 {{ item.depo_name }}, {{ item.location }}
               </h5>
-              <p>{{ item.price_per_twenty_million_ton }}</p>
+              <p style="color:white;">{{ Number(item.price_per_twenty_million_ton).toLocaleString() }}</p>
             </div>
           </div>
         </template>
