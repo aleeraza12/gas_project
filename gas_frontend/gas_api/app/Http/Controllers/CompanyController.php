@@ -42,6 +42,12 @@ class CompanyController extends Controller
         return response()->json(['response' => $company, 'status' => 201]);
     }
 
+    public function updateCompanyStatus(Request $request)
+    {
+        Company::find($request->company_id)->update(['status' => $request->status]);
+        return response()->json(['response' => 'Status update successfully', 'status' => 200]);
+    }
+
     public function getAttachment($company)
     {
         if ($company['company_profile_picture'] !== null)

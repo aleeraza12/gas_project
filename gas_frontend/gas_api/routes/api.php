@@ -151,6 +151,7 @@ Route::middleware('token')->group(function () {
         Route::controller(CompanyController::class)->group(function () {
             Route::post('create', 'create_company')->withoutMiddleware('token');
             Route::post('delete', 'delete_company');
+            Route::post('update_company_status', 'updateCompanyStatus');
             Route::post('read_specific_company', 'read_company');
             Route::post('read', 'read');
             Route::post('read_all', 'read_all_companies');

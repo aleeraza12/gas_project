@@ -25,6 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('password');
             $table->boolean('is_super_admin');
             $table->longText('permissions');
+            $table->enum('status', ['Active', 'Inactive'])->default('Inactive');
             $table->string('company_profile_picture')->nullable();
             $table->timestamps();
         });

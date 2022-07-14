@@ -21,14 +21,19 @@ class General extends Controller
         $message = [];
         if ($is_admin) { //if company & super admin
             if (Hash::check($request->password, $is_admin->password)) {
-                $response = Token::create($request, $is_admin->id);
-                $message['token'] = $response[0];
-                $message['user'] = $is_admin;
-                $user_id = $is_admin->user;
-                $message['user']->user_id =  $user_id[0]->id;
-                $message['user']->user_type = 'Admin';
-                unset($message['user']['user']);
-                $status = 200;
+                if ($is_admin->status == "Active") {
+                    $response = Token::create($request, $is_admin->id);
+                    $message['token'] = $response[0];
+                    $message['user'] = $is_admin;
+                    $user_id = $is_admin->user;
+                    $message['user']->user_id =  $user_id[0]->id;
+                    $message['user']->user_type = 'Admin';
+                    unset($message['user']['user']);
+                    $status = 200;
+                } else {
+                    $message = "Your account is not approved yet";
+                    $status = 400;
+                }
             } else {
                 $message = "Credentials didn't matched";
                 $status = 400;
