@@ -17,9 +17,9 @@ class General extends Controller
     {
         $is_admin = Company::where('company_email', $request->email)->first();
 
-        if($is_admin->is_super_admin == "0"){
+        if ($is_admin->is_super_admin == "0") {
             $is_admin->is_super_admin = false;
-        }else{
+        } else {
             $is_admin->is_super_admin = true;
         }
 

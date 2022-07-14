@@ -45,6 +45,7 @@ class CompanyController extends Controller
     public function updateCompanyStatus(Request $request)
     {
         Company::find($request->company_id)->update(['status' => $request->status]);
+        //dd(Company::find($request->company_id)->users);
         return response()->json(['response' => 'Status update successfully', 'status' => 200]);
     }
 

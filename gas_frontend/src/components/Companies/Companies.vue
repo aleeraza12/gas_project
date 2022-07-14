@@ -91,11 +91,17 @@
                 </div>
               </th>
             </template>
-            <!--<template v-slot:item.actions1="{ item }">
-              <v-icon small class="mr-2" @click="editItem(item)">
-                mdi-eye
+            <template v-slot:item.actions1="{ item }">
+              <v-icon
+                small
+                class="mr-2"
+                color="success"
+                @click="setApprovalModal(item)"
+                v-show="loggedInUser.company_email != item.company_email"
+              >
+                mdi-checkbox-marked-circle-outline
               </v-icon>
-            </template>-->
+            </template>
             <template v-slot:item.actions2="{ item }">
               <v-icon
                 small
@@ -111,7 +117,7 @@
         </div>
       </v-card-text>
     </v-card>
-
+    <!-- Delet Modal -->
     <v-dialog v-model="dialog" persistent max-width="410">
       <v-card>
         <v-card-title class="text-h7">
@@ -127,6 +133,24 @@
           </v-btn>
           <v-btn color="red darken-1" small text @click="deleteItem()">
             Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- Approval Modal -->
+    <v-dialog v-model="statusDialog" persistent max-width="410">
+      <v-card>
+        <v-card-title class="text-h7">
+          Are you sure to {{ statusText }} this company?
+        </v-card-title>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" black" small text @click="statusDialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="success" small text @click="changeStatus()">
+            Confirm
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -168,6 +192,9 @@ export default {
     loading: true,
     search: "",
     deleteable: "",
+    updateable: "",
+    statusText: "",
+    statusDialog: false,
     dialog: false,
     snacbarMessage: "",
     start_date: "2022-01-01",
@@ -187,7 +214,7 @@ export default {
       { text: "Company Phone Number", value: "company_phone_number" },
       { text: "City", value: "city" },
       { text: "State", value: "state" },
-      //{ text: "Edit", value: "actions1", sortable: false },
+      { text: "Status", value: "actions1", sortable: false },
       { text: "Delete", value: "actions2", sortable: false },
     ],
   }),
@@ -229,12 +256,28 @@ export default {
       };
       this.$store.dispatch("getCompaniesListing", requestBody);
     },
-    editItem(item) {
-      //  this.$router.push("/new-customer");
-      setTimeout(() => {
-        eventBus.$emit("updategetCompanies", item);
-      }, 100);
-      //this.$store.commit("SET_SINGLE_CUSTOMER_DATA", item);
+    setApprovalModal(item) {
+      this.statusDialog = true;
+      this.updateable = item;
+      this.statusText = item.status == "Active" ? "Inactive" : "Active";
+    },
+    changeStatus() {
+      this.statusDialog = false;
+      let requestBody = {
+        company_id: this.updateable.id,
+        status: this.statusText,
+      };
+      RequestService.post("company/update_company_status", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            this.loading = true;
+            this.snackbar = true;
+            this.snackbarColor = "success";
+            this.snacbarMessage = "Your company(s) status updated successfully";
+            this.getCompaniesListing([this.start_date, this.end_date]);
+          }
+        }
+      );
     },
     setModal(item) {
       this.dialog = true;
@@ -251,7 +294,7 @@ export default {
           this.snackbar = true;
           this.snackbarColor = "success";
           this.snacbarMessage = "Your company(s) deleted successfully";
-          this.$store.dispatch("getCompaniesListing");
+          this.getCompaniesListing([this.start_date, this.end_date]);
         }
       });
     },
