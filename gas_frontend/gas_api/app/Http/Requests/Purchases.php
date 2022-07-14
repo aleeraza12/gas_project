@@ -27,11 +27,11 @@ class Purchases extends FormRequest
         $array['receipt_number'] = 'required';
         $array['company_name'] = 'required';
         $array['company_phone_number'] = 'required';
-        $array['driver_name'] = 'required';
+        $array['driver_name'] = 'sometimes';
         $array['gas_quantity'] = 'required';
         $array['amount'] = 'required';
         $array['unit_price'] = 'required';
-        $array['recepient_name'] = 'required';
+        $array['recepient_name'] = 'sometimes';
         $array['user_id'] = 'required';
         return $array;
     }

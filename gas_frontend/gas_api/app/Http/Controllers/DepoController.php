@@ -55,12 +55,14 @@ class DepoController extends Controller
         ], 'status' => 200]);
     }
 
+    //for company
     public function read_company_depos(Request $request)
     {
         $depo_prices =   Company::find($request->company_id)->depos()->where('added_by_admin', false)->get()->toArray();
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
 
+    //for super admin
     public function read_all_depo_prices_admin()
     {
         $depo_prices =  Depos::where('added_by_admin', false)->get()->toArray();
@@ -68,9 +70,9 @@ class DepoController extends Controller
     }
     public function read_rate_list(Request $request)
     {
-        if($request->start_date || $request->end_date){
+        if ($request->start_date || $request->end_date) {
             $depo_prices =  Depos::where('added_by_admin', true)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
-        }else{
+        } else {
             $depo_prices = Depos::where('added_by_admin', true)->get();
         }
         return response()->json(['response' => $depo_prices, 'status' => 200]);

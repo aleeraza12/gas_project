@@ -25,7 +25,7 @@ class CompanySeeder extends Seeder
                 'city' =>  'TestCty',
                 'state' => 'Abia',
                 'is_super_admin' => false,
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Rates',  'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos', 'Rate List'],
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Customers', 'Rates',  'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Settings', 'Promos', 'Rate List', 'Depos'],
                 'address' =>  'Test address',
             ]
         );

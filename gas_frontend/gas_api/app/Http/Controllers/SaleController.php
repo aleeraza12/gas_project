@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Promos;
 use App\Models\Sale;
 use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -73,7 +74,7 @@ class SaleController extends Controller
         $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         $name = Company::find($request->company_id);
         foreach ($sales as $sale) {
-            $sale['updated_by'] = $name->company_name; //updated_by
+            $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->company_id)->first();
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
@@ -83,6 +84,7 @@ class SaleController extends Controller
             $sale['customer_address'] =   $customer->address;
             $sale['company_profile_picture']   = $name['company_profile_picture'];
             $sale['company_address']   = $name['address'];
+            $sale['company_name']   = $name['company_name'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
@@ -92,7 +94,7 @@ class SaleController extends Controller
         $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
         foreach ($sales as $sale) {
             $name = Company::find($sale->company_id);
-            $sale['updated_by'] = $name->company_name; //updated_by
+            $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
             $promo = Promos::withTrashed()->where('company_id', $sale->company_id)->where('promo_name', $sale->discount_code)->first();
             $sale['promo_id'] =  @$promo->id;
@@ -102,6 +104,7 @@ class SaleController extends Controller
             $sale['customer_address'] =   $customer->address;
             $sale['company_profile_picture']   = $name['company_profile_picture'];
             $sale['company_address']   = $name['address'];
+            $sale['company_name']   = $name['company_name'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }

@@ -25,7 +25,7 @@ class SuperAdmin extends Seeder
                 'city' =>  'Super Admin',
                 'state' => 'Super Admin',
                 'is_super_admin' => true,
-                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos', 'Rate List'],
+                'permissions' =>  ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'AdminSettings', 'Companies', 'Promos', 'Rate List', 'Depos'],
                 'address' =>  'Super Admin',
             ]
         );

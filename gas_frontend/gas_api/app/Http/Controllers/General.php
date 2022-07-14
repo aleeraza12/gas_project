@@ -26,6 +26,7 @@ class General extends Controller
                 $message['user'] = $is_admin;
                 $user_id = $is_admin->user;
                 $message['user']->user_id =  $user_id[0]->id;
+                $message['user']->user_type = 'Admin';
                 unset($message['user']['user']);
                 $status = 200;
             } else {
