@@ -23,6 +23,8 @@ class SaleController extends Controller
             if ($promo == null)
                 return response()->json(['response' => 'Invalid discount code', 'status' => 400]);
         }
+
+        
         $sale = Sale::updateOrCreate(
             [
                 'id' => $request->sale_id
