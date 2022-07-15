@@ -24,7 +24,7 @@ class SaleController extends Controller
                 return response()->json(['response' => 'Invalid discount code', 'status' => 400]);
         }
 
-        
+
         $sale = Sale::updateOrCreate(
             [
                 'id' => $request->sale_id
@@ -53,8 +53,12 @@ class SaleController extends Controller
         } else if ($request->discount_code == null) {
             Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
         }
+        if ($request->payment_mode != 'Credit') {
+            Sale::find($sale->id)->update(['paid' => true, 'paid_at' => Carbon::now()->addHours(1)]);
+        }
         TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->id]));
         $sale = $this->read_sale($request, $sale);
+
         return response()->json(['response' => $sale, 'status' => 201]);
     }
 
