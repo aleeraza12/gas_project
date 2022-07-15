@@ -94,6 +94,9 @@
                 </div>
               </th>
             </template>
+            <template v-slot:item.price_per_twenty_million_ton="{ item }">
+                <div>{{ item.price_per_twenty_million_ton == "0" || item.price_per_twenty_million_ton == 0 ? "N/A" : item.price_per_twenty_million_ton}}</div>
+            </template>
             <template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
