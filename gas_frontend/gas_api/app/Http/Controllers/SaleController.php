@@ -155,6 +155,9 @@ class SaleController extends Controller
         } else if ($request->discount_code == null) {
             Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
         }
+        if ($request->payment_mode == 'Credit') {
+            Sale::find($sale->id)->update(['paid' => null, 'paid_at' => null, 'delivered' => null, 'delivered_at' => null]);
+        }
         TransactionController::updateSaleTransaction($request->merge([
             'amount' => $request->total_amount, 'outer_id' => $sale->id, 'company_id' => $request->company_id, 'type' => 'sale'
         ]));
