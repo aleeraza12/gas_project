@@ -237,8 +237,7 @@
               <div>
                 <div class="d-flex align-start justify-start">
                   <p class="boldness-600">
-                    {{ Number(getDashboardData.total_sales).toLocaleString() }}
-                    ₦
+                    ₦ {{ Number(getDashboardData.total_sales).toLocaleString() }}
                   </p>
                 </div>
                 <!--<div class="d-flex align-start justify-start mt-7">

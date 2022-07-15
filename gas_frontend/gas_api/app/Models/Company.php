@@ -11,6 +11,11 @@ class Company extends Model
     use HasFactory;
     protected $fillable = ['owner_name', 'company_email', 'company_name', 'status', 'company_phone_number', 'address', 'city', 'state', 'password',   'permissions', 'company_profile_picture', 'is_super_admin'];
 
+    public function getIsSuperAdminAttribute($value)
+    {
+        return $value == "0" || $value == 0 ? false : true;
+    }
+
     public function getCompanyProfilePictureAttribute($value)
     {
         if ($value != null) {

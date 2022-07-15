@@ -27,7 +27,7 @@ export default {
   watch: {
     $route: {
       handler: (to) => {
-        document.title = to.meta.title + "-" + `Sample`;
+        document.title = to.meta.title;
       },
       immediate: true,
     },
