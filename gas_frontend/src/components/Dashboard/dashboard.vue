@@ -164,10 +164,12 @@
                 margin-top: -2px;
               "
             >
-              <h5 style="margin-top: -14px;color: white;">
+              <h5 style="margin-top: -14px; color: white">
                 {{ item.depo_name }}, {{ item.location }}
               </h5>
-              <p style="color:white;">{{ Number(item.price_per_twenty_million_ton).toLocaleString() }}</p>
+              <p style="color: white">
+                {{ Number(item.price_per_twenty_million_ton).toLocaleString() }}
+              </p>
             </div>
           </div>
         </template>
@@ -237,7 +239,8 @@
               <div>
                 <div class="d-flex align-start justify-start">
                   <p class="boldness-600">
-                    ₦ {{ Number(getDashboardData.total_sales).toLocaleString() }}
+                    ₦
+                    {{ Number(getDashboardData.total_sales).toLocaleString() }}
                   </p>
                 </div>
                 <!--<div class="d-flex align-start justify-start mt-7">
@@ -280,6 +283,12 @@
               {{ header.text }}
             </div>
           </th>
+        </template>
+        <template v-slot:item.gas_quantity="{ item }">
+          {{ item.amount }} kg
+        </template>
+        <template v-slot:item.amount="{ item }">
+          ₦ {{ Number(item.amount).toLocaleString() }}
         </template>
         <template v-slot:item.status="{ item }">
           <v-chip

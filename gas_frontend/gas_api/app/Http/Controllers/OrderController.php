@@ -39,7 +39,7 @@ class OrderController extends Controller
 
     public function read_order(Request $request)
     {
-        $orders =  Company::find($request->company_id)->order()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $orders =  Company::find($request->company_id)->order()->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         $company = Company::find($request->company_id);
         foreach ($orders as $order) {
             $order['company_name'] = $company->company_name;
@@ -51,7 +51,7 @@ class OrderController extends Controller
 
     public function read_all_order(Request $request)
     {
-        $orders =  Order::whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $orders =  Order::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $orders, 'status' => 200]);
     }
 }

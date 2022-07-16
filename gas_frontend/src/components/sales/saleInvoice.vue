@@ -88,8 +88,8 @@
 
               00000{{ getSingleReceipt.transaction_id }}
 
-              <div class="font-weight-bold">
-                {{ getDate(getSingleReceipt.created_at) }}
+              <div class="font-weight-bold" style="font-size: 13px">
+                {{ getSingleReceipt.created_at }}
               </div>
             </div>
           </div>
@@ -168,12 +168,12 @@
                 {{ getSingleReceipt.total_amount }}
               </div>
             </div>
-            <div class="d-flex pa-2" style="background-color: #ebebea">
+            <!--<div class="d-flex pa-2" style="background-color: #ebebea">
               <div class="font-weight-bold">Balance</div>
               <div class="ml-5 font-weight-bold">
                 {{ getSingleReceipt.balance }}
               </div>
-            </div>
+            </div>-->
             <div class="d-flex pa-2" style="background-color: #f6f6f5">
               <div class="font-weight-bold">Promo</div>
               <div class="ml-15 font-weight-bold">
@@ -276,6 +276,7 @@ export default {
       this.$router.push("/sales");
     },
     getDate(item) {
+      console.log(item, "ten");
       let date = item.split(" ");
       return date[0] + " " + date[1] + " " + date[2];
     },

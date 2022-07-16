@@ -83,8 +83,15 @@
                 </div>
               </th>
             </template>
-             <template v-slot:item.price_per_twenty_million_ton="{ item }">
-                <div>{{ item.price_per_twenty_million_ton == "0" || item.price_per_twenty_million_ton == 0 ? "N/A" : item.price_per_twenty_million_ton}}</div>
+            <template v-slot:item.price_per_twenty_million_ton="{ item }">
+              <div>
+                {{
+                  item.price_per_twenty_million_ton == "0" ||
+                  item.price_per_twenty_million_ton == 0
+                    ? "N/A"
+                    : item.price_per_twenty_million_ton
+                }}
+              </div>
             </template>
           </v-data-table>
         </div>
@@ -123,7 +130,6 @@ export default {
   },
   created() {
     eventBus.$on("responseArrivedDepo", () => {
-      console.log("asfsdsdfas");
       this.loading = false;
     });
   },
@@ -137,7 +143,6 @@ export default {
   },
   watch: {},
   mounted() {
-    console.log("sdsda");
     this.$store.dispatch("getAllDepos");
   },
 };

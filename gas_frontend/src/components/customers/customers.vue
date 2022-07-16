@@ -91,6 +91,9 @@
                 {{ item.address != null ? item.address : "No address" }}
               </div>
             </template>
+            <template v-slot:item.total_sale="{ item }">
+              ₦ {{ Number(item.total_sale).toLocaleString() }}
+            </template>
             <template v-slot:item.actions1="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil

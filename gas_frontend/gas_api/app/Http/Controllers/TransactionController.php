@@ -29,7 +29,7 @@ class TransactionController extends Controller
 
     public function readTransactions(Request $request)
     {
-        $transactions = Transaction::where('company_id', $request->company_id)->whereBetween('created_at', array($request->start_date, $request->end_date))->whereIn('status', ['verified', 'reconcilled'])->get();
+        $transactions = Transaction::where('company_id', $request->company_id)->whereBetween('created_at', array($request->start_date, $request->end_date))->whereIn('status', ['verified', 'reconcilled'])->orderBy('created_at', 'DESC')->get();
         foreach ($transactions as $transaction) {
             if ($transaction->type == 'sale') {
                 $data = Sale::find($transaction->outer_id);
@@ -49,7 +49,7 @@ class TransactionController extends Controller
 
     public function read(Request $request)
     {
-        $transactions = Transaction::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $transactions = Transaction::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         foreach ($transactions as $transaction) {
             if ($transaction->type == 'sale') {
                 $data = Sale::find($transaction->outer_id);

@@ -53,12 +53,14 @@ class SaleController extends Controller
         } else if ($request->discount_code == null) {
             Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
         }
+        TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->id]));
         if ($request->payment_mode != 'Credit') {
             Sale::find($sale->id)->update(['paid' => true, 'paid_at' => Carbon::now()->addHours(1)]);
+            Transaction::where('outer_id', $sale->id)->where('company_id', $request->company_id)->where('type', 'sale')->update([
+                'status' => 'verified'
+            ]);
         }
-        TransactionController::createTransaction($request->merge(['type' => 'sale', 'amount' => $request->total_amount, 'outer_id' => $request->sale_id ? $request->sale_id : $sale->id]));
         $sale = $this->read_sale($request, $sale);
-
         return response()->json(['response' => $sale, 'status' => 201]);
     }
 
@@ -90,7 +92,7 @@ class SaleController extends Controller
     //for companes
     public function read_all_sale(Request $request)
     {
-        $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         $name = Company::find($request->company_id);
         foreach ($sales as $sale) {
             $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
@@ -110,7 +112,7 @@ class SaleController extends Controller
     //for super admn
     public function read(Request $request)
     {
-        $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         foreach ($sales as $sale) {
             $name = Company::find($sale->company_id);
             $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
@@ -155,12 +157,16 @@ class SaleController extends Controller
         } else if ($request->discount_code == null) {
             Sale::find($sale->id)->update(['discounted_amount' => $request->total_amount]);
         }
-        if ($request->payment_mode == 'Credit') {
-            Sale::find($sale->id)->update(['paid' => null, 'paid_at' => null, 'delivered' => null, 'delivered_at' => null]);
-        }
         TransactionController::updateSaleTransaction($request->merge([
             'amount' => $request->total_amount, 'outer_id' => $sale->id, 'company_id' => $request->company_id, 'type' => 'sale'
         ]));
+        if ($request->payment_mode == 'Credit') {
+            Sale::find($sale->id)->update(['paid' => null, 'paid_at' => null, 'delivered' => null, 'delivered_at' => null]);
+            Transaction::where('outer_id', $sale->id)->where('company_id', $request->company_id)->where('type', 'sale')->update([
+                'status' => 'not_verified'
+            ]);
+        }
+
         return response()->json(['response' => $sale, 'status' => 200]);
     }
     public function updateSaleStatus(Request $request)

@@ -58,22 +58,22 @@ class DepoController extends Controller
     //for company
     public function read_company_depos(Request $request)
     {
-        $depo_prices =   Company::find($request->company_id)->depos()->where('added_by_admin', false)->get()->toArray();
+        $depo_prices =   Company::find($request->company_id)->depos()->where('added_by_admin', false)->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
 
     //for super admin
     public function read_all_depo_prices_admin()
     {
-        $depo_prices =  Depos::where('added_by_admin', false)->get()->toArray();
+        $depo_prices =  Depos::where('added_by_admin', false)->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }
     public function read_rate_list(Request $request)
     {
         if ($request->start_date || $request->end_date) {
-            $depo_prices =  Depos::where('added_by_admin', true)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+            $depo_prices =  Depos::where('added_by_admin', true)->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         } else {
-            $depo_prices = Depos::where('added_by_admin', true)->get();
+            $depo_prices = Depos::where('added_by_admin', true)->orderBy('created_at', 'DESC')->get();
         }
         return response()->json(['response' => $depo_prices, 'status' => 200]);
     }

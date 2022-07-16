@@ -59,7 +59,7 @@ class PurchaseController extends Controller
     //for company/user
     public function read_all_purchases(Request $request)
     {
-        $purchases =  Company::find($request->company_id)->purchase()->whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $purchases =  Company::find($request->company_id)->purchase()->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         foreach ($purchases as $purchase) {
             if ($purchase['receipt_attachment_path'] !== null)
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));
@@ -72,7 +72,7 @@ class PurchaseController extends Controller
     //for super admn
     public function read(Request $request)
     {
-        $purchases =  Purchase::whereBetween('created_at', array($request->start_date, $request->end_date))->get();
+        $purchases =  Purchase::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         foreach ($purchases as $purchase) {
             if ($purchase['receipt_attachment_path'] !== null)
                 $purchase['base64'] = base64_encode(Storage::get($purchase['receipt_attachment_path']));

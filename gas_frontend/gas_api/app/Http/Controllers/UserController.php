@@ -123,13 +123,13 @@ class UserController extends Controller
     //read all users for a company
     public function read_all_user(Request $request)
     {
-        $users =  Company::find($request->company_id)->user()->where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $users =  Company::find($request->company_id)->user()->where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
     //read all users for super admn
     public function read(Request $request)
     {
-        $users =  User::where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $users =  User::where('is_company', false)->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $users, 'status' => 200]);
     }
 }

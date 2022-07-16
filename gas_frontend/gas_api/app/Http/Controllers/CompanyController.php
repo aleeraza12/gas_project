@@ -69,7 +69,7 @@ class CompanyController extends Controller
 
     public function read(Request $request)
     {
-        $companies =  Company::whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $companies =  Company::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $companies, 'status' => 200]);
     }
 

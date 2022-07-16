@@ -32,13 +32,13 @@ class PromosController extends Controller
 
     public function read_promo(Request $request)
     {
-        $promo =  Company::find($request->company_id)->promos()->whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $promo =  Company::find($request->company_id)->promos()->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $promo, 'status' => 200]);
     }
 
     public function read_all_promos(Request $request)
     {
-        $promos = Promos::whereBetween('created_at', array($request->start_date, $request->end_date))->get()->toArray();
+        $promos = Promos::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get()->toArray();
         return response()->json(['response' => $promos, 'status' => 200]);
     }
 }

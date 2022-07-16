@@ -102,6 +102,12 @@
                       </div>
                     </th>
                   </template>
+                  <template v-slot:item.gas_quantity="{ item }">
+                    {{ item.gas_quantity }} kg
+                  </template>
+                  <template v-slot:item.amount="{ item }">
+                    ₦ {{ Number(item.amount).toLocaleString() }}
+                  </template>
                   <template v-slot:item.status="{ item }">
                     <v-chip
                       class="ma-2"
@@ -159,6 +165,12 @@
                       {{ header.text }}
                     </div>
                   </th>
+                </template>
+                <template v-slot:item.gas_quantity="{ item }">
+                  {{ item.gas_quantity }} kg
+                </template>
+                <template v-slot:item.amount="{ item }">
+                  ₦ {{ Number(item.amount).toLocaleString() }}
                 </template>
                 <template v-slot:item.status="{ item }">
                   <v-chip

@@ -277,7 +277,6 @@ export default {
   },
   watch: {
     getScrollablePrice() {
-      console.log("getScrollablePrice", this.getScrollablePrice);
     },
     getPurchases() {
       if (this.getPurchases.length > 0) {
