@@ -76,7 +76,19 @@
                 :class="$vuetify.breakpoint.smAndDown ? 'mr-15' : ''"
               >
                 <b> Customer Address:</b>
-                <b class="ml-2">{{ getSingleReceipt.customer_address }}</b>
+                <b
+                  class="ml-2"
+                  :class="
+                    getSingleReceipt.customer_address == null
+                      ? 'text--disabled font-weight-thin'
+                      : ''
+                  "
+                  >{{
+                    getSingleReceipt.customer_address == null
+                      ? "N/A"
+                      : getSingleReceipt.customer_address
+                  }}</b
+                >
               </div>
             </div>
             <v-spacer></v-spacer>
@@ -86,7 +98,7 @@
             >
               <div class="font-weight-bold">Transaction Id</div>
 
-              00000{{ getSingleReceipt.transaction_id }}
+              000{{ getSingleReceipt.transaction_id }}
 
               <div class="font-weight-bold" style="font-size: 13px">
                 {{ getSingleReceipt.created_at }}
