@@ -74,7 +74,8 @@ class SaleController extends Controller
 
     public function read_sale($request, $sale)
     {
-        $sale =  Sale::find($sale->id)->first();
+        //dd($sale);
+        $new_sale_data =  Sale::find($sale->id);
         $name = Company::find($request->company_id);
         $sale['updated_by'] = User::find($request->users_id)->name; //updated_by
         $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->company_id)->first();
@@ -87,6 +88,7 @@ class SaleController extends Controller
         $sale['company_profile_picture']   = $name['company_profile_picture'];
         $sale['company_address']   = $name['address'];
         $sale['company_name']   = $name['company_name'];
+        $sale['discounted_amount']   = $new_sale_data->discounted_amount;
         return $sale;
     }
     //for companes

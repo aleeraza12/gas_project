@@ -677,6 +677,7 @@ export default {
           if (res.data.status == 201) {
             this.snacbarMessage = "Your sale(s) added successfully";
             this.snackbarColor = "success";
+            console.log("sale data", res.data.response);
             this.$store.commit("SET_VIEW_RECEIPT", res.data.response);
             setTimeout(() => {
               this.$router.push("/sale-invoice");
