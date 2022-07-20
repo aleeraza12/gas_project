@@ -168,6 +168,7 @@ Route::middleware('token')->group(function () {
             Route::post('read_specific_sale', 'read_sale');
             Route::post('read', 'read');
             Route::post('read_all', 'read_all_sale');
+            Route::post('read_single_sale', 'read_single_sale');
         });
     });
 

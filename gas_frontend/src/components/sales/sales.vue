@@ -107,9 +107,15 @@
               {{ getStatus(item) }}
             </template>
             <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="ViewReceipt(item)">
-                mdi-eye
-              </v-icon>
+              <v-btn
+                small
+                class="mr-2"
+                @click="ViewReceipt(item), (loader_id = item.id)"
+                :loading="noResponse && loader_id == item.id"
+                icon
+              >
+                <v-icon size="17"> mdi-eye </v-icon>
+              </v-btn>
             </template>
           </v-data-table>
         </div>
@@ -127,12 +133,15 @@ import { mapGetters } from "vuex";
 import { eventBus } from "@/main";
 import datePicker from "../../views/Pages/datePicker.vue";
 import VueJsonToCsv from "vue-json-to-csv";
+import RequestService from "../../RequestService";
 import Vue from "vue";
 Vue.component("downloadCsv", VueJsonToCsv);
 export default {
   data: () => ({
     loading: true,
     total_sales: null,
+    loader_id: "",
+    noResponse: false,
     search: "",
     start_date: "2022-01-01",
     end_date: new Date().toISOString().substr(0, 10),
@@ -182,8 +191,19 @@ export default {
       this.$router.push("sale-receipt-form");
     },
     ViewReceipt(item) {
-      this.$store.commit("SET_VIEW_RECEIPT", item);
-      this.$router.push("sales-details");
+      this.noResponse = true;
+      let requestBody = {
+        sale_id: item.id,
+      };
+      RequestService.post("sale/read_single_sale", requestBody).then(
+        (response) => {
+          if (response.data.status == 200) {
+            this.noResponse = false;
+            this.$store.commit("SET_VIEW_RECEIPT", response.data.response);
+            this.$router.push("sales-details");
+          }
+        }
+      );
     },
     getSalesListings(date) {
       this.loading = true;

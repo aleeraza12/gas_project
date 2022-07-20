@@ -71,7 +71,7 @@ class SaleController extends Controller
         return response()->json(['response' => "Sale deleted successfully", 'status' => 200]);
     }
 
-
+    // this is used for getting sale instance while creating sale
     public function read_sale($request, $sale)
     {
         //dd($sale);
@@ -91,23 +91,42 @@ class SaleController extends Controller
         $sale['discounted_amount']   = $new_sale_data->discounted_amount;
         return $sale;
     }
+
+    // this is used to get sngle sale instance
+    public function read_single_sale(Request $request)
+    {
+        $sale =   Sale::find($request->sale_id);
+        $name = Company::find($sale->company_id);
+        $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
+        $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
+        $sale['transaction_id'] =  @$transaction->id;
+        $customer = Customer::find($sale->customer_id);
+        $promo = Promos::withTrashed()->where('company_id', $sale->company_id)->where('promo_name', $sale->discount_code)->first();
+        $sale['promo_id'] =  @$promo->id;
+        $sale['customer_name'] =  $customer->name;
+        $sale['customer_address'] =   $customer->address;
+        $sale['company_profile_picture']   = $name['company_profile_picture'];
+        $sale['company_address']   = $name['address'];
+        $sale['company_name']   = $name['company_name'];
+        return response()->json(['response' => $sale, 'status' => 200]);
+    }
     //for companes
     public function read_all_sale(Request $request)
     {
         $sales =   Company::find($request->company_id)->sale()->whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
-        $name = Company::find($request->company_id);
+        //$name = Company::find($request->company_id);
         foreach ($sales as $sale) {
             $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $request->company_id)->first();
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
-            $promo = Promos::withTrashed()->where('company_id', $request->company_id)->where('promo_name', $sale->discount_code)->first();
-            $sale['promo_id'] =  @$promo->id;
+            //$promo = Promos::withTrashed()->where('company_id', $request->company_id)->where('promo_name', $sale->discount_code)->first();
+            //$sale['promo_id'] =  @$promo->id;
             $sale['customer_name'] =  $customer->name;
-            $sale['customer_address'] =   $customer->address;
-            $sale['company_profile_picture']   = $name['company_profile_picture'];
-            $sale['company_address']   = $name['address'];
-            $sale['company_name']   = $name['company_name'];
+            //$sale['customer_address'] =   $customer->address;
+            //$sale['company_profile_picture']   = $name['company_profile_picture'];
+            //$sale['company_address']   = $name['address'];
+            //$sale['company_name']   = $name['company_name'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }
@@ -116,18 +135,18 @@ class SaleController extends Controller
     {
         $sales =  Sale::whereBetween('created_at', array($request->start_date, $request->end_date))->orderBy('created_at', 'DESC')->get();
         foreach ($sales as $sale) {
-            $name = Company::find($sale->company_id);
+            //$name = Company::find($sale->company_id);
             $sale['updated_by'] = User::find($sale->user_id)->name; //updated_by
             $transaction = Transaction::where('type', 'sale')->where('outer_id', $sale->id)->where('company_id', $sale->company_id)->first();
-            $promo = Promos::withTrashed()->where('company_id', $sale->company_id)->where('promo_name', $sale->discount_code)->first();
-            $sale['promo_id'] =  @$promo->id;
+            //$promo = Promos::withTrashed()->where('company_id', $sale->company_id)->where('promo_name', $sale->discount_code)->first();
+            //$sale['promo_id'] =  @$promo->id;
             $sale['transaction_id'] =  @$transaction->id;
             $customer = Customer::find($sale->customer_id);
             $sale['customer_name'] =  $customer->name;
-            $sale['customer_address'] =   $customer->address;
-            $sale['company_profile_picture']   = $name['company_profile_picture'];
-            $sale['company_address']   = $name['address'];
-            $sale['company_name']   = $name['company_name'];
+            //$sale['customer_address'] =   $customer->address;
+            //$sale['company_profile_picture']   = $name['company_profile_picture'];
+            //$sale['company_address']   = $name['address'];
+            //$sale['company_name']   = $name['company_name'];
         }
         return response()->json(['response' => $sales, 'status' => 200]);
     }

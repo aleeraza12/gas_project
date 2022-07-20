@@ -127,7 +127,11 @@
             Gas Quantity:&nbsp;{{ getSingleReceipt.gas_quantity }} kg
           </div>
           <div class="fonts">
-            Promo Used:&nbsp;{{ getSingleReceipt.discount_code }}
+            Promo Used:&nbsp;{{
+              getSingleReceipt.discount_code == null
+                ? "N/A"
+                : getSingleReceipt.discount_code
+            }}
           </div>
           <div class="fonts">
             Updated By:&nbsp;{{ getSingleReceipt.updated_by }}
