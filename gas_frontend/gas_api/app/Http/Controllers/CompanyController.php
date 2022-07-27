@@ -36,8 +36,8 @@ class CompanyController extends Controller
         //if company is created first time than we create user
         if (!$request->company_id) {
             $user = UserController::create_company_user($request->merge(['name' =>  $request->company_name, 'created_by' =>  $request->company_name, 'password' => $request->password, 'designation' => 'company', 'permissions' => ['Dashboard', 'Orders', 'Users', 'Rates', 'Customers', 'Reconciliation', 'Wallet', 'Sales', 'Purchases', 'Promos', 'Rate List', 'Depos'], 'user_type' => 'admin', 'status' => 'Active', 'company_id' => $company->id]));
-            $seeder = new \Database\Seeders\OrderSeeder();
-            $seeder->run($company->id, $user->id);
+            // $seeder = new \Database\Seeders\OrderSeeder();
+            // $seeder->run($company->id, $user->id);
         }
         return response()->json(['response' => $company, 'status' => 201]);
     }

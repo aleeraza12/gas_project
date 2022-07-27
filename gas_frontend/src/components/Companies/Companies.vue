@@ -74,7 +74,6 @@
             :items="getCompanies"
             :items-per-page="5"
             class="elevation-1"
-            hide-default-footer
             hide-default-header
             height="calc(100vh - 340px)"
             :search="search"

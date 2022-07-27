@@ -168,7 +168,7 @@
                 {{ item.depo_name }}, {{ item.location }}
               </h5>
               <p style="color: white">
-                {{ Number(item.price_per_twenty_million_ton).toLocaleString() }}
+                {{ Number(item.price_per_twenty_million_ton).toLocaleString() == "0" ? "N/A" : Number(item.price_per_twenty_million_ton).toLocaleString()}}
               </p>
             </div>
           </div>
