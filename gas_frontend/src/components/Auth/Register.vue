@@ -93,7 +93,7 @@
             </div>
             <div :class="$vuetify.breakpoint.smAndDown ? 'ml-2' : 'ml-0'">
               <v-text-field
-                label="Compnay Email Address"
+                label="Company Email Address"
                 outlined
                 dense
                 placeholder="Email Address"

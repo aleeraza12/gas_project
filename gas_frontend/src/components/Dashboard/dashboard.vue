@@ -117,7 +117,7 @@
                 v-else
                 >N0</b
               >
-              <h5>Retailor</h5>
+              <h5>Retailer</h5>
             </div>
             <div class="col" v-if="!priceLoader">
               <b

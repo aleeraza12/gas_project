@@ -10,19 +10,19 @@ const router = new VueRouter({
     {
       path: "/signup",
       name: "Sign up",
-      meta: { layout: "simple", title: "Sing Up" },
+      meta: { layout: "simple", title: "Sign Up" },
       component: require("@/views/Pages/SignUp").default,
     },
     {
       path: "/",
       name: "Home",
-      meta: { layout: "simple", title: "Login" },
+      meta: { layout: "simple", title: "Gas360" },
       component: require("@/views/Pages/Login").default,
     },
     {
       path: "/login",
       name: "Login",
-      meta: { layout: "simple", title: "Login" },
+      meta: { layout: "simple", title: "Gas360" },
       component: require("@/views/Pages/Login").default,
     },
     {
