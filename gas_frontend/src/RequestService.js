@@ -4,8 +4,8 @@ import { eventBus } from "@/main";
 //  const baseUrl = "http://127.0.0.1:8000/api";
 
 //const baseUrl = "https://gas.api.reverbsoft.com/api";
-const baseUrl = "https://demo.api.gas360.online/api";
-// const baseUrl = "https://console.api.gas360.online/api";
+// const baseUrl = "https://demo.api.gas360.online/api";
+const baseUrl = "https://console.api.gas360.io/api";
 //Customized axios request
 var customAxios;
 //Service module

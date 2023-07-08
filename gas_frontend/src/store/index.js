@@ -8,8 +8,8 @@ Vue.use(Vuex);
 
 const store = {
   state: {
-    // url: "https://console.api.gas360.online/api/",
-    url: "https://demo.api.gas360.online/api/",
+    url: "https://console.api.gas360.io/api/",
+    // url: "https://demo.api.gas360.online/api/",
     //  url: "http://127.0.0.1:8000/api/",
     sales: [],
     customers: [],

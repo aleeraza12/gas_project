@@ -5,7 +5,7 @@
         <div class="d-flex">
           <div class="grey-side" v-show="!$vuetify.breakpoint.smAndDown">
             <div style="position: absolute">
-              <img src="../../assets/images/sidePic.png" width="650" />
+              <img src="../../assets/images/sidePic.png" style="height: auto" />
             </div>
             <div
               style="position: relative; margin-top: 15rem; margin-right: 5rem"

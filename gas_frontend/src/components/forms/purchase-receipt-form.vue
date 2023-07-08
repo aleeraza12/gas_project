@@ -469,6 +469,11 @@ export default {
       }
     },
     savePurchase() {
+      if (this.amount < 0) {
+        this.snacbarMessage = "Amount cannot be less than zero";
+        return;
+      }
+
       this.loading = true;
       var d = new Date();
       let requestBody = {

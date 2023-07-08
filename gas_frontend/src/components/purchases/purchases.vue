@@ -33,7 +33,7 @@
               class="d-flex align-start justify-start"
               style="color: #2b3896"
             >
-              <b>Available Balance</b>
+              <b>Total Purchases</b>
             </div>
             <div class="d-flex align-start justify-start total-amount">
               ₦ {{ Number(total_sales).toLocaleString() }}
@@ -131,8 +131,15 @@
                 </div>
               </th>
             </template>
-             <template v-slot:item.price_per_twenty_million_ton="{ item }">
-                <div>{{ item.price_per_twenty_million_ton == "0" || item.price_per_twenty_million_ton == 0 ? "N/A" : item.price_per_twenty_million_ton}}</div>
+            <template v-slot:item.price_per_twenty_million_ton="{ item }">
+              <div>
+                {{
+                  item.price_per_twenty_million_ton == "0" ||
+                  item.price_per_twenty_million_ton == 0
+                    ? "N/A"
+                    : item.price_per_twenty_million_ton
+                }}
+              </div>
             </template>
             <template v-slot:item.date="{ item }">
               {{ getDate(item) }}
@@ -276,8 +283,7 @@ export default {
     },
   },
   watch: {
-    getScrollablePrice() {
-    },
+    getScrollablePrice() {},
     getPurchases() {
       if (this.getPurchases.length > 0) {
         this.total_sales = 0;

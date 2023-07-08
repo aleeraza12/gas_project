@@ -30,7 +30,7 @@
         >
           <div>
             <div class="d-flex align-start justify-start">
-              <b>Available Balance</b>
+              <b>Total Purchases</b>
             </div>
             <div class="d-flex align-start justify-start">
               {{ total_sales }} ₦
@@ -74,8 +74,15 @@
                 </div>
               </th>
             </template>
-             <template v-slot:item.price_per_twenty_million_ton="{ item }">
-                <div>{{ item.price_per_twenty_million_ton == "0" || item.price_per_twenty_million_ton == 0 ? "N/A" : item.price_per_twenty_million_ton}}</div>
+            <template v-slot:item.price_per_twenty_million_ton="{ item }">
+              <div>
+                {{
+                  item.price_per_twenty_million_ton == "0" ||
+                  item.price_per_twenty_million_ton == 0
+                    ? "N/A"
+                    : item.price_per_twenty_million_ton
+                }}
+              </div>
             </template>
           </v-data-table>
         </div>
